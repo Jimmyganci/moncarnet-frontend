@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 import imageHome from '../../assets/photohome.svg';
-import { button, glassMorphism, input } from '../../variableTailwind';
+import { glassMorphism, input } from '../../variableTailwind';
+import Logo from '../Logo';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -28,11 +29,9 @@ const Login = () => {
     <div className="flex flex-col h-screen">
       <div className="flex flex-col items-center justify-center h-1/2">
         <div
-          className={`flex flex-col items-center w-4/5 rounded-lg h-2/3 ${glassMorphism}`}>
-          <h1 className="w-3/4 mt-4 text-2xl font-montserrat">
-            Mon carnet d&#39;entretien digitalisé
-          </h1>
-          <img src={imageHome} alt="car" />
+          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 bg-background shadow-main`}>
+          <Logo />
+          <img className="absolute bottom-0" src={imageHome} alt="car" />
         </div>
       </div>
       <div className={`flex flex-col items-center justify-center h-1/2 ${glassMorphism}`}>
@@ -41,7 +40,7 @@ const Login = () => {
           className="flex flex-col items-center w-full mt-4"
           onSubmit={(e: React.FormEvent) => handleLogin(e)}>
           <input
-            className={`w-3/4 ${input}`}
+            className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus`}
             type="email"
             name="email"
             id="email"
@@ -57,7 +56,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button>Pasencore membre ? Créer un compte</button>
-          <button className={button} type="submit">
+          <button
+            className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
+            type="submit">
             Se connecter
           </button>
         </form>
