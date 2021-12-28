@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import imageHome from '../../assets/photohome.svg';
 import { glassMorphism, input } from '../../variableTailwind';
@@ -10,6 +11,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +26,10 @@ function Login() {
           { withCredentials: true },
         )
         .then((res) => res.data)
-        .then((data) => console.log(data))
+        .then((data) => {
+          console.log(`User ${data} connected`);
+          navigate('/particular');
+        })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
           else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
