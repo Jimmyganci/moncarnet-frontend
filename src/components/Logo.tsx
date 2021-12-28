@@ -2,16 +2,20 @@ import React from 'react';
 
 import logo from '../assets/logo.svg';
 
-function Logo() {
+interface HeaderProps {
+  location?: string;
+}
+
+const Logo: React.FC<HeaderProps> = ({ location }) => {
   return (
-    <div className="flex items-center mt-4">
+    <div className="flex items-center">
       <div className="w-10 mr-4">
         <img className="w-full" src={logo} alt="book" />
       </div>
 
-      <h2 className="text-2xl">Mon Carnet</h2>
+      {location !== 'header' && <h2 className="text-2xl">Mon Carnet</h2>}
     </div>
   );
-}
+};
 
 export default Logo;
