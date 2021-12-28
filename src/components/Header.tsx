@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { glassMorphism } from '../variableTailwind';
 import Logo from './Logo';
@@ -20,8 +21,10 @@ const Header = () => {
           <span className={spanBurgerMenu}></span>
           <span className={spanBurgerMenu}></span>
         </div>
-        <div className="absolute -translate-x-1/2 left-1/2">
-          <Logo location="header" />
+        <div className="absolute -translate-x-1/2 cursor-pointer left-1/2">
+          <Link to="/particular">
+            <Logo location="header" />
+          </Link>
         </div>
         <div className="w-12">
           <svg
