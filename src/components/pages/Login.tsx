@@ -1,28 +1,37 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import imageHome from '../../assets/photohome.svg';
 import { glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    axios
-      .post(
-        'http://localhost:8000/api/auth/login',
-        {
-          email: email,
-          password: password,
-        },
-        { withCredentials: true },
-      )
-      .then((res) => res.data)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    if (email && password) {
+      axios
+        .post(
+          'http://localhost:8000/api/auth/login',
+          {
+            email: email,
+            password: password,
+          },
+          { withCredentials: true },
+        )
+        .then((res) => res.data)
+        .then((data) => console.log(data))
+        .catch((err) => {
+          if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
+          else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
+        });
+    } else {
+      setMessage('Veuillez remplir les champs.');
+    }
   };
 
   return (
@@ -55,7 +64,10 @@ const Login = () => {
             placeholder="Entrez votre mot de passe"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button>Pasencore membre ? Créer un compte</button>
+          <nav>
+            <Link to="/signup">Pas encore membre ? Créer un compte</Link>
+          </nav>
+          <p className="text-error-600">{message}</p>
           <button
             className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
             type="submit">
@@ -65,6 +77,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
