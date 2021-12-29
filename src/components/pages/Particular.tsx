@@ -9,7 +9,6 @@ function Particular() {
     <div className="min-h-screen">
       <UserContextProvider>
         <Header />
-        <h1>Bienvenue Jimmy</h1>
         <Vehicules />
       </UserContextProvider>
     </div>
