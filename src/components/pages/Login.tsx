@@ -43,7 +43,7 @@ function Login() {
     <div className="flex flex-col h-screen">
       <div className="flex flex-col items-center justify-center h-1/2">
         <div
-          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 bg-background shadow-main`}>
+          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 bg-background shadow-main`}>
           <Logo />
           <img className="absolute bottom-0" src={imageHome} alt="car" />
         </div>

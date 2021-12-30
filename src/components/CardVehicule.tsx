@@ -11,7 +11,7 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
   console.log(vehiculeSelect);
 
   return (
-    <div className={`h-full m-4 rounded-lg ${glassMorphism}`}>
+    <div className={`h-full m-4 mb-0 rounded-lg ${glassMorphism}`}>
       {vehiculeSelect.length > 0 ? (
         <>
           <div className="flex justify-center">
@@ -23,13 +23,13 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
           </div>
 
           <p className="text-2xl">{vehiculeSelect[0].vehicule.immat}</p>
-          <div className="flex justify-around m-4">
+          <div className="flex justify-around p-1 m-4 border rounded-lg shadow-second shadow-background border-background">
             <p className="font-bold uppercase">{vehiculeSelect[0].brand}</p>
             <p>{vehiculeSelect[0].model}</p>
           </div>
-          <h3 className="m-2 text-xl text-background">Date de mise en circulation</h3>
+          <h3 className="m-1 text-xl text-background">Date de mise en circulation</h3>
           <p>{vehiculeSelect[0].vehicule.registration_date.slice(0, 10)}</p>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center mt-2">
             <p>Ma carte grise</p>
             <img
               className="w-2/12 m-4"
@@ -41,8 +41,8 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
             <p className="underline">Voir mon carnet d&apos;entretien</p>
           </Link>
           <div className="flex flex-col items-center">
-            <button className={`w-1/2 ${button}`}>Modifier</button>
-            <button className={`w-1/2 ${button}`}>Céder</button>
+            <button className={`w-1/2 uppercase ${button}`}>Modifier</button>
+            <button className={`w-1/2 uppercase ${button}`}>Céder</button>
             <button className="m-4 underline">Supprimer</button>
           </div>
         </>
