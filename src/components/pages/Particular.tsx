@@ -1,15 +1,15 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { UserContextProvider } from '../../contexts/UserContext';
 import Header from '../Header';
-import Vehicules from './Vehicules';
 
 function Particular() {
   return (
     <div className="min-h-screen">
       <UserContextProvider>
         <Header />
-        <Vehicules />
+        <Outlet />
       </UserContextProvider>
     </div>
   );

@@ -9,6 +9,7 @@ module.exports = {
       },
       boxShadow: {
         main: '0 0 10px 2px rgba(0, 0, 0, 0.3)',
+        second: '0 0 5px 1px rgba(0, 0, 0, 0.3)',
       },
     },
     colors: {
@@ -24,6 +25,7 @@ module.exports = {
       },
       error: colors.red,
       warning: colors.amber,
+      valid: colors.green,
     },
     container: {
       center: true,
