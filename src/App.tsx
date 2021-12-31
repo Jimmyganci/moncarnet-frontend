@@ -11,7 +11,7 @@ import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <div className="h-full pb-4 text-center bg-no-repeat bg-cover bg-main">
+    <div className="h-full pb-4 text-center bg-center bg-no-repeat bg-cover bg-main">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
