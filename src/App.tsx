@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import AddVehicules from './components/AddVehicules';
 import HomeCard from './components/HomeCard';
+import Garage from './components/pages/Garage';
 import Login from './components/pages/Login';
 import Particular from './components/pages/Particular';
 import SignUp from './components/pages/SignUp';
@@ -25,6 +26,7 @@ function App() {
           <Route path="home" element={<HomeCard />} />
           <Route path="vehicules" element={<Vehicules />} />
           <Route path="addVehicule" element={<AddVehicules />} />
+          <Route path="garage" element={<Garage />} />
         </Route>
       </Routes>
     </div>

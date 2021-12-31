@@ -54,7 +54,7 @@ function HomeGarage() {
           <button className={`w-1/2 ${button}`} type="submit">
             Chercher
           </button>
-          <button className="mt-1 underline">Rechercher par filtre</button>
+          <button className="mt-1 underline">Ajouter des filtres</button>
         </div>
       </form>
     </div>
