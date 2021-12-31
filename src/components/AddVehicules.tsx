@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 import { button, glassMorphism, input, title } from '../variableTailwind';
@@ -15,7 +16,7 @@ function AddVehicules() {
   const [registrationDate, setRegistrationDate] = useState('');
   const [file, setFile] = useState<any>();
   const { userLogin }: any = useContext(UserContext);
-  const [posted, setPosted] = useState(true);
+  const [posted, setPosted] = useState(false);
 
   useEffect(() => {
     async function getBrandModel() {
@@ -98,6 +99,7 @@ function AddVehicules() {
               name="immat"
               id="immat"
               pattern="[a-z]{2}-[0-9]{3}-[a-z]{2}"
+              placeholder="Rentrez votre immatriculation"
               onChange={(e) => setImmat(e.target.value)}
               required
             />
@@ -110,7 +112,7 @@ function AddVehicules() {
               id="type"
               required
               onChange={(e) => setType(e.target.value)}>
-              <option value="">Selectionner un type de véhicule</option>
+              <option value="">Selectionnez un type de véhicule</option>
               {typeList.map((el: any) => (
                 <option key={el.id_type} value={el.id_type}>
                   {el.name_type}
@@ -126,6 +128,7 @@ function AddVehicules() {
               name="brand"
               id="brand"
               list="listBrands"
+              placeholder="Selectionnez une marque"
               required
               onChange={(e) => setBrandFilter(e.target.value)}
             />
@@ -186,7 +189,9 @@ function AddVehicules() {
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>
-          <button className={`mb-10 ${button}`}>Mes véhicules</button>
+          <Link to="/particular/vehicules">
+            <button className={`mb-10 ${button}`}>Mes véhicules</button>
+          </Link>
         </div>
       )}
     </div>
