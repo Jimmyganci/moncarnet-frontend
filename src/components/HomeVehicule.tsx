@@ -9,8 +9,6 @@ interface VehiculeProps {
 }
 
 function HomeVehicule({ vehiculesSlice }: VehiculeProps) {
-  console.log(vehiculesSlice);
-
   return (
     <div className={`flex flex-col items-center m-4 p-4 rounded-lg ${glassMorphism}`}>
       <img className="w-12" src={car} alt="car" />
