@@ -2,10 +2,12 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import AddVehicules from './components/AddVehicules';
+import HomeCard from './components/HomeCard';
 import Login from './components/pages/Login';
 import Particular from './components/pages/Particular';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
+import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
@@ -13,7 +15,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/particular" element={<Particular />}>
+        <Route
+          path="/particular"
+          element={
+            <UserContextProvider>
+              <Particular />
+            </UserContextProvider>
+          }>
+          <Route path="home" element={<HomeCard />} />
           <Route path="vehicules" element={<Vehicules />} />
           <Route path="addVehicule" element={<AddVehicules />} />
         </Route>
