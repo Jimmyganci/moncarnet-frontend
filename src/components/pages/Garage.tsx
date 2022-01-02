@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { button, glassMorphism, input } from '../../variableTailwind';
 
 function Garage() {
-  const [garageList, setGarageList] = useState<any>([]);
+  const [garageList, setGarageList] = useState<Array<any>>([]);
+  const [cityList, setCityList] = useState<Array<any>>([]);
   const [filtreActive, setFiltreActive] = useState<boolean>(false);
+  const [searchGarage, setSearchGarage] = useState<string>('');
   const [codePostal, setCodePostal] = useState<number>(0);
   const [city, setCity] = useState<string>('');
   const [rangeValue, setRangeValue] = useState<number>(50);
@@ -14,6 +16,15 @@ function Garage() {
     async function getGarage() {
       try {
         let url = 'http://localhost:8000/api/pros';
+        if (searchGarage) {
+          if (city) url += `?namePros=${searchGarage}&city=${city}`;
+          else url += `?namePros=${searchGarage}`;
+        }
+        if (city && !searchGarage) {
+          url += `?city=${city}`;
+        }
+        console.log(url);
+
         const garages = await axios.get(url, {
           withCredentials: true,
         });
@@ -22,26 +33,38 @@ function Garage() {
         console.log(err);
       }
     }
+    async function getCity() {
+      try {
+        const res = await axios.get(
+          `https://geo.api.gouv.fr/communes?codePostal=${codePostal}`,
+        );
+        setCityList(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     getGarage();
-  }, []);
+    getCity();
+  }, [searchGarage, codePostal, city]);
   return (
     <div>
-      <h1>Choisir un garage</h1>
-      <div className={`m-4 rounded-lg ${glassMorphism}`}>
+      <div className={`m-4 rounded-lg min-h-screen ${glassMorphism}`}>
         <form
           className={`flex flex-col items-center w-full p-4 rounded-t-lg ${glassMorphism}`}>
-          <label className="w-full">
+          <h1>Choisir un garage</h1>
+          <label className="w-full mt-4">
             <input
               className={`w-full ${input}`}
               type="text"
               name="searchGarage"
               id="searchGarage"
               placeholder={`Entrez le nom d'un garage`}
+              onChange={(e) => setSearchGarage(e.target.value)}
             />
           </label>
-          <button type="submit" className={`w-1/2 ${button}`}>
+          {/* <button type="submit" className={`w-1/2 ${button}`}>
             Chercher
-          </button>
+          </button> */}
           <div className="flex flex-col items-center">
             <button
               type="button"
@@ -82,6 +105,7 @@ function Garage() {
                     type="number"
                     name="postalCode"
                     id="postalCode"
+                    placeholder="Code postale"
                     onChange={(e) => setCodePostal(parseInt(e.target.value))}
                   />
                 </label>
@@ -91,9 +115,14 @@ function Garage() {
                       onChange={(e) => setCity(e.target.value)}
                       className={`w-2/3 ${input}`}
                       name="city"
-                      id="city">
+                      id="city"
+                      placeholder="Ville">
                       <option value="">Selectionnez une ville </option>
-                      <option value="Capbreton">Capbreton</option>
+                      {cityList.map((el) => (
+                        <option key={el.code} value="Capbreton">
+                          {el.nom}
+                        </option>
+                      ))}
                     </select>
                   </label>
                 )}
@@ -115,12 +144,22 @@ function Garage() {
             )}
           </div>
         </form>
-        {garageList.map((el: any) => (
-          <div key={el.id_pros}>
-            <p>{el.name}</p>
-            <p>{el.city}</p>
-          </div>
-        ))}
+        {garageList.length > 0 ? (
+          garageList.map((el: any) => (
+            <div
+              className="flex items-center justify-around m-2 rounded-lg shadow-second shadow-background"
+              key={el.id_pros}>
+              <div className="flex flex-col items-center justify-center">
+                <p>{el.name}</p>
+                <p>{el.city}</p>
+              </div>
+
+              <button className={`m-4 ${button}`}>Choisir</button>
+            </div>
+          ))
+        ) : (
+          <span className="w-3/4">Aucun garage ne correspond à votre recherche!</span>
+        )}
       </div>
     </div>
   );
