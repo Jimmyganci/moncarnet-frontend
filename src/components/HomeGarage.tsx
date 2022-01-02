@@ -8,7 +8,6 @@ function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
   const [resultsSearchGarage, setResultsSearchGarage] = useState<any>([]);
   const [message, setMessage] = useState<string>('');
-  console.log(resultsSearchGarage);
 
   const handleSearchGarage = async (e: React.FormEvent) => {
     e.preventDefault();
