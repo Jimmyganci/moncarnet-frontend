@@ -2,12 +2,14 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import AddVehicules from './components/AddVehicules';
+import GarageDetails from './components/GarageDetails';
 import HomeCard from './components/HomeCard';
 import Garage from './components/pages/Garage';
 import Login from './components/pages/Login';
 import Particular from './components/pages/Particular';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
+import UserGarage from './components/UserGarage';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
           <Route path="vehicules" element={<Vehicules />} />
           <Route path="addVehicule" element={<AddVehicules />} />
           <Route path="garage" element={<Garage />} />
+          <Route path="garage-details/:prosId" element={<GarageDetails />} />
+          <Route path="mygarages" element={<UserGarage />} />
         </Route>
       </Routes>
     </div>
