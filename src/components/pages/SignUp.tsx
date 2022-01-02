@@ -57,6 +57,7 @@ function SignUp() {
   return (
     <div className="flex flex-col items-center justify-around h-full">
       <Logo />
+
       <form
         className={`w-11/12 mt-4 rounded-lg p-2 ${glassMorphism}`}
         onSubmit={(e: React.FormEvent) => handleSignUp(e)}>

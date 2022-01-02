@@ -22,7 +22,7 @@ const Header = () => {
           <span className={spanBurgerMenu}></span>
         </div>
         <div className="absolute -translate-x-1/2 cursor-pointer left-1/2">
-          <Link to="/particular">
+          <Link to="/particular/home">
             <Logo location="header" />
           </Link>
         </div>
@@ -43,10 +43,20 @@ const Header = () => {
         </div>
       </nav>
       <ul className="flex flex-col h-full mt-4">
-        <li className="mt-4 text-4xl font-medium tracking-widest">Items1</li>
-        <li className="mt-4 text-4xl font-medium tracking-widest">Items2</li>
-        <li className="mt-4 text-4xl font-medium tracking-widest">Items3</li>
-        <li className="mt-4 text-4xl font-medium tracking-widest">Items4</li>
+        <li
+          onClick={() => setShowMenu(false)}
+          aria-hidden="true"
+          className="mt-4 text-2xl font-medium tracking-widest">
+          <Link to="/particular/vehicules">Mes véhicules</Link>
+        </li>
+        <li className="mt-4 text-2xl font-medium tracking-widest">Mes rendez-vous</li>
+        <li
+          onClick={() => setShowMenu(false)}
+          aria-hidden="true"
+          className="mt-4 text-2xl font-medium tracking-widest">
+          <Link to="/particular/mygarages">Mes garages</Link>
+        </li>
+        <li className="mt-4 text-2xl font-medium tracking-widest">Mon profil</li>
       </ul>
     </div>
   );

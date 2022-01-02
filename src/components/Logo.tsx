@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Logo: React.FC<HeaderProps> = ({ location }) => {
   return (
-    <div className="flex items-center">
+    <div className={`flex items-center ${location !== 'header' && 'mt-4'}`}>
       <div className="w-10 mr-4">
         <img className="w-full" src={logo} alt="book" />
       </div>
