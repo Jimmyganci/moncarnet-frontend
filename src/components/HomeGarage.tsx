@@ -36,7 +36,6 @@ function HomeGarage() {
             className={`p-2.5 ${input}`}
             type="search"
             placeholder="Garage du centre"
-            required
             onChange={(e) => setSearchGarage(e.target.value)}
           />
           <p>{message}</p>
@@ -45,15 +44,23 @@ function HomeGarage() {
           {resultsSearchGarage.length === 1 && (
             <>
               <p>1 garage trouvé</p>
-              <Link to="/garage/details">
+              <Link to={`/particular/garage-details/${resultsSearchGarage[0].id_pros}`}>
                 <button className="underline">{resultsSearchGarage[0].name}</button>
               </Link>
             </>
           )}
-          <button className={`w-1/2 ${button}`} type="submit">
-            Chercher
-          </button>
-          <button className="mt-1 underline">Ajouter des filtres</button>
+          {searchGarage && (
+            <>
+              <button className={`w-1/2 ${button}`} type="submit">
+                Chercher
+              </button>
+              <Link to="/particular/garage">
+                <button type="button" className="mt-1 underline">
+                  Ajouter des filtres
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </form>
     </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { button, glassMorphism, input } from '../../variableTailwind';
 
@@ -149,12 +150,13 @@ function Garage() {
             <div
               className="flex items-center justify-around m-2 rounded-lg shadow-second shadow-background"
               key={el.id_pros}>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center w-1/2">
                 <p>{el.name}</p>
                 <p>{el.city}</p>
               </div>
-
-              <button className={`m-4 ${button}`}>Choisir</button>
+              <Link to={`/particular/garage-details/${el.id_pros}`}>
+                <button className={`m-4 ${button}`}>Consulter fiche</button>
+              </Link>
             </div>
           ))
         ) : (

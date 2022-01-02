@@ -5,9 +5,12 @@ import HomeGarage from './HomeGarage';
 import HomeVehicule from './HomeVehicule';
 
 function HomeCard() {
-  const { infosUserVehicule }: any = useContext(UserContext);
+  const { userLogin, infosUserVehicule }: any = useContext(UserContext);
   return (
     <div>
+      <h1 className="mt-8 mb-8 text-2xl text-background">
+        Bienvenue {userLogin.firstname}
+      </h1>
       <HomeGarage />
       <HomeVehicule vehiculesSlice={infosUserVehicule.slice(0, 2)} />
     </div>

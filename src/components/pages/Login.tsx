@@ -28,7 +28,7 @@ function Login() {
         .then((res) => res.data)
         .then((data) => {
           console.log(`User ${data} connected`);
-          navigate('/particular');
+          navigate('/particular/home');
         })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
