@@ -148,7 +148,7 @@ function AddVehicules() {
               id="model"
               required
               onChange={(e) => setModel(e.target.value)}>
-              <option value="">Selectionner un modèl</option>
+              <option value="">Selectionner un modèle</option>
               {modelList.map((el: any) => (
                 <option key={el.id_model} value={el.id_model}>
                   {el.name}
