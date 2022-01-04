@@ -2,12 +2,15 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import Return from '../../assets/return.png';
 import imageHome from '../../assets/photohome.svg';
-import { glassMorphism, input } from '../../variableTailwind';
+import { glassMorphism, input} from '../../variableTailwind';
 import Logo from '../Logo';
 
-function LoginPro() {
+function LoginPro () {
+
+    console.log("login pro");
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -18,7 +21,7 @@ function LoginPro() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/login',
+          'http://localhost:8000/api/auth/pro/login',
           {
             email: email,
             password: password,
@@ -41,7 +44,12 @@ function LoginPro() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex flex-col items-center justify-center h-1/2">
+        <Link to="/" className='absolute'>
+            <button className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2`}>
+                <img src={Return} alt="return" className='w-full h-full' />
+            </button>
+        </Link>
+      <div className="flex flex-col items-center justify-center h-1/2">          
         <div
           className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 bg-background shadow-main`}>
           <Logo />
@@ -49,7 +57,7 @@ function LoginPro() {
         </div>
       </div>
       <div className={`flex flex-col items-center justify-center h-1/2 ${glassMorphism}`}>
-        <h2 className="w-1/2 text-3xl font-montserrat">Accéder à mon compte Pro</h2>
+        <h2 className="w-1/2 text-3xl font-montserrat">Accéder à mon compte</h2>
         <form
           className="flex flex-col items-center w-full mt-4"
           onSubmit={(e: React.FormEvent) => handleLogin(e)}>
