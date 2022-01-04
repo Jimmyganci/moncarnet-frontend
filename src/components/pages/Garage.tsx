@@ -24,8 +24,6 @@ function Garage() {
         if (city && !searchGarage) {
           url += `?city=${city}`;
         }
-        console.log(url);
-
         const garages = await axios.get(url, {
           withCredentials: true,
         });
@@ -146,7 +144,7 @@ function Garage() {
           </div>
         </form>
         {garageList.length > 0 ? (
-          garageList.map((el: any) => (
+          garageList.map((el) => (
             <div
               className="flex items-center justify-around m-2 rounded-lg shadow-second shadow-background"
               key={el.id_pros}>
