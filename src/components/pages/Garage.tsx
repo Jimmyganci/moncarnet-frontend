@@ -50,6 +50,7 @@ function Garage() {
   return (
     <div>
       <div className={`m-4 rounded-lg min-h-screen ${glassMorphism}`}>
+  
         <form
           className={`flex flex-col items-center w-full p-4 rounded-t-lg ${glassMorphism}`}>
           <h1>Choisir un garage</h1>
