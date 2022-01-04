@@ -8,7 +8,7 @@ import CardVehicule from '../CardVehicule';
 
 function Vehicules() {
   const { infosUserVehicule }: any = useContext(UserContext);
-  const [vehiculeSelected, setVehiculeSelected] = useState<any>([]);
+  const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
 
   useEffect(() => {
     setVehiculeSelected(infosUserVehicule);

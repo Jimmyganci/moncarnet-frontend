@@ -8,8 +8,6 @@ interface InfosVehicules {
 }
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
-  console.log(vehiculeSelect);
-
   return (
     <div className={`h-full m-4 mb-0 rounded-lg ${glassMorphism}`}>
       {vehiculeSelect ? (

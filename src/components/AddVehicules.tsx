@@ -59,7 +59,6 @@ function AddVehicules() {
         formData,
         { withCredentials: true },
       );
-      console.log(upload);
       if (upload) {
         const postVehicule = await axios.post(
           'http://localhost:8000/api/vehicules/',
