@@ -18,14 +18,16 @@ function Login() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/login',
+          'http://localhost:8000/api/auth/particular/login',
           {
             email: email,
             password: password,
           },
           { withCredentials: true },
         )
-        .then((res) => res.data)
+        .then((res) => {
+          res.data;
+        })
         .then((data) => {
           console.log(`User ${data} connected`);
           navigate('/particular/home');
