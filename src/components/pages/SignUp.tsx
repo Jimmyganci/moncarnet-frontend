@@ -6,16 +6,16 @@ import { button, glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function SignUp() {
-  const [lastname, setLastname] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [address, setAddress] = useState('');
-  const [addressList, setAddressList] = useState([]);
-  const [addressSelect, setAddressSelect] = useState<any>('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [lastname, setLastname] = useState<string>('');
+  const [firstname, setFirstname] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [addressList, setAddressList] = useState<Array<any>>([]);
+  const [addressSelect, setAddressSelect] = useState<any>([]);
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function SignUp() {
             onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}>
             <option value="">{addressList.length} adresses trouvées</option>
             {addressList.length >= 0 &&
-              addressList.map((el: any, index: any) => (
+              addressList.map((el, index) => (
                 <option key={index} value={JSON.stringify(el.properties)}>
                   {el.properties.label}
                 </option>
