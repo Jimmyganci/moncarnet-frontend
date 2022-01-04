@@ -6,6 +6,7 @@ import GarageDetails from './components/GarageDetails';
 import HomeCard from './components/HomeCard';
 import Garage from './components/pages/Garage';
 import Login from './components/pages/Login';
+import LoginPro from './components/pages/LoginPro';
 import Particular from './components/pages/Particular';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
@@ -17,6 +18,7 @@ function App() {
     <div className="h-full pb-4 text-center bg-center bg-no-repeat bg-cover bg-main">
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login-pro" element={<LoginPro />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/particular"
