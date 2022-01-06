@@ -57,9 +57,9 @@ export const UserContextProvider = ({ children }: any) => {
                     promise2,
                     promise3,
                   ]);
+
                   data.push({
-                    immat: el.immat,
-                    registration_date: el.registration_date,
+                    ...el,
                     brand: getInfosVehicule[0].data.model.brand.name,
                     model: getInfosVehicule[1].data.model.name,
                     type: getInfosVehicule[2].data.type.name_type,
