@@ -59,7 +59,6 @@ function AddVehicules() {
         formData,
         { withCredentials: true },
       );
-      console.log(upload);
       if (upload) {
         const postVehicule = await axios.post(
           'http://localhost:8000/api/vehicules/',
@@ -92,13 +91,13 @@ function AddVehicules() {
           className={`flex flex-col m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
-            <p className="text-sm">Format (XX-XXX-XX)</p>
+            <p className="text-sm">Format (AA-111-AA)</p>
             <input
               className={`valid:outline-valid-500 invalid:outline-error-500 ${input}`}
               type="text"
               name="immat"
               id="immat"
-              pattern="[a-z]{2}-[0-9]{3}-[a-z]{2}"
+              pattern="[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}"
               placeholder="Rentrez votre immatriculation"
               onChange={(e) => setImmat(e.target.value)}
               required
