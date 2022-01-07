@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from '../Header';
 
-function Particular() {
-
+function Pros() {
   return (
     <div className="min-h-screen">
       <Header />
@@ -13,4 +12,4 @@ function Particular() {
   );
 }
 
-export default Particular;
+export default Pros;

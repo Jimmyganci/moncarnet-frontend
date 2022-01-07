@@ -47,10 +47,10 @@ function SignUp() {
           navigate('/');
         }, 2000);
       } catch (err: any) {
-        if (err.response.status === 409) setMessage('Cette email existe déjà!');
+        if (err.response.status === 409) setMessage('Cet email existe déjà!');
       }
     } else {
-      setMessage('Vos mot de passe ne sont pas identiques!');
+      setMessage('Vos mots de passe ne sont pas identiques!');
     }
   };
 
@@ -158,7 +158,7 @@ function SignUp() {
           Mot de passe
           <input
             className={`w-full ${input} ${
-              message === 'Vos mot de passe ne sont pas identiques!' && 'border-error-600'
+              message === 'Vos mots de passe ne sont pas identiques!' && 'border-error-600'
             }`}
             type="password"
             name="password"
@@ -170,7 +170,7 @@ function SignUp() {
           Confirmez mot de passe
           <input
             className={`w-full ${input} ${
-              message === 'Vos mot de passe ne sont pas identiques!' && 'border-error-600'
+              message === 'Vos mots de passe ne sont pas identiques!' && 'border-error-600'
             }`}
             type="password"
             name="confirmPassword"
