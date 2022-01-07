@@ -12,6 +12,7 @@ import Particular from './components/pages/Particular';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
 import UserGarage from './components/UserGarage';
+import InfosParticular from './components/InfosParticular';
 import Pros from './components/pages/Pros';
 import HomePros from './components/HomePros';
 import { UserContextProvider } from './contexts/UserContext';
@@ -32,6 +33,7 @@ function App() {
             </UserContextProvider>
           }>
             <Route path="home" element={<HomeCard />} />
+            <Route path="infos" element={<InfosParticular />} />
             <Route path="vehicules" element={<Vehicules />} />
             <Route path="addVehicule" element={<AddVehicules />} />
             <Route path="garage" element={<Garage />} />
