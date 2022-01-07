@@ -183,7 +183,7 @@ function AddVehicules() {
       )}
       {posted && (
         <div className={`m-4 flex flex-col items-center rounded-lg ${glassMorphism}`}>
-          <h3 className="w-3/4 mb-20 text-5xl mt-28">Véhicule ajouté avec succés</h3>
+          <h3 className="w-3/4 mb-20 text-5xl mt-28">Véhicule ajouté avec succès</h3>
           <p className="mb-28">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
