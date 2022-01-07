@@ -13,6 +13,8 @@ import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
 import UserGarage from './components/UserGarage';
 import InfosParticular from './components/InfosParticular';
+import Pros from './components/pages/Pros';
+import HomePros from './components/HomePros';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
@@ -30,14 +32,23 @@ function App() {
               <Particular />
             </UserContextProvider>
           }>
-          <Route path="home" element={<HomeCard />} />
-          <Route path="infos" element={<InfosParticular />} />
-          <Route path="vehicules" element={<Vehicules />} />
-          <Route path="addVehicule" element={<AddVehicules />} />
-          <Route path="garage" element={<Garage />} />
-          <Route path="garage-details/:prosId" element={<GarageDetails />} />
-          <Route path="mygarages" element={<UserGarage />} />
-        </Route>
+            <Route path="home" element={<HomeCard />} />
+            <Route path="infos" element={<InfosParticular />} />
+            <Route path="vehicules" element={<Vehicules />} />
+            <Route path="addVehicule" element={<AddVehicules />} />
+            <Route path="garage" element={<Garage />} />
+            <Route path="garage-details/:prosId" element={<GarageDetails />} />
+            <Route path="mygarages" element={<UserGarage />} />
+         </Route>
+         <Route
+          path="/pros"
+          element={
+            <UserContextProvider>
+              <Pros />
+            </UserContextProvider>
+          }>
+            <Route path="home" element={<HomePros />} />
+          </Route>
       </Routes>
     </div>
   );

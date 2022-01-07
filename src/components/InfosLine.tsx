@@ -22,7 +22,7 @@ const InfosLine = (props: any) => {
                   pattern="[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}"
                   placeholder={`modifier votre ${champ}`}
                   onChange={(e) => setModif(e.target.value)}
-                  onClick={() => {(changeMode && !lineChangeMode)? currentModif() : ""}}
+                  onClick={() => {(changeMode && !lineChangeMode) ? currentModif() : ""}}
                   required></input>
                   <button
                      className={`${!lineChangeMode?"hidden":""} w-1/6 py-1 min-w-[30px] ml-5 mb-3 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
