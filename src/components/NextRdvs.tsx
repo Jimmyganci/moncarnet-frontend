@@ -3,6 +3,7 @@ import ProRdv from './ProRdv';
 import { glassMorphism } from '../variableTailwind';
 import axios from 'axios';
 import IProsInfos from '../Interfaces/IProsInfos';
+import calendar from '../assets/PhCalendarDuotone.svg';
 
 type Props = IProsInfos;
 
@@ -26,19 +27,25 @@ const NextRdvs = (props) => {
     for(let i = 0; i<=2 ; i++ ) {
       nextRdvDisplay.push(orderRdv[i])
     }
-  }
- 
+  } 
 
   return (
-    <div className={`m-4 p-4 rounded-lg ${glassMorphism}`}>
-        <h2>Mes prochains RDVs</h2>
-        {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e) => 
-        <ProRdv
+    <div className={`m-4 p-4 rounded-lg  ${glassMorphism}`}>
+      <div className='flex items-center justify-center'>
+        <img className='h-20' src={calendar} alt="calendar" />
+        <h2 className='ml-12'>Mes prochains RDVs</h2>  
+      </div>            
+      {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e) => 
+      <ProRdv
         date={e.date}
         comment={e.comment}
         user={e.userId}
-        />
-        )}        
+      />
+      )}
+      <div className='flex justify-around'>
+        <button>Voir tout</button>
+        <button>Créer un RDV</button>
+      </div>     
     </div>
   );
 }

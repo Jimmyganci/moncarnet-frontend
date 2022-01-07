@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import NextRdvs from './NextRdvs';
-
 import UserContext from '../contexts/UserContext';
 
 function HomePros() {
