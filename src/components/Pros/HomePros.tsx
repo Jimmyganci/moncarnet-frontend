@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 import NextRdvs from './NextRdvs';
 import UserContext from '../../contexts/UserContext';
+import { glassMorphism, h1 } from '../../variableTailwind';
 
 function HomePros() {
-  const { userLogin, infosUserVehicule }: any = useContext(UserContext);
+  const { userLogin }: any = useContext(UserContext);
   return (
-    <div className="min-h-screen">
-      <h1 className="mt-8 mb-8 text-2xl text-background">
+    <div className='w-full h-full'>
+      <h1 className={`${h1} m-6`}>
         Bienvenue {userLogin.firstname}
       </h1>
-      <NextRdvs/>
+      <main className='h-5/6'>
+        <NextRdvs/>
+      </main>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
 import AddVehicules from './components/AddVehicules';
 import GarageDetails from './components/GarageDetails';
 import HomeCard from './components/HomeCard';
@@ -24,7 +23,7 @@ import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <div className="h-full pb-4 text-center bg-center bg-no-repeat bg-cover bg-main">
+    <div className="h-full text-center bg-center bg-no-repeat bg-cover bg-main">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login-particular" element={<Login />} />
