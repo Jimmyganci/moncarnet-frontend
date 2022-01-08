@@ -14,7 +14,12 @@ import Vehicules from './components/pages/Vehicules';
 import UserGarage from './components/UserGarage';
 import InfosParticular from './components/InfosParticular';
 import Pros from './components/pages/Pros';
-import HomePros from './components/HomePros';
+import HomePros from './components/Pros/HomePros';
+import Profile from './components/Pros/Profile';
+import Appointments from './components/Pros/Appointments';
+import Customers from './components/Pros/Customers';
+import Quotes from './components/Pros/Quotes';
+import Invoices from './components/Pros/Invoices';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
@@ -48,6 +53,11 @@ function App() {
             </UserContextProvider>
           }>
             <Route path="home" element={<HomePros />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="quotes" element={<Quotes />} />
+            <Route path="invoices" element={<Invoices />} />
           </Route>
       </Routes>
     </div>
