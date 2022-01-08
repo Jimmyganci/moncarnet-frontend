@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProRdv from './ProRdv';
 import axios from 'axios';
-import calendar from '../../assets/minimalist_logos/calendar.svg';
-import { button, h2 } from '../../variableTailwind';
+import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import { button, h2 } from '../../../variableTailwind';
 
 const NextRdvs = () => {
 
