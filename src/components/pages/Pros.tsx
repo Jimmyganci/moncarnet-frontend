@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import SideBar from '../SideBar';
+import SideBar from '../Pros/SideBar/SideBar';
 
 function Pros() {
   return (

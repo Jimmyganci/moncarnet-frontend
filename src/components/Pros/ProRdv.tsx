@@ -1,6 +1,6 @@
 import React from 'react';
-import { glassMorphism } from '../variableTailwind';
-import IProsInfos from '../Interfaces/IProsInfos';
+import { glassMorphism } from '../../variableTailwind';
+import IProsInfos from '../../Interfaces/IProsInfos';
 
 type Props = IProsInfos;
 

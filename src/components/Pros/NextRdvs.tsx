@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ProRdv from './ProRdv';
-import { glassMorphism } from '../variableTailwind';
+import { glassMorphism } from '../../variableTailwind';
 import axios from 'axios';
-import IProsInfos from '../Interfaces/IProsInfos';
-import calendar from '../assets/PhCalendarDuotone.svg';
+import calendar from '../../assets/minimalist_logos/calendar.svg';
 
-type Props = IProsInfos;
-
-const NextRdvs = (props) => {
+const NextRdvs = () => {
 
   const [nextRdv, setNextRdv] = useState([]);
-  const nextRdvDisplay:Array<object> = [];
+  const nextRdvDisplay:Array<any> = [];
 
   useEffect(() => {
     axios
@@ -35,8 +32,9 @@ const NextRdvs = (props) => {
         <img className='h-20' src={calendar} alt="calendar" />
         <h2 className='ml-12'>Mes prochains RDVs</h2>  
       </div>            
-      {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e) => 
+      {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e, i) => 
       <ProRdv
+        key = {i}
         date={e.date}
         comment={e.comment}
         user={e.userId}
