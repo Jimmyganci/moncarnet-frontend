@@ -10,7 +10,7 @@ const Profile = () => {
   const [infoUser, setInfoUser]: Array<any> = useState([]);
 
   useEffect(() => {
-    axios
+    userLogin.length !==0 && axios
     .get(`http://localhost:8000/api/pros/${userLogin.id_user}`,
     { withCredentials: true },
     )
