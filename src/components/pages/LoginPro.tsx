@@ -2,9 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import imageHome from '../../assets/photohome.svg';
-import Return from '../../assets/return.png';
+import returnArrow from '../../assets/return.png';
 import { glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
@@ -47,7 +46,7 @@ function LoginPro() {
       <Link to="/" className="absolute">
         <button
           className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2`}>
-          <img src={Return} alt="return" className="w-full h-full" />
+          <img src={returnArrow} alt="return" className="w-full h-full" />
         </button>
       </Link>
       <div className="flex flex-col items-center justify-center h-1/2">

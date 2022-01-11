@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 
 import UserContext from '../contexts/UserContext';
@@ -23,7 +23,7 @@ const handleInfosUser = () => {
 };
 
 function refreshPage() {
-  window.location.reload(false);
+  window.location.reload();
 }
 
   async function getInfosParticular () {
