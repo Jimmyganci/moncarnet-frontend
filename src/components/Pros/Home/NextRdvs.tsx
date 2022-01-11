@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProRdv from './ProRdv';
-import { glassMorphism } from '../../variableTailwind';
 import axios from 'axios';
-import calendar from '../../assets/minimalist_logos/calendar.svg';
+import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import { button, h2 } from '../../../variableTailwind';
 
 const NextRdvs = () => {
 
@@ -27,10 +27,10 @@ const NextRdvs = () => {
   } 
 
   return (
-    <div className={`m-4 p-4 rounded-lg  ${glassMorphism}`}>
+    <div className='h-full flex flex-col justify-around'>
       <div className='flex items-center justify-center'>
         <img className='h-20' src={calendar} alt="calendar" />
-        <h2 className='ml-12'>Mes prochains RDVs</h2>  
+        <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>            
       {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e, i) => 
       <ProRdv
@@ -41,8 +41,8 @@ const NextRdvs = () => {
       />
       )}
       <div className='flex justify-around'>
-        <button>Voir tout</button>
-        <button>Créer un RDV</button>
+        <button className={`${button}`}>Voir tout</button>
+        <button className={`${button}`}>Créer un RDV</button>
       </div>     
     </div>
   );
