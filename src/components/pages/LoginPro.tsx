@@ -21,7 +21,7 @@ function LoginPro() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/pro/login',
+          'http://localhost:8000/api/auth/pros/login',
           {
             email: email,
             password: password,
@@ -31,11 +31,11 @@ function LoginPro() {
         .then((res) => res.data)
         .then((data) => {
           console.log(`User ${data} connected`);
-          navigate('/particular/home');
+          navigate('/pros/home');
         })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
-          else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
+          else if (err.response.status === 404) setMessage(`Cet email n'existe pas.`);
         });
     } else {
       setMessage('Veuillez remplir les champs.');
@@ -67,7 +67,7 @@ function LoginPro() {
             type="email"
             name="email"
             id="email"
-            placeholder="Rentrez votre mail"
+            placeholder="Entrez votre mail"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input

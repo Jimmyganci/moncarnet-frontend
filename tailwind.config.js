@@ -11,7 +11,6 @@ module.exports = {
         main: '0 0 10px 2px rgba(0, 0, 0, 0.3)',
         second: '0 0 5px 1px rgba(0, 0, 0, 0.3)',
       },
-
       colors: {
         primary: {
           DEFAULT: '#009B9B',
