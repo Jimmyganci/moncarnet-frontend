@@ -13,7 +13,7 @@ const SideLink:React.FC<Props> = (props) => {
           <img className='' src={props.logo} alt={props.alt} />
         </div>
         <div className='w-2/3 flex justify-start'>
-          <Link className='' to={props.path}>{props.label}</Link>
+          <Link className='hover:text-white' to={props.path}>{props.label}</Link>
         </div>        
       </li>
     </div>

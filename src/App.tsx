@@ -15,7 +15,7 @@ import InfosParticular from './components/InfosParticular';
 import Pros from './components/pages/Pros';
 import HomePros from './components/Pros/Home/HomePros';
 import Profile from './components/Pros/Profile/Profile';
-import Appointments from './components/Pros/Appointments';
+import Appointments from './components/Pros/Appointments/Appointments';
 import Customers from './components/Pros/Customers';
 import Quotes from './components/Pros/Quotes';
 import Invoices from './components/Pros/Invoices';

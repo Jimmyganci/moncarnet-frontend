@@ -32,14 +32,15 @@ const NextRdvs = () => {
         <img className='h-20' src={calendar} alt="calendar" />
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>            
-      {(nextRdvDisplay.length !==0)  && nextRdvDisplay.map((e, i) => 
+      {nextRdvDisplay.length !==0 ? nextRdvDisplay.map((e, i) => 
       <ProRdv
         key = {i}
         date={e.date}
         comment={e.comment}
         user={e.userId}
-      />
-      )}
+      />) : 
+      <p>Pas de rendez-vous à afficher</p>
+      }
       <div className='flex justify-around'>
         <button className={`${button}`}>Voir tout</button>
         <button className={`${button}`}>Créer un RDV</button>

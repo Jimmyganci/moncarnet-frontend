@@ -18,8 +18,6 @@ const Profile = () => {
   const [nameUpdate, setNameUpdate] = useState("");
   const [siretUpdate, setSiretUpdate] = useState("");
 
-
-
   useEffect(() => {
     userLogin.length !==0 && axios
     .get(`http://localhost:8000/api/pros/${userLogin.id_user}`,
