@@ -9,7 +9,6 @@ import { glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function Login() {
-  console.log('login particulier');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

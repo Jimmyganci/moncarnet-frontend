@@ -6,7 +6,6 @@ import HomeVehicule from './HomeVehicule';
 
 function HomeCard() {
   const { userLogin, infosUserVehicule }: any = useContext(UserContext);
-  console.log(userLogin);
 
   return (
     <div>

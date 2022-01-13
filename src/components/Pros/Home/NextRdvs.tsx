@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useContext, useState } from 'react';
 import ProsContext from '../../../contexts/ProsContext';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
-import { button, h2 } from '../../../variableTailwind';
+import { h2 } from '../../../variableTailwind';
 import ProRdv from './ProRdv';
+import { Link } from 'react-router-dom';
+
 
 const NextRdvs = () => {
 
@@ -31,7 +33,7 @@ const NextRdvs = () => {
   return (
     <div className="flex flex-col justify-around h-full">
       <div className="flex items-center justify-center">
-        <img className="h-20" src={calendar} alt="calendar" />
+        <img className="w-12" src={calendar} alt="calendar" />
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>
       {nextRdv.length !== 0 &&
@@ -41,8 +43,8 @@ const NextRdvs = () => {
           ))
         }
       <div className="flex justify-around">
-        <button className={`${button}`}>Voir tout</button>
-        <button className={`${button}`}>Créer un RDV</button>
+        <Link className='hover:text-white' to="/pros/appointments">Voir tous</Link>
+        <Link className='hover:text-white' to="/pros/appointments/create">Créer un RDV</Link>
       </div>
     </div>
   );

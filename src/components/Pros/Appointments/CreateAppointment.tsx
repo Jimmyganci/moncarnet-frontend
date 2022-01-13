@@ -58,12 +58,12 @@ function CreateAppointments() {
   };
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       <h1 className={`${h1}`}>
       Créer un RDV
       </h1>
       <form
-          className="flex flex-col items-center w-full mt-4"
+          className="flex flex-col items-center w-full h-5/6 justify-around"
           onSubmit={(e: React.FormEvent) => handleCreateRdv(e)}>
           <label htmlFor="client">Nom du client</label>
           <input

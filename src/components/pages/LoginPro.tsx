@@ -8,7 +8,6 @@ import { glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function LoginPro() {
-  console.log('login pro');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
