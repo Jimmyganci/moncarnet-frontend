@@ -22,10 +22,6 @@ const handleInfosUser = () => {
   setChangeMode(!changeMode);
 };
 
-function refreshPage() {
-  window.location.reload();
-}
-
   async function getInfosParticular () {
       try {
         const res = await axios.put(`http://localhost:8000/api/users/${userLogin.id_user}`,
@@ -40,7 +36,6 @@ function refreshPage() {
         }, {
           withCredentials: true,
         });
-        refreshPage();
       } catch (err) {
         console.log(err);
       }

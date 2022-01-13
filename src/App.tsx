@@ -39,16 +39,16 @@ function App() {
               <Particular />
             </UserContextProvider>
           }>
-            <Route path="home" element={<HomeCard />} />
-            <Route path="infos" element={<InfosParticular />} />
-            <Route path="vehicules" element={<Vehicules />} />
-            <Route path="addVehicule" element={<AddVehicules />} />
-            <Route path="vehicules/:vehiculeImmatToUpdate/update" element={<UpdateVehicule />} />
-            <Route path="garage" element={<Garage />} />
-            <Route path="garage-details/:prosId" element={<GarageDetails />} />
-            <Route path="mygarages" element={<UserGarage />} />
-         </Route>
-         <Route
+          <Route path="home" element={<HomeCard />} />
+          <Route path="infos" element={<InfosParticular />} />
+          <Route path="vehicules" element={<Vehicules />} />
+          <Route path="vehicules/:vehiculeImmatToUpdate/update" element={<UpdateVehicule />} />
+          <Route path="addVehicule" element={<AddVehicules />} />
+          <Route path="garage" element={<Garage />} />
+          <Route path="garage-details/:prosId" element={<GarageDetails />} />
+          <Route path="mygarages" element={<UserGarage />} />
+        </Route>
+        <Route
           path="/pros"
           element={
             <ProsContextProvider>
