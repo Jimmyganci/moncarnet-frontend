@@ -27,9 +27,6 @@ const NextRdvs = () => {
 }))
 .reverse()
 .slice(0, 3);
-  
-
-  console.log(nextRdvDisplay);
 
   return (
     <div className="flex flex-col justify-around h-full">
