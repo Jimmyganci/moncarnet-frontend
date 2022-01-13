@@ -27,10 +27,8 @@ function Login() {
             password: password,
           },
           { withCredentials: true },
-        )
-        .then((res) => {
-          res.data;
-        })
+        )  
+        .then((res) => res.data)
         .then((data) => {
           console.log(`User ${data} connected`);
           navigate('/particular/home');
