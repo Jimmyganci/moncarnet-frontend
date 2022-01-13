@@ -58,6 +58,7 @@ function Garage() {
               name="searchGarage"
               id="searchGarage"
               placeholder={`Entrez le nom d'un garage`}
+              autoFocus={(garageList.length !==0)? false : true}
               onChange={(e) => setSearchGarage(e.target.value)}
             />
           </label>

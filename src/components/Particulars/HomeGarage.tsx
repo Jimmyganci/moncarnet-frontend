@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { button, glassMorphism, input } from '../variableTailwind';
+import { button, glassMorphism, input } from '../../variableTailwind';
 
 function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
