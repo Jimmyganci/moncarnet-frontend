@@ -9,7 +9,6 @@
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
-	"tailwind":"npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "type-check": "tsc"
   },
   "dependencies": {

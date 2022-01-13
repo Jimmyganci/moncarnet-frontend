@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
-import NextRdvs from './NextRdvs';
-import UserContext from '../../../contexts/UserContext';
+
+import ProsContext from '../../../contexts/prosContext';
 import { h1 } from '../../../variableTailwind';
+import NextRdvs from './NextRdvs';
 
 function HomePros() {
+  const { prosLogin }: any = useContext(ProsContext);
+  console.log(prosLogin);
 
-  const { userLogin }: any = useContext(UserContext);
-  
   return (
-    <div className='w-full h-full'>
-      <h1 className={`${h1} m-6`}>
-        Bienvenue {userLogin.firstname}
-      </h1>
-      <main className='h-5/6'>
-        <NextRdvs/>
+    <div className="w-full h-full">
+      <h1 className={`${h1} m-6`}>Bienvenue {prosLogin.name}</h1>
+      <main className="h-5/6">
+        <NextRdvs />
       </main>
     </div>
   );
