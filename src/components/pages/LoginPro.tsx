@@ -2,9 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import imageHome from '../../assets/photohome.svg';
-import Return from '../../assets/return.png';
+import returnArrow from '../../assets/return.png';
 import { glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
@@ -21,7 +20,7 @@ function LoginPro() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/pro/login',
+          'http://localhost:8000/api/auth/pros/login',
           {
             email: email,
             password: password,
@@ -31,11 +30,11 @@ function LoginPro() {
         .then((res) => res.data)
         .then((data) => {
           console.log(`User ${data} connected`);
-          navigate('/particular/home');
+          navigate('/pros/home');
         })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
-          else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
+          else if (err.response.status === 404) setMessage(`Cet email n'existe pas.`);
         });
     } else {
       setMessage('Veuillez remplir les champs.');
@@ -47,7 +46,7 @@ function LoginPro() {
       <Link to="/" className="absolute">
         <button
           className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2`}>
-          <img src={Return} alt="return" className="w-full h-full" />
+          <img src={returnArrow} alt="return" className="w-full h-full" />
         </button>
       </Link>
       <div className="flex flex-col items-center justify-center h-1/2">
@@ -67,7 +66,7 @@ function LoginPro() {
             type="email"
             name="email"
             id="email"
-            placeholder="Rentrez votre mail"
+            placeholder="Entrez votre mail"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input

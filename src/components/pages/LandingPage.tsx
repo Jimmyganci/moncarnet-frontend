@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import imageHome from '../../assets/photohome.svg';
-import { button, glassMorphism } from '../../variableTailwind';
+import { button, h1, h2, glassMorphism } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function LandingPage() {
@@ -17,13 +16,20 @@ function LandingPage() {
       </div>
       <div
         className={`flex flex-col items-center justify-center h-1/2 w-full${glassMorphism}`}>
-        <Link to="/login-particular" className="h-1/3">
-          <button className={`${button}`}>Particulier</button>
-        </Link>
-        <Link to="/login-pro" className="h-1/3">
-          {' '}
-          <button className={`${button}`}>Professionnel</button>
-        </Link>
+          <div className="h-1/4">
+            <h1 className={`${h1}`}>Bienvenue</h1>
+            <h2 className={`${h2}`}>Je suis un :</h2>
+          </div>
+          <div className='mt-3 w-full' >
+            <Link to="/login-particular" className="w-full">
+              <button className={`${button} w-1/3 mr-3`}>Particulier</button>
+            </Link>
+            <Link to="/login-pro" className="w-full">
+            {' '}
+              <button className={`${button} w-1/3`}>Professionnel</button>
+          </Link>
+          </div>        
+        
       </div>
     </div>
   );

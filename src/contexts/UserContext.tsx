@@ -7,6 +7,7 @@ interface AppContextInterface {
   setUserLogin: Function;
   infosUserVehicule: Array<object>;
   setInfosUserVehicule: Function;
+  logOut: Function 
 }
 
 const UserContext = createContext<AppContextInterface | null>(null);
@@ -19,10 +20,15 @@ export const UserContextProvider = ({ children }: any) => {
   const navigate = useNavigate();
   let data: Array<object> = [];
 
+  // set current user to nothing !
+  const logOut = async function() {
+    return await axios.post('http://localhost:8000/api/auth/logout',{},{ withCredentials: true }) 
+  }
+
   useEffect(() => {
     async function getUserLogin() {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/login', {
+        const response = await axios.get('http://localhost:8000/api/auth/login', {
           withCredentials: true,
         });
 
@@ -83,7 +89,7 @@ export const UserContextProvider = ({ children }: any) => {
 
   return (
     <UserContext.Provider
-      value={{ userLogin, setUserLogin, infosUserVehicule, setInfosUserVehicule }}>
+      value={{ userLogin, setUserLogin, infosUserVehicule, setInfosUserVehicule, logOut }}>
       {children}
     </UserContext.Provider>
   );
