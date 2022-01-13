@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import imageHome from '../../assets/photohome.svg';
 import { button, h1, h2, glassMorphism } from '../../variableTailwind';
 import Logo from '../Logo';
