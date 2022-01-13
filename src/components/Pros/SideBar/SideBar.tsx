@@ -52,8 +52,8 @@ const SideBar = () => {
 ];
 
   return (
-    <div className={`${glassMorphism} w-5/6 mt-2 mb-2 h-5/6 rounded-lg flex flex-col items-center`}>
-      <div className='w-full h-1/6 flex justify-center items-center pb-4'>
+    <div className={`${glassMorphism} w-5/6 h-5/6 rounded-lg flex flex-col items-center`}>
+      <div className='w-full h-1/6 flex justify-center items-center pb-4 pr-3 pl-3'>
         <Logo />
       </div>
       <span className='w-5/6 border-b-2'></span>
