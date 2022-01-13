@@ -14,18 +14,19 @@ import Vehicules from './components/pages/Vehicules';
 import UserGarage from './components/Particulars/UserGarage';
 import InfosParticular from './components/Particulars/InfosParticular';
 import Pros from './components/pages/Pros';
-import HomePros from './components/Pros/HomePros';
-import Profile from './components/Pros/Profile';
-import Appointments from './components/Pros/Appointments';
+import HomePros from './components/Pros/Home/HomePros';
+import Profile from './components/Pros/Profile/Profile';
+import Appointments from './components/Pros/Appointments/Appointments';
 import Customers from './components/Pros/Customers';
-import Quotes from './components/Pros/Quotes';
 import Invoices from './components/Pros/Invoices';
+import Quotes from './components/Pros/Quotes';
+import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 import UpdateVehicule from './components/Particulars/UpdateVehicule';
 
 function App() {
   return (
-    <div className="h-full pb-4 text-center bg-center bg-no-repeat bg-cover bg-main">
+    <div className="h-full text-center bg-center bg-no-repeat bg-cover bg-main">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login-particular" element={<Login />} />
@@ -50,17 +51,17 @@ function App() {
          <Route
           path="/pros"
           element={
-            <UserContextProvider>
+            <ProsContextProvider>
               <Pros />
-            </UserContextProvider>
+            </ProsContextProvider>
           }>
-            <Route path="home" element={<HomePros />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="appointments" element={<Appointments />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="quotes" element={<Quotes />} />
-            <Route path="invoices" element={<Invoices />} />
-          </Route>
+          <Route path="home" element={<HomePros />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="quotes" element={<Quotes />} />
+          <Route path="invoices" element={<Invoices />} />
+        </Route>
       </Routes>
     </div>
   );

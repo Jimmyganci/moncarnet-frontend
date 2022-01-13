@@ -6,6 +6,8 @@ import HomeVehicule from './HomeVehicule';
 
 function HomeCard() {
   const { userLogin, infosUserVehicule }: any = useContext(UserContext);
+  console.log(userLogin);
+
   return (
     <div>
       <h1 className="mt-8 mb-8 text-2xl text-background">
