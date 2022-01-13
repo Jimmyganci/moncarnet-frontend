@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 import { glassMorphism } from '../variableTailwind';
 import Logo from './Logo';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+
+  // Return Home after logout !
+  const navigate: NavigateFunction = useNavigate();
+  
+  // access userContext !
+  const { logOut }: any = useContext(UserContext);
+
   const spanBurgerMenu = 'w-full h-1.5 bg-text-darker rounded-lg';
   return (
     <div
@@ -59,6 +70,12 @@ const Header = () => {
           <Link to="/particular/mygarages">Mes garages</Link>
         </li>
         <li className="mt-4 text-2xl font-medium tracking-widest">Mon profil</li>
+        <button className="mt-4 text-2xl font-medium tracking-widest" onClick={() => {
+            logOut().then( () =>{
+              console.log('logged out');
+            return navigate("/")
+            })
+          }}>LogOut</button>
       </ul>
     </div>
   );
