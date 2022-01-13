@@ -1,26 +1,25 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
 import AddVehicules from './components/AddVehicules';
 import GarageDetails from './components/GarageDetails';
 import HomeCard from './components/HomeCard';
-import InfosParticular from './components/InfosParticular';
 import Garage from './components/pages/Garage';
 import LandingPage from './components/pages/LandingPage';
 import Login from './components/pages/LoginParticular';
 import LoginPro from './components/pages/LoginPro';
 import Particular from './components/pages/Particular';
-import Pros from './components/pages/Pros';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
-import Appointments from './components/Pros/Appointments';
-import Customers from './components/Pros/Customers';
-import HomePros from './components/Pros/Home/HomePros';
-import Invoices from './components/Pros/Invoices';
-import Profile from './components/Pros/Profile/Profile';
-import Quotes from './components/Pros/Quotes';
 import UserGarage from './components/UserGarage';
-import { ProsContextProvider } from './contexts/prosContext';
+import InfosParticular from './components/InfosParticular';
+import Pros from './components/pages/Pros';
+import HomePros from './components/Pros/Home/HomePros';
+import Profile from './components/Pros/Profile/Profile';
+import Appointments from './components/Pros/Appointments/Appointments';
+import Customers from './components/Pros/Customers';
+import Invoices from './components/Pros/Invoices';
+import Quotes from './components/Pros/Quotes';
+import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
