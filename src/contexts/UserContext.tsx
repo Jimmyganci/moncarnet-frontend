@@ -7,7 +7,7 @@ interface AppContextInterface {
   setUserLogin: Function;
   infosUserVehicule: Array<object>;
   setInfosUserVehicule: Function;
-  logOut: Function
+  logOut: Function 
 }
 
 const UserContext = createContext<AppContextInterface | null>(null);
@@ -20,9 +20,9 @@ export const UserContextProvider = ({ children }: any) => {
   const navigate = useNavigate();
   let data: Array<object> = [];
 
-  // set current user to nothing
+  // set current user to nothing !
   const logOut = async function() {
-    return await axios.post('http://localhost:8000/api/auth/particular/logout',{},{ withCredentials: true }) 
+    return await axios.post('http://localhost:8000/api/auth/logout',{},{ withCredentials: true }) 
   }
 
   useEffect(() => {

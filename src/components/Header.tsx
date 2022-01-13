@@ -11,10 +11,10 @@ import Logo from './Logo';
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Return Home
+  // Return Home after logout !
   const navigate: NavigateFunction = useNavigate();
   
-  // access userContext
+  // access userContext !
   const { logOut }: any = useContext(UserContext);
 
   const spanBurgerMenu = 'w-full h-1.5 bg-text-darker rounded-lg';
@@ -38,12 +38,6 @@ const Header = () => {
           </Link>
         </div>
         <div className="w-12">
-          <button onClick={() => {
-            logOut().then( () =>{
-              console.log('logged out');
-            return navigate("/")
-            })
-          }}>LogOut</button>
           <Link to="/particular/infos">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +70,12 @@ const Header = () => {
           <Link to="/particular/mygarages">Mes garages</Link>
         </li>
         <li className="mt-4 text-2xl font-medium tracking-widest">Mon profil</li>
+        <button className="mt-4 text-2xl font-medium tracking-widest" onClick={() => {
+            logOut().then( () =>{
+              console.log('logged out');
+            return navigate("/")
+            })
+          }}>LogOut</button>
       </ul>
     </div>
   );
