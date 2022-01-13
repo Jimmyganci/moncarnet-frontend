@@ -19,7 +19,7 @@ export const ProsContextProvider = ({ children }: any) => {
         const response = await axios.get('http://localhost:8000/api/auth/login', {
           withCredentials: true,
         });
-        console.log(response.data);
+        setProsLogin(response.data);
       } catch (err) {
         console.log(err);
       }

@@ -1,28 +1,32 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect, useContext, useState } from 'react';
+import ProsContext from '../../../contexts/ProsContext';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import { button, h2 } from '../../../variableTailwind';
 import ProRdv from './ProRdv';
 
 const NextRdvs = () => {
-  const [nextRdv, setNextRdv] = useState<any>([]);
-  //   const nextRdvDisplay: Array<any> = [];
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:8000/api/appointment', { withCredentials: true })
+  const { prosLogin }: any = useContext(ProsContext);
+
+  const [nextRdv, setNextRdv] = useState<any>([]);
+  let nextRdvDisplay:Array<any> = [];
+
+  useEffect(() => {    
+    prosLogin.length !==0 && axios
+      .get(`http://localhost:8000/api/appointment/pros/${prosLogin.id_user}`, { withCredentials: true })
       .then((res) => res.data)
       .then((data) => setNextRdv(data))
       .catch((err) => console.log(err));
+  }, [prosLogin]);
 
-    // if (nextRdv.length !== 0) {
-    //   let orderRdv = nextRdv.sort();
-    //   for (let i = 0; i <= 2; i++) {
-    //     nextRdvDisplay.push(orderRdv[i]);
-    //   }
-    // }
-  }, []);
+  nextRdvDisplay = nextRdv.sort((function(a:any, b:any) {
+    a = new Date(a.date);
+    b = new Date(b.date);
+    return a>b ? -1 : a<b ? 1 : 0;
+}))
+.reverse()
+.slice(0, 3);
 
   return (
     <div className="flex flex-col justify-around h-full">
@@ -31,12 +35,11 @@ const NextRdvs = () => {
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>
       {nextRdv.length !== 0 &&
-        nextRdv
-          .sort()
-          .slice(0, 3)
-          .map((e, i) => (
+        nextRdvDisplay
+          .map((e:any, i:number) => (
             <ProRdv key={i} date={e.date} comment={e.comment} user={e.userId} />
-          ))}
+          ))
+        }
       <div className="flex justify-around">
         <button className={`${button}`}>Voir tout</button>
         <button className={`${button}`}>Créer un RDV</button>
