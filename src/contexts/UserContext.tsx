@@ -22,7 +22,7 @@ export const UserContextProvider = ({ children }: any) => {
   useEffect(() => {
     async function getUserLogin() {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/login', {
+        const response = await axios.get('http://localhost:8000/api/auth/login', {
           withCredentials: true,
         });
 

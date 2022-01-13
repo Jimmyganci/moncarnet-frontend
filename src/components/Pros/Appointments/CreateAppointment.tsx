@@ -1,12 +1,12 @@
 import React, { useContext,useEffect,useState } from 'react';
 import { h1, input } from '../../../variableTailwind';
-import UserContext from '../../../contexts/UserContext';
+import ProsContext from '../../../contexts/ProsContext';
 import axios from 'axios';
 
 
 function CreateAppointments() {
 
-  const { userLogin }: any = useContext(UserContext);
+  const { prosLogin }: any = useContext(ProsContext);
   const [customer, setCustomer] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -19,26 +19,26 @@ function CreateAppointments() {
   // Looking for customers in database
 
   useEffect(() => {
-    userLogin.id_user && axios
+    prosLogin.id_user && axios
     .get(
-      `http://localhost:8000/api/pros/${userLogin.id_user}/users`,
+      `http://localhost:8000/api/pros/${prosLogin.id_user}/users`,
       { withCredentials: true },
     )
     .then((res) => res.data)
     .then((data) => setCustomersList(data))
-  }, [userLogin]);
+  }, [prosLogin]);
 
   // Create rdv in database
 
   const handleCreateRdv = (e: React.FormEvent) => {
     e.preventDefault();
-    if (details && date && chosenCustomer && userLogin) {
+    if (details && date && chosenCustomer && prosLogin) {
       axios
         .post(
           'http://localhost:8000/api/appointment',
           {
             userId: parseInt(chosenCustomer),
-            prosId: userLogin.id_user,
+            prosId: prosLogin.id_user,
             date: appointmentDate,
             comment: details
           },

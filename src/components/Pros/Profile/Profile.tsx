@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useContext, useState } from 'react';
 import { h1 } from '../../../variableTailwind';
-import UserContext from '../../../contexts/UserContext';
+import ProsContext from '../../../contexts/ProsContext';
 import {h2, button} from '../../../variableTailwind';
 import InfosLine from '../../InfosLine';
 
 const Profile = () => {
 
-  const { userLogin }: any = useContext(UserContext);
+  const { prosLogin }: any = useContext(ProsContext);
   const [infoUser, setInfoUser]: Array<any> = useState([]);
   const [changeMode, setChangeMode] = useState(false);
   const [addressUpdate, setAddressUpdate] = useState("");
@@ -19,13 +19,13 @@ const Profile = () => {
   const [siretUpdate, setSiretUpdate] = useState("");
 
   useEffect(() => {
-    userLogin.length !==0 && axios
-    .get(`http://localhost:8000/api/pros/${userLogin.id_user}`,
+    prosLogin.length !==0 && axios
+    .get(`http://localhost:8000/api/pros/${prosLogin.id_user}`,
     { withCredentials: true },
     )
     .then((res) => res.data)
     .then((data) => setInfoUser(data))
-  }, [userLogin]);
+  }, [prosLogin]);
 
   const handleInfosUser = () => {
     getInfosPros();
@@ -38,7 +38,7 @@ const Profile = () => {
 
   async function getInfosPros () {
     try {
-      const res = await axios.put(`http://localhost:8000/api/pros/${userLogin.id_user}`,
+      const res = await axios.put(`http://localhost:8000/api/pros/${prosLogin.id_user}`,
       {name: nameUpdate || infoUser.name,
         email: emailUpdate || infoUser.email,
         address: addressUpdate || infoUser.address,
