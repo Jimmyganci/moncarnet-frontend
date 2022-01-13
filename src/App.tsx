@@ -19,6 +19,7 @@ import Appointments from './components/Pros/Appointments/Appointments';
 import Customers from './components/Pros/Customers';
 import Invoices from './components/Pros/Invoices';
 import Quotes from './components/Pros/Quotes';
+import CreateAppointments from './components/Pros/Appointments/CreateAppointment';
 import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="customers" element={<Customers />} />
           <Route path="quotes" element={<Quotes />} />
           <Route path="invoices" element={<Invoices />} />
+          <Route path="appointments/create" element={<CreateAppointments />} />
         </Route>
       </Routes>
     </div>

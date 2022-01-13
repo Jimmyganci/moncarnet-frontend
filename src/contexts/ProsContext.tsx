@@ -4,6 +4,7 @@ import React, { createContext, useEffect, useState } from 'react';
 interface AppContextInterface {
   prosLogin: any;
   setProsLogin: Function;
+  logOut: Function;
 }
 
 const ProsContext = createContext<AppContextInterface | null>(null);
@@ -12,6 +13,12 @@ export default ProsContext;
 
 export const ProsContextProvider = ({ children }: any) => {
   const [prosLogin, setProsLogin] = useState<Array<object>>([]);
+
+
+    // set current user to nothing !
+    const logOut = async function() {
+      return await axios.post('http://localhost:8000/api/auth/logout',{},{ withCredentials: true }) 
+    }
 
   useEffect(() => {
     async function getProsLogin() {
@@ -28,7 +35,7 @@ export const ProsContextProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <ProsContext.Provider value={{ prosLogin, setProsLogin }}>
+    <ProsContext.Provider value={{ prosLogin, setProsLogin, logOut }}>
       {children}
     </ProsContext.Provider>
   );
