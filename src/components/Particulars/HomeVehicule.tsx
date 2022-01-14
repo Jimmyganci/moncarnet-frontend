@@ -12,7 +12,7 @@ function HomeVehicule({ vehiculesSlice }: VehiculeProps) {
   return (
     <div className={`flex flex-col items-center m-4 p-4 rounded-lg ${glassMorphism}`}>
       <img className="w-12" src={car} alt="car" />
-      <h2 className="mb-4 text-2xl">Mes véhicules</h2>
+      <h2 className="mb-4 text-2xl text-background">Mes véhicules</h2>
       {vehiculesSlice.map((el) => (
         <p
           className="w-full p-2 mt-4 mb-4 text-lg rounded-lg opacity-90 backdrop-filter backdrop-blur-sm shadow-second text-background shadow-background"

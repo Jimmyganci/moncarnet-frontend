@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import UserContext from '../../contexts/UserContext';
 import InfosLine from './InfosLine';
-import { button, glassMorphism } from '../../variableTailwind';
+import { button, glassMorphism, title } from '../../variableTailwind';
 
 function ParticularInfos () {
   const { userLogin }: any = useContext(UserContext);
@@ -24,6 +24,7 @@ const handleInfosUser = () => {
 
   async function getInfosParticular () {
       try {
+        
         const res = await axios.put(`http://localhost:8000/api/users/${userLogin.id_user}`,
         {firstname: firstNameModif || userLogin.firstname,
           lastname: lastNameModif || userLogin.lastname,
@@ -43,10 +44,10 @@ const handleInfosUser = () => {
 
   return (
     <div className='h-screen w-screen flex flex-col items-center'>
-      <h1 className="mt-8 mb-8 text-2xl text-background">
+      <h1 className={`${title}`}>
         Mon profil
       </h1>
-      <div className={`w-10/12 h-5/6 rounded-xl ${glassMorphism} flex flex-col items-center justify-center`}>
+      <div className={`w-10/12 h-3/4 rounded-xl ${glassMorphism} flex flex-col items-center justify-center`}>
         <InfosLine champ={"prénom"} lineName={userLogin.firstname} changeMode={changeMode} setChangeMode={setChangeMode} modif={firstNameModif} setModif={setFirstNameModif} />
         <InfosLine champ={"nom"} lineName={userLogin.lastname} changeMode={changeMode} setChangeMode={setChangeMode} modif={lastNameModif} setModif={setLastNameModif} />
         <InfosLine champ={"adresse mail"} lineName={userLogin.email} changeMode={changeMode} setChangeMode={setChangeMode} modif={emailModif} setModif={setEmailModif} />
