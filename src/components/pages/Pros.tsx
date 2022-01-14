@@ -22,8 +22,9 @@ function Pros() {
           return navigate("/login-pro")
           })
         }}
-          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2 absolute top-2`}>
-          <img src={returnArrow} alt="return" className="w-full h-full" />
+          className={`flex p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-10 ml-7 absolute top-2 text-white`}>
+            
+          <img src={returnArrow} alt="return" className="h-6 w-6 mr-2" />Se déconnecter
         </button>
       <div className="flex items-center justify-center w-1/5 h-full">
         <SideBar />

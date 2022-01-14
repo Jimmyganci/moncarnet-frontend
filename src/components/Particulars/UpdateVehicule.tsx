@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import UserContext from '../contexts/UserContext';
-import { button, glassMorphism, input, title } from '../variableTailwind';
+import UserContext from '../../contexts/UserContext';
+import { button, glassMorphism, input, title } from '../../variableTailwind';
 
-function AddVehicules() {
+function UpdateVehicule() {
   const [brandList, setBrandList] = useState<any>([]);
   const [modelList, setModelList] = useState<any>([]);
   const [typeList, setTypeList] = useState<any>([]);
@@ -15,14 +15,24 @@ function AddVehicules() {
   const [model, setModel] = useState<any>([]);
   const [registrationDate, setRegistrationDate] = useState('');
   const [file, setFile] = useState<any>();
-  const { userLogin }: any = useContext(UserContext);
+  const { infosUserVehicule }: any = useContext(UserContext);
   const [posted, setPosted] = useState(false);
+  const {vehiculeImmatToUpdate}:any = useParams();
+  const [infosVehicule, setInfosVehicule] = useState<any>([]);
+  const refDate: any = useRef();
+  const refCard: any = useRef();
+
+  useEffect(() => {
+    async function getInfosVehicule () {
+        setInfosVehicule(infosUserVehicule.filter((ele: any)=> ele.immat === vehiculeImmatToUpdate));
+      }
+      getInfosVehicule();
+  }, [infosUserVehicule]);
 
   useEffect(() => {
     async function getBrandModel() {
       let urlBrand = 'http://localhost:8000/api/brands';
       if (brandFilter) urlBrand += `?name=${brandFilter}`;
-
       try {
         const getBrand = await axios.get(urlBrand, {
           withCredentials: true,
@@ -48,47 +58,53 @@ function AddVehicules() {
     getBrandModel();
   }, [brandFilter, model]);
 
-  const handleUpload = async (e: React.FormEvent) => {
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('immat', immat);
-    formData.append('file', file);
+    let uploadedGreenCard: any = undefined;
     try {
-      const upload = await axios.post(
-        `http://localhost:8000/api/vehicules/upload`,
-        formData,
-        { withCredentials: true },
-      );
-      if (upload) {
-        const postVehicule = await axios.post(
-          'http://localhost:8000/api/vehicules/',
-          {
-            immat: immat.toUpperCase(),
-            registration_date: registrationDate,
-            url_vehiculeRegistration: upload.data.url,
-            id_modelId: parseInt(model),
-            id_typeId: parseInt(type),
-            id_userId: parseInt(userLogin.id_user),
-          },
-          {
-            withCredentials: true,
-          },
+      if (file !== undefined) { const formData = new FormData();
+        formData.append('file', (file));
+        formData.append('immat', (vehiculeImmatToUpdate));
+        const resUpload = await axios.post(
+          `http://localhost:8000/api/vehicules/upload`,
+          formData,
+          { withCredentials: true },
         );
-        if (postVehicule.status === 200) {
-          setPosted(true);
-        }
-      }
-    } catch (err) {
-      console.log(err);
+      uploadedGreenCard = resUpload.data.url;
     }
+       
+       
+    const putVehicule = await axios.put(`http://localhost:8000/api/vehicules/${vehiculeImmatToUpdate}`,
+      {
+        immat: immat.toUpperCase() || vehiculeImmatToUpdate,
+        registration_date: registrationDate || infosVehicule[0].registration_date,
+        url_vehiculeRegistration: uploadedGreenCard || infosVehicule[0].url_vehiculeRegistration,
+        id_modelId: parseInt(model) || infosVehicule[0].id_modelId,
+        id_typeId: parseInt(type) || infosVehicule[0].id_typeId,
+        id_userId: parseInt(infosVehicule[0].id_userId)
+      },
+      {
+        withCredentials: true,
+      },
+    );
+      if (putVehicule.status === 200) {
+        setPosted(true);
+        console.log(model)
+      }
+     } catch (err) {
+  console.log(err);
+   }
   };
+
   return (
-    <div className="flex flex-col">
-      <h1 className={title}>Ajouter un véhicule</h1>
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      
       {posted === false && (
+        <div className='h-full w-full flex flex-col items-center m-auto'>
+        <h1 className={title}>Modifier votre véhicule</h1>
         <form
-          onSubmit={(e) => handleUpload(e)}
-          className={`flex flex-col m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
+          onSubmit={(e) => handleUpdate(e)}
+          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
@@ -98,9 +114,8 @@ function AddVehicules() {
               name="immat"
               id="immat"
               pattern="[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}"
-              placeholder="Rentrez votre immatriculation"
+              placeholder={vehiculeImmatToUpdate}
               onChange={(e) => setImmat(e.target.value)}
-              required
             />
           </label>
           <label className="flex flex-col w-full text-lg font-semibold">
@@ -109,9 +124,8 @@ function AddVehicules() {
               className={`${input}`}
               name="type"
               id="type"
-              required
               onChange={(e) => setType(e.target.value)}>
-              <option value="">Selectionnez un type de véhicule</option>
+              <option value="">{infosVehicule.length && infosVehicule[0].type}</option>
               {typeList.map((el: any) => (
                 <option key={el.id_type} value={el.id_type}>
                   {el.name_type}
@@ -127,9 +141,10 @@ function AddVehicules() {
               name="brand"
               id="brand"
               list="listBrands"
-              placeholder="Selectionnez une marque"
-              required
+              value={brandFilter}
+              placeholder={infosVehicule.length && infosVehicule[0].brand}
               onChange={(e) => setBrandFilter(e.target.value)}
+              onClick={() => setBrandFilter('')}
             />
             <datalist id="listBrands">
               {brandList.map((el: any) => (
@@ -145,9 +160,9 @@ function AddVehicules() {
               className={input}
               name="model"
               id="model"
-              required
-              onChange={(e) => setModel(e.target.value)}>
-              <option value="">Selectionner un modèle</option>
+              onChange={(e) => setModel(e.target.value)}
+              >
+              <option value={model}>{infosVehicule.length && infosVehicule[0].model}</option>
               {modelList.map((el: any) => (
                 <option key={el.id_model} value={el.id_model}>
                   {el.name}
@@ -158,38 +173,45 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Date de mise en circulation
             <input
-              className={input}
-              type="date"
+              className={`${input} w-full`}
+              type="text"
+              ref={refDate}
+              onFocus={() => (refDate.current.type= "date")}
+              onBlur={() => (refDate.current.type = "text")}
               name="registrationDate"
               id="registrationDate"
-              required
+              placeholder={infosVehicule.length && infosVehicule[0].registration_date.slice(0, 10)}
               onChange={(e) => setRegistrationDate(e.target.value)}
             />
           </label>
           <label className="flex flex-col w-full text-lg font-semibold">
-            Télécharger votre carte grise
+            Votre carte grise
             <input
               className={input}
-              type="file"
+              type="text"
               name="file"
               id="file"
-              required
+              ref={refCard}
+              onFocus={() => (refCard.current.type= "file")}
+              onBlur={() => (refCard.current.type = "file")}
+              placeholder={infosVehicule.length && infosVehicule[0].url_vehiculeRegistration.slice(81, infosVehicule[0].url_vehiculeRegistration.length)}
               accept=".jpg, .jpeg, .png"
               onChange={(e) => setFile(e.target.files![0])}
             />
           </label>
-          <button className={`w-1/2 ${button}`}>Ajouter</button>
+          <button className={`w-1/2 ${button}`}>Valider les modifications</button>
         </form>
+        </div>
       )}
       {posted && (
-        <div className={`m-4 flex flex-col items-center rounded-lg ${glassMorphism}`}>
-          <h3 className="w-3/4 mb-20 text-5xl mt-28">Véhicule ajouté avec succès</h3>
-          <p className="mb-28">
+        <div className={`h-full w-5/6 my-20 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
+          <h3 className="w-3/4 h-3/6 mb-10 mt-15 pt-10 text-4xl">Véhicule modifié avec succès</h3>
+          <p className="w-3/4 h-4/6 my-5">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>
           <Link to="/particular/vehicules">
-            <button className={`mb-10 ${button}`}>Mes véhicules</button>
+            <button className={`mb-5 h-1/6 ${button}`}>Mes véhicules</button>
           </Link>
         </div>
       )}
@@ -197,4 +219,4 @@ function AddVehicules() {
   );
 }
 
-export default AddVehicules;
+export default UpdateVehicule;

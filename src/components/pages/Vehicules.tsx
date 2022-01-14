@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 import { title } from '../../variableTailwind';
-import CardVehicule from '../CardVehicule';
+import CardVehicule from '../Particulars/CardVehicule';
 
 function Vehicules() {
   const { infosUserVehicule }: any = useContext(UserContext);
@@ -19,12 +19,12 @@ function Vehicules() {
   };
   return (
     <div>
-      <div className="flex items-center justify-around">
-        <h1 className={title}>Mes Vehicules</h1>
+      <div className="flex items-center justify-center">
+        <h1 className={title}>Mes Véhicules</h1>
         <Link to="/particular/addVehicule">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
+            className="w-6 h-6 ml-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
