@@ -43,7 +43,7 @@ const Profile = () => {
         email: emailUpdate || infoUser.email,
         address: addressUpdate || infoUser.address,
         postal_code: parseInt(postalUpdate) || parseInt(infoUser.postal_code),     
-        password: infoUser.hashedPassword,   
+        password: infoUser.hashedPassword,
         city: cityUpdate || infoUser.city,
         phone: phoneUpdate || infoUser.phone,
         siret: siretUpdate || infoUser.siret,
