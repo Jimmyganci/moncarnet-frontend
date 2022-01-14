@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import garage from '../assets/garage.png';
-import UserContext from '../contexts/UserContext';
-import { button, glassMorphism } from '../variableTailwind';
+import garage from '../../assets/garage.png';
+import UserContext from '../../contexts/UserContext';
+import { button, glassMorphism } from '../../variableTailwind';
 
 function GarageDetails() {
   const { userLogin }: any = useContext(UserContext);

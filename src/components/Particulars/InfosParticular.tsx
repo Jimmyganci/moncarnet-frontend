@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
 
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 import InfosLine from './InfosLine';
-import { button, glassMorphism } from '../variableTailwind';
+import { button, glassMorphism } from '../../variableTailwind';
 
 function ParticularInfos () {
   const { userLogin }: any = useContext(UserContext);
@@ -21,10 +21,6 @@ const handleInfosUser = () => {
   getInfosParticular();
   setChangeMode(!changeMode);
 };
-
-function refreshPage() {
-  window.location.reload();
-}
 
   async function getInfosParticular () {
       try {
