@@ -11,8 +11,10 @@ const NextRdvs = () => {
 
   const { prosLogin }: any = useContext(ProsContext);
 
-  const [nextRdv, setNextRdv] = useState<any>([]);
-  let nextRdvDisplay:Array<any> = [];
+  const [nextRdv, setNextRdv] = useState<any>();
+  const [users, setUsers] = useState<any>();
+
+  // Search RDV from this pro
 
   useEffect(() => {    
     prosLogin.length !==0 && axios
@@ -22,21 +24,18 @@ const NextRdvs = () => {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
-  nextRdvDisplay = nextRdv.sort((function(a:any, b:any) {
-    a = new Date(a.date);
-    b = new Date(b.date);
-    return a>b ? -1 : a<b ? 1 : 0;
-})).reverse()
-.slice(0, 3);
+// Search user's from this pro
 
+useEffect(() => {    
+  prosLogin.length !==0 && axios
+    .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, { withCredentials: true })
+    .then((res) => res.data)
+    .then((data) => setUsers(data))
+    .catch((err) => console.log(err));
+}, [prosLogin]);
 
-const displayRdv = (array:any) => {
-  let dateArray = array.date
-  dateArray.split().slice(0,5);
-  console.log(dateArray);
-};
-
-nextRdvDisplay.length !== 0 && displayRdv(nextRdvDisplay[1]);
+users && nextRdv && console.log(users[nextRdv[1].userId].firstname)
+users && nextRdv && console.log(nextRdv[2].userId)
 
   return (
     <div className="flex flex-col justify-around h-full">
@@ -44,10 +43,17 @@ nextRdvDisplay.length !== 0 && displayRdv(nextRdvDisplay[1]);
         <img className="w-12" src={calendar} alt="calendar" />
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>
-      {nextRdv.length !== 0 &&
-        nextRdvDisplay
+        {nextRdv && users &&
+          nextRdv
+          .sort((function(a:any, b:any) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a>b ? -1 : a<b ? 1 : 0;
+          }))
+          .reverse()
+          .slice(0, 3)
           .map((e:any, i:number) => (
-            <ProRdv key={i} date={e.date} comment={e.comment} user={e.userId} />
+            <ProRdv key={i} date={e.date} comment={e.comment} user={users[1].firstname + ' ' + users[1].lastname} />
           ))
         }
       <div className="flex justify-around">
