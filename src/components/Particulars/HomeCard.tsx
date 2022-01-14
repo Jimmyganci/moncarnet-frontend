@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
+import { title } from '../../variableTailwind';
 import HomeGarage from './HomeGarage';
 import HomeVehicule from './HomeVehicule';
 
@@ -9,7 +10,7 @@ function HomeCard() {
 
   return (
     <div>
-      <h1 className="mt-8 mb-8 text-2xl text-background">
+      <h1 className={`${title}`}>
         Bienvenue {userLogin.firstname}
       </h1>
       <HomeGarage />

@@ -9,7 +9,7 @@ interface InfosVehicules {
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
   return (
-    <div className={`h-full m-4 mb-0 rounded-lg ${glassMorphism}`}>
+    <div className={`rounded-lg ${glassMorphism} m-4`}>
       {vehiculeSelect ? (
         <>
           <div className="flex justify-center">
@@ -37,13 +37,13 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
               />
             </a>
           </div>
-          <Link to="/service_book">
+          <Link to={`/particular/vehicules/${vehiculeSelect.immat}/serviceBook`}>
             <p className="underline">Voir mon carnet d&apos;entretien</p>
           </Link>
           <div className="flex flex-col items-center">
             <Link className='w-1/2' to={`/particular/vehicules/${vehiculeSelect.immat}/update`}><button className={`w-full uppercase ${button}`}>Modifier</button></Link>
-            <button className={`w-1/2 uppercase ${button}`}>Céder</button>
-            <button className="m-4 underline">Supprimer</button>
+            <button className={`w-1/2 uppercase ${button} bg-background`}>Céder</button>
+            <button className={`w-1/2 uppercase ${button} bg-red-700 text-background mb-4`}>Supprimer</button>
           </div>
         </>
       ) : (

@@ -12,7 +12,7 @@ const Logo: React.FC<HeaderProps> = ({ location }) => {
         <img className="w-full" src={logo} alt="book" />
       </div>
 
-      {location !== 'header' && <h2 className="text-2xl">Mon Carnet</h2>}
+      {location !== 'header' && <h2 className="text-2xl text-green-50">Mon Carnet</h2>}
     </div>
   );
 };

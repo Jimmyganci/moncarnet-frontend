@@ -6,7 +6,7 @@ import Header from '../Header';
 function Particular() {
 
   return (
-    <div className="min-h-screen">
+    <div className="h-full">
       <Header />
       <Outlet />
     </div>
