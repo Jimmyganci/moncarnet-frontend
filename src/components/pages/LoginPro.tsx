@@ -76,10 +76,6 @@ function LoginPro() {
             placeholder="Entrez votre mot de passe"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <nav>
-            <Link to="/signup">Pas encore membre ? Créer un compte</Link>
-          </nav>
-          <p className="text-error-600">{message}</p>
           <button
             className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
             type="submit">

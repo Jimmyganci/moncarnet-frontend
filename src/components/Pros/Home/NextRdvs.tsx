@@ -26,9 +26,17 @@ const NextRdvs = () => {
     a = new Date(a.date);
     b = new Date(b.date);
     return a>b ? -1 : a<b ? 1 : 0;
-}))
-.reverse()
+})).reverse()
 .slice(0, 3);
+
+
+const displayRdv = (array:any) => {
+  let dateArray = array.date
+  dateArray.split().slice(0,5);
+  console.log(dateArray);
+};
+
+nextRdvDisplay.length !== 0 && displayRdv(nextRdvDisplay[1]);
 
   return (
     <div className="flex flex-col justify-around h-full">
