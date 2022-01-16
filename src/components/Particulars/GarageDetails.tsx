@@ -34,6 +34,7 @@ function GarageDetails() {
         { withCredentials: true },
       );
       setMessage(res.data);
+      if (res.status === 200) {setMessage(`Le garage "${infosPros.name}" a été ajouté à vos favoris`)}
     } catch (err: any) {
       if (err.response.status === 409)
         setMessage("Ce garage est déjà l'un de vos favoris");
@@ -64,7 +65,7 @@ function GarageDetails() {
       <button onClick={handleChoiceGarage} className={button}>
         Ajouter aux favoris
       </button>
-      <p className="text-error-500">{message}</p>
+      <p className={message.includes("déjà") ? "text-error-500" : "text-valid-500"}>{message}</p>
     </div>
   );
 }

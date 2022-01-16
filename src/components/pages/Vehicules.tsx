@@ -43,7 +43,7 @@ function Vehicules() {
         id="listVehicule"
         onChange={(e) => getVehiculeSelected(e.target.value)}>
         {infosUserVehicule.map((el: any) => (
-          <option key={el.immat} value={el.immat}>
+          <option className="text-black" key={el.immat} value={el.immat}>
             {`${el.brand} ${el.model} | ${el.immat}`}
           </option>
         ))}
