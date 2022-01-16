@@ -24,6 +24,7 @@ import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 import UpdateVehicule from './components/Particulars/UpdateVehicule';
 import ServiceBook from './components/Particulars/ServiceBook';
+import ServiceDetail from './components/Particulars/ServiceDetail';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="vehicules" element={<Vehicules />} />
           <Route path="vehicules/:vehiculeImmatToUpdate/update" element={<UpdateVehicule />} />
           <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook" element={<ServiceBook />} />
+          <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook/:id_service_book" element={<ServiceDetail />} />
           <Route path="addVehicule" element={<AddVehicules />} />
           <Route path="garage" element={<Garage />} />
           <Route path="garage-details/:prosId" element={<GarageDetails />} />
