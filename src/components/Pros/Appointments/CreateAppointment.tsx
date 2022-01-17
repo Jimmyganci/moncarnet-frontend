@@ -14,7 +14,24 @@ function CreateAppointments() {
   const [message, setMessage] = useState('');
   const [customersList, setCustomersList]: Array<any> = useState([]);
   const [chosenCustomer, setChosenCustomer] = useState('');
+  const [valideRdv, setValivRdv] = useState(true);
   let appointmentDate = `${date}T${time}:00.000Z`;
+
+  let today = new Date().toISOString();
+
+  // Check validity of rdv's date :
+
+  const dateCompare = (today:string, rdvDate:string) => {
+    if (today < date) {
+      setValivRdv(true);
+    } else {
+      setValivRdv(false);
+    }
+  }
+
+  useEffect(() => {
+    dateCompare(today, date);
+  }, [date]);
 
   // Looking for customers in database
 
@@ -32,7 +49,7 @@ function CreateAppointments() {
 
   const handleCreateRdv = (e: React.FormEvent) => {
     e.preventDefault();
-    if (details && date && chosenCustomer && prosLogin) {
+    if (valideRdv && details && date && chosenCustomer && prosLogin) {
       axios
         .post(
           'http://localhost:8000/api/appointment',
@@ -64,7 +81,7 @@ function CreateAppointments() {
       </h1>
       <form
           className="flex flex-col items-center w-full h-5/6 justify-around"
-          onSubmit={(e: React.FormEvent) => handleCreateRdv(e)}>
+          onSubmit={(e: React.FormEvent) => handleCreateRdv(e)} >
           <label htmlFor="client">Nom du client</label>
           <input
             className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus`}
@@ -97,6 +114,7 @@ function CreateAppointments() {
             placeholder="Choisissez une heure"
             onChange={(e) => setTime(e.target.value)}
           />
+          {valideRdv ? '' : <p className='text-red-700'>La date sélectionnée est antérieure à aujourd'hui</p>}
           <label htmlFor="details">Détails</label>
           <input
             className={`w-3/4 ${input}`}

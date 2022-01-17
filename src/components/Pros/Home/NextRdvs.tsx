@@ -14,6 +14,10 @@ const NextRdvs = () => {
   const [nextRdv, setNextRdv] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
 
+  // Date of the day
+
+  let today = new Date().toISOString();
+
   // Search RDV from this pro
 
   useEffect(() => {    
@@ -54,6 +58,7 @@ useEffect(() => {
       </div>
         {nextRdv.length !== 0 && users.length !== 0 &&
           nextRdv
+          .filter((e:any) => e.date > today)
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);

@@ -13,6 +13,10 @@ function Appointments() {
   const [rdvArray, setRdvArray] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
 
+    // Date of the day
+
+    let today = new Date().toISOString();
+
     // Search RDV from this pro
 
   useEffect(() => {    
@@ -56,6 +60,7 @@ function Appointments() {
       <main className='h-5/6 w-full overflow-x-auto'>
         {rdvArray.length !== 0 && users.length !== 0 &&
           rdvArray
+          .filter((e:any) => e.date > today)
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
