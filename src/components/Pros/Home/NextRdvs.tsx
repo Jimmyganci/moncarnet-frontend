@@ -34,6 +34,18 @@ useEffect(() => {
     .catch((err) => console.log(err));
 }, [prosLogin]);
 
+   // Display correctly the date
+   
+   const dateDisplay = (element:Array<any>) => {
+    const wholeDate =element.date.slice(0,10);
+    const day = wholeDate.slice(8,10);
+    const month = wholeDate.slice(5,7);
+    const year = wholeDate.slice(0,4);
+    const orderedDate = `${day}-${month}-${year}`;
+    const hourDate = element.date.slice(11,16);
+    return `${orderedDate} à ${hourDate}`;
+ }
+
   return (
     <div className="flex flex-col justify-around h-full">
       <div className="flex items-center justify-center">
@@ -52,7 +64,7 @@ useEffect(() => {
           .map((e:any, i:number) => (
             <ProRdv 
             key={i} 
-            date={e.date} 
+            date={dateDisplay(e)} 
             comment={e.comment} 
             user={users[e.userId].firstname+ ' ' +users[e.userId].lastname}
             />

@@ -1,5 +1,5 @@
 export default interface IProsInfos {
-    date: Date;
+    date: string;
     comment: string;
     user: string;
   }
