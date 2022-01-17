@@ -33,6 +33,18 @@ function Appointments() {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
+  // Display correctly the date
+
+  const dateDisplay = (element:Array<any>) => {
+    const wholeDate =element.date.slice(0,10);
+    const day = wholeDate.slice(8,10);
+    const month = wholeDate.slice(5,7);
+    const year = wholeDate.slice(0,4);
+    const orderedDate = `${day}-${month}-${year}`;
+    const hourDate = element.date.slice(11,16);
+    return `${orderedDate} à ${hourDate}`;
+ }
+
   return (
     <div className="h-full w-5/6">
       <div className='flex justify-center'>
@@ -53,7 +65,7 @@ function Appointments() {
             .map((e:any, i:number) => (
               <RdvDisplay 
               key={i} 
-              date={e.date} 
+              date={dateDisplay(e)} 
               comment={e.comment} 
               user={users[e.userId].firstname+ ' '+users[e.userId].lastname}
               />
