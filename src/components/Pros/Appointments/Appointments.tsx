@@ -11,8 +11,13 @@ function Appointments() {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [rdvArray, setRdvArray] = useState<any>([]);
-  let rdvArrayDisplay:Array<any> = [];
+  const [users, setUsers] = useState<any>([]);
 
+    // Date of the day
+
+    let today = new Date().toISOString();
+
+    // Search RDV from this pro
 
   useEffect(() => {    
     prosLogin.length !==0 && axios
@@ -22,12 +27,27 @@ function Appointments() {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
-  rdvArrayDisplay = rdvArray.sort((function(a:any, b:any) {
-    a = new Date(a.date);
-    b = new Date(b.date);
-    return a>b ? -1 : a<b ? 1 : 0;
-}))
-.reverse();
+  // Search user's from this pro
+
+  useEffect(() => {    
+    prosLogin.length !==0 && axios
+      .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, { withCredentials: true })
+      .then((res) => res.data)
+      .then((data) => setUsers(data))
+      .catch((err) => console.log(err));
+  }, [prosLogin]);
+
+  // Display correctly the date
+
+  const dateDisplay = (element:Array<any>) => {
+    const wholeDate =element.date.slice(0,10);
+    const day = wholeDate.slice(8,10);
+    const month = wholeDate.slice(5,7);
+    const year = wholeDate.slice(0,4);
+    const orderedDate = `${day}-${month}-${year}`;
+    const hourDate = element.date.slice(11,16);
+    return `${orderedDate} à ${hourDate}`;
+ }
 
   return (
     <div className="h-full w-5/6">
@@ -38,10 +58,22 @@ function Appointments() {
         </h1>
       </div>     
       <main className='h-5/6 w-full overflow-x-auto'>
-        {rdvArrayDisplay.length !== 0 &&
-          rdvArrayDisplay
+        {rdvArray.length !== 0 && users.length !== 0 &&
+          rdvArray
+          .filter((e:any) => e.date > today)
+          .sort((function(a:any, b:any) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a>b ? -1 : a<b ? 1 : 0;
+          }))
+          .reverse()
             .map((e:any, i:number) => (
-              <RdvDisplay key={i} date={e.date} comment={e.comment} user={e.userId} />
+              <RdvDisplay 
+              key={i} 
+              date={dateDisplay(e)} 
+              comment={e.comment} 
+              user={users[e.userId].firstname+ ' '+users[e.userId].lastname}
+              />
             ))
           }
       </main>

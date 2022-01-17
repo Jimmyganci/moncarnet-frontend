@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import { title } from '../../variableTailwind';
+import { title, select } from '../../variableTailwind';
 import CardVehicule from '../Particulars/CardVehicule';
 
 function Vehicules() {
@@ -18,13 +18,13 @@ function Vehicules() {
     setVehiculeSelected(infosUserVehicule.filter((el: any) => el.immat.includes(immat)));
   };
   return (
-    <div>
-      <div className="flex items-center justify-center">
-        <h1 className={title}>Mes Véhicules</h1>
+    <div className='h-full'>
+      <div className="flex items-center justify-center h-full">
+        <h1 className={`${title}`}>Mes Véhicules</h1>
         <Link to="/particular/addVehicule">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 ml-4"
+            className="w-6 h-6 ml-4 text-background"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -38,12 +38,12 @@ function Vehicules() {
         </Link>
       </div>
       <select
-        className="w-10/12 p-1 text-center border rounded-lg p1 border-primary-focus bg-background/0 outline-primary-focus"
+        className={select}
         name="listVehicule"
         id="listVehicule"
         onChange={(e) => getVehiculeSelected(e.target.value)}>
         {infosUserVehicule.map((el: any) => (
-          <option key={el.immat} value={el.immat}>
+          <option className="text-black" key={el.immat} value={el.immat}>
             {`${el.brand} ${el.model} | ${el.immat}`}
           </option>
         ))}

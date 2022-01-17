@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
 import AddVehicules from './components/Particulars/AddVehicules';
 import GarageDetails from './components/Particulars/GarageDetails';
 import HomeCard from './components/Particulars/HomeCard';
@@ -24,10 +23,12 @@ import CreateAppointments from './components/Pros/Appointments/CreateAppointment
 import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 import UpdateVehicule from './components/Particulars/UpdateVehicule';
+import ServiceBook from './components/Particulars/ServiceBook';
+import ServiceDetail from './components/Particulars/ServiceDetail';
 
 function App() {
   return (
-    <div className="h-full text-center bg-center bg-no-repeat bg-cover bg-main">
+    <div className="min-h-screen h-full text-center bg-center bg-no-repeat bg-cover bg-main pb-6">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login-particular" element={<Login />} />
@@ -44,6 +45,8 @@ function App() {
           <Route path="infos" element={<InfosParticular />} />
           <Route path="vehicules" element={<Vehicules />} />
           <Route path="vehicules/:vehiculeImmatToUpdate/update" element={<UpdateVehicule />} />
+          <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook" element={<ServiceBook />} />
+          <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook/:id_service_book" element={<ServiceDetail />} />
           <Route path="addVehicule" element={<AddVehicules />} />
           <Route path="garage" element={<Garage />} />
           <Route path="garage-details/:prosId" element={<GarageDetails />} />

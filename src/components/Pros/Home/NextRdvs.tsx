@@ -12,7 +12,13 @@ const NextRdvs = () => {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [nextRdv, setNextRdv] = useState<any>([]);
-  let nextRdvDisplay:Array<any> = [];
+  const [users, setUsers] = useState<any>([]);
+
+  // Date of the day
+
+  let today = new Date().toISOString();
+
+  // Search RDV from this pro
 
   useEffect(() => {    
     prosLogin.length !==0 && axios
@@ -22,21 +28,27 @@ const NextRdvs = () => {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
-  nextRdvDisplay = nextRdv.sort((function(a:any, b:any) {
-    a = new Date(a.date);
-    b = new Date(b.date);
-    return a>b ? -1 : a<b ? 1 : 0;
-})).reverse()
-.slice(0, 3);
+// Search user's from this pro
 
+useEffect(() => {    
+  prosLogin.length !==0 && axios
+    .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, { withCredentials: true })
+    .then((res) => res.data)
+    .then((data) => setUsers(data))
+    .catch((err) => console.log(err));
+}, [prosLogin]);
 
-const displayRdv = (array:any) => {
-  let dateArray = array.date
-  dateArray.split().slice(0,5);
-  console.log(dateArray);
-};
-
-nextRdvDisplay.length !== 0 && displayRdv(nextRdvDisplay[1]);
+   // Display correctly the date
+   
+   const dateDisplay = (element:Array<any>) => {
+    const wholeDate =element.date.slice(0,10);
+    const day = wholeDate.slice(8,10);
+    const month = wholeDate.slice(5,7);
+    const year = wholeDate.slice(0,4);
+    const orderedDate = `${day}-${month}-${year}`;
+    const hourDate = element.date.slice(11,16);
+    return `${orderedDate} à ${hourDate}`;
+ }
 
   return (
     <div className="flex flex-col justify-around h-full">
@@ -44,10 +56,23 @@ nextRdvDisplay.length !== 0 && displayRdv(nextRdvDisplay[1]);
         <img className="w-12" src={calendar} alt="calendar" />
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>
-      {nextRdv.length !== 0 &&
-        nextRdvDisplay
+        {nextRdv.length !== 0 && users.length !== 0 &&
+          nextRdv
+          .filter((e:any) => e.date > today)
+          .sort((function(a:any, b:any) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a>b ? -1 : a<b ? 1 : 0;
+          }))
+          .reverse()
+          .slice(0, 3)
           .map((e:any, i:number) => (
-            <ProRdv key={i} date={e.date} comment={e.comment} user={e.userId} />
+            <ProRdv 
+            key={i} 
+            date={dateDisplay(e)} 
+            comment={e.comment} 
+            user={users[e.userId].firstname+ ' ' +users[e.userId].lastname}
+            />
           ))
         }
       <div className="flex justify-around">

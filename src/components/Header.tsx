@@ -72,7 +72,7 @@ const Header = () => {
             logOut().then( () =>{
             return navigate("/")
             })
-          }}>LogOut</button>
+          }}>Se déconnecter</button>
       </ul>
     </div>
   );

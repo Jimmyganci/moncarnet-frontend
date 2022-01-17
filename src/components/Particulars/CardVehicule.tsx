@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { button, glassMorphism } from '../../variableTailwind';
+import { button, deleteButton, glassMorphism, glassMorphismWhiteShadow } from '../../variableTailwind';
 
 interface InfosVehicules {
   vehiculeSelect: any;
@@ -9,10 +9,10 @@ interface InfosVehicules {
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
   return (
-    <div className={`h-full m-4 mb-0 rounded-lg ${glassMorphism}`}>
+    <div className={`rounded-lg ${glassMorphism} mx-auto mt-5 w-5/6`}>
       {vehiculeSelect ? (
-        <>
-          <div className="flex justify-center">
+        <div className='w-full flex flex-col items-center'>
+          <div className="flex justify-center w-full">
             <img
               className="w-5/12"
               src={`../src/assets/brands/${vehiculeSelect.brand}.png`}
@@ -21,9 +21,9 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
           </div>
 
           <p className="text-2xl">{vehiculeSelect.immat}</p>
-          <div className="flex justify-around p-1 m-4 border rounded-lg shadow-second shadow-background border-background">
+          <div className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
             <p className="font-bold uppercase">{vehiculeSelect.brand}</p>
-            <p className="font-bold text-green-50 uppercase">{vehiculeSelect.model}</p>
+            <p className="font-bold uppercase">{vehiculeSelect.model}</p>
           </div>
           <h3 className="m-1 text-xl text-background">Date de mise en circulation</h3>
           <p>{vehiculeSelect.registration_date.slice(0, 10)}</p>
@@ -37,15 +37,17 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
               />
             </a>
           </div>
-          <Link to="/service_book">
+          <Link to={`/particular/vehicules/${vehiculeSelect.immat}/serviceBook`}>
             <p className="underline">Voir mon carnet d&apos;entretien</p>
           </Link>
-          <div className="flex flex-col items-center">
-            <Link className='w-1/2' to={`/particular/vehicules/${vehiculeSelect.immat}/update`}><button className={`w-full uppercase ${button}`}>Modifier</button></Link>
-            <button className={`w-1/2 uppercase ${button}`}>Céder</button>
-            <button className="m-4 underline">Supprimer</button>
+          <div className="flex flex-col items-center w-5/6">
+            <Link className='w-1/2' to={`/particular/vehicules/${vehiculeSelect.immat}/update`}>
+              <button className={`w-full uppercase ${button} max-w-xs`}>Modifier</button>
+            </Link>
+            <button className={`w-1/2 uppercase ${button} max-w-xs`}>Céder</button>
+            <button className={`w-1/2 uppercase ${deleteButton} bg-error-500 max-w-xs mb-4`}>Supprimer</button>
           </div>
-        </>
+        </div>
       ) : (
         'Pas de véhicules enregistré'
       )}
