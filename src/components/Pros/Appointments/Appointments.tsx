@@ -11,8 +11,9 @@ function Appointments() {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [rdvArray, setRdvArray] = useState<any>([]);
-  let rdvArrayDisplay:Array<any> = [];
+  const [users, setUsers] = useState<any>([]);
 
+    // Search RDV from this pro
 
   useEffect(() => {    
     prosLogin.length !==0 && axios
@@ -22,12 +23,15 @@ function Appointments() {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
-  rdvArrayDisplay = rdvArray.sort((function(a:any, b:any) {
-    a = new Date(a.date);
-    b = new Date(b.date);
-    return a>b ? -1 : a<b ? 1 : 0;
-}))
-.reverse();
+  // Search user's from this pro
+
+  useEffect(() => {    
+    prosLogin.length !==0 && axios
+      .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, { withCredentials: true })
+      .then((res) => res.data)
+      .then((data) => setUsers(data))
+      .catch((err) => console.log(err));
+  }, [prosLogin]);
 
   return (
     <div className="h-full w-5/6">
@@ -38,10 +42,21 @@ function Appointments() {
         </h1>
       </div>     
       <main className='h-5/6 w-full overflow-x-auto'>
-        {rdvArrayDisplay.length !== 0 &&
-          rdvArrayDisplay
+        {rdvArray.length !== 0 && users.length !== 0 &&
+          rdvArray
+          .sort((function(a:any, b:any) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a>b ? -1 : a<b ? 1 : 0;
+          }))
+          .reverse()
             .map((e:any, i:number) => (
-              <RdvDisplay key={i} date={e.date} comment={e.comment} user={e.userId} />
+              <RdvDisplay 
+              key={i} 
+              date={e.date} 
+              comment={e.comment} 
+              user={users[e.userId].firstname+ ' '+users[e.userId].lastname}
+              />
             ))
           }
       </main>
