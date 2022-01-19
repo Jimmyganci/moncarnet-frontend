@@ -14,11 +14,14 @@ export default ProsContext;
 export const ProsContextProvider = ({ children }: any) => {
   const [prosLogin, setProsLogin] = useState<Array<object>>([]);
 
-
-    // set current user to nothing !
-    const logOut = async function() {
-      return await axios.post('http://localhost:8000/api/auth/logout',{},{ withCredentials: true }) 
-    }
+  // set current user to nothing !
+  const logOut = async function () {
+    return await axios.post(
+      'http://localhost:8000/api/auth/logout',
+      {},
+      { withCredentials: true },
+    );
+  };
 
   useEffect(() => {
     async function getProsLogin() {
