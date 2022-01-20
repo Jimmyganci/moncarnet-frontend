@@ -29,6 +29,16 @@ export const vehicule = {
     axios
       .get(`${API_URL}/vehicules/${immat}`, { withCredentials: true })
       .then((res) => res.data),
+  putOne: (immat: string, data: VehiculeInfos): Promise<VehiculeInfos> =>
+    axios
+      .put(
+        `${API_URL}/vehicules/${immat}`,
+
+        data,
+
+        { withCredentials: true },
+      )
+      .then((res) => res.data),
 };
 export const brand = {
   getOne: (idBrand: number) =>

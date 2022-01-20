@@ -1,5 +1,8 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
@@ -34,7 +37,8 @@ import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <div className="h-full min-h-screen pb-6 text-center bg-center bg-no-repeat bg-cover bg-main">
+    <div className="h-full min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login-particular" element={<Login />} />
