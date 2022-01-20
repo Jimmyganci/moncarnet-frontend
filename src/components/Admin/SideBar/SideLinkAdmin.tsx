@@ -10,7 +10,7 @@ const SideLinkAdmin: React.FC<Props> = (props) => {
     <div className="w-full h-1/6 ">
       <li className="flex items-center h-full">
         <div className="flex justify-center w-1/3">
-          <img className="" src={props.logo} alt={props.alt} />
+          <img className="w-1/2" src={props.logo} alt={props.alt} />
         </div>
         <div className="flex justify-start w-2/3">
           <Link className="hover:text-white" to={props.path}>

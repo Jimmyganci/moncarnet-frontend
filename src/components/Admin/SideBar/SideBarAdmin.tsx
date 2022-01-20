@@ -44,7 +44,7 @@ const SideBarAdmin = () => {
   ];
 
   return (
-    <div className={`${glassMorphism} w-1/6 h-screen`}>
+    <div className={`${glassMorphism} w-1/6 h-screen fixed`}>
       <div className="flex items-center justify-center w-full pb-4 pl-3 pr-3 h-1/6">
         <Logo />
       </div>

@@ -3,15 +3,22 @@ import { useOutletContext } from 'react-router-dom';
 
 import { model, type, users, vehicule } from '../../../API/request';
 import VehiculeInfos from '../../../Interfaces/IVehiculeInfos';
+import { glassMorphism } from '../../../variableTailwind';
 import ItemVehiculeToValidate from './ItemVehiculeToValidate';
 
 function VehiculeToValidate() {
+  interface RequestId {
+    immat: string;
+    model: number;
+    user: number;
+    type: number;
+  }
   const [vehiculeToValidate] = useOutletContext<Array<any>>();
   const [data, setData] = useState([]);
 
   async function getVehiculeDetails() {
     try {
-      let requestId: Array<any> = [];
+      let requestId: Array<RequestId> = [];
 
       vehiculeToValidate.map(async (el: VehiculeInfos) => {
         requestId.push({
@@ -29,7 +36,7 @@ function VehiculeToValidate() {
           await type.getOne(el.type),
           await users.getOne(el.user),
         ]),
-      ).then((res) => setData(res));
+      ).then((res: any) => setData(res));
     } catch (err) {
       console.log(err);
     }
@@ -40,19 +47,33 @@ function VehiculeToValidate() {
   }, [vehiculeToValidate]);
 
   return (
-    <div className="w-full">
-      <div>
-        <h1>Vehicule à valider</h1>
+    <div className="flex justify-end w-full">
+      <div className="w-5/6">
+        <div>
+          <h1>Vehicule à valider</h1>
+        </div>
+        {vehiculeToValidate.length > 0 ? (
+          <div className={`flex justify-around p-1 m-5 ${glassMorphism} rounded-lg`}>
+            <p>Immatriculation</p>
+            <p>Type</p>
+            <p>Modèle</p>
+            <p>Client</p>
+            <p>Carte Grise</p>
+            <p>Approuver</p>
+          </div>
+        ) : (
+          <p className={`${glassMorphism}`}>{`Vous n'avez aucun véhicule à vérifier`}</p>
+        )}
+        {data?.map((el, index) => (
+          <ItemVehiculeToValidate
+            key={index}
+            vehiculeInfos={el[0]}
+            model={el[1]}
+            type={el[2]}
+            users={el[3]}
+          />
+        ))}
       </div>
-      {data?.map((el, index) => (
-        <ItemVehiculeToValidate
-          key={index}
-          vehicule={el[0]}
-          model={el[1]}
-          type={el[2]}
-          users={el[3]}
-        />
-      ))}
     </div>
   );
 }
