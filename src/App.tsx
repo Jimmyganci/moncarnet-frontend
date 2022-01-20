@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
+import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate';
 import Admin from './components/pages/Admin';
 import Garage from './components/pages/Garage';
 import LandingPage from './components/pages/LandingPage';
@@ -90,6 +91,7 @@ function App() {
             </AdminContextProvider>
           }>
           <Route path="home" element={<HomeAdmin />} />
+          <Route path="vehicules/toValidate" element={<VehiculeToValidate />} />
         </Route>
       </Routes>
     </div>

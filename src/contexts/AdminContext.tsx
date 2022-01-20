@@ -2,12 +2,7 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 
 import { admin, isLoggin } from '../API/request';
-
-interface AppContextInterface {
-  adminLogin: Array<object>;
-  setAdminLogin: Function;
-  logOut: Function;
-}
+import AppContextInterface from '../Interfaces/IAdminContext';
 
 const AdminContext = createContext<AppContextInterface | null>(null);
 
