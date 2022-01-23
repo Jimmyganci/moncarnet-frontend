@@ -1,6 +1,9 @@
 import axios from 'axios';
 
+import AppointmentInfos from '../Interfaces/IAppointmentInfos';
+import BrandInfos from '../Interfaces/IBrandInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
+import ProsInfos from '../Interfaces/IProsInfos';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import UserInfos from '../Interfaces/IuserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
@@ -18,6 +21,10 @@ export const appointment = {
     axios
       .get(`${API_URL}/appointment`, { withCredentials: true })
       .then((res) => res.data),
+  getOne: (appointmentId: number): Promise<AppointmentInfos> =>
+    axios
+      .get(`${API_URL}/appointment/${appointmentId}`, { withCredentials: true })
+      .then((res) => res.data),
 };
 export const users = {
   getAll: () =>
@@ -34,6 +41,10 @@ export const users = {
 export const pros = {
   getAll: () =>
     axios.get(`${API_URL}/pros`, { withCredentials: true }).then((res) => res.data),
+  getOne: (prosId: number): Promise<ProsInfos> =>
+    axios
+      .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
+      .then((res) => res.data),
 };
 
 export const vehicule = {
@@ -64,8 +75,8 @@ export const vehicule = {
       .get(`${API_URL}/vehicules/withoutServiceBook`, { withCredentials: true })
       .then((res) => res.data),
 };
-export const brand = {
-  getOne: (idBrand: number) =>
+export const brands = {
+  getOne: (idBrand: number): Promise<BrandInfos> =>
     axios
       .get(`${API_URL}/brands/${idBrand}`, { withCredentials: true })
       .then((res) => res.data),

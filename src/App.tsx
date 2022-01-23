@@ -11,6 +11,8 @@ import AppointmentList from './components/Admin/Appointment/AppointmentList';
 import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
+import ProfilAdmin from './components/Admin/profil/ProfilAdmin';
+import VehiculeList from './components/Admin/Vehicules/VehiculeList';
 import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate';
 import Admin from './components/pages/Admin';
 import Garage from './components/pages/Garage';
@@ -44,8 +46,10 @@ function App() {
   const RouteAdmin = [
     { path: 'home', component: <HomeAdmin /> },
     { path: 'customers', component: <CustomersAdmin /> },
+    { path: 'vehicules', component: <VehiculeList /> },
     { path: 'vehicules/toValidate', component: <VehiculeToValidate /> },
     { path: 'appointments', component: <AppointmentList /> },
+    { path: 'profil', component: <ProfilAdmin /> },
   ];
   return (
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
