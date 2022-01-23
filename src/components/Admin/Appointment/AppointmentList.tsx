@@ -13,7 +13,6 @@ interface RequestId {
 
 function AppointmentList() {
   const [dataAppointment, setDataAppointment] = useState([]);
-  console.log(dataAppointment);
 
   async function getAppointments() {
     try {
@@ -50,7 +49,7 @@ function AppointmentList() {
         <div>
           <h1 className="text-3xl uppercase text-background">Tous les rendez-vous</h1>
         </div>
-        <div className={`bg-background/50 rounded-lg`}>
+        <div className={`bg-background/50 rounded-lg mt-4`}>
           <div className={`grid grid-cols-5 ${glassMorphism} rounded-lg pt-2 pb-2`}>
             <p>N°</p>
             <p>Date</p>

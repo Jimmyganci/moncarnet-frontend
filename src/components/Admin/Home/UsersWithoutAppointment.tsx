@@ -2,6 +2,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import React from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { Link } from 'react-router-dom';
 
 import { button, glassMorphism } from '../../../variableTailwind';
 
@@ -26,7 +27,9 @@ function UsersWithoutAppointment({ percentage }: UserAppointmentProps) {
       </div>
 
       <p>{`% d'utilisateurs qui n'ont pas pris de rendez-vous sur la plateforme!`}</p>
-      <button className={`${button}`}>Voir</button>
+      <Link to="/admin/users/withoutAppointment">
+        <button className={`${button}`}>Voir</button>
+      </Link>
     </div>
   );
 }

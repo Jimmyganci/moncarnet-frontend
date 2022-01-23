@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { model, type, users, vehicule } from '../../../API/request';
+import { model, service_book, type, users, vehicule } from '../../../API/request';
 import VehiculeInfos from '../../../Interfaces/IVehiculeInfos';
 import { glassMorphism } from '../../../variableTailwind';
 import VehiculeCard from './VehiculeCard';
@@ -36,6 +36,7 @@ function VehiculeList() {
         await model.getOne(id.id_modelId),
         await type.getOne(id.id_typeId),
         await users.getOne(id.id_userId),
+        await service_book.getServiceBookVehicule(id.immat),
       ]),
     ).then((res: any) => setDataVehicule(res));
   }
@@ -67,6 +68,7 @@ function VehiculeList() {
               model={vehicule[1]}
               type={vehicule[2]}
               user={vehicule[3]}
+              serviceBook={vehicule[4]}
             />
           ))}
         </div>
