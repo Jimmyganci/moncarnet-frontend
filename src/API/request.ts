@@ -4,6 +4,7 @@ import AppointmentInfos from '../Interfaces/IAppointmentInfos';
 import BrandInfos from '../Interfaces/IBrandInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
 import ProsInfos from '../Interfaces/IProsInfos';
+import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import UserInfos from '../Interfaces/IuserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
@@ -98,6 +99,10 @@ export const service_book = {
   getAll: () =>
     axios
       .get(`${API_URL}/service_book`, { withCredentials: true })
+      .then((res) => res.data),
+  getServiceBookVehicule: (immat: string): Promise<ServiceBookInfos> =>
+    axios
+      .get(`${API_URL}/service_book/vehicule/${immat}`, { withCredentials: true })
       .then((res) => res.data),
 };
 

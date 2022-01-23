@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { appointment, pros, service_book, users, vehicule } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
@@ -93,7 +94,9 @@ function HomeAdmin() {
             <CountAppointment appointment={dataLength[0].appointment} />
             <UsersWithoutAppointment percentage={percentageAppointment} />
           </div>
-          <button className={`${button}`}>Accéder au rendez-vous</button>
+          <Link to="/admin/appointments">
+            <button className={`${button}`}>Accéder au rendez-vous</button>
+          </Link>
         </div>
         <div
           className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}>
@@ -105,7 +108,9 @@ function HomeAdmin() {
             <CountServiceBook serviceBook={dataLength[0].serviceBook} />
             <VehiculeWithoutServiceBook percentage={percentageServiceBook} />
           </div>
-          <button className={`${button}`}>Liste des carnets</button>
+          <Link to="/admin/appointments">
+            <button className={`${button}`}>Liste des carnets</button>
+          </Link>
         </div>
       </div>
     </div>
