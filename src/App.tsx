@@ -1,9 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
+import queryClient from './API/query-client';
+import AppointmentList from './components/Admin/Appointment/AppointmentList';
+import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
 import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate';
@@ -36,68 +41,78 @@ import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
+  const RouteAdmin = [
+    { path: 'home', component: <HomeAdmin /> },
+    { path: 'customers', component: <CustomersAdmin /> },
+    { path: 'vehicules/toValidate', component: <VehiculeToValidate /> },
+    { path: 'appointments', component: <AppointmentList /> },
+  ];
   return (
-    <div className="h-full min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
+    <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
       <ToastContainer />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login-particular" element={<Login />} />
-        <Route path="/login-pro" element={<LoginPro />} />
-        <Route path="login-admin" element={<LoginAdmin />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/particular"
-          element={
-            <UserContextProvider>
-              <Particular />
-            </UserContextProvider>
-          }>
-          <Route path="home" element={<HomeCard />} />
-          <Route path="infos" element={<InfosParticular />} />
-          <Route path="vehicules" element={<Vehicules />} />
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login-particular" element={<Login />} />
+          <Route path="/login-pro" element={<LoginPro />} />
+          <Route path="login-admin" element={<LoginAdmin />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
-            path="vehicules/:vehiculeImmatToUpdate/update"
-            element={<UpdateVehicule />}
-          />
+            path="/particular"
+            element={
+              <UserContextProvider>
+                <Particular />
+              </UserContextProvider>
+            }>
+            <Route path="home" element={<HomeCard />} />
+            <Route path="infos" element={<InfosParticular />} />
+            <Route path="vehicules" element={<Vehicules />} />
+            <Route
+              path="vehicules/:vehiculeImmatToUpdate/update"
+              element={<UpdateVehicule />}
+            />
+            <Route
+              path="vehicules/:vehiculeImmatToUpdate/serviceBook"
+              element={<ServiceBook />}
+            />
+            <Route
+              path="vehicules/:vehiculeImmatToUpdate/serviceBook/:id_service_book"
+              element={<ServiceDetail />}
+            />
+            <Route path="addVehicule" element={<AddVehicules />} />
+            <Route path="garage" element={<Garage />} />
+            <Route path="garage-details/:prosId" element={<GarageDetails />} />
+            <Route path="mygarages" element={<UserGarage />} />
+          </Route>
           <Route
-            path="vehicules/:vehiculeImmatToUpdate/serviceBook"
-            element={<ServiceBook />}
-          />
+            path="/pros"
+            element={
+              <ProsContextProvider>
+                <Pros />
+              </ProsContextProvider>
+            }>
+            <Route path="home" element={<HomePros />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="quotes" element={<Quotes />} />
+            <Route path="invoices" element={<Invoices />} />
+            <Route path="appointments/create" element={<CreateAppointments />} />
+          </Route>
           <Route
-            path="vehicules/:vehiculeImmatToUpdate/serviceBook/:id_service_book"
-            element={<ServiceDetail />}
-          />
-          <Route path="addVehicule" element={<AddVehicules />} />
-          <Route path="garage" element={<Garage />} />
-          <Route path="garage-details/:prosId" element={<GarageDetails />} />
-          <Route path="mygarages" element={<UserGarage />} />
-        </Route>
-        <Route
-          path="/pros"
-          element={
-            <ProsContextProvider>
-              <Pros />
-            </ProsContextProvider>
-          }>
-          <Route path="home" element={<HomePros />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="appointments" element={<Appointments />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="quotes" element={<Quotes />} />
-          <Route path="invoices" element={<Invoices />} />
-          <Route path="appointments/create" element={<CreateAppointments />} />
-        </Route>
-        <Route
-          path="/admin"
-          element={
-            <AdminContextProvider>
-              <Admin />
-            </AdminContextProvider>
-          }>
-          <Route path="home" element={<HomeAdmin />} />
-          <Route path="vehicules/toValidate" element={<VehiculeToValidate />} />
-        </Route>
-      </Routes>
+            path="/admin"
+            element={
+              <AdminContextProvider>
+                <Admin />
+              </AdminContextProvider>
+            }>
+            {RouteAdmin.map((route, index) => (
+              <Route key={index} path={route.path} element={route.component} />
+            ))}
+          </Route>
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </div>
   );
 }

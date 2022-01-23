@@ -19,7 +19,7 @@ const SideBarAdmin = () => {
     },
     {
       label: 'Utilisateurs',
-      path: '/admin/users',
+      path: '/admin/customers',
       logo: customers,
       alt: 'clients logo',
     },
@@ -37,7 +37,7 @@ const SideBarAdmin = () => {
     },
     {
       label: 'Mon Profil',
-      path: '/admin/profile',
+      path: '/admin/profil',
       logo: profile,
       alt: 'profil logo',
     },

@@ -13,14 +13,34 @@ export const admin = {
       .get(`${API_URL}/admin/${idAdmin}`, { withCredentials: true })
       .then((res) => res.data),
 };
+export const appointment = {
+  getAll: () =>
+    axios
+      .get(`${API_URL}/appointment`, { withCredentials: true })
+      .then((res) => res.data),
+};
 export const users = {
+  getAll: () =>
+    axios.get(`${API_URL}/users/all`, { withCredentials: true }).then((res) => res.data),
   getOne: (idUser: number): Promise<UserInfos> =>
     axios
       .get(`${API_URL}/users/${idUser}`, { withCredentials: true })
       .then((res) => res.data),
+  getUserWithoutAppointment: () =>
+    axios
+      .get(`${API_URL}/users/withoutAppointment`, { withCredentials: true })
+      .then((res) => res.data),
+};
+export const pros = {
+  getAll: () =>
+    axios.get(`${API_URL}/pros`, { withCredentials: true }).then((res) => res.data),
 };
 
 export const vehicule = {
+  getAll: () =>
+    axios
+      .get(`${API_URL}/vehicules/all`, { withCredentials: true })
+      .then((res) => res.data),
   getVehiculeNoValidate: () =>
     axios
       .get(`${API_URL}/vehicules/all?noValidate=true`, { withCredentials: true })
@@ -39,6 +59,10 @@ export const vehicule = {
         { withCredentials: true },
       )
       .then((res) => res.data),
+  getVehiculeWithoutServiceBook: () =>
+    axios
+      .get(`${API_URL}/vehicules/withoutServiceBook`, { withCredentials: true })
+      .then((res) => res.data),
 };
 export const brand = {
   getOne: (idBrand: number) =>
@@ -56,6 +80,13 @@ export const type = {
   getOne: (idType: number): Promise<TypeInfos> =>
     axios
       .get(`${API_URL}/types/${idType}`, { withCredentials: true })
+      .then((res) => res.data),
+};
+
+export const service_book = {
+  getAll: () =>
+    axios
+      .get(`${API_URL}/service_book`, { withCredentials: true })
       .then((res) => res.data),
 };
 
