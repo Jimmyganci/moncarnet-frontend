@@ -14,6 +14,14 @@ const NextRdvs = () => {
   const [nextRdv, setNextRdv] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
 
+  // console.log(nextRdv[0])
+  // console.log(users[0])
+
+    // const userName = users;
+    // nextRdv && userName && console.log(userName);
+
+  
+
   // Date of the day
 
   let today = new Date().toISOString();
@@ -62,16 +70,15 @@ useEffect(() => {
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
-            return a>b ? -1 : a<b ? 1 : 0;
+            return b>a ? -1 : a<b ? 1 : 0;
           }))
-          .reverse()
           .slice(0, 3)
           .map((e:any, i:number) => (
             <ProRdv 
             key={i} 
             date={dateDisplay(e)} 
             comment={e.comment} 
-            user={users[e.userId].firstname+ ' ' +users[e.userId].lastname}
+            user={users.find(el => el.id_user === e.userId).firstname + " " + users.find(el => el.id_user === e.userId).lastname}
             />
           ))
         }
