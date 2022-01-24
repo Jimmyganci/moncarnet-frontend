@@ -53,9 +53,9 @@ const HomeAppointment = () => {
     }
 
     return (
-        <div className='w-full h-full flex flex-col items-center justify-center pb-5'>
+        <div className='flex flex-col items-center justify-center w-full h-full pb-5'>
             <div className="flex items-center justify-center">
-                <h1 className={`${title}`}>Mes rendez-vous</h1>
+                <h1 className={`${title} animate-smoothAppear opacity-0`}>Mes rendez-vous</h1>
             </div>
             <div className={`${glassMorphism} w-11/12 max-w-xl rounded-lg pb-4`}>
                 <div className='flex flex-col items-center justify-around'>
@@ -72,7 +72,7 @@ const HomeAppointment = () => {
                     .map((app:any, index:number) =>
                         <div
                         key={index}
-                        className={`${borderGlass} w-11/12 mb-2`}
+                        className={`${borderGlass} w-11/12 mb-2 animate-smoothAppear opacity-0`}
                         >
                             <p className='text-sm'>{"le "}
                                 <span className="font-medium underline">{dateDisplay(app.date)}</span>
@@ -97,7 +97,7 @@ const HomeAppointment = () => {
                      .map((app:any, index:number) =>
                         <div
                         key={index}
-                        className={`${borderGlass} w-11/12 mb-2 transition-opacity ${showAll ? "opacity-100 transition-opacity" : "opacity-0 hidden transition-opacity"}`}
+                        className={`${borderGlass} w-11/12 mb-2 ${showAll ? "animate-smoothAppear opacity-0" : "hidden"}`}
                         >
                             <p className='text-sm'>{"le "}
                                 <span className="font-medium underline">{dateDisplay(app.date)}</span>
@@ -120,7 +120,7 @@ const HomeAppointment = () => {
                     <button 
                     className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
                     onClick={() => setShowPastAppointments(!showPastAppointments) } >
-                        {showPastAppointments ? <BsArrowUpCircle className='font-bold text-lg' /> : "Voir mes rendez-vous passés"}
+                        {showPastAppointments ? <BsArrowUpCircle className='text-lg font-bold' /> : "Voir mes rendez-vous passés"}
                     </button>
                     {(infosAppointments.length !== 0 && pros.length !== 0) &&
                     infosAppointments
@@ -134,7 +134,7 @@ const HomeAppointment = () => {
                     .map((app:any, index:number) =>
                         <div
                         key={index}
-                        className={`${borderGlass} w-11/12 mb-2 transition-opacity ${showPastAppointments ? "opacity-100" : "opacity-0"}`}
+                        className={`${borderGlass} w-11/12 mb-2 ${showPastAppointments ? "animate-smoothAppear opacity-0" : "hidden"}`}
                         >
                             <p className='text-sm'>{"le "}
                                 <span className="font-medium underline">{dateDisplay(app.date)}</span>
@@ -159,7 +159,7 @@ const HomeAppointment = () => {
                             .map((app:any, index:number) =>
                         <div
                         key={index}
-                        className={`${borderGlass} w-11/12 mb-2 transition-opacity ${showAllPast ? "opacity-100" : "opacity-0 hidden"}`}
+                        className={`${borderGlass} w-11/12 mb-2 duration-500 ${showAllPast ? "animate-smoothAppear opacity-0" : "hidden"}`}
                         >
                             <p className='text-sm'>{"le "}
                                 <span className="font-medium underline">{dateDisplay(app.date)}</span>
@@ -170,12 +170,12 @@ const HomeAppointment = () => {
                             <p className='text-sm'>{"Avec "}
                                 <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
                             </p>
-                            <p className='underline' onClick={() => setShowAll(!showAllPast)} >Retour</p>
                         </div>)
                     }
                     </div>
-                    <p className="cursor-pointer hover:underline"
-                onClick={() => setShowAllPast(!showAllPast)} >{showAllPast ? "Retour" : "Voir tout"}</p>
+                    <p 
+                    className={`cursor-pointer duration-500 hover:underline ${showPastAppointments ? "animate-smoothAppear opacity-0" : "hidden"}`}
+                    onClick={() => setShowAllPast(!showAllPast)} >{showAllPast ? "Retour" : "Voir tout"}</p>
                 </div>
         </div>
     );
