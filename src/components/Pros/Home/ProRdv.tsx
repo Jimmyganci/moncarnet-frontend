@@ -1,5 +1,5 @@
 import React from 'react';
-import { glassMorphism } from '../../../variableTailwind';
+import { glassMorphism, button } from '../../../variableTailwind';
 import IProsInfos from '../../../Interfaces/IProsInfos';
 
 type Props = IProsInfos;
@@ -18,7 +18,7 @@ const ProRdv:React.FC<Props> = (props) => {
         <p>{props.comment}</p>
       </div>
       <div className='w-1/4 flex justify-center'>
-        <button>Détails</button>
+        <button className={`${button}`}>Détails</button>
       </div>     
     </div>
   );

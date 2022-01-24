@@ -5,6 +5,7 @@ import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import { h2 } from '../../../variableTailwind';
 import ProRdv from './ProRdv';
 import { Link } from 'react-router-dom';
+import { button } from '../../../variableTailwind';
 
 
 const NextRdvs = () => {
@@ -12,15 +13,7 @@ const NextRdvs = () => {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [nextRdv, setNextRdv] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);
-
-  // console.log(nextRdv[0])
-  // console.log(users[0])
-
-    // const userName = users;
-    // nextRdv && userName && console.log(userName);
-
-  
+  const [users, setUsers] = useState<any>([]);  
 
   // Date of the day
 
@@ -83,8 +76,8 @@ useEffect(() => {
           ))
         }
       <div className="flex justify-around">
-        <Link className='hover:text-white' to="/pros/appointments">Voir tous</Link>
-        <Link className='hover:text-white' to="/pros/appointments/create">Créer un RDV</Link>
+        <Link className={`${button} p-3`} to="/pros/appointments">Voir tous</Link>
+        <Link className={`${button} p-3`}to="/pros/appointments/create">Créer un RDV</Link>
       </div>
     </div>
   );
