@@ -33,7 +33,7 @@ const handleInfosUser = () => {
           address: addressModif || userLogin.address,
           postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
           city: cityModif || userLogin.city,
-          password: userLogin.hashedPassword,
+          /* password: userLogin.hashedPassword, */
         }, {
           withCredentials: true,
         });
@@ -47,7 +47,7 @@ const handleInfosUser = () => {
       <h1 className={`${title}`}>
         Mon profil
       </h1>
-      <div className={`w-10/12 h-3/4 rounded-xl ${glassMorphism} flex flex-col items-center justify-center`}>
+      <div className={`w-10/12 rounded-lg ${glassMorphism} flex flex-col items-center justify-center py-6`}>
         <InfosLine champ={"prénom"} lineName={userLogin.firstname} changeMode={changeMode} setChangeMode={setChangeMode} modif={firstNameModif} setModif={setFirstNameModif} />
         <InfosLine champ={"nom"} lineName={userLogin.lastname} changeMode={changeMode} setChangeMode={setChangeMode} modif={lastNameModif} setModif={setLastNameModif} />
         <InfosLine champ={"adresse mail"} lineName={userLogin.email} changeMode={changeMode} setChangeMode={setChangeMode} modif={emailModif} setModif={setEmailModif} />

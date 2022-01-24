@@ -9,7 +9,7 @@ function HomeCard() {
   const { userLogin, infosUserVehicule }: any = useContext(UserContext);
 
   return (
-    <div>
+    <div className='h-full w-full pb-5'>
       <h1 className={`${title}`}>
         Bienvenue {userLogin.firstname}
       </h1>
