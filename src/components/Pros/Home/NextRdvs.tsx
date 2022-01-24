@@ -5,6 +5,7 @@ import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import { h2 } from '../../../variableTailwind';
 import ProRdv from './ProRdv';
 import { Link } from 'react-router-dom';
+import { button } from '../../../variableTailwind';
 
 
 const NextRdvs = () => {
@@ -12,7 +13,7 @@ const NextRdvs = () => {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [nextRdv, setNextRdv] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);
+  const [users, setUsers] = useState<any>([]);  
 
   // Date of the day
 
@@ -62,22 +63,21 @@ useEffect(() => {
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
-            return a>b ? -1 : a<b ? 1 : 0;
+            return b>a ? -1 : a<b ? 1 : 0;
           }))
-          .reverse()
           .slice(0, 3)
           .map((e:any, i:number) => (
             <ProRdv 
             key={i} 
             date={dateDisplay(e)} 
             comment={e.comment} 
-            user={users[e.userId].firstname+ ' ' +users[e.userId].lastname}
+            user={users.find(el => el.id_user === e.userId).firstname + " " + users.find(el => el.id_user === e.userId).lastname}
             />
           ))
         }
       <div className="flex justify-around">
-        <Link className='hover:text-white' to="/pros/appointments">Voir tous</Link>
-        <Link className='hover:text-white' to="/pros/appointments/create">Créer un RDV</Link>
+        <Link className={`${button} p-3`} to="/pros/appointments">Voir tous</Link>
+        <Link className={`${button} p-3`}to="/pros/appointments/create">Créer un RDV</Link>
       </div>
     </div>
   );

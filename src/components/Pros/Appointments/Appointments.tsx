@@ -4,7 +4,9 @@ import ProsContext from '../../../contexts/ProsContext';
 import { h1 } from '../../../variableTailwind';
 import { Link } from 'react-router-dom';
 import RdvDisplay from './RdvDisplay';
-import calendar from '../../../assets/minimalist_logos/calendar.svg'
+import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import { button } from '../../../variableTailwind';
+
 
 function Appointments() {
 
@@ -64,20 +66,20 @@ function Appointments() {
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
-            return a>b ? -1 : a<b ? 1 : 0;
+            return b>a ? -1 : b<a ? 1 : 0;
           }))
           .reverse()
             .map((e:any, i:number) => (
-              <RdvDisplay 
+              <RdvDisplay
               key={i} 
               date={dateDisplay(e)} 
               comment={e.comment} 
-              user={users[e.userId].firstname+ ' '+users[e.userId].lastname}
+              user={users.find(el => el.id_user === e.userId).firstname + " " + users.find(el => el.id_user === e.userId).lastname}
               />
             ))
           }
       </main>
-      <Link className='hover:text-white' to="/pros/appointments/create">Créer un RDV</Link>
+      <Link className={`${button} p-3`} to="/pros/appointments/create">Créer un RDV</Link>
     </div>
   );
 }

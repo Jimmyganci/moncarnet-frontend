@@ -43,6 +43,7 @@ import Quotes from './components/Pros/Quotes';
 import { AdminContextProvider } from './contexts/AdminContext';
 import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
+import HomeAppointment from './components/Particulars/HomeAppointment';
 
 function App() {
   const RouteAdmin = [
@@ -88,6 +89,7 @@ function App() {
               element={<ServiceDetail />}
             />
             <Route path="addVehicule" element={<AddVehicules />} />
+          <Route path="appointments" element={<HomeAppointment />} />
             <Route path="garage" element={<Garage />} />
             <Route path="garage-details/:prosId" element={<GarageDetails />} />
             <Route path="mygarages" element={<UserGarage />} />
