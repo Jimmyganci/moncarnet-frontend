@@ -7,5 +7,4 @@ export default interface IServiceBookInfos {
   url_invoice: string;
   id_pros: number;
   immat: string;
-  length: number;
 }
