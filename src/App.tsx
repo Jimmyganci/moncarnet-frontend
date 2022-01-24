@@ -27,6 +27,7 @@ import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
 import AddVehicules from './components/Particulars/AddVehicules';
 import GarageDetails from './components/Particulars/GarageDetails';
+import HomeAppointment from './components/Particulars/HomeAppointment';
 import HomeCard from './components/Particulars/HomeCard';
 import InfosParticular from './components/Particulars/InfosParticular';
 import ServiceBook from './components/Particulars/ServiceBook';
@@ -88,6 +89,7 @@ function App() {
               element={<ServiceDetail />}
             />
             <Route path="addVehicule" element={<AddVehicules />} />
+            <Route path="appointments" element={<HomeAppointment />} />
             <Route path="garage" element={<Garage />} />
             <Route path="garage-details/:prosId" element={<GarageDetails />} />
             <Route path="mygarages" element={<UserGarage />} />

@@ -60,7 +60,12 @@ const Header = () => {
           className="mt-4 text-2xl font-medium tracking-widest">
           <Link to="/particular/vehicules">Mes véhicules</Link>
         </li>
-        <li className="mt-4 text-2xl font-medium tracking-widest">Mes rendez-vous</li>
+        <li 
+          className="mt-4 text-2xl font-medium tracking-widest"
+          onClick={() => setShowMenu(false)}
+          aria-hidden="true">
+          <Link to="/particular/appointments">Mes rendez-vous</Link>
+        </li>
         <li
           onClick={() => setShowMenu(false)}
           aria-hidden="true"

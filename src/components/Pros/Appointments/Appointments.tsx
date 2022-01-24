@@ -64,7 +64,7 @@ function Appointments() {
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
-            return a>b ? -1 : a<b ? 1 : 0;
+            return b>a ? -1 : b<a ? 1 : 0;
           }))
           .reverse()
             .map((e:any, i:number) => (

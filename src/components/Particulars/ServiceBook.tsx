@@ -49,7 +49,7 @@ const ServiceBook = () => {
   }, [infosVehicule, vehiculeSelected]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full h-full pb-5">
       <div className="flex flex-col items-center justify-around w-full h-full max-w-xl">
         <h2 className={title}>Mon carnet d&apos;entretien</h2>
         <select
