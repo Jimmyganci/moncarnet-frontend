@@ -3,7 +3,7 @@ import axios from 'axios';
 import AppointmentInfos from '../Interfaces/IAppointmentInfos';
 import BrandInfos from '../Interfaces/IBrandInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
-import ProsInfos from '../Interfaces/IProsInfos';
+import ProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import UserInfos from '../Interfaces/IuserInfos';
@@ -17,6 +17,7 @@ export const admin = {
       .get(`${API_URL}/admin/${idAdmin}`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const appointment = {
   getAll: () =>
     axios
@@ -27,6 +28,7 @@ export const appointment = {
       .get(`${API_URL}/appointment/${appointmentId}`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const users = {
   getAll: () =>
     axios.get(`${API_URL}/users/all`, { withCredentials: true }).then((res) => res.data),
@@ -39,6 +41,7 @@ export const users = {
       .get(`${API_URL}/users/withoutAppointment`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const pros = {
   getAll: () =>
     axios.get(`${API_URL}/pros`, { withCredentials: true }).then((res) => res.data),
@@ -76,18 +79,21 @@ export const vehicule = {
       .get(`${API_URL}/vehicules/withoutServiceBook`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const brands = {
   getOne: (idBrand: number): Promise<BrandInfos> =>
     axios
       .get(`${API_URL}/brands/${idBrand}`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const model = {
   getOne: (idModel: number): Promise<ModelInfos> =>
     axios
       .get(`${API_URL}/models/${idModel}`, { withCredentials: true })
       .then((res) => res.data),
 };
+
 export const type = {
   getOne: (idType: number): Promise<TypeInfos> =>
     axios
@@ -100,9 +106,13 @@ export const service_book = {
     axios
       .get(`${API_URL}/service_book`, { withCredentials: true })
       .then((res) => res.data),
-  getServiceBookVehicule: (immat: string): Promise<ServiceBookInfos> =>
+  getServiceBookVehicule: (immat: string): Promise<ServiceBookInfos[]> =>
     axios
       .get(`${API_URL}/service_book/vehicule/${immat}`, { withCredentials: true })
+      .then((res) => res.data),
+  getOne: (idServiceBook: number): Promise<ServiceBookInfos> =>
+    axios
+      .get(`${API_URL}/service_book/${idServiceBook}`, { withCredentials: true })
       .then((res) => res.data),
 };
 
@@ -112,6 +122,7 @@ export const login = {
       .post(`${API_URL}/auth/admin/login`, admin, { withCredentials: true })
       .then((res) => res.status),
 };
+
 export const isLoggin = {
   get: () =>
     axios.get(`${API_URL}/auth/login`, { withCredentials: true }).then((res) => res.data),

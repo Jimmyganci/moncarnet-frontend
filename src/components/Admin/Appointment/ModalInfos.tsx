@@ -9,11 +9,11 @@ import ProsInfos from '../../../Interfaces/IPros';
 import { button } from '../../../variableTailwind';
 
 interface ModalProps {
-  showUser: boolean;
-  setShowUser: Function;
+  showUser?: boolean | null;
+  setShowUser?: Function | null;
   showPros?: boolean | null;
   setShowPros?: Function | null;
-  user: UserInfos;
+  user?: UserInfos | null;
   pros?: ProsInfos | null;
 }
 
@@ -27,14 +27,14 @@ function ModalInfos({
 }: ModalProps) {
   return (
     <div>
-      {showUser && (
+      {showUser && user && (
         <div className={`fixed top-0 left-0 w-full h-full p-4`}>
           <div
             className={` backdrop-filter backdrop-blur-xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
             <div>
               <img className="w-40" src={profilLogo} alt="logo_user" />
             </div>
-            <div className="flex justify-center justify-around w-1/5">
+            <div className="flex justify-around w-1/5">
               <p className="text-4xl ">{user.firstname}</p>
               <p className="text-4xl">{user.lastname}</p>
             </div>
@@ -55,7 +55,9 @@ function ModalInfos({
               <p>{user.city}</p>
             </div>
 
-            <button onClick={() => setShowUser(false)} className={`${button}`}>
+            <button
+              onClick={() => setShowUser && setShowUser(false)}
+              className={`${button}`}>
               Fermer
             </button>
           </div>

@@ -13,7 +13,7 @@ import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
 import ProfilAdmin from './components/Admin/profil/ProfilAdmin';
-import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookDetails';
+import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookList';
 import VehiculeList from './components/Admin/Vehicules/VehiculeList';
 import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate';
 import Admin from './components/pages/Admin';
@@ -53,7 +53,7 @@ function App() {
     { path: 'appointments', component: <AppointmentList /> },
     { path: 'users/withoutAppointment', component: <UsersWithoutAppointment /> },
     { path: 'profil', component: <ProfilAdmin /> },
-    { path: 'vehicule/serviceBook/:id_service_book', component: <ServiceBookDetails /> },
+    { path: 'vehicule/serviceBook/:immat', component: <ServiceBookDetails /> },
   ];
   return (
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
