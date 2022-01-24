@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import imageHome from '../../assets/photohome.svg';
-import { button, h1, h2, glassMorphism } from '../../variableTailwind';
+import { button, glassMorphism, h1, h2 } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function LandingPage() {
@@ -16,20 +17,21 @@ function LandingPage() {
       </div>
       <div
         className={`flex flex-col items-center justify-center h-1/2 w-full${glassMorphism}`}>
-          <div className="h-1/4">
-            <h1 className={`${h1}`}>Bienvenue</h1>
-            <h2 className={`${h2}`}>Je suis un :</h2>
-          </div>
-          <div className='mt-3 w-full' >
-            <Link to="/login-particular" className="w-full">
-              <button className={`${button} w-1/3 mr-3`}>Particulier</button>
-            </Link>
-            <Link to="/login-pro" className="w-full">
-            {' '}
-              <button className={`${button} w-1/3`}>Professionnel</button>
+        <div className="h-1/4">
+          <h1 className={`${h1}`}>Bienvenue</h1>
+          <h2 className={`${h2}`}>Je suis un :</h2>
+        </div>
+        <div className="flex flex-col w-full mt-3">
+          <Link to="/login-particular" className="w-full">
+            <button className={`${button} w-1/3`}>Particulier</button>
           </Link>
-          </div>        
-        
+          <Link to="/login-pro" className="w-full">
+            <button className={`${button} w-1/3`}>Professionnel</button>
+          </Link>
+          <Link to="/login-admin" className="w-full">
+            <button className={`${button} w-1/3`}>Admin</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
