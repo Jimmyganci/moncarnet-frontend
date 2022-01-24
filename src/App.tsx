@@ -43,13 +43,7 @@ import Quotes from './components/Pros/Quotes';
 import { AdminContextProvider } from './contexts/AdminContext';
 import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
-<<<<<<< Updated upstream
-=======
-import UpdateVehicule from './components/Particulars/UpdateVehicule';
-import ServiceBook from './components/Particulars/ServiceBook';
-import ServiceDetail from './components/Particulars/ServiceDetail';
 import HomeAppointment from './components/Particulars/HomeAppointment';
->>>>>>> Stashed changes
 
 function App() {
   const RouteAdmin = [
@@ -63,7 +57,6 @@ function App() {
     { path: 'vehicule/serviceBook/:id_service_book', component: <ServiceBookDetails /> },
   ];
   return (
-<<<<<<< Updated upstream
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
       <ToastContainer />
       <QueryClientProvider client={queryClient}>
@@ -96,6 +89,7 @@ function App() {
               element={<ServiceDetail />}
             />
             <Route path="addVehicule" element={<AddVehicules />} />
+          <Route path="appointments" element={<HomeAppointment />} />
             <Route path="garage" element={<Garage />} />
             <Route path="garage-details/:prosId" element={<GarageDetails />} />
             <Route path="mygarages" element={<UserGarage />} />
@@ -129,49 +123,6 @@ function App() {
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-=======
-    <div className="min-h-screen h-full text-center bg-center bg-no-repeat bg-cover bg-main">
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login-particular" element={<Login />} />
-        <Route path="/login-pro" element={<LoginPro />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/particular"
-          element={
-            <UserContextProvider>
-              <Particular />
-            </UserContextProvider>
-          }>
-          <Route path="home" element={<HomeCard />} />
-          <Route path="infos" element={<InfosParticular />} />
-          <Route path="vehicules" element={<Vehicules />} />
-          <Route path="vehicules/:vehiculeImmatToUpdate/update" element={<UpdateVehicule />} />
-          <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook" element={<ServiceBook />} />
-          <Route path="vehicules/:vehiculeImmatToUpdate/serviceBook/:id_service_book" element={<ServiceDetail />} />
-          <Route path="addVehicule" element={<AddVehicules />} />
-          <Route path="appointments" element={<HomeAppointment />} />
-          <Route path="garage" element={<Garage />} />
-          <Route path="garage-details/:prosId" element={<GarageDetails />} />
-          <Route path="mygarages" element={<UserGarage />} />
-        </Route>
-        <Route
-          path="/pros"
-          element={
-            <ProsContextProvider>
-              <Pros />
-            </ProsContextProvider>
-          }>
-          <Route path="home" element={<HomePros />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="appointments" element={<Appointments />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="quotes" element={<Quotes />} />
-          <Route path="invoices" element={<Invoices />} />
-          <Route path="appointments/create" element={<CreateAppointments />} />
-        </Route>
-      </Routes>
->>>>>>> Stashed changes
     </div>
   );
 }
