@@ -14,7 +14,6 @@ interface RequestId {
 
 function VehiculeList() {
   const [dataVehicule, setDataVehicule] = useState([]);
-  console.log(dataVehicule);
 
   async function getAllVehicules() {
     const getAllVehicules = await vehicule.getAll();
@@ -44,9 +43,10 @@ function VehiculeList() {
   useEffect(() => {
     getAllVehicules();
   }, []);
+
   return (
     <div className="flex flex-col items-end w-full">
-      <div className={`w-5/6 h-full p-2`}>
+      <div className="w-5/6 h-full p-2">
         <div>
           <h1 className="text-3xl uppercase text-background">Vehicules</h1>
         </div>
@@ -68,7 +68,7 @@ function VehiculeList() {
               model={vehicule[1]}
               type={vehicule[2]}
               user={vehicule[3]}
-              serviceBook={vehicule[4]}
+              serviceBookList={vehicule[4]}
             />
           ))}
         </div>
