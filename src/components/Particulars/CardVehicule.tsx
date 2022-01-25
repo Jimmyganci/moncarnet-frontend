@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ModalDelete from './ModalDelete';
+import ModalDeleteVehicule from './ModalDeleteVehicule';
 
 import { select, deleteButton, glassMorphism, glassMorphismWhiteShadow, clearedGreenButton } from '../../variableTailwind';
 
@@ -10,6 +10,7 @@ interface InfosVehicules {
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
 const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
+vehiculeSelect && console.log(vehiculeSelect);
 
   const dateDisplay = (element:Array<any>) => {
     const wholeDate =element.slice(0,10);
@@ -51,10 +52,13 @@ const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
                   />
                 </a>
               </div>
-            </div> : <ModalDelete
+            </div> : <ModalDeleteVehicule
                 immat={vehiculeSelect.immat}
-                brand={vehiculeSelect.brand}
-                model={vehiculeSelect.model}
+                registration_date={vehiculeSelect.registration_date}
+                url_vehiculeRegistration={vehiculeSelect.url_vehiculeRegistration}
+                model_id={vehiculeSelect.id_modelId}
+                type_id={vehiculeSelect.id_typeId}
+                user_id={vehiculeSelect.id_userId}
                 deleteConfirmation={deleteConfirmation}
                 setDeleteConfirmation={setDeleteConfirmation} />}
             {!deleteConfirmation && <div className='w-11/12'>
@@ -70,7 +74,7 @@ const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
               </div>
                 <button
                 className={`w-full uppercase py-2 ${deleteButton} mb-4 bg-secondary hover:bg-secondary-hovered`}
-                onClick={() => setDeleteConfirmation(true)}
+                onClick={() => vehiculeSelect && setDeleteConfirmation(true)}
                 >Supprimer</button>
               </div>}
             </div>

@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState, useRef, PropsWithChildren } from 'react';
+import { Link, Params, useParams } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 import { button, glassMorphism, input, title } from '../../variableTailwind';
 
 function UpdateVehicule() {
+
   const [brandList, setBrandList] = useState<any>([]);
   const [modelList, setModelList] = useState<any>([]);
   const [typeList, setTypeList] = useState<any>([]);
@@ -17,7 +18,7 @@ function UpdateVehicule() {
   const [file, setFile] = useState<any>();
   const { infosUserVehicule }: any = useContext(UserContext);
   const [posted, setPosted] = useState(false);
-  const {vehiculeImmatToUpdate}:any = useParams();
+  const {vehiculeImmatToUpdate}:any= useParams();
   const [infosVehicule, setInfosVehicule] = useState<any>([]);
   const refDate: any = useRef();
   const refCard: any = useRef();
@@ -81,7 +82,9 @@ function UpdateVehicule() {
         url_vehiculeRegistration: uploadedGreenCard || infosVehicule[0].url_vehiculeRegistration,
         id_modelId: parseInt(model) || infosVehicule[0].id_modelId,
         id_typeId: parseInt(type) || infosVehicule[0].id_typeId,
-        id_userId: parseInt(infosVehicule[0].id_userId)
+        id_userId: parseInt(infosVehicule[0].id_userId),
+        active: true,
+        validate: false
       },
       {
         withCredentials: true,
@@ -89,7 +92,6 @@ function UpdateVehicule() {
     );
       if (putVehicule.status === 200) {
         setPosted(true);
-        console.log(model)
       }
      } catch (err) {
   console.log(err);
@@ -163,7 +165,7 @@ function UpdateVehicule() {
               onChange={(e) => setModel(e.target.value)}
               >
               <option value={model}>{infosVehicule.length && infosVehicule[0].model}</option>
-              {modelList.map((el: any) => (
+              {modelList.map((el:any) => (
                 <option key={el.id_model} value={el.id_model}>
                   {el.name}
                 </option>
