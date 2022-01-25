@@ -15,13 +15,12 @@ interface VehiculeProps {
   model: ModelInfos;
   type: TypeInfos;
   user: UserInfos;
-  serviceBook: ServiceBookInfos;
+  serviceBookList: ServiceBookInfos[];
 }
 
-function VehiculeCard({ vehicule, model, type, user, serviceBook }: VehiculeProps) {
+function VehiculeCard({ vehicule, model, type, user, serviceBookList }: VehiculeProps) {
   const [brand, setBrand] = useState('');
   const [showUser, setShowUser] = useState(false);
-  console.log(serviceBook);
 
   async function getBrand() {
     const getBrand = await brands.getOne(model.id_brand);
@@ -49,11 +48,9 @@ function VehiculeCard({ vehicule, model, type, user, serviceBook }: VehiculeProp
       ) : (
         <p className="text-red-600 ">Non vérifié</p>
       )}
-      {serviceBook.length && (
+      {serviceBookList.length !== 0 && (
         <button className={`${button} col-start-4`}>
-          <Link to={`/admin/vehicule/serviceBook/${serviceBook.id_service_book}`}>
-            Voir le carnet{' '}
-          </Link>
+          <Link to={`/admin/vehicule/serviceBook/${vehicule.immat}`}>Voir le carnet</Link>
         </button>
       )}
       <ModalInfos showUser={showUser} setShowUser={setShowUser} user={user} />

@@ -42,6 +42,14 @@ module.exports = {
         inter: ['Inter', 'Arial', 'sans-serif'],
         montserrat: ['Montserrat', 'Arial', 'sans-serif'],
       },
+      animation: {
+        smoothAppear: 'smoothAppear 5s linear forwards',
+      },
+      keyframes: {
+        smoothAppear: {
+          '100%': { opacity: '1' },
+        },
+      },
     },
   },
 };

@@ -13,7 +13,7 @@ import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import LoginAdmin from './components/Admin/LoginAdmin';
 import ProfilAdmin from './components/Admin/profil/ProfilAdmin';
-import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookDetails';
+import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookList';
 import VehiculeList from './components/Admin/Vehicules/VehiculeList';
 import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate';
 import Admin from './components/pages/Admin';
@@ -27,6 +27,7 @@ import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
 import AddVehicules from './components/Particulars/AddVehicules';
 import GarageDetails from './components/Particulars/GarageDetails';
+import HomeAppointment from './components/Particulars/HomeAppointment';
 import HomeCard from './components/Particulars/HomeCard';
 import InfosParticular from './components/Particulars/InfosParticular';
 import ServiceBook from './components/Particulars/ServiceBook';
@@ -43,7 +44,6 @@ import Quotes from './components/Pros/Quotes';
 import { AdminContextProvider } from './contexts/AdminContext';
 import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
-import HomeAppointment from './components/Particulars/HomeAppointment';
 
 function App() {
   const RouteAdmin = [
@@ -54,7 +54,7 @@ function App() {
     { path: 'appointments', component: <AppointmentList /> },
     { path: 'users/withoutAppointment', component: <UsersWithoutAppointment /> },
     { path: 'profil', component: <ProfilAdmin /> },
-    { path: 'vehicule/serviceBook/:id_service_book', component: <ServiceBookDetails /> },
+    { path: 'vehicule/serviceBook/:immat', component: <ServiceBookDetails /> },
   ];
   return (
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
@@ -89,7 +89,7 @@ function App() {
               element={<ServiceDetail />}
             />
             <Route path="addVehicule" element={<AddVehicules />} />
-          <Route path="appointments" element={<HomeAppointment />} />
+            <Route path="appointments" element={<HomeAppointment />} />
             <Route path="garage" element={<Garage />} />
             <Route path="garage-details/:prosId" element={<GarageDetails />} />
             <Route path="mygarages" element={<UserGarage />} />
