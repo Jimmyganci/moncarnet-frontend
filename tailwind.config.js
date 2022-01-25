@@ -47,7 +47,7 @@ module.exports = {
       },
       keyframes: {
         smoothAppear: {
-          '100%': { opacity: '1' },
+          '100%': { visibility: 'visible' },
         },
       },
     },
