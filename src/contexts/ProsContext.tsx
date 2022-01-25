@@ -5,6 +5,10 @@ interface AppContextInterface {
   prosLogin: any;
   setProsLogin: Function;
   logOut: Function;
+  showModal: boolean;
+  setShowModal: Function;
+  rdvToDisplay: Array<any>;
+  setRdvToDisplay: Function;
 }
 
 const ProsContext = createContext<AppContextInterface | null>(null);
@@ -23,6 +27,13 @@ export const ProsContextProvider = ({ children }: any) => {
     );
   };
 
+  // Display The modal Rdv
+
+  const [showModal, setShowModal] = useState(false);
+  const [rdvToDisplay, setRdvToDisplay] = useState([]);
+
+  // Login Pro
+
   useEffect(() => {
     async function getProsLogin() {
       try {
@@ -38,7 +49,7 @@ export const ProsContextProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <ProsContext.Provider value={{ prosLogin, setProsLogin, logOut }}>
+    <ProsContext.Provider value={{ prosLogin, setProsLogin, logOut, showModal, setShowModal, rdvToDisplay, setRdvToDisplay }}>
       {children}
     </ProsContext.Provider>
   );
