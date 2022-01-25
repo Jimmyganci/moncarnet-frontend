@@ -7,7 +7,6 @@ import RdvDisplay from './RdvDisplay';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import { button } from '../../../variableTailwind';
 
-
 function Appointments() {
 
   const { prosLogin }: any = useContext(ProsContext);
@@ -53,13 +52,13 @@ function Appointments() {
 
   return (
     <div className="h-full w-5/6">
-      <div className='flex justify-center'>
+      <div className='flex justify-center mt-6'>
         <img className='w-12' src={calendar} alt="calendar logo" />
         <h1 className={`${h1}`}>
           Mes RDVs
         </h1>
       </div>     
-      <main className='h-5/6 w-full overflow-x-auto'>
+      <main className='h-4/5 w-full overflow-x-auto'>
         {rdvArray.length !== 0 && users.length !== 0 &&
           rdvArray
           .filter((e:any) => e.date > today)
