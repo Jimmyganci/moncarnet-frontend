@@ -1,7 +1,7 @@
 import React from 'react';
 import SideLink from './SideLink';
-import { glassMorphism } from '../../../variableTailwind';
-import Logo from '../../Logo';
+import logo from "../../../assets/logo.svg"
+import { glassMorphism, h3 } from '../../../variableTailwind';
 import home from '../../../assets/minimalist_logos/home.svg';
 import customers from '../../../assets/minimalist_logos/customers.svg';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
@@ -53,8 +53,9 @@ const SideBar = () => {
 
   return (
     <div className={`${glassMorphism} w-5/6 h-5/6 rounded-lg flex flex-col items-center`}>
-      <div className='w-full h-1/6 flex justify-center items-center pb-4 pr-3 pl-3'>
-        <Logo />
+      <div className='w-full h-1/6 flex justify-center items-center pr-3 pl-3'>
+        <img src={logo} alt="logo mon carnet" className='h-10' />
+        <p className="text-lg ml-4 text-white">Mon Carnet</p>
       </div>
       <span className='w-5/6 border-b-2'></span>
       <div className='h-5/6 w-full'>
