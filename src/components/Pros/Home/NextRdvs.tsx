@@ -13,7 +13,7 @@ const NextRdvs = () => {
   const { prosLogin }: any = useContext(ProsContext);
 
   const [nextRdv, setNextRdv] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);  
+  const [users, setUsers] = useState<any>([]);
 
   // Date of the day
 
@@ -72,6 +72,7 @@ useEffect(() => {
             date={dateDisplay(e)} 
             comment={e.comment} 
             user={users.find(el => el.id_user === e.userId).firstname + " " + users.find(el => el.id_user === e.userId).lastname}
+            id_appointment={e.id_appointment}
             />
           ))
         }
