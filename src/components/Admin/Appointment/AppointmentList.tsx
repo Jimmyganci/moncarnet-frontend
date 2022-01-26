@@ -4,6 +4,7 @@ import { appointment, pros, users } from '../../../API/request';
 import AppointmentInfos from '../../../Interfaces/IAppointmentInfos';
 import { glassMorphism } from '../../../variableTailwind';
 import AppointmentCard from './AppointmentCard';
+import ModalInfos from './ModalInfos';
 
 interface RequestId {
   appointment: number;
@@ -13,6 +14,10 @@ interface RequestId {
 
 function AppointmentList() {
   const [dataAppointment, setDataAppointment] = useState([]);
+  const [userId, setUserId] = useState<number>();
+  const [prosId, setProsId] = useState<number>();
+  const [showUser, setShowUser] = useState(false);
+  const [showPros, setShowPros] = useState(false);
 
   async function getAppointments() {
     try {
@@ -49,7 +54,7 @@ function AppointmentList() {
         <div>
           <h1 className="text-3xl uppercase text-background">Tous les rendez-vous</h1>
         </div>
-        <div className={`bg-background/50 rounded-lg mt-4`}>
+        <div className={`${glassMorphism} rounded-lg mt-4`}>
           <div className={`grid grid-cols-5 ${glassMorphism} rounded-lg pt-2 pb-2`}>
             <p>N°</p>
             <p>Date</p>
@@ -63,10 +68,22 @@ function AppointmentList() {
               appointment={appointment[0]}
               user={appointment[1]}
               pros={appointment[2]}
+              setUserId={setUserId}
+              setProsId={setProsId}
+              setShowUser={setShowUser}
+              setShowPros={setShowPros}
             />
           ))}
         </div>
       </div>
+      <ModalInfos
+        showUser={showUser}
+        setShowUser={setShowUser}
+        showPros={showPros}
+        setShowPros={setShowPros}
+        userId={userId}
+        prosId={prosId}
+      />
     </div>
   );
 }

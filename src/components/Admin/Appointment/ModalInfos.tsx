@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { pros, users } from '../../../API/request';
 import email from '../../../assets/minimalist_logos/email.svg';
 import house from '../../../assets/minimalist_logos/house.svg';
 import phone from '../../../assets/minimalist_logos/phone.svg';
@@ -13,8 +14,8 @@ interface ModalProps {
   setShowUser?: Function | null;
   showPros?: boolean | null;
   setShowPros?: Function | null;
-  user?: UserInfos | null;
-  pros?: ProsInfos | null;
+  userId?: number | null;
+  prosId?: number | null;
 }
 
 function ModalInfos({
@@ -22,37 +23,55 @@ function ModalInfos({
   setShowUser,
   showPros,
   setShowPros,
-  user,
-  pros,
+  userId,
+  prosId,
 }: ModalProps) {
+  const [userData, setUserData] = useState<UserInfos>();
+  const [prosData, setProsData] = useState<ProsInfos>();
+
+  async function getUserOrPros() {
+    if (userId) {
+      const res = await users.getOne(userId);
+      setUserData(res);
+    }
+    if (prosId) {
+      const res = await pros.getOne(prosId);
+      setProsData(res);
+    }
+  }
+
+  useEffect(() => {
+    getUserOrPros();
+  }, [userId, prosId]);
+
   return (
     <div>
-      {showUser && user && (
+      {showUser && userData && (
         <div className={`fixed top-0 left-0 w-full h-full p-4`}>
           <div
-            className={` backdrop-filter backdrop-blur-xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
+            className={` backdrop-filter backdrop-blur-3xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
             <div>
               <img className="w-40" src={profilLogo} alt="logo_user" />
             </div>
             <div className="flex justify-around w-1/5">
-              <p className="text-4xl ">{user.firstname}</p>
-              <p className="text-4xl">{user.lastname}</p>
+              <p className="text-4xl ">{userData.firstname}</p>
+              <p className="text-4xl">{userData.lastname}</p>
             </div>
             <div className="flex justify-around w-1/2">
               <div className="flex flex-col items-center">
                 <img className="w-11" src={email} alt="email" />
-                <p>{user.email}</p>
+                <p>{userData.email}</p>
               </div>
               <div className="flex flex-col items-center">
                 <img className="w-11" src={phone} alt="phone" />
-                <p>{user.phone}</p>
+                <p>{userData.phone}</p>
               </div>
             </div>
             <div className="flex flex-col items-center">
               <img className="w-14" src={house} alt="house_logo" />
-              <p>{user.address}</p>
-              <p>{user.postal_code}</p>
-              <p>{user.city}</p>
+              <p>{userData.address}</p>
+              <p>{userData.postal_code}</p>
+              <p>{userData.city}</p>
             </div>
 
             <button
@@ -63,7 +82,7 @@ function ModalInfos({
           </div>
         </div>
       )}
-      {showPros && pros && (
+      {showPros && prosData && (
         <div className={`fixed top-0 left-0 w-full h-full p-4`}>
           <div
             className={` backdrop-filter backdrop-blur-xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
@@ -71,24 +90,24 @@ function ModalInfos({
               <img className="w-40" src={profilLogo} alt="logo_user" />
             </div>
             <div className="flex flex-col">
-              <p className="text-4xl ">{pros.name}</p>
-              <p className="mt-4 text-2xl">siret: {pros.siret}</p>
+              <p className="text-4xl ">{prosData.name}</p>
+              <p className="mt-4 text-2xl">siret: {prosData.siret}</p>
             </div>
             <div className="flex justify-around w-1/2">
               <div className="flex flex-col items-center">
                 <img className="w-11" src={email} alt="email" />
-                <p>{pros.email}</p>
+                <p>{prosData.email}</p>
               </div>
               <div className="flex flex-col items-center">
                 <img className="w-11" src={phone} alt="phone" />
-                <p>{pros.phone}</p>
+                <p>{prosData.phone}</p>
               </div>
             </div>
             <div className="flex flex-col items-center">
               <img className="w-14" src={house} alt="house_logo" />
-              <p>{pros.address}</p>
-              <p>{pros.postal_code}</p>
-              <p>{pros.city}</p>
+              <p>{prosData.address}</p>
+              <p>{prosData.postal_code}</p>
+              <p>{prosData.city}</p>
             </div>
 
             <button

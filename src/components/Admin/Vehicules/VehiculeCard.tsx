@@ -1,46 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { brands } from '../../../API/request';
-import ModelInfos from '../../../Interfaces/IModelInfos';
+import { brands, service_book } from '../../../API/request';
 import ServiceBookInfos from '../../../Interfaces/IServiceBook';
-import TypeInfos from '../../../Interfaces/ITypeInfos';
-import UserInfos from '../../../Interfaces/IuserInfos';
-import VehiculeInfos from '../../../Interfaces/IVehiculeInfos';
 import { button } from '../../../variableTailwind';
-import ModalInfos from '../Appointment/ModalInfos';
 
 interface VehiculeProps {
-  vehicule: VehiculeInfos;
-  model: ModelInfos;
-  type: TypeInfos;
-  user: UserInfos;
-  serviceBookList: ServiceBookInfos[];
+  vehicule: any;
+  setUserId?: Function;
+  setShowUser?: Function;
 }
 
-function VehiculeCard({ vehicule, model, type, user, serviceBookList }: VehiculeProps) {
+function VehiculeCard({ vehicule, setUserId, setShowUser }: VehiculeProps) {
   const [brand, setBrand] = useState('');
-  const [showUser, setShowUser] = useState(false);
+  const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
 
   async function getBrand() {
-    const getBrand = await brands.getOne(model.id_brand);
+    const getBrand = await brands.getOne(vehicule.brandId);
     setBrand(getBrand.name);
+  }
+  async function getServiceBook() {
+    const res = await service_book.getServiceBookVehicule(vehicule.immat);
+    setServiceBookList(res);
   }
 
   useEffect(() => {
     getBrand();
+    getServiceBook();
   }, []);
   return (
     <div className="grid grid-cols-7 pt-2 pb-2 hover:bg-background/30">
-      <p>{type.name_type}</p>
+      <p>{vehicule.type}</p>
       <p>{vehicule.immat}</p>
-      <p>{new Date(vehicule.registration_date).toLocaleDateString()}</p>
+      <p>{new Date(vehicule.registrationDate).toLocaleDateString()}</p>
       <p>{brand}</p>
-      <p>{model.name}</p>
+      <p>{vehicule.model}</p>
       <button
-        onClick={() => setShowUser(true)}
+        onClick={() => {
+          setUserId && setUserId(vehicule.userId);
+          setShowUser && setShowUser(true);
+        }}
         className="underline hover:text-background">
-        {user.lastname}
+        {vehicule.userName}
       </button>
 
       {vehicule.validate === true ? (
@@ -48,12 +49,11 @@ function VehiculeCard({ vehicule, model, type, user, serviceBookList }: Vehicule
       ) : (
         <p className="text-red-600 ">Non vérifié</p>
       )}
-      {serviceBookList.length !== 0 && (
+      {serviceBookList && serviceBookList.length !== 0 && (
         <button className={`${button} col-start-4`}>
           <Link to={`/admin/vehicule/serviceBook/${vehicule.immat}`}>Voir le carnet</Link>
         </button>
       )}
-      <ModalInfos showUser={showUser} setShowUser={setShowUser} user={user} />
     </div>
   );
 }

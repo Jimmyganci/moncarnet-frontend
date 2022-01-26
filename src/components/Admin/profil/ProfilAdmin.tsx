@@ -6,7 +6,6 @@ import { glassMorphism } from '../../../variableTailwind';
 
 function ProfilAdmin() {
   const { adminLogin }: any = useContext(AdminContext);
-  console.log(adminLogin);
 
   return (
     <div className="flex flex-col items-end w-full">

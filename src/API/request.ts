@@ -74,7 +74,7 @@ export const vehicule = {
         { withCredentials: true },
       )
       .then((res) => res.data),
-  getVehiculeWithoutServiceBook: () =>
+  getVehiculeWithoutServiceBook: (): Promise<VehiculeInfos[]> =>
     axios
       .get(`${API_URL}/vehicules/withoutServiceBook`, { withCredentials: true })
       .then((res) => res.data),
