@@ -35,10 +35,11 @@ function Pros() {
         <Outlet />
       </div>
       {showModal && rdvToDisplay && 
-        <ModalAppointment 
+        <ModalAppointment
         date = {rdvToDisplay[0]}
         user = {rdvToDisplay[1]}
         comment = {rdvToDisplay[2]}
+        id_appointment={rdvToDisplay[3]}
         />}
     </div>
   );
