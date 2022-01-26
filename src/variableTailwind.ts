@@ -17,5 +17,7 @@ export const h1 = 'm-4 text-3xl font-bold font-inter';
 export const h2 = 'm-4 text-2xl font-bold font-inter';
 export const dataGlass =
   'w-full p-2 mt-4 mb-4 text-lg rounded-lg opacity-90 backdrop-filter backdrop-blur-sm shadow-second text-background shadow-background';
-  export const borderGlass =
+export const borderGlass =
   'w-full p-2 mt-4 mb-4 text-lg rounded-lg opacity-90 shadow-second text-background shadow-background';
+export const glassMorphismLower =
+  'bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 bg-background shadow-main';
