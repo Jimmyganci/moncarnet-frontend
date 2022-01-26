@@ -108,7 +108,7 @@ function HomeAdmin() {
             <CountServiceBook serviceBook={dataLength[0].serviceBook} />
             <VehiculeWithoutServiceBook percentage={percentageServiceBook} />
           </div>
-          <Link to="/admin/appointments">
+          <Link to="/admin/serviceBook">
             <button className={`${button}`}>Liste des carnets</button>
           </Link>
         </div>

@@ -1,42 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
-import { model, type, users, vehicule } from '../../../API/request';
-import VehiculeInfos from '../../../Interfaces/IVehiculeInfos';
+import { getVehicules } from '../../../API/requestVehicule';
 import { glassMorphism } from '../../../variableTailwind';
+import ModalInfos from '../Appointment/ModalInfos';
 import ItemVehiculeToValidate from './ItemVehiculeToValidate';
 
 function VehiculeToValidate() {
-  interface RequestId {
-    immat: string;
-    model: number;
-    user: number;
-    type: number;
-  }
   const [vehiculeToValidate] = useOutletContext<Array<any>>();
-  const [data, setData] = useState([]);
+  const [dataVehicules, setDataVehicules] = useState<Array<any>>([]);
+  const [userId, setUserId] = useState<number>();
+  const [showUser, setShowUser] = useState(false);
 
   async function getVehiculeDetails() {
     try {
-      let requestId: Array<RequestId> = [];
-
-      vehiculeToValidate.map(async (el: VehiculeInfos) => {
-        requestId.push({
-          immat: el.immat,
-          model: el.id_modelId,
-          user: el.id_userId,
-          type: el.id_typeId,
-        });
-      });
-
-      Promise.all(
-        requestId.map(async (el) => [
-          await vehicule.getOne(el.immat),
-          await model.getOne(el.model),
-          await type.getOne(el.type),
-          await users.getOne(el.user),
-        ]),
-      ).then((res: any) => setData(res));
+      const res = await getVehicules(vehiculeToValidate);
+      setDataVehicules(res);
     } catch (err) {
       console.log(err);
     }
@@ -47,33 +26,39 @@ function VehiculeToValidate() {
   }, [vehiculeToValidate]);
 
   return (
-    <div className="flex justify-end w-full">
-      <div className="w-5/6">
+    <div className="flex flex-col items-end w-full">
+      <div className="w-5/6 h-full p-2">
         <div>
-          <h1>Vehicule à valider</h1>
+          <h1 className="text-3xl uppercase text-background">Vehicules</h1>
         </div>
-        {vehiculeToValidate.length > 0 ? (
-          <div className={`flex justify-around p-1 m-5 ${glassMorphism} rounded-lg`}>
-            <p>Immatriculation</p>
-            <p>Type</p>
-            <p>Modèle</p>
-            <p>Client</p>
-            <p>Carte Grise</p>
-            <p>Approuver</p>
+        <div className={`${glassMorphism} rounded-lg mt-4`}>
+          {vehiculeToValidate.length > 0 ? (
+            <div className={`grid grid-cols-7 pt-2 pb-2 ${glassMorphism} rounded-lg`}>
+              <p>Immatriculation</p>
+              <p>Type</p>
+              <p>Marque</p>
+              <p>Modèle</p>
+              <p>Client</p>
+              <p>Carte Grise</p>
+              <p>Approuver</p>
+            </div>
+          ) : (
+            <p
+              className={`${glassMorphism}`}>{`Vous n'avez aucun véhicule à vérifier`}</p>
+          )}
+          <div>
+            {dataVehicules?.map((vehicule, index) => (
+              <ItemVehiculeToValidate
+                key={index}
+                vehiculeData={vehicule}
+                setUserId={setUserId}
+                setShowUser={setShowUser}
+              />
+            ))}
           </div>
-        ) : (
-          <p className={`${glassMorphism}`}>{`Vous n'avez aucun véhicule à vérifier`}</p>
-        )}
-        {data?.map((el, index) => (
-          <ItemVehiculeToValidate
-            key={index}
-            vehiculeInfos={el[0]}
-            model={el[1]}
-            type={el[2]}
-            users={el[3]}
-          />
-        ))}
+        </div>
       </div>
+      <ModalInfos showUser={showUser} setShowUser={setShowUser} userId={userId} />
     </div>
   );
 }
