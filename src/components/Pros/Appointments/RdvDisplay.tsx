@@ -12,9 +12,9 @@ const RdvDisplay:React.FC<Props> = (props) => {
 
   const handleSetModal = () => {
     setShowModal(true);
-    setRdvToDisplay([props.date, props.user, props.comment]);
+    setRdvToDisplay([props.date, props.user, props.comment, props.id_appointment]);
   }
-
+  
   return (
     <div className={`m-4 p-4 h-1/6 flex justify-around items-center rounded-lg ${glassMorphism}`}>
       <div className='w-1/4 flex justify-center'>
@@ -24,9 +24,9 @@ const RdvDisplay:React.FC<Props> = (props) => {
         <p>{props.user}</p>
       </div>
       <div className='w-1/4 flex justify-center'>
-        <p>{props.comment}</p>
+        <p>{props.comment.slice(0,20) + "..."}</p>
       </div>
-      <div className='w-1/4 flex justify-center'>
+      <div className='w-1/4 flex justify-center mb-2'>
         <button className={`${button} p-3`} onClick={() => handleSetModal()}>Détails</button>
       </div>
     </div>
