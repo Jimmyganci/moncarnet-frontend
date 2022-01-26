@@ -2,6 +2,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import React from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { Link } from 'react-router-dom';
 
 import { button, glassMorphism } from '../../../variableTailwind';
 
@@ -26,7 +27,9 @@ function VehiculeWithoutServiceBook({ percentage }: ServiceBookProps) {
       </div>
 
       <p>{`% de véhicules qui ont un carnet d'entretien vierge!`}</p>
-      <button className={`${button}`}>Voir</button>
+      <button className={`${button}`}>
+        <Link to="/admin/vehicules/withoutServiceBook"> Voir</Link>
+      </button>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import WithoutAppointmentCard from './WithoutAppointmentCard';
 
 function UsersWithoutAppointment() {
   const [dataUsers, setDataUsers] = useState<Array<UserInfos>>([]);
-  console.log(dataUsers);
 
   async function getUsersWithoutAppointment() {
     const res: Array<UserInfos> = await users.getUserWithoutAppointment();
