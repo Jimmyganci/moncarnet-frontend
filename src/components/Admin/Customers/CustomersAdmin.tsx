@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { pros, users } from '../../../API/request';
 import ProsInfos from '../../../Interfaces/IPros';
-import UserInfos from '../../../Interfaces/IuserInfos';
+import UserInfos from '../../../Interfaces/IUserInfos';
 import { glassMorphism } from '../../../variableTailwind';
 
 function CustomersAdmin() {

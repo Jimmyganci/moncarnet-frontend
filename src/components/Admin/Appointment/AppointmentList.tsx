@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { appointment, pros, users } from '../../../API/request';
-import AppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IProsInfos from '../../../Interfaces/IProsInfos';
+import IUserInfos from '../../../Interfaces/IUserInfos';
 import { glassMorphism } from '../../../variableTailwind';
 import AppointmentCard from './AppointmentCard';
 import ModalInfos from './ModalInfos';
@@ -12,8 +14,10 @@ interface RequestId {
   prosId: number;
 }
 
+type DataAppointment = [(IAppointmentInfos | IUserInfos | IProsInfos)[]];
+
 function AppointmentList() {
-  const [dataAppointment, setDataAppointment] = useState([]);
+  const [dataAppointment, setDataAppointment] = useState<DataAppointment>();
   const [userId, setUserId] = useState<number>();
   const [prosId, setProsId] = useState<number>();
   const [showUser, setShowUser] = useState(false);
@@ -24,7 +28,7 @@ function AppointmentList() {
       const getAll = await appointment.getAll();
 
       let requestId: Array<RequestId> = [];
-      getAll.map(async (appointment: AppointmentInfos) => {
+      getAll.map(async (appointment: IAppointmentInfos) => {
         requestId.push({
           appointment: appointment.id_appointment,
           userId: appointment.userId,
@@ -38,7 +42,7 @@ function AppointmentList() {
           await users.getOne(id.userId),
           await pros.getOne(id.prosId),
         ]),
-      ).then((res: any) => setDataAppointment(res));
+      ).then((res) => setDataAppointment(res));
     } catch (err) {
       console.log(err);
     }
@@ -62,18 +66,19 @@ function AppointmentList() {
             <p>Professionel</p>
             <p>Commentaire</p>
           </div>
-          {dataAppointment.map((appointment, index) => (
-            <AppointmentCard
-              key={index}
-              appointment={appointment[0]}
-              user={appointment[1]}
-              pros={appointment[2]}
-              setUserId={setUserId}
-              setProsId={setProsId}
-              setShowUser={setShowUser}
-              setShowPros={setShowPros}
-            />
-          ))}
+          {dataAppointment &&
+            dataAppointment.map((appointment, index) => (
+              <AppointmentCard
+                key={index}
+                appointment={appointment[0]}
+                user={appointment[1]}
+                pros={appointment[2]}
+                setUserId={setUserId}
+                setProsId={setProsId}
+                setShowUser={setShowUser}
+                setShowPros={setShowPros}
+              />
+            ))}
         </div>
       </div>
       <ModalInfos

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { users } from '../../../API/request';
-import UserInfos from '../../../Interfaces/IuserInfos';
+import IUserInfos from '../../../Interfaces/IUserInfos';
 import { glassMorphism } from '../../../variableTailwind';
 import WithoutAppointmentCard from './WithoutAppointmentCard';
 
 function UsersWithoutAppointment() {
-  const [dataUsers, setDataUsers] = useState<Array<UserInfos>>([]);
+  const [dataUsers, setDataUsers] = useState<Array<IUserInfos>>([]);
 
   async function getUsersWithoutAppointment() {
-    const res: Array<UserInfos> = await users.getUserWithoutAppointment();
+    const res: Array<IUserInfos> = await users.getUserWithoutAppointment();
     setDataUsers(res);
   }
 

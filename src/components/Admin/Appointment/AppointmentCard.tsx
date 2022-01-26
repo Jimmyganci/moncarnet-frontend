@@ -1,13 +1,13 @@
 import React from 'react';
 
-import UserInfos from '../../../Interfaces//IuserInfos';
-import AppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import ProsInfos from '../../../Interfaces/IPros';
+import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IProsInfos from '../../../Interfaces/IPros';
+import IUserInfos from '../../../Interfaces/IUserInfos';
 
 interface AppointmentProps {
-  appointment: AppointmentInfos;
-  user: UserInfos;
-  pros: ProsInfos;
+  appointment: IAppointmentInfos;
+  user: IUserInfos;
+  pros: IProsInfos;
   setUserId: Function;
   setProsId: Function;
   setShowUser: Function;

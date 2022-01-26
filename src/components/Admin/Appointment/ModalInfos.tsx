@@ -5,8 +5,8 @@ import email from '../../../assets/minimalist_logos/email.svg';
 import house from '../../../assets/minimalist_logos/house.svg';
 import phone from '../../../assets/minimalist_logos/phone.svg';
 import profilLogo from '../../../assets/minimalist_logos/profile.svg';
-import UserInfos from '../../../Interfaces//IuserInfos';
 import ProsInfos from '../../../Interfaces/IPros';
+import UserInfos from '../../../Interfaces/IUserInfos';
 import { button } from '../../../variableTailwind';
 
 interface ModalProps {
