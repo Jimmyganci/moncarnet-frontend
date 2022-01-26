@@ -18,8 +18,8 @@ function Vehicules() {
     setVehiculeSelected(infosUserVehicule.filter((el: any) => el.immat.includes(immat)));
   };
   return (
-    <div className='h-full'>
-      <div className="flex items-center justify-center h-full">
+    <div className='h-full lg:h-fit'>
+      <div className="flex items-center justify-center h-full lg:h-fit">
         <h1 className={`${title}`}>Mes Véhicules</h1>
         <Link to="/particular/addVehicule">
           <svg

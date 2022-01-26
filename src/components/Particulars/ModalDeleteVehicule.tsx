@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 
 import UserContext from '../../contexts/UserContext';
-import { button, deleteButton } from '../../variableTailwind';
+import { button } from '../../variableTailwind';
 
 interface ModalProps {
   deleteConfirmation?: boolean | null;
@@ -32,7 +32,6 @@ function ModalDelete({
 
   const handleDeleteVehicule = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log('toto');
     try {
       const putVehicule = await axios.put(
         `http://localhost:8000/api/vehicules/${immat && immat}`,

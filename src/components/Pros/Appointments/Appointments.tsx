@@ -38,6 +38,7 @@ function Appointments() {
       .catch((err) => console.log(err));
   }, [prosLogin]);
 
+
   // Display correctly the date
 
   const dateDisplay = (element:Array<any>) => {
@@ -58,27 +59,30 @@ function Appointments() {
           Mes RDVs
         </h1>
       </div>     
-      <main className='h-4/5 w-full overflow-x-auto'>
+      <main className='h-4/6 w-full overflow-x-auto'>
         {rdvArray.length !== 0 && users.length !== 0 &&
           rdvArray
           .filter((e:any) => e.date > today)
           .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
-            return b>a ? -1 : b<a ? 1 : 0;
+            return a>b ? -1 : b<a ? 1 : 0;
           }))
           .reverse()
             .map((e:any, i:number) => (
               <RdvDisplay
-              key={i} 
+              key={i}
+              id_appointment={e.id_appointment}
               date={dateDisplay(e)} 
               comment={e.comment} 
-              user={users.find(el => el.id_user === e.userId).firstname + " " + users.find(el => el.id_user === e.userId).lastname}
+              user={users.find((el:any)=> el.id_user === e.userId).firstname + " " + users.find((el:any) => el.id_user === e.userId).lastname}
               />
             ))
           }
       </main>
-      <Link className={`${button} p-3`} to="/pros/appointments/create">Créer un RDV</Link>
+      <div className='h-1/6 flex justify-center mt-4'>
+        <Link className={`${button} p-3 h-12`} to="/pros/appointments/create">Créer un RDV</Link>
+      </div>
     </div>
   );
 }

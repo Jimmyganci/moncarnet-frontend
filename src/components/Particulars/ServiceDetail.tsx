@@ -53,17 +53,17 @@ const ServiceDetail = () => {
   infosPro && console.log(infosPro);
 
   return (
-    <div className="flex items-center justify-center w-screen h-full">
-      <div className={`${glassMorphism} w-11/12 h-5/6 my-4 rounded-lg py-4 px-2`}>
+    <div className="flex items-center justify-center w-screen h-full lg:h-screen">
+      <div className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}>
         <h3>
-          <span className="pr-2 border-r-2 border-background">
+          <span className="pr-2 border-r-2 border-background text-2xl">
             {infosVehicule.length &&
               infosVehicule[0].brand + ' ' + infosVehicule[0].model}
           </span>
-          <span className="pl-2">{infosVehicule.length && infosVehicule[0].immat}</span>
+          <span className="pl-2 text-2xl">{infosVehicule.length && infosVehicule[0].immat}</span>
         </h3>
         <form
-          className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 items-center justify-center`}>
+          className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 mt-4 items-center justify-center`}>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Date</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
