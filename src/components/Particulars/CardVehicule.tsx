@@ -25,7 +25,7 @@ const { userLogin }: any = useContext(UserContext);
 
   return (
     <div className='w-full h-full lg:h-fit pb-5'>
-      <div className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[400px] flex flex-col justify-center items-center`}>
+      <div className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
           <div className='flex flex-col items-center w-11/12'>
             <div className="flex justify-center w-full">

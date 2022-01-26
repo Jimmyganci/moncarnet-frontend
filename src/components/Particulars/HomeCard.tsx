@@ -14,7 +14,7 @@ function HomeCard() {
         <h1 className={`${title}`}>
           Bienvenue {userLogin.firstname}
         </h1>
-        <div className='max-w-lg h-full'>
+        <div className='lg:max-w-lg h-full w-full'>
           <HomeGarage />
           <HomeVehicule vehiculesSlice={infosUserVehicule.slice(0, 2)} />
         </div>

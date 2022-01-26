@@ -57,8 +57,8 @@ const HomeAppointment = () => {
             <div className="flex items-center justify-center lg:mb-10">
                 <h1 className={`${title}`}>Mes rendez-vous</h1>
             </div>
-            <div className='lg:h-4/6 w-4/5 lg:ml-20 flex flex-col lg:flex-row justify-center lg:justify-around'>
-                <div className={`${glassMorphism} w-11/12 max-w-xl rounded-lg pb-4 lg:w-5/12`}>
+            <div className='lg:h-4/6 w-11/12 lg:ml-20 flex flex-col lg:flex-row justify-center lg:justify-around'>
+                <div className={`${glassMorphism} w-full max-w-xl rounded-lg pb-4 lg:w-5/12 lg:h-fit`}>
                     <div className='flex flex-col items-center justify-around'>
                         <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
                         {(infosAppointments.length !== 0 && pros.length !== 0) &&
@@ -115,9 +115,9 @@ const HomeAppointment = () => {
                     <p className="cursor-pointer hover:underline"
                     onClick={() => setShowAll(!showAll)} >{showAll ? "Retour" : "Voir tout"}</p>
                 </div>
-    
-                <div className={`${showPastAppointments ? `${glassMorphism} mt-6 pt-3 lg:flex lg:flex-col lg:h-full lg:mt-0 lg:items-center lg:justify-center lg:w-5/12` : ""} w-11/12 max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}>
-                    <div className="flex flex-col items-center justify-around">
+                <div className='hidden lg:block h-full w-[1px] -mx-20 px-0 bg-white rounded-full shadow-md shadow-background opacity-50'></div>       
+                <div className={`${showPastAppointments ? `${glassMorphism} mt-6 pt-3 lg:flex lg:flex-col lg:h-fit lg:mt-0` : ""} w-full max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}>
+                    <div className="flex flex-col items-center justify-center lg:justify-around w-full">
                         <button 
                         className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
                         onClick={() => {setShowPastAppointments(!showPastAppointments); setShowAllPast(false)} } >

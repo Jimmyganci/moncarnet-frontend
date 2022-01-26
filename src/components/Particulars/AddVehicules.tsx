@@ -69,6 +69,8 @@ function AddVehicules() {
             id_modelId: parseInt(model),
             id_typeId: parseInt(type),
             id_userId: parseInt(userLogin.id_user),
+            validate: false,
+            active: true,
           },
           {
             withCredentials: true,

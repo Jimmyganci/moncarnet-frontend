@@ -7,7 +7,7 @@ function Particular() {
 
   return (
     <div className="h-full lg:flex lg:items-center lg:h-screen">
-      <div className='lg:hidden '><Header /></div>
+      <div className='lg:hidden'><Header /></div>
       <div className="items-center justify-center w-1/5 h-screen fixed hidden lg:flex">
         <ParticularSideBar />
       </div>   
