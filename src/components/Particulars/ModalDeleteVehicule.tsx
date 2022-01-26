@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import UserContext from '../../contexts/UserContext';
-import UserInfos from '../../Interfaces/IuserInfos';
-import { button, deleteButton } from '../../variableTailwind';
+import { button } from '../../variableTailwind';
 
 interface ModalProps {
   deleteConfirmation?: boolean | null;
@@ -26,13 +24,11 @@ function ModalDelete({
   type_id,
   user_id,
 }: ModalProps) {
-  const { infosUserVehicule }: any = useContext(UserContext);
   const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false)
   console.log(immat, registration_date, model_id, type_id, user_id);
 
   const handleDeleteVehicule = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("toto");
     try {
     const putVehicule = await axios.put(`http://localhost:8000/api/vehicules/${immat && immat}`,
       {

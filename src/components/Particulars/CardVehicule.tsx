@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ModalDeleteVehicule from './ModalDeleteVehicule';
+import { glassMorphism, glassMorphismWhiteShadow, clearedGreenButton } from '../../variableTailwind';
+import Plate from '../Plate';
+import UserContext from '../../contexts/UserContext';
 
-import { select, deleteButton, glassMorphism, glassMorphismWhiteShadow, clearedGreenButton } from '../../variableTailwind';
 
 interface InfosVehicules {
   vehiculeSelect: any;
@@ -10,7 +12,7 @@ interface InfosVehicules {
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
 const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-vehiculeSelect && console.log(vehiculeSelect);
+const { userLogin }: any = useContext(UserContext);
 
   const dateDisplay = (element:Array<any>) => {
     const wholeDate =element.slice(0,10);
@@ -22,34 +24,29 @@ vehiculeSelect && console.log(vehiculeSelect);
   }
 
   return (
-    <div className='w-full h-full pb-5'>
-      <div className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl`}>
+    <div className='w-full h-full lg:h-fit pb-5'>
+      <div className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
-          <div className='flex flex-col items-center w-full'>
+          <div className='flex flex-col items-center w-11/12'>
             <div className="flex justify-center w-full">
               <img
-                className="w-4/12 pt-2"
+                className="w-4/12 pt-2 lg:max-h-40"
                 src={`../src/assets/brands/${vehiculeSelect.brand}.png`}
                 alt="brand_vehicule"
               />
             </div>
-  
-            <p className="text-2xl">{vehiculeSelect.immat}</p>
             <div className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
               <p className="font-bold uppercase">{vehiculeSelect.brand}</p>
               <p className="font-bold uppercase">{vehiculeSelect.model}</p>
             </div>
+            <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+              <Plate immat={vehiculeSelect.immat} postalCode={userLogin && userLogin.postal_code} />
+            </div>
             {!deleteConfirmation ? <div>
-              <h3>Mise en circulation</h3>
-              <p><span>{`le `}</span><span className='text-xl text-background'>{dateDisplay(vehiculeSelect.registration_date)}</span></p>
-              <div className="flex items-center justify-center h-20 my-4">
-                <p>Ma carte grise : </p>
-                <a className="w-3/12 h-full ml-4" href={vehiculeSelect.url_vehiculeRegistration} target={"blank"}>
-                  <img
-                    className="h-full rounded-sm"
-                    src={vehiculeSelect.url_vehiculeRegistration}
-                    alt="greenCard"
-                  />
+              <p><span>{`Mise en circulation le `}</span><span className='text-xl text-background'>{dateDisplay(vehiculeSelect.registration_date)}</span></p>
+              <div className="flex items-center justify-center my-4">
+                <a className="w-full h-full hover:underline" href={vehiculeSelect.url_vehiculeRegistration} target={"blank"}>
+                <p>Voir ma carte grise</p>
                 </a>
               </div>
             </div> : <ModalDeleteVehicule
@@ -73,7 +70,7 @@ vehiculeSelect && console.log(vehiculeSelect);
                   <button className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}>Céder</button>
               </div>
                 <button
-                className={`w-full uppercase py-2 ${deleteButton} mb-4 bg-secondary hover:bg-secondary-hovered`}
+                className={`w-full py-2 mb-4 bg-secondary hover:bg-secondary-hovered uppercase duration-300 ease-in-out rounded-lg shadow-lg text-background`}
                 onClick={() => vehiculeSelect && setDeleteConfirmation(true)}
                 >Supprimer</button>
               </div>}
