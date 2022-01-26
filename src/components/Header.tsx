@@ -72,7 +72,10 @@ const Header = () => {
           className="mt-4 text-2xl font-medium tracking-widest">
           <Link to="/particular/mygarages">Mes garages</Link>
         </li>
-        <li className="mt-4 text-2xl font-medium tracking-widest">Mon profil</li>
+        <li 
+        onClick={() => setShowMenu(false)}
+        aria-hidden="true"
+        className="mt-4 text-2xl font-medium tracking-widest"><Link to="/particular/infos">Mon profil</Link></li>
         <button className="mt-4 text-2xl font-medium tracking-widest" onClick={() => {
             logOut().then( () =>{
             return navigate("/")

@@ -50,15 +50,15 @@ function LoginPro() {
       </Link>
       <div className="flex flex-col items-center justify-center h-1/2">
         <div
-          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 bg-background shadow-main`}>
+          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 max-w-lg ${glassMorphism}`}>
           <Logo />
-          <img className="absolute bottom-0" src={imageHome} alt="car" />
+          <img className="w-full pb-4 lg:p-0 h-2/3 lg:h-2/3" src={imageHome} alt="car" />
         </div>
       </div>
       <div className={`flex flex-col items-center justify-center h-1/2 ${glassMorphism}`}>
-        <h2 className="w-1/2 text-3xl font-montserrat">Accéder à mon compte</h2>
+        <h2 className="w-1/2 text-2xl lg:text-3xl font-montserrat">Accéder à mon compte</h2>
         <form
-          className="flex flex-col items-center w-full mt-4"
+          className="flex flex-col items-center w-full max-w-lg mt-4"
           onSubmit={(e: React.FormEvent) => handleLogin(e)}>
           <input
             className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus`}

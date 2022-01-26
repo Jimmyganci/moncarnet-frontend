@@ -54,129 +54,131 @@ const HomeAppointment = () => {
 
     return (
         <div className='flex flex-col items-center justify-center w-full h-full pb-5'>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center lg:mb-10">
                 <h1 className={`${title}`}>Mes rendez-vous</h1>
             </div>
-            <div className={`${glassMorphism} w-11/12 max-w-xl rounded-lg pb-4`}>
-                <div className='flex flex-col items-center justify-around'>
-                    <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
-                    {(infosAppointments.length !== 0 && pros.length !== 0) &&
-                    infosAppointments
-                    .filter((e:any) => e.date > today)
-                    .sort((function(a:any, b:any) {
-                        a = new Date(a.date);
-                        b = new Date(b.date);
-                        return a > b ? 1 : -1;
-                    }))
-                    .slice(0, 2)
-                    .map((app:any, index:number) =>
-                        <div
-                        key={index}
-                        className={`${borderGlass} w-11/12 mb-2`}
-                        >
-                            <p className='text-sm'>{"le "}
-                                <span className="font-medium underline">{dateDisplay(app.date)}</span>
-                                {" à "}
-                                <span className="font-medium underline">{hourDisplay(app.date)}</span>
-                            </p>
-                            <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                            <p className='text-sm'>{"Avec "}
-                                <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
-                            </p>
-                        </div>)
-                    }
-                     {(infosAppointments.length !== 0 && pros.length !== 0) &&
-                     infosAppointments
-                     .filter((e:any) => e.date > today)
-                     .sort((function(a:any, b:any) {
-                        a = new Date(a.date);
-                        b = new Date(b.date);
-                        return a > b ? 1 : -1;
-                    }))
-                     .slice(2, (infosAppointments.length - 1))
-                     .map((app:any, index:number) =>
-                        <div
-                        key={index}
-                        className={`${borderGlass} w-11/12 mb-2 ${showAll ? "" : "hidden"}`}
-                        >
-                            <p className='text-sm'>{"le "}
-                                <span className="font-medium underline">{dateDisplay(app.date)}</span>
-                                {" à "}
-                                <span className="font-medium underline">{hourDisplay(app.date)}</span>
-                            </p>
-                            <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                            <p className='text-sm'>{"Avec "}
-                                <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
-                            </p>
-                        </div>)
-                    }
-                </div>
-                <p className="cursor-pointer hover:underline"
-                onClick={() => setShowAll(!showAll)} >{showAll ? "Retour" : "Voir tout"}</p>
-            </div>
-
-            <div className={`${showPastAppointments ? `${glassMorphism} mt-6 pt-3` : ""} w-11/12 max-w-xl rounded-lg pb-4`}>
-                <div className="flex flex-col items-center justify-around">
-                    <button 
-                    className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
-                    onClick={() => {setShowPastAppointments(!showPastAppointments); setShowAllPast(false)} } >
-                        {showPastAppointments ? <BsArrowUpCircle className='text-lg font-bold' /> : "Voir mes rendez-vous passés"}
-                    </button>
-                    {(infosAppointments.length !== 0 && pros.length !== 0) &&
-                    infosAppointments
-                    .filter((e:any) => e.date < today)
-                    .sort((function(a:any, b:any) {
-                        a = new Date(a.date);
-                        b = new Date(b.date);
-                        return a < b ? 1 : -1;
-                    }))
-                    .slice(0, 2)
-                    .map((app:any, index:number) =>
-                        <div
-                        key={index}
-                        className={`${borderGlass} w-11/12 mb-2 ${showPastAppointments ? "" : "hidden"}`}
-                        >
-                            <p className='text-sm'>{"le "}
-                                <span className="font-medium underline">{dateDisplay(app.date)}</span>
-                                {" à "}
-                                <span className="font-medium underline">{hourDisplay(app.date)}</span>
-                            </p>
-                            <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                            <p className='text-sm'>{"Avec "}
-                                <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
-                            </p>
-                        </div>)
-                    }
-                     {(infosAppointments.length !== 0 && pros.length !== 0) && 
-                            infosAppointments
-                            .filter((e:any) => e.date < today)
-                            .sort((function(a:any, b:any) {
-                                a = new Date(a.date);
-                                b = new Date(b.date);
-                                return a < b ? 1 : -1;
-                            }))
-                            .slice(2, (infosAppointments.length - 1))
-                            .map((app:any, index:number) =>
-                        <div
-                        key={index}
-                        className={`${borderGlass} w-11/12 mb-2 ${showAllPast ? "" : "hidden"}`}
-                        >
-                            <p className='text-sm'>{"le "}
-                                <span className="font-medium underline">{dateDisplay(app.date)}</span>
-                                {" à "}
-                                <span className="font-medium underline">{hourDisplay(app.date)}</span>
-                            </p>
-                            <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                            <p className='text-sm'>{"Avec "}
-                                <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
-                            </p>
-                        </div>)
-                    }
+            <div className='lg:h-4/6 w-4/5 lg:ml-20 flex flex-col lg:flex-row justify-center lg:justify-around'>
+                <div className={`${glassMorphism} w-11/12 max-w-xl rounded-lg pb-4 lg:w-5/12`}>
+                    <div className='flex flex-col items-center justify-around'>
+                        <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
+                        {(infosAppointments.length !== 0 && pros.length !== 0) &&
+                        infosAppointments
+                        .filter((e:any) => e.date > today)
+                        .sort((function(a:any, b:any) {
+                            a = new Date(a.date);
+                            b = new Date(b.date);
+                            return a > b ? 1 : -1;
+                        }))
+                        .slice(0, 2)
+                        .map((app:any, index:number) =>
+                            <div
+                            key={index}
+                            className={`${borderGlass} w-11/12 mb-2 lg:mt-6`}
+                            >
+                                <p className='text-sm'>{"le "}
+                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                    {" à "}
+                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                </p>
+                                <p className='text-black leading-[1] my-2'>{app.comment}</p>
+                                <p className='text-sm'>{"Avec "}
+                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                </p>
+                            </div>)
+                        }
+                         {(infosAppointments.length !== 0 && pros.length !== 0) &&
+                         infosAppointments
+                         .filter((e:any) => e.date > today)
+                         .sort((function(a:any, b:any) {
+                            a = new Date(a.date);
+                            b = new Date(b.date);
+                            return a > b ? 1 : -1;
+                        }))
+                         .slice(2, (infosAppointments.length - 1))
+                         .map((app:any, index:number) =>
+                            <div
+                            key={index}
+                            className={`${borderGlass} w-11/12 mb-2 ${showAll ? "" : "hidden"}`}
+                            >
+                                <p className='text-sm'>{"le "}
+                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                    {" à "}
+                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                </p>
+                                <p className='text-black leading-[1] my-2'>{app.comment}</p>
+                                <p className='text-sm'>{"Avec "}
+                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                </p>
+                            </div>)
+                        }
                     </div>
-                    <p 
-                    className={`cursor-pointer hover:underline ${showPastAppointments ? "" : "hidden"}`}
-                    onClick={() => setShowAllPast(!showAllPast)} >{showAllPast ? "Retour" : "Voir tout"}</p>
+                    <p className="cursor-pointer hover:underline"
+                    onClick={() => setShowAll(!showAll)} >{showAll ? "Retour" : "Voir tout"}</p>
                 </div>
+    
+                <div className={`${showPastAppointments ? `${glassMorphism} mt-6 pt-3 lg:flex lg:flex-col lg:h-full lg:mt-0 lg:items-center lg:justify-center lg:w-5/12` : ""} w-11/12 max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}>
+                    <div className="flex flex-col items-center justify-around">
+                        <button 
+                        className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
+                        onClick={() => {setShowPastAppointments(!showPastAppointments); setShowAllPast(false)} } >
+                            {showPastAppointments ? <BsArrowUpCircle className='text-lg font-bold' /> : "Voir mes rendez-vous passés"}
+                        </button>
+                        {(infosAppointments.length !== 0 && pros.length !== 0) &&
+                        infosAppointments
+                        .filter((e:any) => e.date < today)
+                        .sort((function(a:any, b:any) {
+                            a = new Date(a.date);
+                            b = new Date(b.date);
+                            return a < b ? 1 : -1;
+                        }))
+                        .slice(0, 2)
+                        .map((app:any, index:number) =>
+                            <div
+                            key={index}
+                            className={`${borderGlass} w-11/12 mb-2 ${showPastAppointments ? "" : "hidden"}`}
+                            >
+                                <p className='text-sm'>{"le "}
+                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                    {" à "}
+                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                </p>
+                                <p className='text-black leading-[1] my-2'>{app.comment}</p>
+                                <p className='text-sm'>{"Avec "}
+                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                </p>
+                            </div>)
+                        }
+                         {(infosAppointments.length !== 0 && pros.length !== 0) && 
+                                infosAppointments
+                                .filter((e:any) => e.date < today)
+                                .sort((function(a:any, b:any) {
+                                    a = new Date(a.date);
+                                    b = new Date(b.date);
+                                    return a < b ? 1 : -1;
+                                }))
+                                .slice(2, (infosAppointments.length - 1))
+                                .map((app:any, index:number) =>
+                            <div
+                            key={index}
+                            className={`${borderGlass} w-11/12 mb-2 ${showAllPast ? "" : "hidden"}`}
+                            >
+                                <p className='text-sm'>{"le "}
+                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                    {" à "}
+                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                </p>
+                                <p className='text-black leading-[1] my-2'>{app.comment}</p>
+                                <p className='text-sm'>{"Avec "}
+                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                </p>
+                            </div>)
+                        }
+                        </div>
+                        <p 
+                        className={`cursor-pointer hover:underline ${showPastAppointments ? "" : "hidden"}`}
+                        onClick={() => setShowAllPast(!showAllPast)} >{showAllPast ? "Retour" : "Voir tout"}</p>
+                    </div>
+            </div>
         </div>
     );
 };

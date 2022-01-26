@@ -41,14 +41,7 @@ module.exports = {
       fontFamily: {
         inter: ['Inter', 'Arial', 'sans-serif'],
         montserrat: ['Montserrat', 'Arial', 'sans-serif'],
-      },
-      animation: {
-        smoothAppear: 'smoothAppear 5s linear forwards',
-      },
-      keyframes: {
-        smoothAppear: {
-          '100%': { visibility: 'visible' },
-        },
+        chakra: ['Chakra Petch', 'sans-serif'],
       },
     },
   },
