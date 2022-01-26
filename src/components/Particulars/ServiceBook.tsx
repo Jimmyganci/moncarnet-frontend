@@ -49,8 +49,8 @@ const ServiceBook = () => {
   }, [infosVehicule, vehiculeSelected]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full pb-5">
-      <div className="flex flex-col items-center justify-around w-full h-full max-w-xl">
+    <div className="flex flex-col items-center justify-center w-full h-full pb-5 lg:h-screen">
+      <div className="flex flex-col items-center justify-around w-full h-full lg:h-5/6 max-w-xl">
         <h2 className={title}>Mon carnet d&apos;entretien</h2>
         <select
           className={select}
@@ -137,10 +137,11 @@ const ServiceBook = () => {
             <p>Vous n'avez pas encore enregistré d'entretien sur ce véhicule</p>
           </div>
         )}
-      </div>
-      <Link className="mt-2 w-fit h-fit" to="/particular/vehicules">
+         <Link className="mt-2 w-fit h-fit" to="/particular/vehicules">
         <button className={`w-fit h-fit p-2 px-4 ${button}`}>Retour aux véhicules</button>
       </Link>
+      </div>
+     
     </div>
   );
 };
