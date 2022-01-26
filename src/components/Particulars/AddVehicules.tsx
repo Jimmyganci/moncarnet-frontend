@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import { button, glassMorphism, input, title } from '../../variableTailwind';
+import { button, clearedGreenButton, glassMorphism, input, title } from '../../variableTailwind';
 
 function AddVehicules() {
   const [brandList, setBrandList] = useState<any>([]);
@@ -69,6 +69,8 @@ function AddVehicules() {
             id_modelId: parseInt(model),
             id_typeId: parseInt(type),
             id_userId: parseInt(userLogin.id_user),
+            validate: false,
+            active: true,
           },
           {
             withCredentials: true,
@@ -83,7 +85,7 @@ function AddVehicules() {
     }
   };
   return (
-    <div className="flex flex-col items-center w-full h-full m-auto">
+    <div className="flex flex-col items-center justify-center w-full h-full m-auto lg:max-w-lg">
       <h1 className={title}>Ajouter un véhicule</h1>
       {posted === false && (
         <form
@@ -169,7 +171,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Télécharger votre carte grise
             <input
-              className={input}
+              className={`${input} file:rounded-lg file:border-0 file:p-2 file:text-sm file:hover:cursor-pointer lg:file:mr-4`}
               type="file"
               name="file"
               id="file"
@@ -183,15 +185,15 @@ function AddVehicules() {
       )}
       {posted && (
         <div className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
-          <h3 className="w-3/4 mb-10 text-4xl h-1/6 mt-23 pt-6">Véhicule ajouté avec succès</h3>
-          <p className="w-3/4 h-3/6 mb-18">
+          <h3 className="w-3/4 text-4xl h-1/6 lg:pt-6 my-5">Véhicule ajouté avec succès</h3>
+          <p className="w-3/4 h-3/6 lg:pt-20 my-5">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>
-          <Link to="/particular/vehicules">
-            <button className={`mb-5 h-1/6 ${button}`}>Mes véhicules</button>
-          </Link>
-        </div>
+          <button className={`${clearedGreenButton} w-4/6 my-5 h-1/6 py-2`}>
+            <Link to="/particular/vehicules" className='h-full w-full'>Mes véhicules</Link>
+          </button>
+      </div>
       )}
     </div>
   );
