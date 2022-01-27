@@ -12,7 +12,7 @@ interface InfosVehicules {
 
 const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
 const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-const { userLogin }: any = useContext(UserContext);
+const { userLogin, vehiculeDeleted }: any = useContext(UserContext);
 
   const dateDisplay = (element:Array<any>) => {
     const wholeDate =element.slice(0,10);
@@ -28,20 +28,22 @@ const { userLogin }: any = useContext(UserContext);
       <div className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
           <div className='flex flex-col items-center w-11/12'>
-            <div className="flex justify-center w-full">
-              <img
-                className="w-4/12 pt-2 lg:max-h-40"
-                src={`../src/assets/brands/${vehiculeSelect.brand}.png`}
-                alt="brand_vehicule"
-              />
-            </div>
-            <div className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
-              <p className="font-bold uppercase">{vehiculeSelect.brand}</p>
-              <p className="font-bold uppercase">{vehiculeSelect.model}</p>
-            </div>
-            <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
-              <Plate immat={vehiculeSelect.immat} postalCode={userLogin && userLogin.postal_code} />
-            </div>
+            {!vehiculeDeleted && <div className='flex flex-col items-center'>
+              <div className="flex justify-center w-full">
+                <img
+                  className="w-4/12 pt-2 lg:max-h-40"
+                  src={`../src/assets/brands/${vehiculeSelect.brand}.png`}
+                  alt="brand_vehicule"
+                />
+              </div>
+              <div className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
+                <p className="font-bold uppercase">{vehiculeSelect.brand}</p>
+                <p className="font-bold uppercase">{vehiculeSelect.model}</p>
+              </div>
+              <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+                <Plate immat={vehiculeSelect.immat} postalCode={userLogin && userLogin.postal_code} />
+              </div>
+            </div>}
             {!deleteConfirmation ? <div>
               <p><span>{`Mise en circulation le `}</span><span className='text-xl text-background'>{dateDisplay(vehiculeSelect.registration_date)}</span></p>
               <div className="flex items-center justify-center my-4">

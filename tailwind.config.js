@@ -43,6 +43,14 @@ module.exports = {
         montserrat: ['Montserrat', 'Arial', 'sans-serif'],
         chakra: ['Chakra Petch', 'sans-serif'],
       },
+      animation: {
+        appearSmooth: 'appearSmooth 0.8s ease-in forwards',
+      },
+      keyframes: {
+        appearSmooth: {
+          '100%': { opacity: '1' },
+        },
+      },
     },
   },
 };

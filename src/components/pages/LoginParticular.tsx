@@ -2,10 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import imageHome from '../../assets/photohome.svg';
 import Return from '../../assets/return.png';
-import { glassMorphism, input } from '../../variableTailwind';
+import { glassMorphism, input, appear } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function Login() {
@@ -45,7 +44,7 @@ function Login() {
     <div className="flex flex-col h-screen">
       <Link to="/" className="absolute">
         <button
-          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2`}>
+          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2 ${appear}`}>
           <img src={Return} alt="return" className="w-full h-full" />
         </button>
       </Link>
@@ -57,9 +56,9 @@ function Login() {
         </div>
       </div>
       <div className={`flex flex-col items-center justify-center h-1/2 ${glassMorphism}`}>
-        <h2 className="w-1/2 text-2xl lg:text-3xl font-montserrat">Accéder à mon compte</h2>
+        <h2 className={`w-1/2 text-2xl lg:text-3xl font-montserrat ${appear}`}>Accéder à mon compte</h2>
         <form
-          className="flex flex-col items-center w-full max-w-lg mt-4"
+          className={`flex flex-col items-center w-full max-w-lg mt-4 ${appear}`}
           onSubmit={(e: React.FormEvent) => handleLogin(e)}>
           <input
             className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus lg:mb-2 lg:h-1/6`}
