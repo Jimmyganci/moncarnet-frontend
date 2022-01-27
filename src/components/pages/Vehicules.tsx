@@ -7,8 +7,9 @@ import { title, select } from '../../variableTailwind';
 import CardVehicule from '../Particulars/CardVehicule';
 
 function Vehicules() {
-  const { infosUserVehicule }: any = useContext(UserContext);
+  const { infosUserVehicule, vehiculeDeleted }: any = useContext(UserContext);
   const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
+  console.log(infosUserVehicule);
 
   useEffect(() => {
     setVehiculeSelected(infosUserVehicule);
