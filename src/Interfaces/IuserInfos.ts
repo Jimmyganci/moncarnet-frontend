@@ -8,4 +8,5 @@ export default interface IUserInfos {
   phone: string;
   postal_code: number;
   city: string;
+  active: boolean;
 }
