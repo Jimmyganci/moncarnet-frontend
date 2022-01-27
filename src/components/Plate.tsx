@@ -11,7 +11,7 @@ const Plate = ({immat, postalCode}) => {
                     <img src={stars} alt="eurepean stars" className='w-[60%] pt-2'/>
                 </div>
             </div>
-            <div className="flex justify-center items-center w-full text-[230%] font-chakra bg-gradient-to-tr from-white to-stone-300">
+            <div className="flex justify-center items-center w-full text-[210%] font-chakra bg-gradient-to-tr from-white to-stone-300">
                 {immat}
             </div>
             <div className="h-full w-[15%] px-[0.5px] pb-[4%] bg-gradient-to-tr from-blue-500 to-blue-700 text-background flex flex-col-reverse justify-center items-center overflow-hidden box-border">

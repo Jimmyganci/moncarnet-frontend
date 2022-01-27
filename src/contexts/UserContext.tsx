@@ -7,6 +7,10 @@ interface AppContextInterface {
   setUserLogin: Function;
   infosUserVehicule: Array<object>;
   setInfosUserVehicule: Function;
+  vehiculeDeleted: boolean;
+  setVehiculeDeleted: Function;
+  posted: boolean;
+  setPosted: Function;
   logOut: Function;
 }
 
@@ -17,6 +21,8 @@ export default UserContext;
 export const UserContextProvider = ({ children }: any) => {
   const [userLogin, setUserLogin] = useState<Array<object>>([]);
   const [infosUserVehicule, setInfosUserVehicule] = useState<Array<object>>([]);
+  const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false);
+  const [posted, setPosted] = useState(false);
   const navigate = useNavigate();
   let data: Array<object> = [];
 
@@ -49,7 +55,7 @@ export const UserContextProvider = ({ children }: any) => {
                 { withCredentials: true },
               );
               if (userVehicule.status === 200) {
-                const results = await userVehicule.data.map(async (el: any) => {
+                const results = await userVehicule.data.filter((veh:any) => veh.active === true ).map(async (el: any) => {
                   const promise1 = axios.get(
                     `http://localhost:8000/api/vehicules/${el.immat}/brand`,
                     { withCredentials: true },
@@ -89,7 +95,7 @@ export const UserContextProvider = ({ children }: any) => {
       }
     }
     getUserLogin();
-  }, []);
+  }, [vehiculeDeleted, posted]);
 
   return (
     <UserContext.Provider
@@ -98,6 +104,10 @@ export const UserContextProvider = ({ children }: any) => {
         setUserLogin,
         infosUserVehicule,
         setInfosUserVehicule,
+        vehiculeDeleted,
+        setVehiculeDeleted,
+        posted,
+        setPosted,
         logOut,
       }}>
       {children}
