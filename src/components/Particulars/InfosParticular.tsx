@@ -34,7 +34,6 @@ const handleInfosUser = () => {
           address: addressModif || userLogin.address,
           postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
           city: cityModif || userLogin.city,
-          /* password: userLogin.hashedPassword, */
         }, {
           withCredentials: true,
         });
@@ -44,7 +43,7 @@ const handleInfosUser = () => {
     };
 
   return (
-    <div className='h-screen w-screen flex flex-col items-center'>
+    <div className='flex flex-col items-center w-screen h-screen'>
       <h1 className={`${title}`}>
         Mon profil
       </h1>
