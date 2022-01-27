@@ -1,7 +1,7 @@
 export const glassMorphism =
   'bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 bg-background shadow-main';
 export const input =
-  'p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus lg:mb-2 lg:h-2/6';
+'p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus';
 export const button =
   'px-4 p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary text-background hover:bg-primary-hovered';
 export const deleteButton =
