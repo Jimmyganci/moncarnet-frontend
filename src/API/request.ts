@@ -6,7 +6,7 @@ import ModelInfos from '../Interfaces/IModelInfos';
 import ProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
-import UserInfos from '../Interfaces/IuserInfos';
+import IUserInfos from '../Interfaces/IUserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -32,7 +32,7 @@ export const appointment = {
 export const users = {
   getAll: () =>
     axios.get(`${API_URL}/users/all`, { withCredentials: true }).then((res) => res.data),
-  getOne: (idUser: number): Promise<UserInfos> =>
+  getOne: (idUser: number): Promise<IUserInfos> =>
     axios
       .get(`${API_URL}/users/${idUser}`, { withCredentials: true })
       .then((res) => res.data),

@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import UserInfos from '../../../Interfaces//IuserInfos';
-import AppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import ProsInfos from '../../../Interfaces/IPros';
+import { vehicule } from '../../../API/request';
+import { getVehicules } from '../../../API/requestVehicule';
+import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IProsInfos from '../../../Interfaces/IPros';
+import IUserInfos from '../../../Interfaces/IUserInfos';
 
 interface AppointmentProps {
-  appointment: AppointmentInfos;
-  user: UserInfos;
-  pros: ProsInfos;
+  appointment: IAppointmentInfos;
+  user: IUserInfos;
+  pros: IProsInfos;
   setUserId: Function;
   setProsId: Function;
   setShowUser: Function;
   setShowPros: Function;
+  setOneVehicule: Function;
+  setShowVehicule: Function;
 }
 
 function AppointmentCard({
@@ -22,10 +26,29 @@ function AppointmentCard({
   setProsId,
   setShowUser,
   setShowPros,
+  setOneVehicule,
+  setShowVehicule,
 }: AppointmentProps) {
+  async function getVehicule() {
+    const response = await vehicule.getOne(appointment.immat);
+    if (response) {
+      const vehiculeInfos = await getVehicules([response]);
+      setOneVehicule(vehiculeInfos);
+    }
+  }
+
+  useEffect(() => {
+    getVehicule();
+  }, []);
+
   return (
-    <div className="grid grid-cols-5 pt-2 pb-2 hover:bg-background/20">
+    <div className="grid grid-cols-6 pt-2 pb-2 hover:bg-background/20">
       <p>{appointment.id_appointment}</p>
+      <button
+        onClick={() => setShowVehicule(true)}
+        className="underline hover:text-background">
+        {appointment.immat}
+      </button>
       <p>{new Date(appointment.date).toLocaleDateString()}</p>
       <button
         onClick={() => {

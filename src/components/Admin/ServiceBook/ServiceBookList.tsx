@@ -25,7 +25,7 @@ function ServiceBookList() {
         <div>
           <h1 className="text-3xl uppercase text-background">{`Carnet d'entretien`}</h1>
         </div>
-        <div className={`${glassMorphism} rounded-lg`}>
+        <div className={`${glassMorphism} rounded-lg mt-4`}>
           <div className={`grid grid-cols-7 ${glassMorphism} pt-2 pb-2 rounded-lg`}>
             <p>Vehicule</p>
             <p>Date</p>
