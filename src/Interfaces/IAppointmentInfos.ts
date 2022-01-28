@@ -4,4 +4,5 @@ export default interface IAppointmentInfos {
   userId: number;
   comment: string;
   date: Date;
+  immat: string;
 }

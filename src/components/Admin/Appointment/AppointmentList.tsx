@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { appointment, pros, users } from '../../../API/request';
-import AppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
+import IProsInfos from '../../../Interfaces/IProsInfos';
+import IUserInfos from '../../../Interfaces/IUserInfos';
+import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 import { glassMorphism } from '../../../variableTailwind';
+import VehiculeModal from '../ServiceBook/VehiculeModal';
 import AppointmentCard from './AppointmentCard';
 import ModalInfos from './ModalInfos';
 
@@ -12,19 +16,23 @@ interface RequestId {
   prosId: number;
 }
 
+type DataAppointment = [(IAppointmentInfos | IUserInfos | IProsInfos)[]];
+
 function AppointmentList() {
-  const [dataAppointment, setDataAppointment] = useState([]);
+  const [dataAppointment, setDataAppointment] = useState<DataAppointment>();
   const [userId, setUserId] = useState<number>();
   const [prosId, setProsId] = useState<number>();
   const [showUser, setShowUser] = useState(false);
   const [showPros, setShowPros] = useState(false);
+  const [showVehicule, setShowVehicule] = useState(false);
+  const [oneVehicule, setOneVehicule] = useState<IVehiculeAllInfos>();
 
   async function getAppointments() {
     try {
       const getAll = await appointment.getAll();
 
       let requestId: Array<RequestId> = [];
-      getAll.map(async (appointment: AppointmentInfos) => {
+      getAll.map(async (appointment: IAppointmentInfos) => {
         requestId.push({
           appointment: appointment.id_appointment,
           userId: appointment.userId,
@@ -38,7 +46,7 @@ function AppointmentList() {
           await users.getOne(id.userId),
           await pros.getOne(id.prosId),
         ]),
-      ).then((res: any) => setDataAppointment(res));
+      ).then((res) => setDataAppointment(res));
     } catch (err) {
       console.log(err);
     }
@@ -55,25 +63,29 @@ function AppointmentList() {
           <h1 className="text-3xl uppercase text-background">Tous les rendez-vous</h1>
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
-          <div className={`grid grid-cols-5 ${glassMorphism} rounded-lg pt-2 pb-2`}>
+          <div className={`grid grid-cols-6 ${glassMorphism} rounded-lg pt-2 pb-2`}>
             <p>N°</p>
+            <p>Immatriculation</p>
             <p>Date</p>
             <p>Client</p>
             <p>Professionel</p>
             <p>Commentaire</p>
           </div>
-          {dataAppointment.map((appointment, index) => (
-            <AppointmentCard
-              key={index}
-              appointment={appointment[0]}
-              user={appointment[1]}
-              pros={appointment[2]}
-              setUserId={setUserId}
-              setProsId={setProsId}
-              setShowUser={setShowUser}
-              setShowPros={setShowPros}
-            />
-          ))}
+          {dataAppointment &&
+            dataAppointment.map((appointment, index) => (
+              <AppointmentCard
+                key={index}
+                appointment={appointment[0]}
+                user={appointment[1]}
+                pros={appointment[2]}
+                setUserId={setUserId}
+                setProsId={setProsId}
+                setShowUser={setShowUser}
+                setShowPros={setShowPros}
+                setOneVehicule={setOneVehicule}
+                setShowVehicule={setShowVehicule}
+              />
+            ))}
         </div>
       </div>
       <ModalInfos
@@ -84,6 +96,9 @@ function AppointmentList() {
         userId={userId}
         prosId={prosId}
       />
+      {showVehicule && (
+        <VehiculeModal vehicule={oneVehicule} setShowVehicule={setShowVehicule} />
+      )}
     </div>
   );
 }
