@@ -76,9 +76,9 @@ export const UserContextProvider = ({ children }: any) => {
 
                   data.push({
                     ...el,
-                    brand: getInfosVehicule[0].data.model.brand.name,
-                    model: getInfosVehicule[1].data.model.name,
-                    type: getInfosVehicule[2].data.type.name_type,
+                    brand: getInfosVehicule[0].data.models.brand.name,
+                    model: getInfosVehicule[1].data.models.name,
+                    type: getInfosVehicule[2].data.types.name_type,
                   });
                   if (data.length === results.length) {
                     setInfosUserVehicule(data);
