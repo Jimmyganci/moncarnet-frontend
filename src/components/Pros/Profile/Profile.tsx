@@ -43,7 +43,6 @@ const Profile = () => {
         email: emailUpdate || infoUser.email,
         address: addressUpdate || infoUser.address,
         postal_code: parseInt(postalUpdate) || parseInt(infoUser.postal_code),     
-        password: infoUser.hashedPassword,
         city: cityUpdate || infoUser.city,
         phone: phoneUpdate || infoUser.phone,
         siret: siretUpdate || infoUser.siret,
@@ -57,7 +56,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full h-full">
       <h1 className={`${h1} m-6`}>
         Mon Profil
       </h1>
@@ -71,7 +70,7 @@ const Profile = () => {
             Numéro de Siret
           </h2>
           <InfosLine champ={"siret"} lineName={infoUser.siret} changeMode={changeMode} setChangeMode={setChangeMode} modif={siretUpdate} setModif={setSiretUpdate} />
-          <div className=' h-4/6 w-full flex items-center justify-around'>
+          <div className='flex items-center justify-around w-full h-4/6'>
             <div className='w-2/5 h-full'>
               <h2 className={`${h2}`}>Adresse</h2>
               <InfosLine champ={"adresse"} lineName={infoUser.address} changeMode={changeMode} setChangeMode={setChangeMode} modif={addressUpdate} setModif={setAddressUpdate} />

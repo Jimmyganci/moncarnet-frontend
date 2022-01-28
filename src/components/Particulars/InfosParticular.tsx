@@ -46,7 +46,7 @@ const handleInfosUser = () => {
     };
 
   return (
-    <div className='h-screen w-screen flex flex-col items-center'>
+    <div className='flex flex-col items-center w-screen h-screen'>
       <h1 className={`${title}`}>
         Mon profil
       </h1>
