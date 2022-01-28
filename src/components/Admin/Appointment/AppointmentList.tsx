@@ -4,7 +4,9 @@ import { appointment, pros, users } from '../../../API/request';
 import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
 import IProsInfos from '../../../Interfaces/IProsInfos';
 import IUserInfos from '../../../Interfaces/IUserInfos';
+import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 import { glassMorphism } from '../../../variableTailwind';
+import VehiculeModal from '../ServiceBook/VehiculeModal';
 import AppointmentCard from './AppointmentCard';
 import ModalInfos from './ModalInfos';
 
@@ -22,6 +24,8 @@ function AppointmentList() {
   const [prosId, setProsId] = useState<number>();
   const [showUser, setShowUser] = useState(false);
   const [showPros, setShowPros] = useState(false);
+  const [showVehicule, setShowVehicule] = useState(false);
+  const [oneVehicule, setOneVehicule] = useState<IVehiculeAllInfos>();
 
   async function getAppointments() {
     try {
@@ -59,8 +63,9 @@ function AppointmentList() {
           <h1 className="text-3xl uppercase text-background">Tous les rendez-vous</h1>
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
-          <div className={`grid grid-cols-5 ${glassMorphism} rounded-lg pt-2 pb-2`}>
+          <div className={`grid grid-cols-6 ${glassMorphism} rounded-lg pt-2 pb-2`}>
             <p>N°</p>
+            <p>Immatriculation</p>
             <p>Date</p>
             <p>Client</p>
             <p>Professionel</p>
@@ -77,6 +82,8 @@ function AppointmentList() {
                 setProsId={setProsId}
                 setShowUser={setShowUser}
                 setShowPros={setShowPros}
+                setOneVehicule={setOneVehicule}
+                setShowVehicule={setShowVehicule}
               />
             ))}
         </div>
@@ -89,6 +96,9 @@ function AppointmentList() {
         userId={userId}
         prosId={prosId}
       />
+      {showVehicule && (
+        <VehiculeModal vehicule={oneVehicule} setShowVehicule={setShowVehicule} />
+      )}
     </div>
   );
 }
