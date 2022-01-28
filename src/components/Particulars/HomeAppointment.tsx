@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../contexts/UserContext';
-import { glassMorphism, glassMorphismLower, title, h2, borderGlass, button } from '../../variableTailwind';
+import { glassMorphism, title, h2, borderGlass, button } from '../../variableTailwind';
 import { BsArrowUpCircle } from 'react-icons/bs';
+import Plate from '../Plate';
 
 const HomeAppointment = () => {
 
@@ -17,7 +18,7 @@ const HomeAppointment = () => {
 
     // Date of the day
     let today = new Date().toISOString();
-
+console.log(infosAppointments)
     useEffect(() => {
         async function getAppointments() {
             try {
@@ -53,11 +54,11 @@ const HomeAppointment = () => {
     }
 
     return (
-        <div className='flex flex-col items-center justify-center w-full h-full pb-5'>
+        <div className='flex flex-col items-center justify-center w-full h-full pb-5 lg:-mt-20'>
             <div className="flex items-center justify-center lg:mb-10">
                 <h1 className={`${title}`}>Mes rendez-vous</h1>
             </div>
-            <div className='lg:h-4/6 w-11/12 lg:ml-20 flex flex-col lg:flex-row justify-center lg:justify-around'>
+            <div className='flex flex-col justify-center w-11/12 lg:h-4/6 lg:ml-20 lg:flex-row lg:justify-around'>
                 <div className={`${glassMorphism} w-full max-w-xl rounded-lg pb-4 lg:w-5/12 lg:h-fit`}>
                     <div className='flex flex-col items-center justify-around'>
                         <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
@@ -75,14 +76,17 @@ const HomeAppointment = () => {
                             key={index}
                             className={`${borderGlass} w-11/12 mb-2 lg:mt-6`}
                             >
-                                <p className='text-sm'>{"le "}
-                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                 <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+                                    <Plate immat={app.immat} postalCode={"64"}/>
+                                </div>
+                                <p>{"le "}
+                                    <span className="text-xl font-medium underline">{dateDisplay(app.date)}</span>
                                     {" à "}
-                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                    <span className="text-xl font-medium underline">{hourDisplay(app.date)}</span>
                                 </p>
-                                <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                                <p className='text-sm'>{"Avec "}
-                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                <p className='text-black text-lg leading-[1] my-2'>{app.comment}</p>
+                                <p>{"Avec "}
+                                    <span className="text-xl font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
                                 </p>
                             </div>)
                         }
@@ -100,14 +104,17 @@ const HomeAppointment = () => {
                             key={index}
                             className={`${borderGlass} w-11/12 mb-2 ${showAll ? "" : "hidden"}`}
                             >
-                                <p className='text-sm'>{"le "}
-                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+                                    <Plate immat={app.immat} postalCode={"64"}/>
+                                </div>
+                                <p className=''>{"le "}
+                                    <span className="text-xl font-medium underline">{dateDisplay(app.date)}</span>
                                     {" à "}
-                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                    <span className="text-xl font-medium underline">{hourDisplay(app.date)}</span>
                                 </p>
                                 <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                                <p className='text-sm'>{"Avec "}
-                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                <p className=''>{"Avec "}
+                                    <span className="text-xl font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
                                 </p>
                             </div>)
                         }
@@ -117,7 +124,7 @@ const HomeAppointment = () => {
                 </div>
                 <div className='hidden lg:block h-full w-[1px] -mx-20 px-0 bg-white rounded-full shadow-md shadow-background opacity-50'></div>       
                 <div className={`${showPastAppointments ? `${glassMorphism} mt-6 pt-3 lg:flex lg:flex-col lg:h-fit lg:mt-0` : ""} w-full max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}>
-                    <div className="flex flex-col items-center justify-center lg:justify-around w-full">
+                    <div className="flex flex-col items-center justify-center w-full lg:justify-around">
                         <button 
                         className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
                         onClick={() => {setShowPastAppointments(!showPastAppointments); setShowAllPast(false)} } >
@@ -137,14 +144,17 @@ const HomeAppointment = () => {
                             key={index}
                             className={`${borderGlass} w-11/12 mb-2 ${showPastAppointments ? "" : "hidden"}`}
                             >
-                                <p className='text-sm'>{"le "}
-                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+                                    <Plate immat={app.immat} postalCode={"64"}/>
+                                </div>
+                                <p className=''>{"le "}
+                                    <span className="text-xl font-medium underline">{dateDisplay(app.date)}</span>
                                     {" à "}
-                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                    <span className="text-xl font-medium underline">{hourDisplay(app.date)}</span>
                                 </p>
                                 <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                                <p className='text-sm'>{"Avec "}
-                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                <p className=''>{"Avec "}
+                                    <span className="text-xl font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
                                 </p>
                             </div>)
                         }
@@ -162,14 +172,17 @@ const HomeAppointment = () => {
                             key={index}
                             className={`${borderGlass} w-11/12 mb-2 ${showAllPast ? "" : "hidden"}`}
                             >
-                                <p className='text-sm'>{"le "}
-                                    <span className="font-medium underline">{dateDisplay(app.date)}</span>
+                                <div className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`} >
+                                    <Plate immat={app.immat} postalCode={"64"}/>
+                                </div>
+                                <p className=''>{"le "}
+                                    <span className="text-xl font-medium underline">{dateDisplay(app.date)}</span>
                                     {" à "}
-                                    <span className="font-medium underline">{hourDisplay(app.date)}</span>
+                                    <span className="text-xl font-medium underline">{hourDisplay(app.date)}</span>
                                 </p>
                                 <p className='text-black leading-[1] my-2'>{app.comment}</p>
-                                <p className='text-sm'>{"Avec "}
-                                    <span className="font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
+                                <p className=''>{"Avec "}
+                                    <span className="text-xl font-medium underline">{pros.find((el:any) => el.id_pros === app.prosId).name}</span>
                                 </p>
                             </div>)
                         }
