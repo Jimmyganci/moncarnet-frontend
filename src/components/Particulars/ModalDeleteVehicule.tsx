@@ -1,31 +1,31 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { button } from '../../variableTailwind';
+import UserContext from '../../contexts/UserContext';
 
 interface ModalProps {
   deleteConfirmation?: boolean | null;
+  setDeleteConfirmation?: Function;
   immat?: string | null;
   registration_date?: string | null;
   url_vehiculeRegistration?: string | null;
   model_id?: number | null;
   type_id?: number | null;
   user_id?: number | null;
-  confirmation?: boolean | null;
-  setDeleteConfirmation?: Function | null;
 }
 
 function ModalDelete({
-  deleteConfirmation,
-  setDeleteConfirmation,
   immat,
   registration_date,
   url_vehiculeRegistration,
   model_id,
   type_id,
   user_id,
+  deleteConfirmation,
+  setDeleteConfirmation
 }: ModalProps) {
-  const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false)
-  console.log(immat, registration_date, model_id, type_id, user_id);
+  const { vehiculeDeleted, setVehiculeDeleted }: any = useContext(UserContext);
 
   const handleDeleteVehicule = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -84,7 +84,8 @@ function ModalDelete({
           <button
             onClick={() => {setDeleteConfirmation && setDeleteConfirmation(false); setVehiculeDeleted(false)}}
             className={`${button} flex justify-center items-center mt-6 w-[45%]`}>
-            Retour
+            <Link to="/particular/vehicules" className='w-full h-full'>Retour
+            </Link>
           </button>
         </div> 
       </div>      

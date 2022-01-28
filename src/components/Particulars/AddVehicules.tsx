@@ -15,8 +15,7 @@ function AddVehicules() {
   const [model, setModel] = useState<any>([]);
   const [registrationDate, setRegistrationDate] = useState('');
   const [file, setFile] = useState<any>();
-  const { userLogin }: any = useContext(UserContext);
-  const [posted, setPosted] = useState(false);
+  const { userLogin, posted, setPosted }: any = useContext(UserContext);
 
   useEffect(() => {
     async function getBrandModel() {
@@ -95,7 +94,7 @@ function AddVehicules() {
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
             <input
-              className={`valid:outline-valid-500 invalid:outline-error-500 ${input}`}
+              className={`valid:outline-valid-500 invalid:outline-error-500 ${`${input} lg:mb-2 lg:h-2/6`}`}
               type="text"
               name="immat"
               id="immat"
@@ -108,7 +107,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Type de véhicule
             <select
-              className={`${input}`}
+              className={`${`${input} lg:mb-2 lg:h-2/6`}`}
               name="type"
               id="type"
               required
@@ -124,7 +123,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Marque
             <input
-              className={input}
+              className={`${input} lg:mb-2 lg:h-2/6`}
               type="text"
               name="brand"
               id="brand"
@@ -144,7 +143,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Modèle
             <select
-              className={input}
+              className={`${input} lg:mb-2 lg:h-2/6`}
               name="model"
               id="model"
               required
@@ -160,7 +159,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Date de mise en circulation
             <input
-              className={input}
+              className={`${input} lg:mb-2 lg:h-2/6`}
               type="date"
               name="registrationDate"
               id="registrationDate"
@@ -171,7 +170,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Télécharger votre carte grise
             <input
-              className={`${input} file:rounded-lg file:border-0 file:p-2 file:text-sm file:hover:cursor-pointer lg:file:mr-4`}
+              className={`${`${input} lg:mb-2 lg:h-2/6`} file:rounded-lg file:border-0 file:p-2 file:text-sm file:hover:cursor-pointer lg:file:mr-4`}
               type="file"
               name="file"
               id="file"
@@ -185,13 +184,13 @@ function AddVehicules() {
       )}
       {posted && (
         <div className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
-          <h3 className="w-3/4 text-4xl h-1/6 lg:pt-6 my-5">Véhicule ajouté avec succès</h3>
-          <p className="w-3/4 h-3/6 lg:pt-20 my-5">
+          <h3 className="w-3/4 my-5 text-4xl h-1/6 lg:pt-6">Véhicule ajouté avec succès</h3>
+          <p className="w-3/4 my-5 h-3/6 lg:pt-20">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>
           <button className={`${clearedGreenButton} w-4/6 my-5 h-1/6 py-2`}>
-            <Link to="/particular/vehicules" className='h-full w-full'>Mes véhicules</Link>
+            <Link to="/particular/vehicules" className='w-full h-full'>Mes véhicules</Link>
           </button>
       </div>
       )}
