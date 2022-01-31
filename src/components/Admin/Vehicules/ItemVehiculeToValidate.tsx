@@ -16,18 +16,17 @@ function ItemVehiculeToValidate({
   setUserId,
   setShowUser,
 }: VehiculeToValidateProps) {
-  console.log(vehiculeData);
-
   const [brand, setBrand] = useState<string>();
   async function getBrand() {
     const res = await brands.getOne(vehiculeData.brandId);
     setBrand(res.name);
   }
+
   const handleValidate = async () => {
     const validateVehicule = await toast.promise(
       vehicule.putOne(vehiculeData.immat, {
         immat: vehiculeData.immat,
-        registration_date: vehiculeData.registration_Date,
+        registration_date: vehiculeData.registrationDate,
         url_vehiculeRegistration: vehiculeData.urlGreenCard,
         id_modelId: vehiculeData.modelId,
         id_typeId: vehiculeData.typeId,
