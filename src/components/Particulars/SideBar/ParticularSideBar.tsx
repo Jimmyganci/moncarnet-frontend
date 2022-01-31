@@ -4,11 +4,22 @@ import { glassMorphism } from '../../../variableTailwind';
 import Logo from '../../Logo';
 import home from '../../../assets/minimalist_logos/home.svg';
 import car from '../../../assets/minimalist_logos/car.svg';
+import garage from '../../../assets/minimalist_logos/garage.svg';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
+import { useContext } from 'react';
+import UserContext from '../../../contexts/UserContext';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+
 
 
 const ParticularSideBar = () => {
+
+  // Return Home after logout !
+  const navigate: NavigateFunction = useNavigate();
+  
+  // access userContext !
+  const { logOut }: any = useContext(UserContext);
 
   const linkArray = [
     {
@@ -28,6 +39,12 @@ const ParticularSideBar = () => {
       path : "/particular/vehicules",
       logo : car,
       alt : "cars logo"
+    },
+     {
+      label : "Mes Garages",
+      path : "/particular/garage",
+      logo : garage,
+      alt : "garage logo"
     },
     {
       label : "Mes RDVs",
@@ -56,6 +73,11 @@ const ParticularSideBar = () => {
                 />
             )}
           </ul>
+          <button className="mt-4 text-2xl font-medium tracking-widest" onClick={() => {
+            logOut().then( () =>{
+            return navigate("/")
+            })
+          }}>Se déconnecter</button>
         </nav>
       </div>        
     </div>

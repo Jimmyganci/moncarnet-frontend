@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
-import { button, glassMorphism, title } from '../../variableTailwind';
+import UserContext from '../../../contexts/UserContext';
+import { button, glassMorphism, title } from '../../../variableTailwind';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<Array<object>>([]);

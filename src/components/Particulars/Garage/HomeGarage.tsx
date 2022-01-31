@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { button, glassMorphism, input } from '../../variableTailwind';
+import { button, glassMorphism, input } from '../../../variableTailwind';
 
 function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
@@ -27,7 +27,7 @@ function HomeGarage() {
   };
 
   return (
-    <div className={`m-4 p-4 rounded-lg ${glassMorphism}`}>
+    <div className={`m-4 p-4 rounded-lg ${glassMorphism} lg:h-fit`}>
       <form onSubmit={(e) => handleSearchGarage(e)}>
         <label className="flex flex-col">
           <p className="mb-4 text-2xl">Trouver un garage</p>

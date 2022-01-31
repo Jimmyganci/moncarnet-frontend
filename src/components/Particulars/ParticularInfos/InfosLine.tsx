@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { input } from '../../variableTailwind';
+import { input } from '../../../variableTailwind';
 
 const InfosLine = (props: any) => {
     const { lineName, champ, changeMode, modif, setModif } = props;
