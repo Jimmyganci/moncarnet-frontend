@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import car from '../../assets/car.png';
-import { button, glassMorphism } from '../../variableTailwind';
+import car from '../../../assets/car.png';
+import { button, glassMorphism } from '../../../variableTailwind';
 
 interface VehiculeProps {
   vehiculesSlice: Array<any>;

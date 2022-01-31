@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
+import UserContext from '../../../contexts/UserContext';
 import {
   button,
   glassMorphism,
   glassMorphismWhiteShadow,
   select,
   title,
-} from '../../variableTailwind';
+} from '../../../variableTailwind';
 
 const ServiceBook = () => {
   const { vehiculeImmatToUpdate }: any = useParams();

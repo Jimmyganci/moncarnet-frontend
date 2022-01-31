@@ -11,7 +11,7 @@ function Garage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
   const [codePostal, setCodePostal] = useState<number>(0);
   const [city, setCity] = useState<string>('');
-  const [rangeValue, setRangeValue] = useState<number>(50);
+  /* const [rangeValue, setRangeValue] = useState<number>(50); */
 
   useEffect(() => {
     async function getGarage() {
@@ -47,7 +47,7 @@ function Garage() {
   }, [searchGarage, codePostal, city]);
   return (
     <div>
-      <div className={`m-4 rounded-lg min-h-screen ${glassMorphism}`}>
+      <div className={`m-4 rounded-lg ${glassMorphism} p-5`}>
   
         <form
           className={`flex flex-col items-center w-full p-4 rounded-t-lg ${glassMorphism}`}>
@@ -110,7 +110,7 @@ function Garage() {
                     onChange={(e) => setCodePostal(parseInt(e.target.value))}
                   />
                 </label>
-                {codePostal && (
+                {codePostal !== 0 && (
                   <label>
                     <select
                       onChange={(e) => setCity(e.target.value)}
@@ -127,7 +127,7 @@ function Garage() {
                     </select>
                   </label>
                 )}
-                {city && (
+               {/*  {city && (
                   <label>
                     <p>{rangeValue}KM</p>
                     <input
@@ -140,7 +140,7 @@ function Garage() {
                       value={rangeValue}
                     />
                   </label>
-                )}
+                )} */}
               </div>
             )}
           </div>
@@ -148,7 +148,7 @@ function Garage() {
         {garageList.length > 0 ? (
           garageList.map((el) => (
             <div
-              className="flex items-center justify-around m-2 rounded-lg shadow-second shadow-background"
+              className="flex items-center justify-around mx-2 my-6 rounded-lg shadow-second shadow-background"
               key={el.id_pros}>
               <div className="flex flex-col items-center justify-center w-1/2">
                 <p>{el.name}</p>

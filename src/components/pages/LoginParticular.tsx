@@ -33,6 +33,7 @@ function Login() {
         })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
+          if (err.response.status === 403) setMessage(`Ce compte a été supprimé. Veuillez utiliser un autre compte ou en créer un nouveau`);
           else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
         });
     } else {

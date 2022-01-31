@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
-import DeleteAccountModal from './DeleteAccountModal';
-import UserContext from '../../contexts/UserContext';
+import DeleteAccountModal from './../DeleteAccountModal';
+import UserContext from '../../../contexts/UserContext';
 import InfosLine from './InfosLine';
-import { button, deleteButton,glassMorphism, title } from '../../variableTailwind';
+import { button, deleteButton,glassMorphism, title } from '../../../variableTailwind';
 
 function ParticularInfos () {
   const { userLogin }: any = useContext(UserContext);
@@ -16,17 +16,16 @@ function ParticularInfos () {
   const [addressModif, setAddressModif] = useState<string>("");
   const [postalCodeModif, setPostalCodeModif] = useState<string>("");
   const [cityModif, setCityModif] = useState<string>("");
-  const [deleteAccount, setDeleteAccount] = useState<boolean>(false);
   const [deleteAccountModal, setDeleteAccountModal] = useState<boolean>(false);
+  const { deleteAccount, setDeleteAccount }: any = useContext(UserContext);
 
 const handleInfosUser = () => {
   getInfosParticular();
   setChangeMode(!changeMode);
 };
-
+console.log(userLogin)
   async function getInfosParticular () {
-      try {
-        
+      try {     
         const res = await axios.put(`http://localhost:8000/api/users/${userLogin.id_user}`,
         {firstname: firstNameModif || userLogin.firstname,
           lastname: lastNameModif || userLogin.lastname,
@@ -35,8 +34,7 @@ const handleInfosUser = () => {
           address: addressModif || userLogin.address,
           postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
           city: cityModif || userLogin.city,
-          active: (deleteAccount && !deleteAccount) || userLogin.active,
-          password: userLogin.hashedPassword,
+          active: (deleteAccountModal ? false : userLogin.active),
         }, {
           withCredentials: true,
         });
@@ -60,7 +58,7 @@ const handleInfosUser = () => {
         <InfosLine champ={"ville"} lineName={userLogin.city} changeMode={changeMode} setChangeMode={setChangeMode} modif={cityModif} setModif={setCityModif} />
         <button className={`w-1/6 min-w-[200px] ${button}`} onClick={() => !changeMode ? setChangeMode(!changeMode) : handleInfosUser()}>{changeMode ? "Valider" : "Modifier"}</button>
         <button className={`w-1/6 min-w-[200px] ${button} text-sm bg-secondary hover:bg-secondary-hovered`} onClick={() => setDeleteAccountModal(true)}>Supprimer mon compte</button>
-      </div> : <DeleteAccountModal deleteAccountModal={deleteAccountModal} setDeleteAccountModal={setDeleteAccountModal} deleteAccount={deleteAccount} setDeleteAccount={setDeleteAccount} />}     
+      </div> : <DeleteAccountModal deleteAccountModal={deleteAccountModal} setDeleteAccountModal={setDeleteAccountModal} deleteAccount={deleteAccount} setDeleteAccount={setDeleteAccount} getInfosParticular={getInfosParticular} />}     
     </div>
   );
 }

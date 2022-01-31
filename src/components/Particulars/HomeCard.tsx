@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 import { title } from '../../variableTailwind';
-import HomeGarage from './HomeGarage';
-import HomeVehicule from './HomeVehicule';
+import HomeGarage from './Garage/HomeGarage';
+import HomeVehicule from './Vehicules/HomeVehicule';
 
 function HomeCard() {
   const { userLogin, infosUserVehicule }: any = useContext(UserContext);

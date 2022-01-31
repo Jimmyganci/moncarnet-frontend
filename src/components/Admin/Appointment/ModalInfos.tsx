@@ -47,15 +47,16 @@ function ModalInfos({
   return (
     <div>
       {showUser && userData && (
-        <div className={`fixed top-0 left-0 w-full h-full p-4`}>
+        <div
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
           <div
-            className={` backdrop-filter backdrop-blur-3xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
             <div>
-              <img className="w-40" src={profilLogo} alt="logo_user" />
+              <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
-            <div className="flex justify-around w-1/5">
-              <p className="text-4xl ">{userData.firstname}</p>
-              <p className="text-4xl">{userData.lastname}</p>
+            <div className="flex justify-around w-1/3">
+              <p className="text-2xl ">{userData.firstname}</p>
+              <p className="text-2xl">{userData.lastname}</p>
             </div>
             <div className="flex justify-around w-1/2">
               <div className="flex flex-col items-center">
@@ -83,14 +84,15 @@ function ModalInfos({
         </div>
       )}
       {showPros && prosData && (
-        <div className={`fixed top-0 left-0 w-full h-full p-4`}>
+        <div
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
           <div
-            className={` backdrop-filter backdrop-blur-xl bg-background/30 w-full h-full rounded-lg flex flex-col items-center justify-around`}>
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
             <div>
-              <img className="w-40" src={profilLogo} alt="logo_user" />
+              <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
             <div className="flex flex-col">
-              <p className="text-4xl ">{prosData.name}</p>
+              <p className="text-3xl ">{prosData.name}</p>
               <p className="mt-4 text-2xl">siret: {prosData.siret}</p>
             </div>
             <div className="flex justify-around w-1/2">

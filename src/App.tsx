@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+/* import { ReactQueryDevtools } from 'react-query/devtools'; */
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -27,15 +27,15 @@ import Particular from './components/pages/Particular';
 import Pros from './components/pages/Pros';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
-import AddVehicules from './components/Particulars/AddVehicules';
-import GarageDetails from './components/Particulars/GarageDetails';
+import AddVehicules from './components/Particulars/Vehicules/AddVehicules';
+import GarageDetails from './components/Particulars/Garage/GarageDetails';
 import HomeAppointment from './components/Particulars/HomeAppointment';
 import HomeCard from './components/Particulars/HomeCard';
-import InfosParticular from './components/Particulars/InfosParticular';
-import ServiceBook from './components/Particulars/ServiceBook';
-import ServiceDetail from './components/Particulars/ServiceDetail';
-import UpdateVehicule from './components/Particulars/UpdateVehicule';
-import UserGarage from './components/Particulars/UserGarage';
+import InfosParticular from './components/Particulars/ParticularInfos/InfosParticular';
+import ServiceBook from './components/Particulars/ServiceBook/ServiceBook';
+import ServiceDetail from './components/Particulars/ServiceBook/ServiceDetail';
+import UpdateVehicule from './components/Particulars/Vehicules/UpdateVehicule';
+import UserGarage from './components/Particulars/Garage/UserGarage';
 import Appointments from './components/Pros/Appointments/Appointments';
 import CreateAppointments from './components/Pros/Appointments/CreateAppointment';
 import Customers from './components/Pros/Customers';
@@ -48,6 +48,7 @@ import { ProsContextProvider } from './contexts/ProsContext';
 import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
+
   const RouteAdmin = [
     { path: 'home', component: <HomeAdmin /> },
     { path: 'customers', component: <CustomersAdmin /> },
@@ -125,7 +126,7 @@ function App() {
             ))}
           </Route>
         </Routes>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} closeButtonProps={queryStyles} /> */}
       </QueryClientProvider>
     </div>
   );

@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
-import { button, clearedGreenButton, glassMorphism, input, title } from '../../variableTailwind';
+import UserContext from '../../../contexts/UserContext';
+import { button, clearedGreenButton, glassMorphism, input, title } from '../../../variableTailwind';
 
 function AddVehicules() {
   const [brandList, setBrandList] = useState<any>([]);

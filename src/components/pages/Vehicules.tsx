@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 import { title, select } from '../../variableTailwind';
-import CardVehicule from '../Particulars/CardVehicule';
+import CardVehicule from '../Particulars/Vehicules/CardVehicule';
 
 function Vehicules() {
   const { infosUserVehicule, vehiculeDeleted }: any = useContext(UserContext);
   const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
-  console.log(infosUserVehicule);
 
   useEffect(() => {
     setVehiculeSelected(infosUserVehicule);
