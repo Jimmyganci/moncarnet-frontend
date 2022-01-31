@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { brands } from '../../../API/request';
 import carLogo from '../../../assets/minimalist_logos/car.svg';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeInfos';
+import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 import { button } from '../../../variableTailwind';
 
 interface IProps {
@@ -11,8 +11,6 @@ interface IProps {
 }
 
 function VehiculeModal({ vehicule, setShowVehicule }: IProps) {
-  console.log(vehicule);
-
   const [brand, setBrand] = useState<string>();
   async function getBrand() {
     const response = await brands.getOne(vehicule[0].brandId);
@@ -34,7 +32,7 @@ function VehiculeModal({ vehicule, setShowVehicule }: IProps) {
           <p>{vehicule[0].immat}</p>
           <p>{brand}</p>
           <p>{vehicule[0].model}</p>
-          <p>{new Date(vehicule[0].registrationDate).toLocaleDateString()}</p>
+          <p>{new Date(vehicule[0].registration_Date).toLocaleDateString()}</p>
           <p>{vehicule[0].urlGreenCard}</p>
           <p>{vehicule[0].userName}</p>
         </div>
