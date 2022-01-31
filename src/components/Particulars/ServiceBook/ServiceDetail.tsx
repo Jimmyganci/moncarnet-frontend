@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
-import { button, glassMorphism, glassMorphismWhiteShadow } from '../../variableTailwind';
+import UserContext from '../../../contexts/UserContext';
+import { button, glassMorphism, glassMorphismWhiteShadow } from '../../../variableTailwind';
 
 const ServiceDetail = () => {
   const { vehiculeImmatToUpdate, id_service_book }: any = useParams();

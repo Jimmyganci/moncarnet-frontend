@@ -16,14 +16,14 @@ const DeleteAccountModal = ({deleteAccountModal, setDeleteAccountModal, deleteAc
   const navigateFromDeleteAccount: NavigateFunction = useNavigate();
     return (
         <div className='flex justify-center w-full h-full'>
-      {deleteAccountModal && (
+      {deleteAccountModal && !deleteAccount && (
         <div className={`w-full h-full flex flex-col justify-center items-center`}>
           <div
-            className={`backdrop-filter backdrop-blur-xl bg-background/30 w-5/6 h-full rounded-lg py-6 px-2 my-4`}>
-            {`Vous êtes sur le point de supprimer ce véhicule.`} <br /><span className='font-bold'>Confirmer ?</span>
+            className={`backdrop-filter backdrop-blur-xl bg-background/30 w-5/6 h-fit rounded-lg py-6 px-2 my-4`}>
+            {`Vous êtes sur le point de supprimer votre compte.`} <br /><span className='font-bold'>Confirmer ?</span>
             <div className='flex items-center justify-between px-2'>
               <button
-                onClick={(e) => {getInfosParticular(e); setDeleteAccount(true)}}
+                onClick={(e) => { setDeleteAccount && setDeleteAccount(true); getInfosParticular(e);}}
                 className={`${button} flex justify-center items-center bg-secondary hover:bg-secondary-hovered mt-6 w-[45%]`}>
               Supprimer
             </button> 

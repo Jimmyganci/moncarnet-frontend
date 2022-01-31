@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import ModalDeleteVehicule from './ModalDeleteVehicule';
+import ModalDeleteVehicule from './../ModalDeleteVehicule';
 import {
   glassMorphism,
   glassMorphismWhiteShadow,
   clearedGreenButton,
-} from '../../variableTailwind';
-import Plate from '../Plate';
-import UserContext from '../../contexts/UserContext';
+} from '../../../variableTailwind';
+import Plate from '../../Plate';
+import UserContext from '../../../contexts/UserContext';
 
 interface InfosVehicules {
   vehiculeSelect: any;

@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <div
       className={`ease-in-out duration-300 overflow-hidden ${
-        showMenu ? 'h-screen' : 'h-16'
+        showMenu ? 'h-screen' : 'h-16 mb-[10vw]'
       } ${glassMorphism}`}>
       <nav className={`flex h-16 items-center justify-between pl-4 pr-4 relative`}>
         <div
