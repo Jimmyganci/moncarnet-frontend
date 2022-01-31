@@ -4,7 +4,7 @@ export default interface IVehiculeAllInfos {
   immat: string;
   model: string;
   modelId: number;
-  registration_Date: Date;
+  registrationDate: Date;
   type: string;
   typeId: number;
   urlGreenCard: string;
