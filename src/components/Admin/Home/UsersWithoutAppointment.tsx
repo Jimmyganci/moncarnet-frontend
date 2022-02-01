@@ -13,7 +13,8 @@ interface UserAppointmentProps {
 function UsersWithoutAppointment({ percentage }: UserAppointmentProps) {
   return (
     <div
-      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}>
+      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}
+    >
       <div className="w-1/5">
         <CircularProgressbar
           value={percentage}

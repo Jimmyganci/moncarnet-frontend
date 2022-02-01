@@ -60,7 +60,8 @@ function SignUp() {
 
       <form
         className={`w-11/12 mt-4 rounded-lg p-2 ${glassMorphism}`}
-        onSubmit={(e: React.FormEvent) => handleSignUp(e)}>
+        onSubmit={(e: React.FormEvent) => handleSignUp(e)}
+      >
         <h1 className="pt-4 pb-4 mb-4 text-2xl border-b border-background/25">
           Créer mon compte
         </h1>
@@ -100,7 +101,8 @@ function SignUp() {
         {address && (
           <select
             className="w-11/12 rounded-lg bg-background/30"
-            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}>
+            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}
+          >
             <option value="">{addressList.length} adresses trouvées</option>
             {addressList.length >= 0 &&
               addressList.map((el, index) => (
@@ -158,7 +160,8 @@ function SignUp() {
           Mot de passe
           <input
             className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' && 'border-error-600'
+              message === 'Vos mots de passe ne sont pas identiques!' &&
+              'border-error-600'
             }`}
             type="password"
             name="password"
@@ -170,7 +173,8 @@ function SignUp() {
           Confirmez mot de passe
           <input
             className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' && 'border-error-600'
+              message === 'Vos mots de passe ne sont pas identiques!' &&
+              'border-error-600'
             }`}
             type="password"
             name="confirmPassword"

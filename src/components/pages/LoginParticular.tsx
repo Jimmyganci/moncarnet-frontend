@@ -8,7 +8,6 @@ import { glassMorphism, input, appear } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function Login() {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -25,7 +24,7 @@ function Login() {
             password: password,
           },
           { withCredentials: true },
-        )  
+        )
         .then((res) => res.data)
         .then((data) => {
           console.log(`User ${data} connected`);
@@ -33,7 +32,10 @@ function Login() {
         })
         .catch((err) => {
           if (err.response.status === 401) setMessage(`Mot de passe incorrect.`);
-          if (err.response.status === 403) setMessage(`Ce compte a été supprimé. Veuillez utiliser un autre compte ou en créer un nouveau`);
+          if (err.response.status === 403)
+            setMessage(
+              `Ce compte a été supprimé. Veuillez utiliser un autre compte ou en créer un nouveau`,
+            );
           else if (err.response.status === 404) setMessage(`Cette email n'existe pas.`);
         });
     } else {
@@ -45,22 +47,27 @@ function Login() {
     <div className="flex flex-col h-screen">
       <Link to="/" className="absolute">
         <button
-          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2 ${appear}`}>
+          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2 ${appear}`}
+        >
           <img src={Return} alt="return" className="w-full h-full" />
         </button>
       </Link>
       <div className="flex flex-col items-center justify-center h-1/2">
         <div
-          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 max-w-lg ${glassMorphism}`}>
+          className={`relative flex flex-col items-center w-4/5 rounded-lg h-2/3 max-w-lg ${glassMorphism}`}
+        >
           <Logo />
           <img className="w-full pb-4 lg:p-0 h-2/3 lg:h-2/3" src={imageHome} alt="car" />
         </div>
       </div>
       <div className={`flex flex-col items-center justify-center h-1/2 ${glassMorphism}`}>
-        <h2 className={`w-1/2 text-2xl lg:text-3xl font-montserrat ${appear}`}>Accéder à mon compte</h2>
+        <h2 className={`w-1/2 text-2xl lg:text-3xl font-montserrat ${appear}`}>
+          Accéder à mon compte
+        </h2>
         <form
           className={`flex flex-col items-center w-full max-w-lg mt-4 ${appear}`}
-          onSubmit={(e: React.FormEvent) => handleLogin(e)}>
+          onSubmit={(e: React.FormEvent) => handleLogin(e)}
+        >
           <input
             className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus lg:mb-2 lg:h-1/6`}
             type="email"
@@ -83,7 +90,8 @@ function Login() {
           <p className="text-error-600">{message}</p>
           <button
             className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
-            type="submit">
+            type="submit"
+          >
             Se connecter
           </button>
         </form>
