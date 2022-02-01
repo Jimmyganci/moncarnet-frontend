@@ -19,7 +19,7 @@ function Login() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/particular/login',
+          'http://localhost:8000/api/login_user',
           {
             email: email,
             password: password,

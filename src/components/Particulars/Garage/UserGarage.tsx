@@ -14,7 +14,7 @@ function UserGarage() {
       if (userLogin.id_user !== undefined) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/api/users/pros/${userLogin.id_user}`,
+            `http://localhost:8000/api/users/${userLogin.id_user}/pros`,
             {
               withCredentials: true,
             },

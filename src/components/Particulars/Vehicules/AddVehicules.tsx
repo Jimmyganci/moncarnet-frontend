@@ -27,7 +27,7 @@ function AddVehicules() {
           withCredentials: true,
         });
         setBrandList(getBrand.data);
-        const getType = await axios.get('http://localhost:8000/api/types/all', {
+        const getType = await axios.get('http://localhost:8000/api/types', {
           withCredentials: true,
         });
         setTypeList(getType.data);
@@ -54,7 +54,7 @@ function AddVehicules() {
     formData.append('file', file);
     try {
       const upload = await axios.post(
-        `http://localhost:8000/api/vehicules/upload`,
+        `http://localhost:8000/api/vehicules/${immat.length > 0 && immat}/upload`,
         formData,
         { withCredentials: true },
       );

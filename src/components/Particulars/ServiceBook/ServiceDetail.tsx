@@ -22,7 +22,7 @@ const ServiceDetail = () => {
     async function getservice() {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/service_book/${id_service_book}`,
+          `http://localhost:8000/api/service_books/${id_service_book}`,
           { withCredentials: true },
         );
         setInfosService(res.data);

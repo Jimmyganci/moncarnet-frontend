@@ -22,7 +22,7 @@ console.log(infosAppointments)
     useEffect(() => {
         async function getAppointments() {
             try {
-                const res = await axios.get(`http://localhost:8000/api/appointment/user/${userLogin.id_user}`, {
+                const res = await axios.get(`http://localhost:8000/api/users/${userLogin.id_user}/appointments`, {
                     withCredentials: true,
                   });
                 if (res.status === 200) {

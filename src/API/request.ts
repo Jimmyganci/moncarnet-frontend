@@ -6,7 +6,7 @@ import ModelInfos from '../Interfaces/IModelInfos';
 import ProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
-import IUserInfos from '../Interfaces/IUserInfos';
+import IUserInfos from '../Interfaces/IuserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -119,11 +119,11 @@ export const service_book = {
 export const login = {
   admin: (admin: { email: string; password: string }) =>
     axios
-      .post(`${API_URL}/auth/admin/login`, admin, { withCredentials: true })
+      .post(`${API_URL}login_admin`, admin, { withCredentials: true })
       .then((res) => res.status),
 };
 
 export const isLoggin = {
   get: () =>
-    axios.get(`${API_URL}/auth/login`, { withCredentials: true }).then((res) => res.data),
+    axios.get(`${API_URL}/connected`, { withCredentials: true }).then((res) => res.data),
 };

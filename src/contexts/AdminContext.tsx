@@ -14,7 +14,7 @@ export const AdminContextProvider = ({ children }: any) => {
   // set current user to nothing !
   const logOut = async function () {
     return await axios.post(
-      'http://localhost:8000/api/auth/logout',
+      'http://localhost:8000/api/logout',
       {},
       { withCredentials: true },
     );

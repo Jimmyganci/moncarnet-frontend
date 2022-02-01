@@ -10,7 +10,7 @@ import { button } from '../../../variableTailwind';
 function Appointments() {
 
   const { prosLogin }: any = useContext(ProsContext);
-
+  console.log(prosLogin);
   const [rdvArray, setRdvArray] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
 
@@ -22,6 +22,7 @@ function Appointments() {
 
   useEffect(() => {    
     prosLogin.length !==0 && axios
+    /* `http://localhost:8000/api/pros/${prosLogin.id_user}/users/${prosLogin.id_user}/appointments` */
       .get(`http://localhost:8000/api/appointment/pros/${prosLogin.id_user}`, { withCredentials: true })
       .then((res) => res.data)
       .then((data) => setRdvArray(data))
