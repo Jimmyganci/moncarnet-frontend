@@ -3,7 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import UserContext from '../../../contexts/UserContext';
-import { button, glassMorphism, glassMorphismWhiteShadow } from '../../../variableTailwind';
+import {
+  button,
+  glassMorphism,
+  glassMorphismWhiteShadow,
+} from '../../../variableTailwind';
 
 const ServiceDetail = () => {
   const { vehiculeImmatToUpdate, id_service_book }: any = useParams();
@@ -54,16 +58,21 @@ const ServiceDetail = () => {
 
   return (
     <div className="flex items-center justify-center w-screen h-full lg:h-screen">
-      <div className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}>
+      <div
+        className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}
+      >
         <h3>
           <span className="pr-2 border-r-2 border-background text-2xl">
             {infosVehicule.length &&
               infosVehicule[0].brand + ' ' + infosVehicule[0].model}
           </span>
-          <span className="pl-2 text-2xl">{infosVehicule.length && infosVehicule[0].immat}</span>
+          <span className="pl-2 text-2xl">
+            {infosVehicule.length && infosVehicule[0].immat}
+          </span>
         </h3>
         <form
-          className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 mt-4 items-center justify-center`}>
+          className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 mt-4 items-center justify-center`}
+        >
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Date</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
@@ -101,7 +110,8 @@ const ServiceDetail = () => {
         </form>
         <Link
           className="mt-2 w-fit h-fit"
-          to={`/particular/vehicules/${vehiculeImmatToUpdate}/serviceBook`}>
+          to={`/particular/vehicules/${vehiculeImmatToUpdate}/serviceBook`}
+        >
           <button className={`w-fit h-fit p-2 px-4 ${button}`}>Retour au carnet</button>
         </Link>
       </div>
