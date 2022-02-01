@@ -34,7 +34,9 @@ function GarageDetails() {
         { withCredentials: true },
       );
       setMessage(res.data);
-      if (res.status === 200) {setMessage(`Le garage "${infosPros.name}" a été ajouté à vos favoris`)}
+      if (res.status === 200) {
+        setMessage(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
+      }
     } catch (err: any) {
       if (err.response.status === 409)
         setMessage("Ce garage est déjà l'un de vos favoris");
@@ -46,7 +48,7 @@ function GarageDetails() {
       <div className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}>
         <img className="w-2/6 m-4" src={garage} alt="garage" />
         <h1 className="text-3xl">{infosPros.name}</h1>
-  
+
         <div className="mt-4 mb-4">
           <p className="underline">Adresse</p>
           <p>{infosPros.address}</p>
@@ -69,7 +71,9 @@ function GarageDetails() {
         <button className={button}>
           <Link to="/particular/garage">Retour</Link>
         </button>
-        <p className={message.includes("déjà") ? "text-error-500" : "text-valid-500"}>{message}</p>
+        <p className={message.includes('déjà') ? 'text-error-500' : 'text-valid-500'}>
+          {message}
+        </p>
       </div>
     </div>
   );

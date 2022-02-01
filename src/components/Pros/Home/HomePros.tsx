@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
-import ProsContext from '../../../contexts/ProsContext';
+import React from 'react';
 import { h1 } from '../../../variableTailwind';
 import NextRdvs from './NextRdvs';
 
 function HomePros() {
-  const { prosLogin }: any = useContext(ProsContext);
 
   return (
     <div className="w-full h-full">

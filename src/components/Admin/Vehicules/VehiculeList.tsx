@@ -33,7 +33,8 @@ function VehiculeList() {
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
           <div
-            className={`grid grid-cols-7 ${glassMorphism} pt-2 pb-2 rounded-lg items-center `}>
+            className={`grid grid-cols-7 ${glassMorphism} pt-2 pb-2 rounded-lg items-center `}
+          >
             <p>Type</p>
             <p>Immatriculation</p>
             <p>Mise en circulation</p>

@@ -3,5 +3,6 @@ export default interface IProsInfos {
     comment: string;
     user: string;
     id_appointment: number;
+    immat: string;
   }
   

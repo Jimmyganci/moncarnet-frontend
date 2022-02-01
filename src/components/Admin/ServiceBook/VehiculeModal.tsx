@@ -23,9 +23,11 @@ function VehiculeModal({ vehicule, setShowVehicule }: IProps) {
 
   return (
     <div
-      className={`backdrop-filter backdrop-blur-lg fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
+      className={`backdrop-filter backdrop-blur-lg fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}
+    >
       <div
-        className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30`}>
+        className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30`}
+      >
         <div className="flex flex-col items-center justify-center w-full">
           <div className="mb-4">
             <img className="w-32" src={carLogo} alt="car_logo" />

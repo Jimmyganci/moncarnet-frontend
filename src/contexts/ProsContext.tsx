@@ -49,7 +49,17 @@ export const ProsContextProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <ProsContext.Provider value={{ prosLogin, setProsLogin, logOut, showModal, setShowModal, rdvToDisplay, setRdvToDisplay }}>
+    <ProsContext.Provider
+      value={{
+        prosLogin,
+        setProsLogin,
+        logOut,
+        showModal,
+        setShowModal,
+        rdvToDisplay,
+        setRdvToDisplay,
+      }}
+    >
       {children}
     </ProsContext.Provider>
   );

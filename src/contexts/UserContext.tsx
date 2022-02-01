@@ -58,35 +58,37 @@ export const UserContextProvider = ({ children }: any) => {
                 { withCredentials: true },
               );
               if (userVehicule.status === 200) {
-                const results = await userVehicule.data.filter((veh:any) => veh.active === true ).map(async (el: any) => {
-                  const promise1 = axios.get(
-                    `http://localhost:8000/api/vehicules/${el.immat}/brand`,
-                    { withCredentials: true },
-                  );
-                  const promise2 = axios.get(
-                    `http://localhost:8000/api/vehicules/${el.immat}/model`,
-                    { withCredentials: true },
-                  );
-                  const promise3 = axios.get(
-                    `http://localhost:8000/api/vehicules/${el.immat}/type`,
-                    { withCredentials: true },
-                  );
-                  const getInfosVehicule = await Promise.all([
-                    promise1,
-                    promise2,
-                    promise3,
-                  ]);
+                const results = await userVehicule.data
+                  .filter((veh: any) => veh.active === true)
+                  .map(async (el: any) => {
+                    const promise1 = axios.get(
+                      `http://localhost:8000/api/vehicules/${el.immat}/brand`,
+                      { withCredentials: true },
+                    );
+                    const promise2 = axios.get(
+                      `http://localhost:8000/api/vehicules/${el.immat}/model`,
+                      { withCredentials: true },
+                    );
+                    const promise3 = axios.get(
+                      `http://localhost:8000/api/vehicules/${el.immat}/type`,
+                      { withCredentials: true },
+                    );
+                    const getInfosVehicule = await Promise.all([
+                      promise1,
+                      promise2,
+                      promise3,
+                    ]);
 
-                  data.push({
-                    ...el,
-                    brand: getInfosVehicule[0].data.models.brand.name,
-                    model: getInfosVehicule[1].data.models.name,
-                    type: getInfosVehicule[2].data.types.name_type,
+                    data.push({
+                      ...el,
+                      brand: getInfosVehicule[0].data.models.brand.name,
+                      model: getInfosVehicule[1].data.models.name,
+                      type: getInfosVehicule[2].data.types.name_type,
+                    });
+                    if (data.length === results.length) {
+                      setInfosUserVehicule(data);
+                    }
                   });
-                  if (data.length === results.length) {
-                    setInfosUserVehicule(data);
-                  }
-                });
               }
             }
           } catch (err) {
@@ -98,7 +100,7 @@ export const UserContextProvider = ({ children }: any) => {
       }
     }
     getUserLogin();
-  }, [vehiculeDeleted, posted ,deleteAccount]);
+  }, [vehiculeDeleted, posted, deleteAccount]);
 
   return (
     <UserContext.Provider
@@ -114,7 +116,8 @@ export const UserContextProvider = ({ children }: any) => {
         posted,
         setPosted,
         logOut,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

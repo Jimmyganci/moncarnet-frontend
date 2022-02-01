@@ -31,14 +31,16 @@ function CustomersAdmin() {
               onClick={() => setDataSelect('particular')}
               className={`w-1/2 p-4 rounded-tl-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'particular' ? 'bg-primary-focus' : ''
-              }`}>
+              }`}
+            >
               Particulier
             </button>
             <button
               onClick={() => setDataSelect('pros')}
               className={`w-1/2 p-4 rounded-tr-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'pros' ? 'bg-primary-focus' : ''
-              }`}>
+              }`}
+            >
               Professionnels
             </button>
           </div>
