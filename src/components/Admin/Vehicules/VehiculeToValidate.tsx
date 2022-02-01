@@ -44,7 +44,8 @@ function VehiculeToValidate() {
             </div>
           ) : (
             <p
-              className={`${glassMorphism}`}>{`Vous n'avez aucun véhicule à vérifier`}</p>
+              className={`${glassMorphism}`}
+            >{`Vous n'avez aucun véhicule à vérifier`}</p>
           )}
           <div>
             {dataVehicules?.map((vehicule, index) => (

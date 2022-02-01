@@ -3,7 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../../contexts/UserContext';
-import { button, clearedGreenButton, glassMorphism, input, title } from '../../../variableTailwind';
+import {
+  button,
+  clearedGreenButton,
+  glassMorphism,
+  input,
+  title,
+} from '../../../variableTailwind';
 
 function AddVehicules() {
   const [brandList, setBrandList] = useState<any>([]);
@@ -89,7 +95,8 @@ function AddVehicules() {
       {posted === false && (
         <form
           onSubmit={(e) => handleUpload(e)}
-          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
+          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}
+        >
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
@@ -111,7 +118,8 @@ function AddVehicules() {
               name="type"
               id="type"
               required
-              onChange={(e) => setType(e.target.value)}>
+              onChange={(e) => setType(e.target.value)}
+            >
               <option value="">Selectionnez un type de véhicule</option>
               {typeList.map((el: any) => (
                 <option key={el.id_type} value={el.id_type}>
@@ -147,7 +155,8 @@ function AddVehicules() {
               name="model"
               id="model"
               required
-              onChange={(e) => setModel(e.target.value)}>
+              onChange={(e) => setModel(e.target.value)}
+            >
               <option value="">Selectionner un modèle</option>
               {modelList.map((el: any) => (
                 <option key={el.id_model} value={el.id_model}>
@@ -183,16 +192,22 @@ function AddVehicules() {
         </form>
       )}
       {posted && (
-        <div className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
-          <h3 className="w-3/4 my-5 text-4xl h-1/6 lg:pt-6">Véhicule ajouté avec succès</h3>
+        <div
+          className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}
+        >
+          <h3 className="w-3/4 my-5 text-4xl h-1/6 lg:pt-6">
+            Véhicule ajouté avec succès
+          </h3>
           <p className="w-3/4 my-5 h-3/6 lg:pt-20">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>
           <button className={`${clearedGreenButton} w-4/6 my-5 h-1/6 py-2`}>
-            <Link to="/particular/vehicules" className='w-full h-full'>Mes véhicules</Link>
+            <Link to="/particular/vehicules" className="w-full h-full">
+              Mes véhicules
+            </Link>
           </button>
-      </div>
+        </div>
       )}
     </div>
   );

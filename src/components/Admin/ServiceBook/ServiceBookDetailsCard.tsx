@@ -34,7 +34,8 @@ function ServiceBookDetailsCard({ serviceBook, setShowPros, setProsId }: CardPro
           setProsId && setProsId(serviceBook.id_pros);
           setShowPros && setShowPros(true);
         }}
-        className="underline hover:text-background">
+        className="underline hover:text-background"
+      >
         {prosData?.name}
       </button>
     </div>

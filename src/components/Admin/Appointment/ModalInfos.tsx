@@ -48,9 +48,11 @@ function ModalInfos({
     <div>
       {showUser && userData && (
         <div
-          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}
+        >
           <div
-            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}
+          >
             <div>
               <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
@@ -77,7 +79,8 @@ function ModalInfos({
 
             <button
               onClick={() => setShowUser && setShowUser(false)}
-              className={`${button}`}>
+              className={`${button}`}
+            >
               Fermer
             </button>
           </div>
@@ -85,9 +88,11 @@ function ModalInfos({
       )}
       {showPros && prosData && (
         <div
-          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}
+        >
           <div
-            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}
+          >
             <div>
               <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
@@ -114,7 +119,8 @@ function ModalInfos({
 
             <button
               onClick={() => setShowPros && setShowPros(false)}
-              className={`${button}`}>
+              className={`${button}`}
+            >
               Fermer
             </button>
           </div>

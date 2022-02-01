@@ -1,11 +1,9 @@
-import React, { useContext,useEffect,useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { h1, input } from '../../../variableTailwind';
 import ProsContext from '../../../contexts/ProsContext';
 import axios from 'axios';
 
-
 function CreateAppointments() {
-
   const { prosLogin }: any = useContext(ProsContext);
   const [customer, setCustomer] = useState('');
   const [date, setDate] = useState('');
@@ -21,13 +19,13 @@ function CreateAppointments() {
 
   // Check validity of rdv's date :
 
-  const dateCompare = (today:string, rdvDate:string) => {
+  const dateCompare = (today: string, date: string) => {
     if (today < date) {
       setValivRdv(true);
     } else {
       setValivRdv(false);
     }
-  }
+  };
 
   useEffect(() => {
     dateCompare(today, date);
@@ -36,13 +34,13 @@ function CreateAppointments() {
   // Looking for customers in database
 
   useEffect(() => {
-    prosLogin.id_user && axios
-    .get(
-      `http://localhost:8000/api/pros/${prosLogin.id_user}/users`,
-      { withCredentials: true },
-    )
-    .then((res) => res.data)
-    .then((data) => setCustomersList(data))
+    prosLogin.id_user &&
+      axios
+        .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, {
+          withCredentials: true,
+        })
+        .then((res) => res.data)
+        .then((data) => setCustomersList(data));
   }, [prosLogin]);
 
   // Create rdv in database
@@ -57,17 +55,17 @@ function CreateAppointments() {
             userId: parseInt(chosenCustomer),
             prosId: prosLogin.id_user,
             date: appointmentDate,
-            comment: details
+            comment: details,
           },
           { withCredentials: true },
         )
         .then((res) => {
           res.data;
-          setMessage('Rendez-vous créé')
+          setMessage('Rendez-vous créé');
         })
-        
+
         .catch((err) => {
-         console.log(err)
+          console.log(err);
         });
     } else {
       setMessage('Veuillez remplir les champs.');
@@ -75,62 +73,74 @@ function CreateAppointments() {
   };
 
   return (
-    <div className="h-full w-full">
-      <h1 className={`${h1}`}>
-      Créer un RDV
-      </h1>
+    <div className="w-full h-full">
+      <h1 className={`${h1}`}>Créer un RDV</h1>
       <form
-          className="flex flex-col items-center w-full h-5/6 justify-around"
-          onSubmit={(e: React.FormEvent) => handleCreateRdv(e)} >
-          <label htmlFor="client">Nom du client</label>
-          <input
-            className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus`}
-            type="text"
-            name="client"
-            id="client"
-            placeholder="Rechercher un client"
-            onChange={(e) => setCustomer(e.target.value)}
-          />
-          <select name="customer" id="client" onChange={(e) => setChosenCustomer(e.target.value)}>
-            <option defaultValue={""}>Aucun client sélectionné</option>
-            {customersList.filter(e => e.lastname.toLowerCase().includes(customer.toLowerCase()))
-              .map((client: any)=> 
-              <option value={client.id_user} key={client.id_user}>{client.lastname} {client.firstname}</option>)}
-          </select>
-          <label htmlFor="date">Date</label>
-          <input
-            className={`w-3/4 ${input}`}
-            type="date"
-            name="date"
-            id="date"
-            placeholder="Choisissez une date"
-            onChange={(e) => setDate(e.target.value)}
-          />
-           <input
-            className={`w-3/4 ${input}`}
-            type="time"
-            name="time"
-            id="time"
-            placeholder="Choisissez une heure"
-            onChange={(e) => setTime(e.target.value)}
-          />
-          {valideRdv ? '' : <p className='text-red-700'>La date sélectionnée est antérieure à aujourd'hui</p>}
-          <label htmlFor="details">Détails</label>
-          <input
-            className={`w-3/4 ${input}`}
-            type="text"
-            name="details"
-            id="details"
-            placeholder="Détails"
-            onChange={(e) => setDetails(e.target.value)}
-          />
-          <p className="text-error-600">{message}</p>
-          <button
-            className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
-            type="submit">
-            Créer
-          </button>
-        </form>
+        className="flex flex-col items-center justify-around w-full h-5/6"
+        onSubmit={(e: React.FormEvent) => handleCreateRdv(e)}>
+        <label htmlFor="client">Nom du client</label>
+        <input
+          className={`w-3/4 p-2 mb-4 text-center border rounded-md bg-primary-hovered border-primary outline-primary-focus`}
+          type="text"
+          name="client"
+          id="client"
+          placeholder="Rechercher un client"
+          onChange={(e) => setCustomer(e.target.value)}
+        />
+        <select
+          name="customer"
+          id="client"
+          onChange={(e) => setChosenCustomer(e.target.value)}>
+          <option defaultValue={''}>Aucun client sélectionné</option>
+          {customersList
+            .filter((e) => e.lastname.toLowerCase().includes(customer.toLowerCase()))
+            .map((client: any) => (
+              <option value={client.id_user} key={client.id_user}>
+                {client.lastname} {client.firstname}
+              </option>
+            ))}
+        </select>
+        <label htmlFor="date">Date</label>
+        <input
+          className={`w-3/4 ${input}`}
+          type="date"
+          name="date"
+          id="date"
+          placeholder="Choisissez une date"
+          onChange={(e) => setDate(e.target.value)}
+        />
+        <input
+          className={`w-3/4 ${input}`}
+          type="time"
+          name="time"
+          id="time"
+          placeholder="Choisissez une heure"
+          onChange={(e) => setTime(e.target.value)}
+        />
+        {valideRdv ? (
+          ''
+        ) : (
+          <p className="text-red-700">
+            La date sélectionnée est antérieure à aujourd'hui
+          </p>
+        )}
+        <label htmlFor="details">Détails</label>
+        <input
+          className={`w-3/4 ${input}`}
+          type="text"
+          name="details"
+          id="details"
+          placeholder="Détails"
+          onChange={(e) => setDetails(e.target.value)}
+        />
+        <p className="text-error-600">{message}</p>
+        <button
+          className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
+          type="submit"
+        >
+          Créer
+        </button>
+      </form>
     </div>
   );
 }

@@ -40,7 +40,8 @@ function VehiculeCard({ vehicule, setUserId, setShowUser }: VehiculeProps) {
           setUserId && setUserId(vehicule.userId);
           setShowUser && setShowUser(true);
         }}
-        className="underline hover:text-background">
+        className="underline hover:text-background"
+      >
         {vehicule.userName}
       </button>
 

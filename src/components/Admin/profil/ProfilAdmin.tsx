@@ -14,7 +14,8 @@ function ProfilAdmin() {
           <h1 className="text-3xl uppercase text-background">Profil</h1>
         </div>
         <div
-          className={`flex flex-col items-center mt-4 ${glassMorphism} p-4 rounded-lg`}>
+          className={`flex flex-col items-center mt-4 ${glassMorphism} p-4 rounded-lg`}
+        >
           <div>
             <img src={profil} alt="profil_logo" />
           </div>

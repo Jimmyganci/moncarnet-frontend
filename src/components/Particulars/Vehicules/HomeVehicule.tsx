@@ -16,7 +16,8 @@ function HomeVehicule({ vehiculesSlice }: VehiculeProps) {
       {vehiculesSlice.map((el) => (
         <p
           className="w-full p-2 my-2 text-lg rounded-lg opacity-90 backdrop-filter backdrop-blur-sm shadow-second text-background shadow-background"
-          key={el.immat}>{`${el.brand} ${el.model} ${el.immat}`}</p>
+          key={el.immat}
+        >{`${el.brand} ${el.model} ${el.immat}`}</p>
       ))}
       <Link to="/particular/vehicules">
         <button className={button}>Voir tout</button>

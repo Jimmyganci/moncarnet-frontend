@@ -46,7 +46,8 @@ function AppointmentCard({
       <p>{appointment.id_appointment}</p>
       <button
         onClick={() => setShowVehicule(true)}
-        className="underline hover:text-background">
+        className="underline hover:text-background"
+      >
         {appointment.immat}
       </button>
       <p>{new Date(appointment.date).toLocaleDateString()}</p>
@@ -55,7 +56,8 @@ function AppointmentCard({
           setUserId(user.id_user);
           setShowUser(true);
         }}
-        className="underline hover:text-background">
+        className="underline hover:text-background"
+      >
         {user.lastname.toUpperCase() +
           ' ' +
           user.firstname.charAt(0).toUpperCase() +
@@ -66,7 +68,8 @@ function AppointmentCard({
           setProsId(pros.id_pros);
           setShowPros(true);
         }}
-        className="underline hover:text-background">
+        className="underline hover:text-background"
+      >
         {pros.name}
       </button>
       <p>{appointment.comment}</p>
