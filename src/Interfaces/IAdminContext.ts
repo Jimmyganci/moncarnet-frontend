@@ -1,6 +1,9 @@
-import AdminInfos from '../Interfaces/IAdminInfos';
+import React from 'react';
+
+import IAdminInfos from '../Interfaces/IAdminInfos';
+
 export default interface AppContextInterface {
-  adminLogin: Array<AdminInfos>;
-  setAdminLogin: Function;
+  adminLogin: IAdminInfos;
+  setAdminLogin: React.Dispatch<React.SetStateAction<IAdminInfos>>;
   logOut: Function;
 }

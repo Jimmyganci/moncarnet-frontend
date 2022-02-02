@@ -8,8 +8,9 @@ import WithoutAppointmentCard from './WithoutAppointmentCard';
 function UsersWithoutAppointment() {
   const [dataUsers, setDataUsers] = useState<Array<IUserInfos>>([]);
 
+  //  get all users witch doesn't never had an appointment
   async function getUsersWithoutAppointment() {
-    const res: Array<IUserInfos> = await users.getUserWithoutAppointment();
+    const res = await users.getUserWithoutAppointment();
     setDataUsers(res);
   }
 

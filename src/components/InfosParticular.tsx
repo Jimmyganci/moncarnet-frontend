@@ -1,10 +1,10 @@
+import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import axios from 'axios';
 
 import UserContext from '../contexts/UserContext';
-import InfosLine from './InfosLine';
 import { button, glassMorphism } from '../variableTailwind';
+import InfosLine from './InfosLine';
 
 function ParticularInfos() {
   const { userLogin }: any = useContext(UserContext);
@@ -50,11 +50,10 @@ function ParticularInfos() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center">
+    <div className="flex flex-col items-center w-screen h-screen">
       <h1 className="mt-8 mb-8 text-2xl text-background">Mon profil</h1>
       <div
-        className={`w-10/12 h-5/6 rounded-xl ${glassMorphism} flex flex-col items-center justify-center`}
-      >
+        className={`w-10/12 h-5/6 rounded-xl ${glassMorphism} flex flex-col items-center justify-center`}>
         <InfosLine
           champ={'prénom'}
           lineName={userLogin.firstname}
@@ -113,8 +112,7 @@ function ParticularInfos() {
         />
         <button
           className={`w-1/6 min-w-[200px] ${button}`}
-          onClick={() => (!changeMode ? setChangeMode(!changeMode) : handleInfosUser())}
-        >
+          onClick={() => (!changeMode ? setChangeMode(!changeMode) : handleInfosUser())}>
           {changeMode ? 'Valider' : 'Modifier'}
         </button>
       </div>

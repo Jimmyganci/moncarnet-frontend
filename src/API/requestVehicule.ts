@@ -1,8 +1,10 @@
 // import IModelInfos from '../Interfaces/IModelInfos';
 // import ITypeInfos from '../Interfaces/ITypeInfos';
-// import IUserInfos from '../Interfaces/IuserInfos';
+// import IUserInfos from '../Interfaces/IUserInfos';
 import IVehiculeInfos from '../Interfaces/IVehiculeInfos';
 import { model, type, users, vehicule } from './request';
+
+// (IVehiculeInfos | IModelInfos | ITypeInfos | IUserInfos)[][]
 
 type infosRequested = {
   immat: string;
@@ -22,7 +24,7 @@ export const getVehicules = async (
       await type.getOne(vehic.id_typeId),
       await users.getOne(vehic.id_userId),
     ]),
-  ).then((results: any) =>
+  ).then((results) =>
     results.map(([vehicule, model, type, user]: any) => {
       return {
         immat: vehicule.immat,

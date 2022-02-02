@@ -3,13 +3,15 @@ import axios from 'axios';
 import AppointmentInfos from '../Interfaces/IAppointmentInfos';
 import BrandInfos from '../Interfaces/IBrandInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
-import ProsInfos from '../Interfaces/IPros';
+import IProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import IUserInfos from '../Interfaces/IuserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+
+//  model API
 
 export const admin = {
   getOne: (idAdmin: number) =>
@@ -19,7 +21,7 @@ export const admin = {
 };
 
 export const appointment = {
-  getAll: () =>
+  getAll: (): Promise<AppointmentInfos[]> =>
     axios
       .get(`${API_URL}/appointments`, { withCredentials: true })
       .then((res) => res.data),
@@ -45,7 +47,7 @@ export const users = {
 export const pros = {
   getAll: () =>
     axios.get(`${API_URL}/pros`, { withCredentials: true }).then((res) => res.data),
-  getOne: (prosId: number): Promise<ProsInfos> =>
+  getOne: (prosId: number): Promise<IProsInfos> =>
     axios
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
