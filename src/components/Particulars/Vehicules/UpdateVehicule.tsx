@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState, useRef, PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import { Link, Params, useParams } from 'react-router-dom';
 
 import UserContext from '../../../contexts/UserContext';
@@ -17,7 +17,7 @@ function UpdateVehicule() {
   const [file, setFile] = useState<any>();
   const { infosUserVehicule }: any = useContext(UserContext);
   const { posted, setPosted }: any = useContext(UserContext);
-  const {vehiculeImmatToUpdate}:any= useParams();
+  const { vehiculeImmatToUpdate }: any = useParams();
   const [infosVehicule, setInfosVehicule] = useState<any>([]);
   const refDate: any = useRef();
   const refCard: any = useRef();
@@ -73,25 +73,26 @@ function UpdateVehicule() {
           formData,
           { withCredentials: true },
         );
-      uploadedGreenCard = resUpload.data.url;
-    }
-       
-       
-    const putVehicule = await axios.put(`http://localhost:8000/api/vehicules/${vehiculeImmatToUpdate}`,
-      {
-        immat: immat.toUpperCase() || vehiculeImmatToUpdate,
-        registration_date: registrationDate || infosVehicule[0].registration_date,
-        url_vehiculeRegistration: uploadedGreenCard || infosVehicule[0].url_vehiculeRegistration,
-        id_modelId: parseInt(model) || infosVehicule[0].id_modelId,
-        id_typeId: parseInt(type) || infosVehicule[0].id_typeId,
-        id_userId: parseInt(infosVehicule[0].id_userId),
-        active: true,
-        validate: false
-      },
-      {
-        withCredentials: true,
-      },
-    );
+        uploadedGreenCard = resUpload.data.url;
+      }
+
+      const putVehicule = await axios.put(
+        `http://localhost:8000/api/vehicules/${vehiculeImmatToUpdate}`,
+        {
+          immat: immat.toUpperCase() || vehiculeImmatToUpdate,
+          registration_date: registrationDate || infosVehicule[0].registration_date,
+          url_vehiculeRegistration:
+            uploadedGreenCard || infosVehicule[0].url_vehiculeRegistration,
+          id_modelId: parseInt(model) || infosVehicule[0].id_modelId,
+          id_typeId: parseInt(type) || infosVehicule[0].id_typeId,
+          id_userId: parseInt(infosVehicule[0].id_userId),
+          active: true,
+          validate: false,
+        },
+        {
+          withCredentials: true,
+        },
+      );
       if (putVehicule.status === 204) {
         setPosted(true);
       }
@@ -101,14 +102,13 @@ function UpdateVehicule() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full h-full">
       {posted === false && (
-        <div className="h-full w-full flex flex-col items-center m-auto">
+        <div className="flex flex-col items-center w-full h-full m-auto">
           <h1 className={title}>Modifier votre véhicule</h1>
           <form
             onSubmit={(e) => handleUpdate(e)}
-            className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}
-          >
+            className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
             <label className="flex flex-col w-full text-lg font-semibold">
               Immatriculation
               <p className="text-sm">Format (AA-111-AA)</p>
@@ -128,8 +128,7 @@ function UpdateVehicule() {
                 className={`${input}`}
                 name="type"
                 id="type"
-                onChange={(e) => setType(e.target.value)}
-              >
+                onChange={(e) => setType(e.target.value)}>
                 <option value="">{infosVehicule.length && infosVehicule[0].type}</option>
                 {typeList.map((el: any) => (
                   <option key={el.id_type} value={el.id_type}>
@@ -165,8 +164,7 @@ function UpdateVehicule() {
                 className={input}
                 name="model"
                 id="model"
-                onChange={(e) => setModel(e.target.value)}
-              >
+                onChange={(e) => setModel(e.target.value)}>
                 <option value={model}>
                   {infosVehicule.length && infosVehicule[0].model}
                 </option>
@@ -220,12 +218,11 @@ function UpdateVehicule() {
       )}
       {posted && (
         <div
-          className={`h-full w-5/6 my-20 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}
-        >
-          <h3 className="w-3/4 h-3/6 mb-10 mt-15 pt-10 text-4xl">
+          className={`h-full w-5/6 my-20 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
+          <h3 className="w-3/4 pt-10 mb-10 text-4xl h-3/6 mt-15">
             Véhicule modifié avec succès
           </h3>
-          <p className="w-3/4 h-4/6 my-5">
+          <p className="w-3/4 my-5 h-4/6">
             Vous pouvez maintenant consulter les informations de votre vehicule depuis
             votre compte utilisateur
           </p>

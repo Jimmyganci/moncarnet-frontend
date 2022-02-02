@@ -6,7 +6,7 @@ import ModelInfos from '../Interfaces/IModelInfos';
 import IProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
-import IUserInfos from '../Interfaces/IuserInfos';
+import IUserInfos from '../Interfaces/IUserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -55,9 +55,7 @@ export const pros = {
 
 export const vehicule = {
   getAll: () =>
-    axios
-      .get(`${API_URL}/vehicules`, { withCredentials: true })
-      .then((res) => res.data),
+    axios.get(`${API_URL}/vehicules`, { withCredentials: true }).then((res) => res.data),
   getVehiculeNoValidate: () =>
     axios
       .get(`${API_URL}/vehicules/?noValidate=true`, { withCredentials: true })
