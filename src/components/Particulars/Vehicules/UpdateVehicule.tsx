@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
-import { Link, Params, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 import UserContext from '../../../contexts/UserContext';
 import { button, glassMorphism, input, title } from '../../../variableTailwind';

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import { title, select } from '../../variableTailwind';
+import { select, title } from '../../variableTailwind';
 import CardVehicule from '../Particulars/Vehicules/CardVehicule';
 
 function Vehicules() {
@@ -27,8 +27,7 @@ function Vehicules() {
             className="w-6 h-6 ml-4 text-background"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+            stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -42,8 +41,7 @@ function Vehicules() {
         className={select}
         name="listVehicule"
         id="listVehicule"
-        onChange={(e) => getVehiculeSelected(e.target.value)}
-      >
+        onChange={(e) => getVehiculeSelected(e.target.value)}>
         {infosUserVehicule.map((el: any) => (
           <option className="text-black" key={el.immat} value={el.immat}>
             {`${el.brand} ${el.model} | ${el.immat}`}

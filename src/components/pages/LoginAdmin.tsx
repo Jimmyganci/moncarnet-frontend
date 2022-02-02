@@ -13,15 +13,9 @@ function LoginAdmin() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const loginAdmin = await toast.promise(
-      login.admin({ email, password }),
-      {
-        error: 'Email ou mot de passe invalide!',
-      },
-      {
-        position: toast.POSITION.BOTTOM_CENTER,
-      },
-    );
+    const loginAdmin = await toast.promise(login.admin({ email, password }), {
+      error: 'Email ou mot de passe invalide!',
+    });
     if (loginAdmin === 200) navigate('/admin/home');
   };
   return (

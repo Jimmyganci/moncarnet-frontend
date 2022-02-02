@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { upload, vehicule } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import {
   button,
@@ -59,29 +60,19 @@ function AddVehicules() {
     formData.append('immat', immat);
     formData.append('file', file);
     try {
-      const upload = await axios.post(
-        `http://localhost:8000/api/vehicules/${immat.length > 0 && immat}/upload`,
-        formData,
-        { withCredentials: true },
-      );
-      if (upload) {
-        const postVehicule = await axios.post(
-          'http://localhost:8000/api/vehicules/',
-          {
-            immat: immat.toUpperCase(),
-            registration_date: registrationDate,
-            url_vehiculeRegistration: upload.data.url,
-            id_modelId: parseInt(model),
-            id_typeId: parseInt(type),
-            id_userId: parseInt(userLogin.id_user),
-            validate: false,
-            active: true,
-          },
-          {
-            withCredentials: true,
-          },
-        );
-        if (postVehicule.status === 200) {
+      const uploadFile = await upload.post(immat, formData);
+      if (uploadFile) {
+        const postVehicule = await vehicule.post({
+          immat: immat.toUpperCase(),
+          registration_date: new Date(registrationDate),
+          url_vehiculeRegistration: uploadFile.data.url,
+          id_modelId: parseInt(model),
+          id_typeId: parseInt(type),
+          id_userId: parseInt(userLogin.id_user),
+          validate: false,
+          active: true,
+        });
+        if (postVehicule === 200) {
           setPosted(true);
         }
       }
