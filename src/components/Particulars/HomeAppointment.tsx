@@ -1,43 +1,39 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import UserContext from '../../contexts/UserContext';
-import { glassMorphism, title, h2, borderGlass, button } from '../../variableTailwind';
 import { BsArrowUpCircle } from 'react-icons/bs';
+
+import { users } from '../../API/request';
+import UserContext from '../../contexts/UserContext';
+import { borderGlass, button, glassMorphism, h2, title } from '../../variableTailwind';
 import Plate from '../Plate';
 
 const HomeAppointment = () => {
-    const { userLogin }: any = useContext(UserContext);
-    const [infosAppointments, setInfosAppointments] = useState<any>([]);
-    const [pros, setPros] = useState<any>([]);
-    const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
-    const [showAll, setShowAll] = useState<boolean>(false);
-    const [showAllPast, setShowAllPast] = useState<boolean>(false);
-    console.log(infosAppointments);
-    console.log(pros);
+  const { userLogin }: any = useContext(UserContext);
+  const [infosAppointments, setInfosAppointments] = useState<any>([]);
+  const [pros, setPros] = useState<any>([]);
+  const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const [showAllPast, setShowAllPast] = useState<boolean>(false);
 
-    // Date of the day
-    let today = new Date().toISOString();
-console.log(infosAppointments)
-    useEffect(() => {
-        async function getAppointments() {
-            try {
-                const res = await axios.get(`http://localhost:8000/api/users/${userLogin.id_user}/appointments`, {
-                    withCredentials: true,
-                  });
-                if (res.status === 200) {
-                    const resPros = await axios.get(`http://localhost:8000/api/pros/`, {
-                        withCredentials: true,
-                    });
-                setInfosAppointments(res.data);
-                setPros(resPros.data); 
-            }}
-
-            catch (err) {
-                console.log(err);
-            }
-        };
-        getAppointments();
-    }, [userLogin]);
+  // Date of the day
+  let today = new Date().toISOString();
+  useEffect(() => {
+    async function getAppointments() {
+      try {
+        const res = await users.appointments(userLogin.id_user);
+        if (res) {
+          const resPros = await axios.get(`http://localhost:8000/api/pros/`, {
+            withCredentials: true,
+          });
+          setInfosAppointments(res);
+          setPros(resPros.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getAppointments();
+  }, [userLogin]);
 
   const dateDisplay = (element: Array<any>) => {
     const wholeDate = element.slice(0, 10);
@@ -59,8 +55,7 @@ console.log(infosAppointments)
       </div>
       <div className="flex flex-col justify-center w-11/12 lg:h-4/6 lg:ml-20 lg:flex-row lg:justify-around">
         <div
-          className={`${glassMorphism} w-full max-w-xl rounded-lg pb-4 lg:w-5/12 lg:h-fit`}
-        >
+          className={`${glassMorphism} w-full max-w-xl rounded-lg pb-4 lg:w-5/12 lg:h-fit`}>
           <div className="flex flex-col items-center justify-around">
             <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
             {infosAppointments.length !== 0 &&
@@ -76,8 +71,7 @@ console.log(infosAppointments)
                 .map((app: any, index: number) => (
                   <div key={index} className={`${borderGlass} w-11/12 mb-2 lg:mt-6`}>
                     <div
-                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}
-                    >
+                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate immat={app.immat} postalCode={'64'} />
                     </div>
                     <p>
@@ -112,11 +106,9 @@ console.log(infosAppointments)
                 .map((app: any, index: number) => (
                   <div
                     key={index}
-                    className={`${borderGlass} w-11/12 mb-2 ${showAll ? '' : 'hidden'}`}
-                  >
+                    className={`${borderGlass} w-11/12 mb-2 ${showAll ? '' : 'hidden'}`}>
                     <div
-                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}
-                    >
+                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate immat={app.immat} postalCode={'64'} />
                     </div>
                     <p className="">
@@ -142,7 +134,8 @@ console.log(infosAppointments)
           <p
             className="cursor-pointer hover:underline"
             onClick={() => setShowAll(!showAll)}
-          >
+            onKeyDown={() => setShowAll(!showAll)}
+            role="presentation">
             {showAll ? 'Retour' : 'Voir tout'}
           </p>
         </div>
@@ -152,16 +145,14 @@ console.log(infosAppointments)
             showPastAppointments
               ? `${glassMorphism} mt-6 pt-3 lg:flex lg:flex-col lg:h-fit lg:mt-0`
               : ''
-          } w-full max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}
-        >
+          } w-full max-w-xl rounded-lg pb-4 lg:flex lg:items-center lg:justify-center lg:w-5/12`}>
           <div className="flex flex-col items-center justify-center w-full lg:justify-around">
             <button
               className={`${button} text-md font-inter max-w-md mb-2 w-4/6 flex justify-center`}
               onClick={() => {
                 setShowPastAppointments(!showPastAppointments);
                 setShowAllPast(false);
-              }}
-            >
+              }}>
               {showPastAppointments ? (
                 <BsArrowUpCircle className="text-lg font-bold" />
               ) : (
@@ -183,11 +174,9 @@ console.log(infosAppointments)
                     key={index}
                     className={`${borderGlass} w-11/12 mb-2 ${
                       showPastAppointments ? '' : 'hidden'
-                    }`}
-                  >
+                    }`}>
                     <div
-                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}
-                    >
+                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate immat={app.immat} postalCode={'64'} />
                     </div>
                     <p className="">
@@ -224,11 +213,9 @@ console.log(infosAppointments)
                     key={index}
                     className={`${borderGlass} w-11/12 mb-2 ${
                       showAllPast ? '' : 'hidden'
-                    }`}
-                  >
+                    }`}>
                     <div
-                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}
-                    >
+                      className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate immat={app.immat} postalCode={'64'} />
                     </div>
                     <p className="">
@@ -256,7 +243,8 @@ console.log(infosAppointments)
               showPastAppointments ? '' : 'hidden'
             }`}
             onClick={() => setShowAllPast(!showAllPast)}
-          >
+            onKeyDown={() => setShowAllPast(!showAllPast)}
+            role="presentation">
             {showAllPast ? 'Retour' : 'Voir tout'}
           </p>
         </div>

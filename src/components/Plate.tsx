@@ -5,7 +5,7 @@ import stars from '../assets/stars.png';
 
 interface IPlate {
   immat: string;
-  postalCode: number;
+  postalCode: string;
 }
 
 const Plate: React.FC<IPlate> = ({ immat, postalCode }) => {

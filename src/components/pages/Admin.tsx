@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { vehicule } from '../../API/request';
+import IVehiculeInfos from '../../Interfaces/IVehiculeInfos';
 import SideBarAdmin from '../Admin/SideBar/SideBarAdmin';
 
 function Admin() {
-  const [vehiculeToValidate, setVehiculeToValidate] = useState([]);
+  const [vehiculeToValidate, setVehiculeToValidate] = useState<IVehiculeInfos[]>();
 
   useEffect(() => {
     async function getVoitureToValidate() {
