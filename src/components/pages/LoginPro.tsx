@@ -18,7 +18,7 @@ function LoginPro() {
     if (email && password) {
       axios
         .post(
-          'http://localhost:8000/api/auth/pros/login',
+          'http://localhost:8000/api/login_pro',
           {
             email: email,
             password: password,

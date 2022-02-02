@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import ModalDeleteVehicule from './../ModalDeleteVehicule';
+import ModalDeleteVehicule from '../ParticularInfos/ModalDeleteVehicule';
 import {
   glassMorphism,
   glassMorphismWhiteShadow,

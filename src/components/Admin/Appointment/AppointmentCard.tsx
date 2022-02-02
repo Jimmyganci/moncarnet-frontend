@@ -29,6 +29,8 @@ function AppointmentCard({
   setOneVehicule,
   setShowVehicule,
 }: AppointmentProps) {
+  // get one Vehicule and call the getVehicules...
+  //...functions to have all informations about this vehicule (put the array of vehicule in the parameter of this function)
   async function getVehicule() {
     const response = await vehicule.getOne(appointment.immat);
     if (response) {
@@ -60,7 +62,7 @@ function AppointmentCard({
       >
         {user.lastname.toUpperCase() +
           ' ' +
-          user.firstname.charAt(0).toUpperCase() +
+          user.firstname.charAt(0).toUpperCase() + // format firstname and lastname
           user.firstname.slice(1)}
       </button>
       <button

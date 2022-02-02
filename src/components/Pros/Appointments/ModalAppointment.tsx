@@ -14,10 +14,12 @@ interface InfosRdv {
   user: string;
   comment: string;
   id_appointment: number;
+  immat: string;
 }
 
-const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => {
-  const { setShowModal }: any = useContext(ProsContext);
+const ModalAppointment = ({ date, user, comment, id_appointment, immat }: InfosRdv) => {
+
+  const { setShowModal } : any = useContext(ProsContext);
   const [changeMode, setChangeMode] = useState(false);
   const [dayUpdate, setDayUpdate] = useState('');
   const [hoursUpdate, setHoursUpdate] = useState('');
@@ -41,27 +43,23 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
 
   const [deleteRdvStatus, setDeleteRdvStatus] = useState(0);
 
-  const deleteAppointment = () => {
-    axios
-      .delete(`http://localhost:8000/api/appointment/${id_appointment}`, {
-        withCredentials: true,
-      })
-      .then((res) => res.status)
-      .then((el) => setDeleteRdvStatus(el))
-      .catch(() => setDeleteRdvStatus(500));
-    setTimeout(() => location.reload(), 1500);
-  };
+    const deleteAppointment = () => {
+       axios
+          .delete(`http://localhost:8000/api/appointments/${id_appointment}`, { withCredentials: true })
+          .then((res) => res.status)
+          .then((el) => setDeleteRdvStatus(el))
+          .catch(() => setDeleteRdvStatus(500));
+          setTimeout(() => location.reload(), 1500); 
+        }
 
   // Update Appointment
 
-  async function updateAppointment() {
-    try {
-      const res = await axios
-        .put(
-          `http://localhost:8000/api/appointment/${id_appointment}`,
-          {
-            date: appointmentDate || date,
+      async function updateAppointment () {
+        try {
+          const res = await axios.put(`http://localhost:8000/api/appointments/${id_appointment}`,
+          { date: appointmentDate || date,
             comment: commentUpdate || comment,
+            immat: immat,
             user: user,
           },
           {

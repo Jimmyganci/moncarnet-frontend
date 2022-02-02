@@ -19,15 +19,12 @@ const NextRdvs = () => {
 
   // Search RDV from this pro
 
-  useEffect(() => {
-    prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/appointment/pros/${prosLogin.id_user}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setNextRdv(data))
-        .catch((err) => console.log(err));
+  useEffect(() => {    
+    prosLogin.length !==0 && axios
+      .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/appointments`, { withCredentials: true })
+      .then((res) => res.data)
+      .then((data) => setNextRdv(data))
+      .catch((err) => console.log(err));
   }, [prosLogin]);
 
   // Search user's from this pro
@@ -45,11 +42,13 @@ const NextRdvs = () => {
 
   // Display correctly the date
 
-  const dateDisplay = (element: Array<any>) => {
-    const wholeDate = element.date.slice(0, 10);
-    const day = wholeDate.slice(8, 10);
-    const month = wholeDate.slice(5, 7);
-    const year = wholeDate.slice(0, 4);
+   // Display correctly the date
+   
+   const dateDisplay = (element:any) => {
+    const wholeDate =element.date.slice(0,10);
+    const day = wholeDate.slice(8,10);
+    const month = wholeDate.slice(5,7);
+    const year = wholeDate.slice(0,4);
     const orderedDate = `${day}-${month}-${year}`;
     const hourDate = element.date.slice(11, 16);
     return `${orderedDate} à ${hourDate}`;
@@ -61,27 +60,23 @@ const NextRdvs = () => {
         <img className="w-12" src={calendar} alt="calendar" />
         <h2 className={`${h2}`}>Mes prochains RDVs</h2>
       </div>
-      {nextRdv.length !== 0 &&
-        users.length !== 0 &&
-        nextRdv
-          .filter((e: any) => e.date > today)
-          .sort(function (a: any, b: any) {
+        {nextRdv.length !== 0 && users.length !== 0 &&
+          nextRdv
+          .filter((rdvFilter:any) => rdvFilter.date > today)
+          .sort((function(a:any, b:any) {
             a = new Date(a.date);
             b = new Date(b.date);
             return b > a ? -1 : a < b ? 1 : 0;
-          })
+          }))
           .slice(0, 3)
-          .map((e: any, i: number) => (
-            <ProRdv
-              key={i}
-              date={dateDisplay(e)}
-              comment={e.comment}
-              user={
-                users.find((el:any) => el.id_user === e.userId).firstname +
-                ' ' +
-                users.find((el:any) => el.id_user === e.userId).lastname
-              }
-              id_appointment={e.id_appointment}
+          .map((rdvMap:any, i:number) => (
+            <ProRdv 
+            key={i} 
+            date={dateDisplay(rdvMap)} 
+            comment={rdvMap.comment} 
+            user={users.find((el:any) => el.id_user === rdvMap.userId).firstname + " " + users.find((el:any) => el.id_user === rdvMap.userId).lastname}
+            id_appointment={rdvMap.id_appointment}
+            immat={rdvMap.immat}
             />
           ))}
       <div className="flex justify-around">

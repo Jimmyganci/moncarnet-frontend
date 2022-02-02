@@ -3,13 +3,15 @@ import axios from 'axios';
 import AppointmentInfos from '../Interfaces/IAppointmentInfos';
 import BrandInfos from '../Interfaces/IBrandInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
-import ProsInfos from '../Interfaces/IPros';
+import IProsInfos from '../Interfaces/IPros';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import IUserInfos from '../Interfaces/IUserInfos';
 import VehiculeInfos from '../Interfaces/IVehiculeInfos';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+
+//  model API
 
 export const admin = {
   getOne: (idAdmin: number) =>
@@ -19,33 +21,33 @@ export const admin = {
 };
 
 export const appointment = {
-  getAll: () =>
+  getAll: (): Promise<AppointmentInfos[]> =>
     axios
-      .get(`${API_URL}/appointment`, { withCredentials: true })
+      .get(`${API_URL}/appointments`, { withCredentials: true })
       .then((res) => res.data),
   getOne: (appointmentId: number): Promise<AppointmentInfos> =>
     axios
-      .get(`${API_URL}/appointment/${appointmentId}`, { withCredentials: true })
+      .get(`${API_URL}/appointments/${appointmentId}`, { withCredentials: true })
       .then((res) => res.data),
 };
 
 export const users = {
   getAll: () =>
-    axios.get(`${API_URL}/users/all`, { withCredentials: true }).then((res) => res.data),
+    axios.get(`${API_URL}/users`, { withCredentials: true }).then((res) => res.data),
   getOne: (idUser: number): Promise<IUserInfos> =>
     axios
       .get(`${API_URL}/users/${idUser}`, { withCredentials: true })
       .then((res) => res.data),
   getUserWithoutAppointment: () =>
     axios
-      .get(`${API_URL}/users/withoutAppointment`, { withCredentials: true })
+      .get(`${API_URL}/users/?appointments=NULL`, { withCredentials: true })
       .then((res) => res.data),
 };
 
 export const pros = {
   getAll: () =>
     axios.get(`${API_URL}/pros`, { withCredentials: true }).then((res) => res.data),
-  getOne: (prosId: number): Promise<ProsInfos> =>
+  getOne: (prosId: number): Promise<IProsInfos> =>
     axios
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
@@ -53,12 +55,10 @@ export const pros = {
 
 export const vehicule = {
   getAll: () =>
-    axios
-      .get(`${API_URL}/vehicules/all`, { withCredentials: true })
-      .then((res) => res.data),
+    axios.get(`${API_URL}/vehicules`, { withCredentials: true }).then((res) => res.data),
   getVehiculeNoValidate: () =>
     axios
-      .get(`${API_URL}/vehicules/all?noValidate=true`, { withCredentials: true })
+      .get(`${API_URL}/vehicules/?noValidate=true`, { withCredentials: true })
       .then((res) => res.data),
   getOne: (immat: string): Promise<VehiculeInfos> =>
     axios
@@ -76,7 +76,7 @@ export const vehicule = {
       .then((res) => res.data),
   getVehiculeWithoutServiceBook: (): Promise<VehiculeInfos[]> =>
     axios
-      .get(`${API_URL}/vehicules/withoutServiceBook`, { withCredentials: true })
+      .get(`${API_URL}/vehicules/?service_book=NULL`, { withCredentials: true })
       .then((res) => res.data),
 };
 
@@ -104,26 +104,26 @@ export const type = {
 export const service_book = {
   getAll: () =>
     axios
-      .get(`${API_URL}/service_book`, { withCredentials: true })
+      .get(`${API_URL}/service_books`, { withCredentials: true })
       .then((res) => res.data),
   getServiceBookVehicule: (immat: string): Promise<ServiceBookInfos[]> =>
     axios
-      .get(`${API_URL}/service_book/vehicule/${immat}`, { withCredentials: true })
+      .get(`${API_URL}/vehicules/${immat}/service_book`, { withCredentials: true })
       .then((res) => res.data),
   getOne: (idServiceBook: number): Promise<ServiceBookInfos> =>
     axios
-      .get(`${API_URL}/service_book/${idServiceBook}`, { withCredentials: true })
+      .get(`${API_URL}/service_books/${idServiceBook}`, { withCredentials: true })
       .then((res) => res.data),
 };
 
 export const login = {
   admin: (admin: { email: string; password: string }) =>
     axios
-      .post(`${API_URL}/auth/admin/login`, admin, { withCredentials: true })
+      .post(`${API_URL}/login_admin`, admin, { withCredentials: true })
       .then((res) => res.status),
 };
 
 export const isLoggin = {
   get: () =>
-    axios.get(`${API_URL}/auth/login`, { withCredentials: true }).then((res) => res.data),
+    axios.get(`${API_URL}/connected`, { withCredentials: true }).then((res) => res.data),
 };

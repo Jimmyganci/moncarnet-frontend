@@ -6,40 +6,38 @@ import { BsArrowUpCircle } from 'react-icons/bs';
 import Plate from '../Plate';
 
 const HomeAppointment = () => {
-  const { userLogin }: any = useContext(UserContext);
-  const [infosAppointments, setInfosAppointments] = useState<any>([]);
-  const [pros, setPros] = useState<any>([]);
-  const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
-  const [showAll, setShowAll] = useState<boolean>(false);
-  const [showAllPast, setShowAllPast] = useState<boolean>(false);
-  console.log(infosAppointments);
-  console.log(pros);
+    const { userLogin }: any = useContext(UserContext);
+    const [infosAppointments, setInfosAppointments] = useState<any>([]);
+    const [pros, setPros] = useState<any>([]);
+    const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
+    const [showAll, setShowAll] = useState<boolean>(false);
+    const [showAllPast, setShowAllPast] = useState<boolean>(false);
+    console.log(infosAppointments);
+    console.log(pros);
 
-  // Date of the day
-  let today = new Date().toISOString();
-  console.log(infosAppointments);
-  useEffect(() => {
-    async function getAppointments() {
-      try {
-        const res = await axios.get(
-          `http://localhost:8000/api/appointment/user/${userLogin.id_user}`,
-          {
-            withCredentials: true,
-          },
-        );
-        if (res.status === 200) {
-          const resPros = await axios.get(`http://localhost:8000/api/pros/`, {
-            withCredentials: true,
-          });
-          setInfosAppointments(res.data);
-          setPros(resPros.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getAppointments();
-  }, [userLogin]);
+    // Date of the day
+    let today = new Date().toISOString();
+console.log(infosAppointments)
+    useEffect(() => {
+        async function getAppointments() {
+            try {
+                const res = await axios.get(`http://localhost:8000/api/users/${userLogin.id_user}/appointments`, {
+                    withCredentials: true,
+                  });
+                if (res.status === 200) {
+                    const resPros = await axios.get(`http://localhost:8000/api/pros/`, {
+                        withCredentials: true,
+                    });
+                setInfosAppointments(res.data);
+                setPros(resPros.data); 
+            }}
+
+            catch (err) {
+                console.log(err);
+            }
+        };
+        getAppointments();
+    }, [userLogin]);
 
   const dateDisplay = (element: Array<any>) => {
     const wholeDate = element.slice(0, 10);

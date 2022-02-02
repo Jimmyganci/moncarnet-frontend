@@ -11,9 +11,11 @@ import ModalAppointment from '../Pros/Appointments/ModalAppointment';
 function Pros() {
   // Return Home after logout !
   const navigate: NavigateFunction = useNavigate();
-
-  // access userContext !
-  const { logOut, showModal, rdvToDisplay }: any = useContext(ProsContext);
+  
+    // access userContext !
+    const { logOut, showModal, rdvToDisplay }: any = useContext(ProsContext);
+    rdvToDisplay.length && console.log(rdvToDisplay);
+    
 
   return (
     <div className="flex items-center h-screen">
@@ -38,12 +40,12 @@ function Pros() {
       </div>
       {showModal && rdvToDisplay && (
         <ModalAppointment
-          date={rdvToDisplay[0]}
-          user={rdvToDisplay[1]}
-          comment={rdvToDisplay[2]}
-          id_appointment={rdvToDisplay[3]}
-        />
-      )}
+        date = {rdvToDisplay[0]}
+        user = {rdvToDisplay[1]}
+        comment = {rdvToDisplay[2]}
+        id_appointment={rdvToDisplay[3]}
+        immat = {rdvToDisplay}
+        />)}
     </div>
   );
 }

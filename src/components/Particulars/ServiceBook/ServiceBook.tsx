@@ -35,9 +35,9 @@ const ServiceBook = () => {
     async function getservices() {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/service_book/vehicule/${
+          `http://localhost:8000/api/vehicules/${
             vehiculeSelected.length ? vehiculeSelected[0].immat : infosVehicule[0].immat
-          }`,
+          }/service_book`,
           { withCredentials: true },
         );
         setServices(res.data);
@@ -50,7 +50,7 @@ const ServiceBook = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full pb-5 lg:h-screen">
-      <div className="flex flex-col items-center justify-around w-full h-full lg:h-5/6 max-w-xl">
+      <div className="flex flex-col items-center justify-around w-full h-full max-w-xl lg:h-5/6">
         <h2 className={title}>Mon carnet d&apos;entretien</h2>
         <select
           className={select}

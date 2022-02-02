@@ -11,9 +11,9 @@ const RdvDisplay: React.FC<Props> = (props) => {
 
   const handleSetModal = () => {
     setShowModal(true);
-    setRdvToDisplay([props.date, props.user, props.comment, props.id_appointment]);
-  };
-
+    setRdvToDisplay([props.date, props.user, props.comment, props.id_appointment, props.immat]);
+  }
+  
   return (
     <div
       className={`m-4 p-4 h-1/6 flex justify-around items-center rounded-lg ${glassMorphism}`}

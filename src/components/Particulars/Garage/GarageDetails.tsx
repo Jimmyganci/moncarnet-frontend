@@ -29,12 +29,12 @@ function GarageDetails() {
   const handleChoiceGarage = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/users/pros/${userLogin.id_user}`,
-        { idPros: infosPros.id_pros },
+        `http://localhost:8000/api/users/${userLogin.id_user}/pros/${infosPros.id_pros}`,
+        {},
         { withCredentials: true },
       );
       setMessage(res.data);
-      if (res.status === 200) {
+      if (res.status === 204) {
         setMessage(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
       }
     } catch (err: any) {
@@ -44,10 +44,9 @@ function GarageDetails() {
   };
 
   return (
-    <div className="h-full w-full py-5 flex justify-center">
+    <div className="flex justify-center w-full h-full py-5">
       <div
-        className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}
-      >
+        className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}>
         <img className="w-2/6 m-4" src={garage} alt="garage" />
         <h1 className="text-3xl">{infosPros.name}</h1>
 

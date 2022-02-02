@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
-import { button } from '../../variableTailwind';
+import UserContext from '../../../contexts/UserContext';
+import { button } from '../../../variableTailwind';
 
 interface ModalProps {
   deleteConfirmation?: boolean | null;

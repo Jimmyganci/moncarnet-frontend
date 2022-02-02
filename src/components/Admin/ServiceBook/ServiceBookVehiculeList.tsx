@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { service_book } from '../../../API/request';
-// import ProsInfos from '../../../Interfaces/IPros';
 import ServiceBookInfos from '../../../Interfaces/IServiceBook';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';

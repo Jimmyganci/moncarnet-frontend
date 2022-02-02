@@ -21,7 +21,7 @@ export const ProsContextProvider = ({ children }: any) => {
   // set current user to nothing !
   const logOut = async function () {
     return await axios.post(
-      'http://localhost:8000/api/auth/logout',
+      'http://localhost:8000/api/logout',
       {},
       { withCredentials: true },
     );
@@ -37,7 +37,7 @@ export const ProsContextProvider = ({ children }: any) => {
   useEffect(() => {
     async function getProsLogin() {
       try {
-        const response = await axios.get('http://localhost:8000/api/auth/login', {
+        const response = await axios.get('http://localhost:8000/api/connected', {
           withCredentials: true,
         });
         setProsLogin(response.data);
