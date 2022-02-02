@@ -2,8 +2,16 @@ import React from 'react';
 
 import logo from '../../../assets/logo.svg';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
+<<<<<<< Updated upstream
 import home from '../../../assets/minimalist_logos/home.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
+=======
+import customers from '../../../assets/minimalist_logos/customers.svg';
+import home from '../../../assets/minimalist_logos/home.svg';
+import invoice from '../../../assets/minimalist_logos/invoice.svg';
+import profile from '../../../assets/minimalist_logos/profile.svg';
+import quote from '../../../assets/minimalist_logos/quote.svg';
+>>>>>>> Stashed changes
 import { glassMorphism, h3 } from '../../../variableTailwind';
 import SideLink from './SideLink';
 
@@ -14,12 +22,39 @@ const SideBar = () => {
       path: '/pros/home',
       logo: home,
       alt: 'accueil logo',
+<<<<<<< Updated upstream
     },
     {
       label: 'Mes RDVs',
       path: '/pros/appointments',
       logo: calendar,
       alt: 'rdv logo',
+=======
+    },
+    {
+      label: 'Mes Clients',
+      path: '/pros/customers',
+      logo: customers,
+      alt: 'clients logo',
+    },
+    {
+      label: 'Mes RDVs',
+      path: '/pros/appointments',
+      logo: calendar,
+      alt: 'rdv logo',
+    },
+    {
+      label: 'Mes Factures',
+      path: '/pros/invoices',
+      logo: invoice,
+      alt: 'factures logo',
+    },
+    {
+      label: 'Mes Devis',
+      path: '/pros/quotes',
+      logo: quote,
+      alt: 'devis logo',
+>>>>>>> Stashed changes
     },
     {
       label: 'Mon Profil',

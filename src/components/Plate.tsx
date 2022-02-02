@@ -3,12 +3,21 @@ import React from 'react';
 import miniLogo from '../assets/logo.svg';
 import stars from '../assets/stars.png';
 
+<<<<<<< Updated upstream
 interface IPlate {
   immat: string;
   postalCode: number;
 }
 
 const Plate: React.FC<IPlate> = ({ immat, postalCode }) => {
+=======
+type PlateProps = {
+  immat: string;
+  postalCode: number;
+};
+
+const Plate: React.FC<PlateProps> = ({ immat, postalCode }) => {
+>>>>>>> Stashed changes
   return (
     <div className="box-border flex items-center justify-between w-full h-full p-0 m-0 overflow-hidden rounded-lg">
       <div className="h-full w-[15%] m-0 pb-2 bg-gradient-to-tr from-blue-500 to-blue-700 text-background flex flex-col-reverse justify-center items-center overflow-hidden box-border">
