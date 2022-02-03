@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useContext, useState } from 'react';
-import { h1 } from '../../../variableTailwind';
+import React, { useContext, useEffect, useState } from 'react';
+
 import ProsContext from '../../../contexts/ProsContext';
-import { h2, button } from '../../../variableTailwind';
-import InfosLine from '../../InfosLine';
+import { h1 } from '../../../variableTailwind';
+import { button, h2 } from '../../../variableTailwind';
+import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
 
 const Profile = () => {
   const { prosLogin }: any = useContext(ProsContext);
@@ -132,8 +133,9 @@ const Profile = () => {
           </div>
           <button
             className={`w-1/6 ${button}`}
-            onClick={() => (!changeMode ? setChangeMode(!changeMode) : handleInfosUser())}
-          >
+            onClick={() =>
+              !changeMode ? setChangeMode(!changeMode) : handleInfosUser()
+            }>
             {changeMode ? 'Valider' : 'Modifier'}
           </button>
         </main>
