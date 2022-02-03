@@ -116,8 +116,7 @@ export const UserContextProvider = ({ children }: any) => {
         posted,
         setPosted,
         logOut,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );

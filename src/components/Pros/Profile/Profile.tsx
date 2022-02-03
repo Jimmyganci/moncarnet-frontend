@@ -1,6 +1,7 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
+import { pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
@@ -20,12 +21,7 @@ const Profile = () => {
 
   useEffect(() => {
     prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/pros/${prosLogin.id_user}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setInfoUser(data));
+      pros.getOne(prosLogin.id_user).then((data) => setInfoUser(data));
   }, [prosLogin]);
 
   const handleInfosUser = () => {
@@ -39,24 +35,24 @@ const Profile = () => {
 
   async function getInfosPros() {
     try {
-      const res = await axios.put(
-        `http://localhost:8000/api/pros/${prosLogin.id_user}`,
-        {
-          name: nameUpdate || infoUser.name,
-          email: emailUpdate || infoUser.email,
-          address: addressUpdate || infoUser.address,
-          postal_code: parseInt(postalUpdate) || parseInt(infoUser.postal_code),
-          city: cityUpdate || infoUser.city,
-          phone: phoneUpdate || infoUser.phone,
-          siret: siretUpdate || infoUser.siret,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await pros.put(prosLogin.id_user, {
+        name: nameUpdate || infoUser.name,
+        email: emailUpdate || infoUser.email,
+        address: addressUpdate || infoUser.address,
+        postal_code: parseInt(postalUpdate) || parseInt(infoUser.postal_code),
+        city: cityUpdate || infoUser.city,
+        phone: phoneUpdate || infoUser.phone,
+        siret: siretUpdate || infoUser.siret,
+      });
+      if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
+
       refreshPage();
     } catch (err) {
       console.log(err);
+      if (err)
+        toast.error(
+          "Une erreur s'est produite, vos informations n'ont pas été modifiées!",
+        );
     }
   }
 
