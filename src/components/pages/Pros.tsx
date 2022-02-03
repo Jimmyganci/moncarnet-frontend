@@ -15,7 +15,6 @@ function Pros() {
 
   // access userContext !
   const { logOut, showModal, rdvToDisplay }: any = useContext(ProsContext);
-  rdvToDisplay.length && console.log(rdvToDisplay);
 
   return (
     <div className="flex items-center h-screen">

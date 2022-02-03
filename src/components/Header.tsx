@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
+import { Link } from 'react-router-dom';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+
+import UserContext from '../contexts/UserContext';
 import { glassMorphism } from '../variableTailwind';
 import Logo from './Logo';
 
@@ -20,14 +21,12 @@ const Header = () => {
     <div
       className={`ease-in-out duration-300 overflow-hidden ${
         showMenu ? 'h-screen' : 'h-16 mb-[10vw]'
-      } ${glassMorphism}`}
-    >
+      } ${glassMorphism}`}>
       <nav className={`flex h-16 items-center justify-between pl-4 pr-4 relative`}>
         <div
           onClick={() => setShowMenu(!showMenu)}
           aria-hidden="true"
-          className="flex flex-col justify-around h-10 cursor-pointer w-11"
-        >
+          className="flex flex-col justify-around h-10 cursor-pointer w-11">
           <span className={spanBurgerMenu}></span>
           <span className={spanBurgerMenu}></span>
           <span className={spanBurgerMenu}></span>
@@ -44,8 +43,7 @@ const Header = () => {
               className="w-full cursor-pointer hover:text-white"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -60,29 +58,25 @@ const Header = () => {
         <li
           onClick={() => setShowMenu(false)}
           aria-hidden="true"
-          className="mt-4 text-2xl font-medium tracking-widest"
-        >
+          className="mt-4 text-2xl font-medium tracking-widest">
           <Link to="/particular/vehicules">Mes véhicules</Link>
         </li>
         <li
           className="mt-4 text-2xl font-medium tracking-widest"
           onClick={() => setShowMenu(false)}
-          aria-hidden="true"
-        >
+          aria-hidden="true">
           <Link to="/particular/appointments">Mes rendez-vous</Link>
         </li>
         <li
           onClick={() => setShowMenu(false)}
           aria-hidden="true"
-          className="mt-4 text-2xl font-medium tracking-widest"
-        >
+          className="mt-4 text-2xl font-medium tracking-widest">
           <Link to="/particular/mygarages">Mes garages</Link>
         </li>
         <li
           onClick={() => setShowMenu(false)}
           aria-hidden="true"
-          className="mt-4 text-2xl font-medium tracking-widest"
-        >
+          className="mt-4 text-2xl font-medium tracking-widest">
           <Link to="/particular/infos">Mon profil</Link>
         </li>
         <button
@@ -91,8 +85,7 @@ const Header = () => {
             logOut().then(() => {
               return navigate('/');
             });
-          }}
-        >
+          }}>
           Se déconnecter
         </button>
       </ul>

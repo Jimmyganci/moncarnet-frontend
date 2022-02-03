@@ -37,6 +37,16 @@ export const appointment = {
     axios
       .get(`${API_URL}/appointments/${appointmentId}`, { withCredentials: true })
       .then((res) => res.data),
+  create: (data: IAppointmentInfos) =>
+    axios.post(`${API_URL}/appointments`, data, { withCredentials: true }),
+  put: (appointmentId: number, data: IAppointmentInfos) =>
+    axios.put(`${API_URL}/appointments/${appointmentId}`, data, {
+      withCredentials: true,
+    }),
+  delete: (appointmentId: number) =>
+    axios.delete(`http://localhost:8000/api/appointments/${appointmentId}`, {
+      withCredentials: true,
+    }),
 };
 //-----------------------------------------------------------//
 
@@ -94,6 +104,20 @@ export const pros = {
     axios
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
+  getAppointments: (userId: number): Promise<IAppointmentInfos[]> =>
+    axios
+      .get(`${API_URL}/pros/${userId}/appointments`, {
+        withCredentials: true,
+      })
+      .then((res) => res.data),
+  getUsers: (userId: number): Promise<IUserInfos[]> =>
+    axios
+      .get(`http://localhost:8000/api/pros/${userId}/users`, {
+        withCredentials: true,
+      })
+      .then((res) => res.data),
+  put: (prosId: number, data: IPros) =>
+    axios.put(`${API_URL}/pros/${prosId}`, data, { withCredentials: true }),
 };
 //----------------------------------------------------------//
 

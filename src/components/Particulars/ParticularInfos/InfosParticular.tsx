@@ -24,7 +24,6 @@ function ParticularInfos() {
     getInfosParticular();
     setChangeMode(!changeMode);
   };
-  console.log(userLogin);
   async function getInfosParticular() {
     try {
       const res = await users.put(userLogin.id_user, {

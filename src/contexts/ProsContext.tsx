@@ -58,8 +58,7 @@ export const ProsContextProvider = ({ children }: any) => {
         setShowModal,
         rdvToDisplay,
         setRdvToDisplay,
-      }}
-    >
+      }}>
       {children}
     </ProsContext.Provider>
   );
