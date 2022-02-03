@@ -1,8 +1,9 @@
-import { glassMorphism } from '../../../variableTailwind';
-import IProsInfos from '../../../Interfaces/IProsInfos';
-import { button } from '../../../variableTailwind';
-import ProsContext from '../../../contexts/ProsContext';
 import React, { useContext } from 'react';
+
+import ProsContext from '../../../contexts/ProsContext';
+import IProsInfos from '../../../Interfaces/IProsInfos';
+import { glassMorphism } from '../../../variableTailwind';
+import { button } from '../../../variableTailwind';
 
 type Props = IProsInfos;
 
@@ -11,23 +12,29 @@ const RdvDisplay: React.FC<Props> = (props) => {
 
   const handleSetModal = () => {
     setShowModal(true);
-    setRdvToDisplay([props.date, props.user, props.comment, props.id_appointment]);
+    setRdvToDisplay([
+      props.date,
+      props.user,
+      props.comment,
+      props.id_appointment,
+      props.immat,
+      props.userId,
+    ]);
   };
 
   return (
     <div
-      className={`m-4 p-4 h-1/6 flex justify-around items-center rounded-lg ${glassMorphism}`}
-    >
-      <div className="w-1/4 flex justify-center">
+      className={`m-4 p-4 h-1/6 flex justify-around items-center rounded-lg ${glassMorphism}`}>
+      <div className="flex justify-center w-1/4">
         <h2>{props.date}</h2>
       </div>
-      <div className="w-1/4 flex justify-center">
+      <div className="flex justify-center w-1/4">
         <p>{props.user}</p>
       </div>
-      <div className="w-1/4 flex justify-center">
+      <div className="flex justify-center w-1/4">
         <p>{props.comment.slice(0, 20) + '...'}</p>
       </div>
-      <div className="w-1/4 flex justify-center mb-2">
+      <div className="flex justify-center w-1/4 mb-2">
         <button className={`${button} p-3`} onClick={() => handleSetModal()}>
           Détails
         </button>

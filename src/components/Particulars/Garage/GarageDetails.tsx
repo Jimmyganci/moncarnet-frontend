@@ -1,7 +1,8 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { pros, users } from '../../../API/request';
 import garage from '../../../assets/garage.png';
 import UserContext from '../../../contexts/UserContext';
 import { button, glassMorphism } from '../../../variableTailwind';
@@ -15,10 +16,10 @@ function GarageDetails() {
   useEffect(() => {
     async function getInfosGarage() {
       try {
-        const res = await axios.get(`http://localhost:8000/api/pros/${prosId}`, {
-          withCredentials: true,
-        });
-        setInfosPros(res.data);
+        if (prosId) {
+          const res = await pros.getOne(Number(prosId));
+          setInfosPros(res);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -28,26 +29,21 @@ function GarageDetails() {
 
   const handleChoiceGarage = async () => {
     try {
-      const res = await axios.put(
-        `http://localhost:8000/api/users/pros/${userLogin.id_user}`,
-        { idPros: infosPros.id_pros },
-        { withCredentials: true },
-      );
+      const res = await users.addFavorite(userLogin.id_user, infosPros.id_pros);
       setMessage(res.data);
-      if (res.status === 200) {
-        setMessage(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
+      if (res.status === 204) {
+        toast.success(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
       }
     } catch (err: any) {
       if (err.response.status === 409)
-        setMessage("Ce garage est déjà l'un de vos favoris");
+        toast.error("Ce garage est déjà l'un de vos favoris");
     }
   };
 
   return (
-    <div className="h-full w-full py-5 flex justify-center">
+    <div className="flex justify-center w-full h-full py-5">
       <div
-        className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}
-      >
+        className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}>
         <img className="w-2/6 m-4" src={garage} alt="garage" />
         <h1 className="text-3xl">{infosPros.name}</h1>
 

@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { pros } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import ProsContext from '../../../contexts/ProsContext';
 import { h1 } from '../../../variableTailwind';
@@ -10,7 +10,6 @@ import RdvDisplay from './RdvDisplay';
 
 function Appointments() {
   const { prosLogin }: any = useContext(ProsContext);
-
   const [rdvArray, setRdvArray] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
 
@@ -19,34 +18,24 @@ function Appointments() {
   let today = new Date().toISOString();
 
   // Search RDV from this pro
-
-  useEffect(() => {
-    prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/appointment/pros/${prosLogin.id_user}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setRdvArray(data))
-        .catch((err) => console.log(err));
-  }, [prosLogin]);
-
   // Search user's from this pro
 
+  async function getProsAndUsers() {
+    const res = await Promise.all([
+      pros.getAppointments(prosLogin.id_user),
+      pros.getUsers(prosLogin.id_user),
+    ]);
+    setRdvArray(res[0]);
+    setUsers(res[1]);
+  }
+
   useEffect(() => {
-    prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setUsers(data))
-        .catch((err) => console.log(err));
+    if (prosLogin.id_user !== undefined) getProsAndUsers();
   }, [prosLogin]);
 
   // Display correctly the date
 
-  const dateDisplay = (element: Array<any>) => {
+  const dateDisplay = (element: any) => {
     const wholeDate = element.date.slice(0, 10);
     const day = wholeDate.slice(8, 10);
     const month = wholeDate.slice(5, 7);
@@ -66,24 +55,26 @@ function Appointments() {
         {rdvArray.length !== 0 &&
           users.length !== 0 &&
           rdvArray
-            .filter((e: any) => e.date > today)
+            .filter((rdvfilter: any) => rdvfilter.date > today)
             .sort(function (a: any, b: any) {
               a = new Date(a.date);
               b = new Date(b.date);
               return a > b ? -1 : b < a ? 1 : 0;
             })
             .reverse()
-            .map((e: any, i: number) => (
+            .map((rdv: any, i: number) => (
               <RdvDisplay
                 key={i}
-                id_appointment={e.id_appointment}
-                date={dateDisplay(e)}
-                comment={e.comment}
+                id_appointment={rdv.id_appointment}
+                date={dateDisplay(rdv)}
+                comment={rdv.comment}
+                userId={users.id_user}
                 user={
-                  users.find((el: any) => el.id_user === e.userId).firstname +
+                  users.find((el: any) => el.id_user === rdv.userId).firstname +
                   ' ' +
-                  users.find((el: any) => el.id_user === e.userId).lastname
+                  users.find((el: any) => el.id_user === rdv.userId).lastname
                 }
+                immat={rdv.immat}
               />
             ))}
       </main>

@@ -3,18 +3,19 @@ import React, { createContext, useEffect, useState } from 'react';
 
 import { admin, isLoggin } from '../API/request';
 import AppContextInterface from '../Interfaces/IAdminContext';
+import IAdminInfos from '../Interfaces/IAdminInfos';
 
 const AdminContext = createContext<AppContextInterface | null>(null);
 
 export default AdminContext;
 
 export const AdminContextProvider = ({ children }: any) => {
-  const [adminLogin, setAdminLogin] = useState([]);
+  const [adminLogin, setAdminLogin] = useState<IAdminInfos>();
 
   // set current user to nothing !
   const logOut = async function () {
     return await axios.post(
-      'http://localhost:8000/api/auth/logout',
+      'http://localhost:8000/api/logout',
       {},
       { withCredentials: true },
     );

@@ -5,7 +5,7 @@ import email from '../../../assets/minimalist_logos/email.svg';
 import house from '../../../assets/minimalist_logos/house.svg';
 import phone from '../../../assets/minimalist_logos/phone.svg';
 import profilLogo from '../../../assets/minimalist_logos/profile.svg';
-import ProsInfos from '../../../Interfaces/IPros';
+import IProsInfos from '../../../Interfaces/IPros';
 import UserInfos from '../../../Interfaces/IUserInfos';
 import { button } from '../../../variableTailwind';
 
@@ -27,9 +27,10 @@ function ModalInfos({
   prosId,
 }: ModalProps) {
   const [userData, setUserData] = useState<UserInfos>();
-  const [prosData, setProsData] = useState<ProsInfos>();
+  const [prosData, setProsData] = useState<IProsInfos>();
 
   async function getUserOrPros() {
+    //  condition for get users information or pros information
     if (userId) {
       const res = await users.getOne(userId);
       setUserData(res);

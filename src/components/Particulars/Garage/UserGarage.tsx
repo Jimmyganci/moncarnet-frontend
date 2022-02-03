@@ -1,25 +1,21 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, title } from '../../../variableTailwind';
 
 function UserGarage() {
-  const [usersGarage, setUsersGarage] = useState<Array<object>>([]);
+  const [usersGarage, setUsersGarage] = useState<IPros[]>();
   const { userLogin }: any = useContext(UserContext);
 
   useEffect(() => {
     async function getUsersGarage() {
       if (userLogin.id_user !== undefined) {
         try {
-          const res = await axios.get(
-            `http://localhost:8000/api/users/pros/${userLogin.id_user}`,
-            {
-              withCredentials: true,
-            },
-          );
-          setUsersGarage(res.data);
+          const res = await users.getGarage(userLogin.id_user);
+          setUsersGarage(res);
         } catch (err) {
           console.log(err);
         }
@@ -30,11 +26,8 @@ function UserGarage() {
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:8000/api/users/${userLogin.id_user}/prosDeleted/${idPros}`,
-        { withCredentials: true },
-      );
-      console.log(res.data);
+      const res = await users.deleteGarage(userLogin.id_user, idPros);
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -49,8 +42,7 @@ function UserGarage() {
             className="w-6 h-6"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+            stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -62,12 +54,11 @@ function UserGarage() {
       </div>
 
       <div className="m-4">
-        {usersGarage.length > 0 ? (
+        {usersGarage && usersGarage.length > 0 ? (
           usersGarage.map((el: any) => (
             <div
               className={`flex flex-col mt-4 mb-4 rounded-lg ${glassMorphism}`}
-              key={el.id_pros}
-            >
+              key={el.id_pros}>
               <div className="flex items-center justify-around p-4">
                 <div className="flex flex-col justify-center w-1/2">
                   <p>{el.name}</p>
@@ -81,8 +72,7 @@ function UserGarage() {
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"
                     viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
+                    fill="currentColor">
                     <path
                       fillRule="evenodd"
                       d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -97,8 +87,7 @@ function UserGarage() {
                   className="w-6 h-6"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
+                  stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

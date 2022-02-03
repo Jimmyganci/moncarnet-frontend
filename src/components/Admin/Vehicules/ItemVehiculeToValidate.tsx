@@ -61,8 +61,7 @@ function ItemVehiculeToValidate({
           setUserId(vehiculeData.userId);
           setShowUser(true);
         }}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {vehiculeData.userName}
       </button>
       <div className="flex justify-center">

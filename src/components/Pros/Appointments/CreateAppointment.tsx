@@ -1,7 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { h1, input } from '../../../variableTailwind';
-import ProsContext from '../../../contexts/ProsContext';
 import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { appointment, pros } from '../../../API/request';
+import ProsContext from '../../../contexts/ProsContext';
+import IVehiculeInfos from '../../../Interfaces/IVehiculeInfos';
+import { h1, input } from '../../../variableTailwind';
 
 function CreateAppointments() {
   const { prosLogin }: any = useContext(ProsContext);
@@ -9,10 +13,11 @@ function CreateAppointments() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [details, setDetails] = useState('');
-  const [message, setMessage] = useState('');
   const [customersList, setCustomersList]: Array<any> = useState([]);
   const [chosenCustomer, setChosenCustomer] = useState('');
   const [valideRdv, setValivRdv] = useState(true);
+  const [userVehicules, setUserVehicules] = useState<IVehiculeInfos[]>();
+  const [chosenImmat, setChosenImmat] = useState<string>();
   let appointmentDate = `${date}T${time}:00.000Z`;
 
   let today = new Date().toISOString();
@@ -35,42 +40,43 @@ function CreateAppointments() {
 
   useEffect(() => {
     prosLogin.id_user &&
-      axios
-        .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setCustomersList(data));
+      pros.getUsers(prosLogin.id_user).then((data) => setCustomersList(data));
   }, [prosLogin]);
 
   // Create rdv in database
 
   const handleCreateRdv = (e: React.FormEvent) => {
     e.preventDefault();
-    if (valideRdv && details && date && chosenCustomer && prosLogin) {
-      axios
-        .post(
-          'http://localhost:8000/api/appointment',
-          {
-            userId: parseInt(chosenCustomer),
-            prosId: prosLogin.id_user,
-            date: appointmentDate,
-            comment: details,
-          },
-          { withCredentials: true },
-        )
-        .then((res) => {
-          res.data;
-          setMessage('Rendez-vous créé');
+    if (valideRdv && details && date && chosenCustomer && prosLogin && chosenImmat) {
+      appointment
+        .create({
+          userId: parseInt(chosenCustomer),
+          prosId: prosLogin.id_user,
+          date: new Date(appointmentDate),
+          comment: details,
+          immat: chosenImmat,
+        })
+        .then(() => {
+          toast.success('Rendez-vous créé');
         })
 
         .catch((err) => {
           console.log(err);
         });
     } else {
-      setMessage('Veuillez remplir les champs.');
+      toast.error('Veuillez remplir les champs.');
     }
   };
+
+  useEffect(() => {
+    chosenCustomer &&
+      axios
+        .get(`http://localhost:8000/api/users/${chosenCustomer}/vehicules`, {
+          withCredentials: true,
+        })
+        .then((res) => res.data)
+        .then((data) => setUserVehicules(data));
+  }, [chosenCustomer]);
 
   return (
     <div className="w-full h-full">
@@ -93,13 +99,34 @@ function CreateAppointments() {
           onChange={(e) => setChosenCustomer(e.target.value)}>
           <option defaultValue={''}>Aucun client sélectionné</option>
           {customersList
-            .filter((e) => e.lastname.toLowerCase().includes(customer.toLowerCase()))
+            .filter((e: any) => e.lastname.toLowerCase().includes(customer.toLowerCase()))
             .map((client: any) => (
               <option value={client.id_user} key={client.id_user}>
                 {client.lastname} {client.firstname}
               </option>
             ))}
         </select>
+
+        {chosenCustomer && (
+          <div className="flex flex-col items-center justify-center">
+            <label className="pt-2" htmlFor="vehicules">
+              Véhicules du client
+            </label>
+            <select
+              className="mt-2 mb-4"
+              name="vehicules"
+              id="vehicules"
+              onChange={(e) => setChosenImmat(e.target.value)}>
+              <option defaultValue={''}>Aucun véhicule sélectionné</option>
+              {userVehicules &&
+                userVehicules.map((vehicule: any) => (
+                  <option value={vehicule.immat} key={vehicule.immat}>
+                    {vehicule.immat}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
         <label htmlFor="date">Date</label>
         <input
           className={`w-3/4 ${input}`}
@@ -121,7 +148,7 @@ function CreateAppointments() {
           ''
         ) : (
           <p className="text-red-700">
-            La date sélectionnée est antérieure à aujourd'hui
+            {`La date sélectionnée est antérieure à aujourd'hui`}
           </p>
         )}
         <label htmlFor="details">Détails</label>
@@ -133,11 +160,9 @@ function CreateAppointments() {
           placeholder="Détails"
           onChange={(e) => setDetails(e.target.value)}
         />
-        <p className="text-error-600">{message}</p>
         <button
           className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}
-          type="submit"
-        >
+          type="submit">
           Créer
         </button>
       </form>

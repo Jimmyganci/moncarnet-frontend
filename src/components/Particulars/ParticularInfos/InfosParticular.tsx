@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import axios from 'axios';
-import DeleteAccountModal from './../DeleteAccountModal';
+import { toast } from 'react-toastify';
+
+import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import { button, glassMorphism, title } from '../../../variableTailwind';
+import DeleteAccountModal from './../DeleteAccountModal';
 import InfosLine from './InfosLine';
-import { button, deleteButton, glassMorphism, title } from '../../../variableTailwind';
 
 function ParticularInfos() {
   const { userLogin }: any = useContext(UserContext);
@@ -23,27 +24,21 @@ function ParticularInfos() {
     getInfosParticular();
     setChangeMode(!changeMode);
   };
-  console.log(userLogin);
   async function getInfosParticular() {
     try {
-      const res = await axios.put(
-        `http://localhost:8000/api/users/${userLogin.id_user}`,
-        {
-          firstname: firstNameModif || userLogin.firstname,
-          lastname: lastNameModif || userLogin.lastname,
-          email: emailModif || userLogin.email,
-          phone: phoneModif || userLogin.phone,
-          address: addressModif || userLogin.address,
-          postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
-          city: cityModif || userLogin.city,
-          active: deleteAccountModal ? false : userLogin.active,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await users.put(userLogin.id_user, {
+        firstname: firstNameModif || userLogin.firstname,
+        lastname: lastNameModif || userLogin.lastname,
+        email: emailModif || userLogin.email,
+        phone: phoneModif || userLogin.phone,
+        address: addressModif || userLogin.address,
+        postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
+        city: cityModif || userLogin.city,
+        active: deleteAccountModal ? false : userLogin.active,
+      });
+      toast.success(`${res.data.firstname} vos modifications ont été modifiés`);
     } catch (err) {
-      console.log(err);
+      if (err) toast.error("Une erreur s'est produite!");
     }
   }
 
@@ -52,8 +47,7 @@ function ParticularInfos() {
       <h1 className={`${title}`}>Mon profil</h1>
       {!deleteAccountModal ? (
         <div
-          className={`w-10/12 rounded-lg ${glassMorphism} flex flex-col items-center justify-center py-6 max-w-xl`}
-        >
+          className={`w-10/12 rounded-lg ${glassMorphism} flex flex-col items-center justify-center py-6 max-w-xl`}>
           <InfosLine
             champ={'prénom'}
             lineName={userLogin.firstname}
@@ -112,14 +106,14 @@ function ParticularInfos() {
           />
           <button
             className={`w-1/6 min-w-[200px] ${button}`}
-            onClick={() => (!changeMode ? setChangeMode(!changeMode) : handleInfosUser())}
-          >
+            onClick={() =>
+              !changeMode ? setChangeMode(!changeMode) : handleInfosUser()
+            }>
             {changeMode ? 'Valider' : 'Modifier'}
           </button>
           <button
             className={`w-1/6 min-w-[200px] ${button} text-sm bg-secondary hover:bg-secondary-hovered`}
-            onClick={() => setDeleteAccountModal(true)}
-          >
+            onClick={() => setDeleteAccountModal(true)}>
             Supprimer mon compte
           </button>
         </div>

@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { users } from '../../API/request';
 import { button, glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
@@ -15,7 +17,6 @@ function SignUp() {
   const [phone, setPhone] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ function SignUp() {
     e.preventDefault();
     if (password === confirmPassword) {
       try {
-        const postUser: any = await axios.post('http://localhost:8000/api/users', {
+        const postUser = await users.post({
           firstname: firstname,
           lastname: lastname,
           email: email,
@@ -42,15 +43,16 @@ function SignUp() {
           postal_code: parseInt(addressSelect.postcode),
           city: addressSelect.city,
         });
-        setMessage(`Merci ${postUser.data.firstname}, votre compte a bien été ajouté`);
+        toast(`Merci ${postUser.firstname}, votre compte a bien été ajouté`);
         setTimeout(() => {
           navigate('/');
         }, 2000);
       } catch (err: any) {
-        if (err.response.status === 409) setMessage('Cet email existe déjà!');
+        if (err.response.status === 409) toast.error('Cet email existe déjà!');
+        if (err.response.status === 422) toast.error('Veuillez remplir tout les champs!');
       }
     } else {
-      setMessage('Vos mots de passe ne sont pas identiques!');
+      toast.error('Vos mots de passe ne sont pas identiques!');
     }
   };
 
@@ -60,8 +62,7 @@ function SignUp() {
 
       <form
         className={`w-11/12 mt-4 rounded-lg p-2 ${glassMorphism}`}
-        onSubmit={(e: React.FormEvent) => handleSignUp(e)}
-      >
+        onSubmit={(e: React.FormEvent) => handleSignUp(e)}>
         <h1 className="pt-4 pb-4 mb-4 text-2xl border-b border-background/25">
           Créer mon compte
         </h1>
@@ -101,8 +102,7 @@ function SignUp() {
         {address && (
           <select
             className="w-11/12 rounded-lg bg-background/30"
-            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}
-          >
+            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}>
             <option value="">{addressList.length} adresses trouvées</option>
             {addressList.length >= 0 &&
               addressList.map((el, index) => (
@@ -159,10 +159,7 @@ function SignUp() {
         <label id="password">
           Mot de passe
           <input
-            className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' &&
-              'border-error-600'
-            }`}
+            className={`w-full ${input} `}
             type="password"
             name="password"
             id="password"
@@ -172,19 +169,13 @@ function SignUp() {
         <label id="confirmPassword">
           Confirmez mot de passe
           <input
-            className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' &&
-              'border-error-600'
-            }`}
+            className={`w-full ${input}`}
             type="password"
             name="confirmPassword"
             id="confirmPassword"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <p className={message.includes('Merci') ? 'text-green-500' : 'text-error-600'}>
-          {message}
-        </p>
         <button className={button} type="submit">
           Valider
         </button>

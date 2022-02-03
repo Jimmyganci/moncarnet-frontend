@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ModalDeleteVehicule from './../ModalDeleteVehicule';
+
+import UserContext from '../../../contexts/UserContext';
 import {
+  clearedGreenButton,
   glassMorphism,
   glassMorphismWhiteShadow,
-  clearedGreenButton,
 } from '../../../variableTailwind';
 import Plate from '../../Plate';
-import UserContext from '../../../contexts/UserContext';
+import ModalDeleteVehicule from '../ParticularInfos/ModalDeleteVehicule';
 
 interface InfosVehicules {
   vehiculeSelect: any;
@@ -29,8 +30,7 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
   return (
     <div className="w-full h-full pb-5 lg:h-fit">
       <div
-        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}
-      >
+        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
           <div className="flex flex-col items-center w-11/12">
             {!vehiculeDeleted && (
@@ -43,14 +43,12 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
                   />
                 </div>
                 <div
-                  className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}
-                >
+                  className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
                   <p className="font-bold uppercase">{vehiculeSelect.brand}</p>
                   <p className="font-bold uppercase">{vehiculeSelect.model}</p>
                 </div>
                 <div
-                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}
-                >
+                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                   <Plate
                     immat={vehiculeSelect.immat}
                     postalCode={userLogin && userLogin.postal_code}
@@ -70,8 +68,7 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
                   <a
                     className="w-full h-full hover:underline"
                     href={vehiculeSelect.url_vehiculeRegistration}
-                    target={'blank'}
-                  >
+                    target={'blank'}>
                     <p>Voir ma carte grise</p>
                   </a>
                 </div>
@@ -99,8 +96,7 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
                   <button className={`w-full mr-1 py-2 uppercase ${clearedGreenButton}`}>
                     <Link
                       className="w-full h-full p-0 m-0"
-                      to={`/particular/vehicules/${vehiculeSelect.immat}/update`}
-                    >
+                      to={`/particular/vehicules/${vehiculeSelect.immat}/update`}>
                       Modifier
                     </Link>
                   </button>
@@ -110,8 +106,7 @@ const CardVehicule = ({ vehiculeSelect }: InfosVehicules) => {
                 </div>
                 <button
                   className={`w-full py-2 mb-4 bg-secondary hover:bg-secondary-hovered uppercase duration-300 ease-in-out rounded-lg shadow-lg text-background`}
-                  onClick={() => vehiculeSelect && setDeleteConfirmation(true)}
-                >
+                  onClick={() => vehiculeSelect && setDeleteConfirmation(true)}>
                   Supprimer
                 </button>
               </div>

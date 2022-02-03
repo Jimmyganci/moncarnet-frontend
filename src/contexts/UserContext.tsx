@@ -32,7 +32,7 @@ export const UserContextProvider = ({ children }: any) => {
   // set current user to nothing !
   const logOut = async function () {
     return await axios.post(
-      'http://localhost:8000/api/auth/logout',
+      'http://localhost:8000/api/logout',
       {},
       { withCredentials: true },
     );
@@ -41,7 +41,7 @@ export const UserContextProvider = ({ children }: any) => {
   useEffect(() => {
     async function getUserLogin() {
       try {
-        const response = await axios.get('http://localhost:8000/api/auth/login', {
+        const response = await axios.get('http://localhost:8000/api/connected', {
           withCredentials: true,
         });
 
@@ -54,7 +54,7 @@ export const UserContextProvider = ({ children }: any) => {
             user.data.active && setUserLogin(user.data);
             if (user.status === 200 && user.data.active === true) {
               const userVehicule = await axios.get(
-                `http://localhost:8000/api/users/vehicules/${response.data.id_user}`,
+                `http://localhost:8000/api/users/${response.data.id_user}/vehicules`,
                 { withCredentials: true },
               );
               if (userVehicule.status === 200) {
@@ -116,8 +116,7 @@ export const UserContextProvider = ({ children }: any) => {
         posted,
         setPosted,
         logOut,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );

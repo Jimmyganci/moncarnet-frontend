@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { upload, vehicule } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import {
   button,
@@ -33,7 +34,7 @@ function AddVehicules() {
           withCredentials: true,
         });
         setBrandList(getBrand.data);
-        const getType = await axios.get('http://localhost:8000/api/types/all', {
+        const getType = await axios.get('http://localhost:8000/api/types', {
           withCredentials: true,
         });
         setTypeList(getType.data);
@@ -59,29 +60,19 @@ function AddVehicules() {
     formData.append('immat', immat);
     formData.append('file', file);
     try {
-      const upload = await axios.post(
-        `http://localhost:8000/api/vehicules/upload`,
-        formData,
-        { withCredentials: true },
-      );
-      if (upload) {
-        const postVehicule = await axios.post(
-          'http://localhost:8000/api/vehicules/',
-          {
-            immat: immat.toUpperCase(),
-            registration_date: registrationDate,
-            url_vehiculeRegistration: upload.data.url,
-            id_modelId: parseInt(model),
-            id_typeId: parseInt(type),
-            id_userId: parseInt(userLogin.id_user),
-            validate: false,
-            active: true,
-          },
-          {
-            withCredentials: true,
-          },
-        );
-        if (postVehicule.status === 200) {
+      const uploadFile = await upload.post(immat, formData);
+      if (uploadFile) {
+        const postVehicule = await vehicule.post({
+          immat: immat.toUpperCase(),
+          registration_date: new Date(registrationDate),
+          url_vehiculeRegistration: uploadFile.data.url,
+          id_modelId: parseInt(model),
+          id_typeId: parseInt(type),
+          id_userId: parseInt(userLogin.id_user),
+          validate: false,
+          active: true,
+        });
+        if (postVehicule === 200) {
           setPosted(true);
         }
       }
@@ -95,8 +86,7 @@ function AddVehicules() {
       {posted === false && (
         <form
           onSubmit={(e) => handleUpload(e)}
-          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}
-        >
+          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
@@ -118,8 +108,7 @@ function AddVehicules() {
               name="type"
               id="type"
               required
-              onChange={(e) => setType(e.target.value)}
-            >
+              onChange={(e) => setType(e.target.value)}>
               <option value="">Selectionnez un type de véhicule</option>
               {typeList.map((el: any) => (
                 <option key={el.id_type} value={el.id_type}>
@@ -155,8 +144,7 @@ function AddVehicules() {
               name="model"
               id="model"
               required
-              onChange={(e) => setModel(e.target.value)}
-            >
+              onChange={(e) => setModel(e.target.value)}>
               <option value="">Selectionner un modèle</option>
               {modelList.map((el: any) => (
                 <option key={el.id_model} value={el.id_model}>
@@ -193,8 +181,7 @@ function AddVehicules() {
       )}
       {posted && (
         <div
-          className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}
-        >
+          className={`h-4/6 w-10/12 m-4 flex flex-col items-center justify-center rounded-lg ${glassMorphism}`}>
           <h3 className="w-3/4 my-5 text-4xl h-1/6 lg:pt-6">
             Véhicule ajouté avec succès
           </h3>

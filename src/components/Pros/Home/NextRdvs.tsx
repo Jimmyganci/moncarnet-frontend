@@ -1,11 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useContext, useState } from 'react';
-import ProsContext from '../../../contexts/ProsContext';
-import calendar from '../../../assets/minimalist_logos/calendar.svg';
-import { h2 } from '../../../variableTailwind';
-import ProRdv from './ProRdv';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { pros } from '../../../API/request';
+import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import ProsContext from '../../../contexts/ProsContext';
+import { h2 } from '../../../variableTailwind';
 import { button } from '../../../variableTailwind';
+import ProRdv from './ProRdv';
 
 const NextRdvs = () => {
   const { prosLogin }: any = useContext(ProsContext);
@@ -18,34 +19,24 @@ const NextRdvs = () => {
   let today = new Date().toISOString();
 
   // Search RDV from this pro
-
-  useEffect(() => {
-    prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/appointment/pros/${prosLogin.id_user}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setNextRdv(data))
-        .catch((err) => console.log(err));
-  }, [prosLogin]);
-
   // Search user's from this pro
 
+  async function getAppointmentsAndUsers() {
+    const res = await Promise.all([
+      pros.getAppointments(prosLogin.id_user),
+      pros.getUsers(prosLogin.id_user),
+    ]);
+    setNextRdv(res[0]);
+    setUsers(res[1]);
+  }
+
   useEffect(() => {
-    prosLogin.length !== 0 &&
-      axios
-        .get(`http://localhost:8000/api/pros/${prosLogin.id_user}/users`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data)
-        .then((data) => setUsers(data))
-        .catch((err) => console.log(err));
+    prosLogin.id_user && getAppointmentsAndUsers();
   }, [prosLogin]);
 
   // Display correctly the date
 
-  const dateDisplay = (element: Array<any>) => {
+  const dateDisplay = (element: any) => {
     const wholeDate = element.date.slice(0, 10);
     const day = wholeDate.slice(8, 10);
     const month = wholeDate.slice(5, 7);
@@ -64,24 +55,25 @@ const NextRdvs = () => {
       {nextRdv.length !== 0 &&
         users.length !== 0 &&
         nextRdv
-          .filter((e: any) => e.date > today)
+          .filter((rdvFilter: any) => rdvFilter.date > today)
           .sort(function (a: any, b: any) {
             a = new Date(a.date);
             b = new Date(b.date);
             return b > a ? -1 : a < b ? 1 : 0;
           })
           .slice(0, 3)
-          .map((e: any, i: number) => (
+          .map((rdvMap: any, i: number) => (
             <ProRdv
               key={i}
-              date={dateDisplay(e)}
-              comment={e.comment}
+              date={dateDisplay(rdvMap)}
+              comment={rdvMap.comment}
               user={
-                users.find((el:any) => el.id_user === e.userId).firstname +
+                users.find((el: any) => el.id_user === rdvMap.userId).firstname +
                 ' ' +
-                users.find((el:any) => el.id_user === e.userId).lastname
+                users.find((el: any) => el.id_user === rdvMap.userId).lastname
               }
-              id_appointment={e.id_appointment}
+              id_appointment={rdvMap.id_appointment}
+              immat={rdvMap.immat}
             />
           ))}
       <div className="flex justify-around">

@@ -1,27 +1,37 @@
-import React, { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { appointment } from '../../../API/request';
+import ProsContext from '../../../contexts/ProsContext';
 import {
-  glassMorphism,
-  h3,
   button,
   deleteButton,
+  glassMorphism,
+  h3,
   input,
 } from '../../../variableTailwind';
-import ProsContext from '../../../contexts/ProsContext';
 
 interface InfosRdv {
   date: string;
   user: string;
+  userId?: number;
   comment: string;
   id_appointment: number;
+  immat: string;
 }
 
-const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => {
-  const { setShowModal }: any = useContext(ProsContext);
+const ModalAppointment = ({
+  date,
+  user,
+  comment,
+  id_appointment,
+  immat,
+  userId,
+}: InfosRdv) => {
+  const { setShowModal, prosLogin }: any = useContext(ProsContext);
   const [changeMode, setChangeMode] = useState(false);
   const [dayUpdate, setDayUpdate] = useState('');
   const [hoursUpdate, setHoursUpdate] = useState('');
-  const [message, setMessage] = useState(0);
   const [commentUpdate, setCommentUpdate] = useState('');
   const [valideRdv, setValivRdv] = useState(true);
 
@@ -39,45 +49,42 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
 
   let appointmentDate = `${dayUpdate}T${hoursUpdate}:00.000Z`;
 
-  const [deleteRdvStatus, setDeleteRdvStatus] = useState(0);
-
-  const deleteAppointment = () => {
-    axios
-      .delete(`http://localhost:8000/api/appointment/${id_appointment}`, {
-        withCredentials: true,
-      })
-      .then((res) => res.status)
-      .then((el) => setDeleteRdvStatus(el))
-      .catch(() => setDeleteRdvStatus(500));
-    setTimeout(() => location.reload(), 1500);
-  };
+  async function deleteAppointment() {
+    try {
+      const res = await appointment.delete(id_appointment);
+      setTimeout(() => location.reload(), 1500);
+      console.log(res);
+      if (res.status === 200) toast.success('Votre rendez-vous a bien été supprimé');
+    } catch (err) {
+      if (err) toast.error('Impossible de supprimer ce rendez-vous');
+    }
+  }
 
   // Update Appointment
 
   async function updateAppointment() {
-    try {
-      const res = await axios
-        .put(
-          `http://localhost:8000/api/appointment/${id_appointment}`,
-          {
-            date: appointmentDate || date,
-            comment: commentUpdate || comment,
-            user: user,
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        .then((res) => setMessage(res.status))
-        .then(() => {
+    if (dayUpdate && hoursUpdate && commentUpdate && userId) {
+      try {
+        const res = await appointment.put(id_appointment, {
+          date: new Date(appointmentDate) || date,
+          comment: commentUpdate || comment,
+          prosId: prosLogin.id_user,
+          userId: userId,
+          immat: immat,
+        });
+        if (res.status === 200) {
+          toast.success('Votre rendez-vous a bien été modifié');
           setTimeout(() => {
             location.reload();
             setChangeMode(false);
           }, 1500);
-        });
-    } catch (err) {
-      console.log(err);
-      setMessage(500);
+        }
+      } catch (err) {
+        console.log(err);
+        if (err) toast.error('Impossible de modifier ce rendez-vous');
+      }
+    } else {
+      toast.error('Veuillez remplir tous les champs!');
     }
   }
 
@@ -101,11 +108,11 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
     <main
       className="fixed inset-0 z-10 flex justify-center w-screen h-screen align-middle"
       onClick={() => handleParentsClick()}
-    >
+      role="presentation">
       <section
         className={`m-16 p-8 rounded-lg w-4/6 ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
-      >
+        role="presentation">
         {changeMode ? (
           <div className="flex flex-col items-center justify-around h-full">
             <h2 className={`m-2 ${h3} `}>Client :</h2>
@@ -129,7 +136,7 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
               ''
             ) : (
               <p className="text-red-700">
-                La date sélectionnée est antérieure à aujourd'hui
+                {`La date sélectionnée est antérieure à aujourd'hui`}
               </p>
             )}
             <label htmlFor="details">Détails</label>
@@ -141,12 +148,6 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
               placeholder={comment}
               onChange={(e) => setCommentUpdate(e.target.value)}
             />
-            {message === 200 && (
-              <p className="text-green-700">Votre rendez-vous a bien été modifié</p>
-            )}
-            {message === 500 && (
-              <p className="text-red-500">Impossible de modifier ce rendez-vous</p>
-            )}
             <button className={`w-32 ${button}`} onClick={() => updateAppointment()}>
               Valider
             </button>
@@ -163,23 +164,15 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
                 className={`w-32 h-12 ${button}`}
                 onClick={() =>
                   !changeMode ? setChangeMode(!changeMode) : updateAppointment()
-                }
-              >
+                }>
                 {changeMode ? 'Valider' : 'Modifier'}
               </button>
               <button
                 className={`${deleteButton} w-32 mx-4 mt-2 px-4 p-2 h-12 bg-secondary hover:bg-secondary-hovered`}
-                onClick={() => deleteAppointment()}
-              >
+                onClick={() => deleteAppointment()}>
                 Supprimer
               </button>
             </div>
-            {deleteRdvStatus === 200 && (
-              <p className="text-green-700">Votre rendez-vous a bien été supprimé</p>
-            )}
-            {deleteRdvStatus === 500 && (
-              <p className="text-red-500">Impossible de supprimer ce rendez-vous</p>
-            )}
           </div>
         )}
       </section>
