@@ -60,8 +60,7 @@ const ServiceBook = () => {
           }
           name="listVehicule"
           id="listVehicule"
-          onChange={(e) => getVehiculeSelected(e.target.value)}
-        >
+          onChange={(e) => getVehiculeSelected(e.target.value)}>
           {infosVehicule &&
             infosUserVehicule.map((el: any) => (
               <option
@@ -72,16 +71,14 @@ const ServiceBook = () => {
                   infosVehicule.length && el.immat === infosVehicule[0].immat
                     ? true
                     : false
-                }
-              >
+                }>
                 {`${el.brand} ${el.model} | ${el.immat}`}
               </option>
             ))}
         </select>
         {services.length !== 0 && (
           <div
-            className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}
-          >
+            className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}>
             <h3 className={`m-4 text-xl font-bold font-inter text-background`}>
               <span className="pr-2 border-r-2 border-background">
                 {((vehiculeSelected.length && vehiculeSelected[0].brand) ||
@@ -99,8 +96,7 @@ const ServiceBook = () => {
                 services.map((service: any, index: number) => (
                   <div
                     key={index}
-                    className={`${glassMorphismWhiteShadow} h-1/4 w-11/12 max-w-lg flex flex-col justify-center items-center p-3 my-2 mb-4`}
-                  >
+                    className={`${glassMorphismWhiteShadow} h-1/4 w-11/12 max-w-lg flex flex-col justify-center items-center p-3 my-2 mb-4`}>
                     <div className="flex items-center justify-between w-full h-full">
                       <div className="flex flex-col items-center justify-center w-full h-full -ml-3 text-sm leading-7">
                         <p className="underline">{`Révision du ${service.date.slice(
@@ -124,8 +120,7 @@ const ServiceBook = () => {
                           vehiculeSelected.length
                             ? vehiculeSelected[0].immat
                             : infosVehicule[0].immat
-                        }/serviceBook/${service.id_service_book}`}
-                      >
+                        }/serviceBook/${service.id_service_book}`}>
                         <div className="flex items-center justify-center w-full h-full p-2 text-sm leading-5 break-words rounded-lg bg-primary text-background">
                           Voir détails
                         </div>
@@ -138,9 +133,8 @@ const ServiceBook = () => {
         )}
         {!services.length && (
           <div
-            className={`${glassMorphism} w-11/12 h-full mx-4 mt-6 p-4 flex flex-col justify-center items-center rounded-lg`}
-          >
-            <p>Vous n'avez pas encore enregistré d'entretien sur ce véhicule</p>
+            className={`${glassMorphism} w-11/12 h-full mx-4 mt-6 p-4 flex flex-col justify-center items-center rounded-lg`}>
+            <p>{`Vous n'avez pas encore enregistré d'entretien sur ce véhicule`}</p>
           </div>
         )}
         <Link className="mt-2 w-fit h-fit" to="/particular/vehicules">
