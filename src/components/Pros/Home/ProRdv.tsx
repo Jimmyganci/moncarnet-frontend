@@ -6,8 +6,9 @@ import { button, glassMorphism } from '../../../variableTailwind';
 
 type Props = IProsInfos;
 
-const ProRdv: React.FC<Props> = (props) => {
-  const { setShowModal, setRdvToDisplay }: any = useContext(ProsContext);
+const ProRdv: React.FC<Props> = (props : any) => {
+
+  const { setShowModal, setRdvToDisplay } = useContext(ProsContext);
 
   const handleSetModal = () => {
     setShowModal(true);

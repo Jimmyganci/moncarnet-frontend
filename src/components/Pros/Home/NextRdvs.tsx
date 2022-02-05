@@ -4,15 +4,19 @@ import { Link } from 'react-router-dom';
 import { pros } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import ProsContext from '../../../contexts/ProsContext';
+import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
 import { h2 } from '../../../variableTailwind';
 import { button } from '../../../variableTailwind';
 import ProRdv from './ProRdv';
+import IUserInfos from '../../../Interfaces/IUserInfos';
+
 
 const NextRdvs = () => {
-  const { prosLogin }: any = useContext(ProsContext);
 
-  const [nextRdv, setNextRdv] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);
+  const { prosLogin } = useContext(ProsContext);
+
+  const [nextRdv, setNextRdv] = useState<IAppointmentInfos[]>([]);
+  const [users, setUsers] = useState<IUserInfos[]>([]);
 
   // Date of the day
 
@@ -36,13 +40,13 @@ const NextRdvs = () => {
 
   // Display correctly the date
 
-  const dateDisplay = (element: any) => {
-    const wholeDate = element.date.slice(0, 10);
+  const dateDisplay = (appointment: IAppointmentInfos) => {
+    const wholeDate = appointment.date.slice(0, 10);
     const day = wholeDate.slice(8, 10);
     const month = wholeDate.slice(5, 7);
     const year = wholeDate.slice(0, 4);
     const orderedDate = `${day}-${month}-${year}`;
-    const hourDate = element.date.slice(11, 16);
+    const hourDate = appointment.date.slice(11, 16);
     return `${orderedDate} à ${hourDate}`;
   };
 
@@ -55,25 +59,26 @@ const NextRdvs = () => {
       {nextRdv.length !== 0 &&
         users.length !== 0 &&
         nextRdv
-          .filter((rdvFilter: any) => rdvFilter.date > today)
-          .sort(function (a: any, b: any) {
-            a = new Date(a.date);
-            b = new Date(b.date);
-            return b > a ? -1 : a < b ? 1 : 0;
-          })
+          .filter((rdvfilter: IAppointmentInfos) => rdvfilter.date > today)
+            .sort((a: IAppointmentInfos, b:IAppointmentInfos) => {
+              const dateA : Date = new Date(a.date);
+              const dateB : Date = new Date(b.date);
+              return dateA > dateB ? -1 : dateB < dateA ? 1 : 0;
+            })
+            .reverse()
           .slice(0, 3)
-          .map((rdvMap: any, i: number) => (
+          .map((rdv, index: number) => (
             <ProRdv
-              key={i}
-              date={dateDisplay(rdvMap)}
-              comment={rdvMap.comment}
+              key={index}
+              date={dateDisplay(rdv)}
+              comment={rdv.comment}
               user={
-                users.find((el: any) => el.id_user === rdvMap.userId).firstname +
+                users.find((user) => user.id_user === rdv.userId).firstname +
                 ' ' +
-                users.find((el: any) => el.id_user === rdvMap.userId).lastname
+                users.find((user) => user.id_user === rdv.userId).lastname
               }
-              id_appointment={rdvMap.id_appointment}
-              immat={rdvMap.immat}
+              id_appointment={rdv.id_appointment}
+              immat={rdv.immat}
             />
           ))}
       <div className="flex justify-around">

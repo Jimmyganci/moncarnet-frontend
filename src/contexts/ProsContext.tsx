@@ -1,36 +1,60 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import IPros from '../Interfaces/IPros';
+import { useCookies } from 'react-cookie';
+import IProsInfos from '../Interfaces/IProsInfos';
+
+const PRO_LOGIN_EMPTY = {
+  id_user: 0,
+  name: '',
+  address: '',
+  email: '',
+  city: '',
+  postal_code: 0,
+  siret: '',
+  phone: ''
+};
 
 interface AppContextInterface {
-  prosLogin: any;
-  setProsLogin: Function;
-  logOut: Function;
+  prosLogin: IPros;
+  setProsLogin: React.Dispatch<React.SetStateAction<IPros>>;
   showModal: boolean;
-  setShowModal: Function;
-  rdvToDisplay: Array<any>;
-  setRdvToDisplay: Function;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  rdvToDisplay: IProsInfos[]; 
+  setRdvToDisplay: React.Dispatch<React.SetStateAction<IProsInfos[]>>;
+  logout: () => void;
 }
 
-const ProsContext = createContext<AppContextInterface | null>(null);
+const ProsContext = createContext<AppContextInterface>({
+  prosLogin: PRO_LOGIN_EMPTY,  
+  setProsLogin: () => {},
+  showModal: false,
+  setShowModal: () => {},
+  rdvToDisplay: [], 
+  setRdvToDisplay: () => {},
+  logout: () => {}
+});
 
 export default ProsContext;
 
-export const ProsContextProvider = ({ children }: any) => {
-  const [prosLogin, setProsLogin] = useState<Array<object>>([]);
+type Props = { children: React.ReactNode };
+export const ProsContextProvider: React.FC<Props> = ({ children }) => {
+
+  const [prosLogin, setProsLogin] = useState <IPros>(PRO_LOGIN_EMPTY);
+
+  const removeCookie = useCookies(['user_token'])[2];
+
 
   // set current user to nothing !
-  const logOut = async function () {
-    return await axios.post(
-      'http://localhost:8000/api/logout',
-      {},
-      { withCredentials: true },
-    );
+  const logout = (): void => {
+    setProsLogin(PRO_LOGIN_EMPTY);
+    removeCookie('user_token');
   };
 
   // Display The modal Rdv
 
-  const [showModal, setShowModal] = useState(false);
-  const [rdvToDisplay, setRdvToDisplay] = useState([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [rdvToDisplay, setRdvToDisplay] = useState<IProsInfos[]>([]);
 
   // Login Pro
 
@@ -53,7 +77,7 @@ export const ProsContextProvider = ({ children }: any) => {
       value={{
         prosLogin,
         setProsLogin,
-        logOut,
+        logout,
         showModal,
         setShowModal,
         rdvToDisplay,

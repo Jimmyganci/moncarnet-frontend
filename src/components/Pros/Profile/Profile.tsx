@@ -6,22 +6,26 @@ import ProsContext from '../../../contexts/ProsContext';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
+import IPros from '../../../Interfaces/IUserInfos';
 
 const Profile = () => {
-  const { prosLogin }: any = useContext(ProsContext);
-  const [infoUser, setInfoUser]: Array<any> = useState([]);
-  const [changeMode, setChangeMode] = useState(false);
-  const [addressUpdate, setAddressUpdate] = useState('');
-  const [postalUpdate, setPostalUpdate] = useState('');
-  const [cityUpdate, setCityUpdate] = useState('');
-  const [phoneUpdate, setPhoneUpdate] = useState('');
-  const [emailUpdate, setEmailUpdate] = useState('');
-  const [nameUpdate, setNameUpdate] = useState('');
-  const [siretUpdate, setSiretUpdate] = useState('');
+
+  const { prosLogin } = useContext(ProsContext);
+
+  const [infoUser, setInfoUser]= useState<IPros[]>([]);
+  const [changeMode, setChangeMode] = useState<boolean>(false);
+  const [addressUpdate, setAddressUpdate] = useState<string>('');
+  const [postalUpdate, setPostalUpdate] = useState<string>('');
+  const [cityUpdate, setCityUpdate] = useState<string>('');
+  const [phoneUpdate, setPhoneUpdate] = useState<string>('');
+  const [emailUpdate, setEmailUpdate] = useState<string>('');
+  const [nameUpdate, setNameUpdate] = useState<string>('');
+  const [siretUpdate, setSiretUpdate] = useState<string>('');
 
   useEffect(() => {
-    prosLogin.length !== 0 &&
-      pros.getOne(prosLogin.id_user).then((data) => setInfoUser(data));
+    prosLogin &&
+      pros.getOne(prosLogin.id_user)
+      .then((data) => setInfoUser(data));
   }, [prosLogin]);
 
   const handleInfosUser = () => {
@@ -43,6 +47,7 @@ const Profile = () => {
         city: cityUpdate || infoUser.city,
         phone: phoneUpdate || infoUser.phone,
         siret: siretUpdate || infoUser.siret,
+        id_user: 0
       });
       if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
 

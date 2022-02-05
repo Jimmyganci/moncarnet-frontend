@@ -28,12 +28,13 @@ const ModalAppointment = ({
   immat,
   userId,
 }: InfosRdv) => {
-  const { setShowModal, prosLogin }: any = useContext(ProsContext);
-  const [changeMode, setChangeMode] = useState(false);
-  const [dayUpdate, setDayUpdate] = useState('');
-  const [hoursUpdate, setHoursUpdate] = useState('');
-  const [commentUpdate, setCommentUpdate] = useState('');
-  const [valideRdv, setValivRdv] = useState(true);
+
+  const { setShowModal, prosLogin } = useContext(ProsContext);
+  const [changeMode, setChangeMode] = useState<boolean>(false);
+  const [dayUpdate, setDayUpdate] = useState<string>('');
+  const [hoursUpdate, setHoursUpdate] = useState<string>('');
+  const [commentUpdate, setCommentUpdate] = useState<string>('');
+  const [valideRdv, setValivRdv] = useState<boolean>(true);
 
   // Close Modal with background
 
@@ -41,8 +42,8 @@ const ModalAppointment = ({
     setShowModal(false);
   };
 
-  const handleChildClick = (item: any) => {
-    item.stopPropagation(item);
+  const handleChildClick = (item : React.MouseEvent<HTMLElement, MouseEvent>) => {
+    item.stopPropagation();
   };
 
   // Delete Appointment
@@ -53,7 +54,6 @@ const ModalAppointment = ({
     try {
       const res = await appointment.delete(id_appointment);
       setTimeout(() => location.reload(), 1500);
-      console.log(res);
       if (res.status === 200) toast.success('Votre rendez-vous a bien été supprimé');
     } catch (err) {
       if (err) toast.error('Impossible de supprimer ce rendez-vous');
@@ -66,9 +66,9 @@ const ModalAppointment = ({
     if (dayUpdate && hoursUpdate && commentUpdate && userId) {
       try {
         const res = await appointment.put(id_appointment, {
-          date: new Date(appointmentDate) || date,
+          date: appointmentDate || date,
           comment: commentUpdate || comment,
-          prosId: prosLogin.id_user,
+          prosId: prosLogin.id_pros,
           userId: userId,
           immat: immat,
         });
@@ -88,7 +88,7 @@ const ModalAppointment = ({
     }
   }
 
-  let today = new Date().toISOString();
+  const today : string = new Date().toISOString();
 
   // Check validity of rdv's date :
 
