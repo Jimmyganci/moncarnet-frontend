@@ -57,9 +57,6 @@ const ServiceDetail = () => {
     getInfosPro();
   }, [infosService]);
 
-  infosService && console.log(infosService);
-  infosPro && console.log(infosPro);
-
   return (
     <div className="flex items-center justify-center w-screen h-full lg:h-screen">
       <div

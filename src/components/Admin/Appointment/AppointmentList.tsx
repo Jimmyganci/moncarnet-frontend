@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import { appointment, pros, users } from '../../../API/request';
+import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 import { glassMorphism } from '../../../variableTailwind';
 import VehiculeModal from '../ServiceBook/VehiculeModal';
 import AppointmentCard from './AppointmentCard';
 import ModalInfos from './ModalInfos';
 
 interface RequestId {
-  appointment: number;
+  appointmentId: number;
   userId: number;
   prosId: number;
 }
@@ -19,17 +20,17 @@ function AppointmentList() {
   const [showUser, setShowUser] = useState(false);
   const [showPros, setShowPros] = useState(false);
   const [showVehicule, setShowVehicule] = useState(false);
-  const [oneVehicule, setOneVehicule] = useState([]);
+  const [oneVehicule, setOneVehicule] = useState<IVehiculeAllInfos[]>([]);
 
   async function getAppointments() {
     try {
       //  get all appointment
       const getAll = await appointment.getAll();
       //  push in an array to map it and make a promise all for have the all informations of appointments
-      let requestId: Array<RequestId> = [];
+      let requestId: RequestId[] = [];
       getAll.map(async (appointment) => {
         requestId.push({
-          appointment: appointment.id_appointment,
+          appointmentId: appointment.id_appointment,
           userId: appointment.userId,
           prosId: appointment.prosId,
         });
@@ -37,7 +38,7 @@ function AppointmentList() {
 
       Promise.all(
         requestId.map(async (id) => [
-          await appointment.getOne(id.appointment),
+          await appointment.getOne(id.appointmentId && id.appointmentId),
           await users.getOne(id.userId),
           await pros.getOne(id.prosId),
         ]),

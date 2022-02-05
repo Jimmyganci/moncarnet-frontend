@@ -6,7 +6,7 @@ import { glassMorphism } from '../../../variableTailwind';
 import WithoutAppointmentCard from './WithoutAppointmentCard';
 
 function UsersWithoutAppointment() {
-  const [dataUsers, setDataUsers] = useState<Array<IUserInfos>>([]);
+  const [dataUsers, setDataUsers] = useState<IUserInfos[]>([]);
 
   //  get all users witch doesn't never had an appointment
   async function getUsersWithoutAppointment() {

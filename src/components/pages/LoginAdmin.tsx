@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { login } from '../../API/request';
@@ -7,9 +7,9 @@ import logo from '../../assets/logo.svg';
 import { button, glassMorphism, input } from '../../variableTailwind';
 
 function LoginAdmin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate: NavigateFunction = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

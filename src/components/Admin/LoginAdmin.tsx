@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { login } from '../../API/request';
@@ -7,9 +7,9 @@ import logo from '../../assets/logo.svg';
 import { button, glassMorphism, input } from '../../variableTailwind';
 
 function LoginAdmin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate: NavigateFunction = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,11 +26,9 @@ function LoginAdmin() {
   };
   return (
     <div
-      className={`${glassMorphism} min-h-screen flex justify-center flex-col items-center`}
-    >
+      className={`${glassMorphism} min-h-screen flex justify-center flex-col items-center`}>
       <div
-        className={`flex justify-center flex-col w-1/2 pt-5 pb-5 rounded-lg items-center ${glassMorphism} mt-5`}
-      >
+        className={`flex justify-center flex-col w-1/2 pt-5 pb-5 rounded-lg items-center ${glassMorphism} mt-5`}>
         <div className="flex items-center justify-center">
           <img src={logo} className="w-1/6 mr-2" alt="logo_mon_carnet" />
           <p>Mon Carnet</p>
@@ -40,8 +38,7 @@ function LoginAdmin() {
         </div>
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="flex flex-col items-center w-full"
-        >
+          className="flex flex-col items-center w-full">
           <label className="w-full">
             <input
               className={`${input} text-center w-2/3`}

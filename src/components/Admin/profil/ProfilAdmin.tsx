@@ -5,7 +5,7 @@ import AdminContext from '../../../contexts/AdminContext';
 import { glassMorphism } from '../../../variableTailwind';
 
 function ProfilAdmin() {
-  const { adminLogin }: any = useContext(AdminContext);
+  const { adminLogin } = useContext(AdminContext);
 
   return (
     <div className="flex flex-col items-end w-full">
@@ -14,8 +14,7 @@ function ProfilAdmin() {
           <h1 className="text-3xl uppercase text-background">Profil</h1>
         </div>
         <div
-          className={`flex flex-col items-center mt-4 ${glassMorphism} p-4 rounded-lg`}
-        >
+          className={`flex flex-col items-center mt-4 ${glassMorphism} p-4 rounded-lg`}>
           <div>
             <img src={profil} alt="profil_logo" />
           </div>

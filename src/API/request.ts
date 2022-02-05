@@ -86,6 +86,10 @@ export const users = {
         withCredentials: true,
       })
       .then((res) => res.data),
+  getVehicules: (userId: number): Promise<IVehiculeInfos[]> =>
+    axios
+      .get(`${API_URL}/users/${userId}/vehicules`, { withCredentials: true })
+      .then((res) => res.data),
   // delete garage of the favorite
   deleteGarage: (userId: number, prosId: number) =>
     axios.delete(`${API_URL}/users/${userId}/prosDeleted/${prosId}`, {
@@ -224,7 +228,7 @@ export const login = {
 //--------------------------------------------------------------//
 
 //------------------------------User connected-------------------------//
-export const isLoggin = {
+export const isLoggedIn = {
   get: (): Promise<ICookieInfos> =>
     axios.get(`${API_URL}/connected`, { withCredentials: true }).then((res) => res.data),
 };

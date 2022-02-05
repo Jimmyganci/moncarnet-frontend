@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavigateFunction } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -10,9 +10,9 @@ import { appear, glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate: NavigateFunction = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

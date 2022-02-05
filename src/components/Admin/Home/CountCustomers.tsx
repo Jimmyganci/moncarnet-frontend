@@ -12,8 +12,7 @@ interface DataLength {
 function CountCustomers({ particular, pros }: DataLength) {
   return (
     <div
-      className={`${glassMorphism} justify-between flex-1 rounded-lg p-2 flex flex-col items-center`}
-    >
+      className={`${glassMorphism} justify-between flex-1 rounded-lg p-2 flex flex-col items-center`}>
       <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
         <img className="w-10" src={usersLogo} alt="customers" />
         <p className="ml-1">Utilisateurs</p>

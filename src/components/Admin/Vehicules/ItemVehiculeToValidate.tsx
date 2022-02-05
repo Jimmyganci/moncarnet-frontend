@@ -7,8 +7,8 @@ import { button } from '../../../variableTailwind';
 
 interface VehiculeToValidateProps {
   vehiculeData: IVehiculeAllInfos;
-  setUserId: Function;
-  setShowUser: Function;
+  setUserId: React.Dispatch<React.SetStateAction<number>>;
+  setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ItemVehiculeToValidate({

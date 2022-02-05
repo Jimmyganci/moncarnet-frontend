@@ -1,4 +1,5 @@
 export default interface IUserInfos {
+  id_user?: number;
   firstname: string;
   lastname: string;
   email: string;

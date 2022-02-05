@@ -6,9 +6,20 @@ import { pros } from '../../API/request';
 import IPros from '../../Interfaces/IPros';
 import { button, glassMorphism, input } from '../../variableTailwind';
 
+interface ICityList {
+  code: string;
+  codeDepartement: string;
+  codeRegion: string;
+  codesPostaux: Array<string>;
+  nom: string;
+  population: number;
+}
+
 function Garage() {
   const [garageList, setGarageList] = useState<IPros[]>();
-  const [cityList, setCityList] = useState<Array<any>>([]);
+  const [cityList, setCityList] = useState<ICityList[]>([]);
+  console.log(cityList);
+
   const [filtreActive, setFiltreActive] = useState<boolean>(false);
   const [searchGarage, setSearchGarage] = useState<string>('');
   const [codePostal, setCodePostal] = useState<number>(0);
@@ -17,7 +28,7 @@ function Garage() {
   useEffect(() => {
     async function getGarage() {
       try {
-        let url = '';
+        let url: string = '';
         if (searchGarage) {
           if (city) url = `?namePros=${searchGarage}&city=${city}`;
           else url = `?namePros=${searchGarage}`;
@@ -114,24 +125,12 @@ function Garage() {
                       placeholder="Ville">
                       <option value="">Selectionnez une ville </option>
                       {cityList &&
-                        cityList.map((el) => <option key={el.code}>{el.nom}</option>)}
+                        cityList.map((city) => (
+                          <option key={city.code}>{city.nom}</option>
+                        ))}
                     </select>
                   </label>
                 )}
-                {/*  {city && (
-                  <label>
-                    <p>{rangeValue}KM</p>
-                    <input
-                      onChange={(e) => setRangeValue(parseInt(e.target.value))}
-                      type="range"
-                      name="ray"
-                      id="ray"
-                      min="0"
-                      max="100"
-                      value={rangeValue}
-                    />
-                  </label>
-                )} */}
               </div>
             )}
           </div>
