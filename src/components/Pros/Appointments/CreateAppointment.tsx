@@ -39,9 +39,13 @@ function CreateAppointments() {
 
   // Looking for customers in database
 
+  async function getUsers () {
+    const res = await pros.getUsers(prosLogin.id_user);
+        setCustomersList(res);
+  }
+
   useEffect(() => {
-    prosLogin.id_user &&
-      pros.getUsers(prosLogin.id_user).then((data) => setCustomersList(data));
+    prosLogin.id_user && getUsers()
   }, [prosLogin]);
 
   // Create rdv in database

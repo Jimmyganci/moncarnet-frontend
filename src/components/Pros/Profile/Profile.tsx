@@ -22,10 +22,15 @@ const Profile = () => {
   const [nameUpdate, setNameUpdate] = useState<string>('');
   const [siretUpdate, setSiretUpdate] = useState<string>('');
 
+
+  async function getOne () {
+    const res = await pros.getOne(prosLogin.id_user)
+    setInfoUser(res);
+  }
+
   useEffect(() => {
     prosLogin &&
-      pros.getOne(prosLogin.id_user)
-      .then((data) => setInfoUser(data));
+    getOne();
   }, [prosLogin]);
 
   const handleInfosUser = () => {
