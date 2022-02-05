@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
@@ -15,6 +16,8 @@ function UserGarage() {
       if (userLogin.id_user !== undefined) {
         try {
           const res = await users.getGarage(userLogin.id_user);
+          console.log(res);
+
           setUsersGarage(res);
         } catch (err) {
           console.log(err);
@@ -27,9 +30,9 @@ function UserGarage() {
   const handleDeleteGarage = async (idPros: number) => {
     try {
       const res = await users.deleteGarage(userLogin.id_user, idPros);
-      console.log(res);
+      res.status === 200 && toast.success(res.data);
     } catch (err) {
-      console.log(err);
+      err && toast.error("Une erreur s'est produite!");
     }
   };
   return (

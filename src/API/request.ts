@@ -81,9 +81,11 @@ export const users = {
     axios.put(`${API_URL}/users/${userId}/pros/${prosId}`, {}, { withCredentials: true }),
   // get all user's garage
   getGarage: (userId: number): Promise<IPros[]> =>
-    axios.get(`http://localhost:8000/api/users/${userId}/pros`, {
-      withCredentials: true,
-    }),
+    axios
+      .get(`http://localhost:8000/api/users/${userId}/pros`, {
+        withCredentials: true,
+      })
+      .then((res) => res.data),
   // delete garage of the favorite
   deleteGarage: (userId: number, prosId: number) =>
     axios.delete(`${API_URL}/users/${userId}/prosDeleted/${prosId}`, {
@@ -95,7 +97,7 @@ export const users = {
 //----------------------------Pros--------------------------//
 let urlPros = `${API_URL}/pros`;
 export const pros = {
-  getAll: (url: string): Promise<IPros[]> => {
+  getAll: (url?: string): Promise<IPros[]> => {
     if (url) urlPros += url;
     return axios.get(urlPros, { withCredentials: true }).then((res) => res.data);
   },

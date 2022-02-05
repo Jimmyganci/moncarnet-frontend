@@ -10,7 +10,7 @@ const AdminContext = createContext<AppContextInterface | null>(null);
 export default AdminContext;
 
 export const AdminContextProvider = ({ children }: any) => {
-  const [adminLogin, setAdminLogin] = useState<IAdminInfos>();
+  const [adminLogin, setAdminLogin] = useState<IAdminInfos | undefined>();
 
   // set current user to nothing !
   const logOut = async function () {
@@ -25,10 +25,9 @@ export const AdminContextProvider = ({ children }: any) => {
     async function getAdminLogin() {
       try {
         const response = await isLoggin.get();
-        if (response) {
-          const getInfosAdmin = await admin.getOne(response.id_user);
-          setAdminLogin(getInfosAdmin);
-        }
+
+        const getInfosAdmin = await admin.getOne(response.id_user);
+        setAdminLogin(getInfosAdmin);
       } catch (err) {
         console.log(err);
       }
