@@ -40,7 +40,7 @@ const ParticularSideBar = () => {
     },
     {
       label: 'Mes Garages',
-      path: '/particular/garage',
+      path: '/particular/mygarages',
       logo: garage,
       alt: 'garage logo',
     },

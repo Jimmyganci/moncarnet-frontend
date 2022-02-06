@@ -18,7 +18,6 @@ interface ICityList {
 function Garage() {
   const [garageList, setGarageList] = useState<IPros[]>();
   const [cityList, setCityList] = useState<ICityList[]>([]);
-  console.log(cityList);
 
   const [filtreActive, setFiltreActive] = useState<boolean>(false);
   const [searchGarage, setSearchGarage] = useState<string>('');

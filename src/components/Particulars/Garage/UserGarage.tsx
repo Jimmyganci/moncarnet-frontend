@@ -16,7 +16,6 @@ function UserGarage() {
       if (userLogin.id_user !== undefined) {
         try {
           const res = await users.getGarage(userLogin.id_user);
-          console.log(res);
 
           setUsersGarage(res);
         } catch (err) {
