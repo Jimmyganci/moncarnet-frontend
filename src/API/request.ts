@@ -1,21 +1,21 @@
 import axios from 'axios';
 
-import IAdminInfos from '../Interfaces/IAdminInfos';
-import IAppointmentInfos from '../Interfaces/IAppointmentInfos';
-import AppointmentInfos from '../Interfaces/IAppointmentInfos';
-import IBrandInfos from '../Interfaces/IBrandInfos';
-import BrandInfos from '../Interfaces/IBrandInfos';
-import { ICookieInfos } from '../Interfaces/ICookieInfos';
-import IModelInfos from '../Interfaces/IModelInfos';
-import ModelInfos from '../Interfaces/IModelInfos';
+import IAdmin from '../Interfaces/IAdmin';
+import IAppointment from '../Interfaces/IAppointment';
+import AppointmentInfos from '../Interfaces/IAppointment';
+import IBrand from '../Interfaces/IBrand';
+import BrandInfos from '../Interfaces/IBrand';
+import { ICookie } from '../Interfaces/ICookie';
+import IModel from '../Interfaces/IModel';
+import ModelInfos from '../Interfaces/IModel';
 import IPros from '../Interfaces/IPros';
 import IServiceBookInfos from '../Interfaces/IServiceBook';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
-import ITypeInfos from '../Interfaces/ITypeInfos';
-import TypeInfos from '../Interfaces/ITypeInfos';
-import IUserInfos from '../Interfaces/IUserInfos';
-import IVehiculeInfos from '../Interfaces/IVehiculeInfos';
-import VehiculeInfos from '../Interfaces/IVehiculeInfos';
+import IType from '../Interfaces/IType';
+import TypeInfos from '../Interfaces/IType';
+import IUser from '../Interfaces/IUser';
+import IVehicule from '../Interfaces/IVehicule';
+import VehiculeInfos from '../Interfaces/IVehicule';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -23,7 +23,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 //----------------------------ADMIN------------------------------//
 export const admin = {
-  getOne: (idAdmin: number): Promise<IAdminInfos> =>
+  getOne: (idAdmin: number): Promise<IAdmin> =>
     axios
       .get(`${API_URL}/admin/${idAdmin}`, { withCredentials: true })
       .then((res) => res.data),
@@ -40,9 +40,9 @@ export const appointment = {
     axios
       .get(`${API_URL}/appointments/${appointmentId}`, { withCredentials: true })
       .then((res) => res.data),
-  create: (data: IAppointmentInfos) =>
+  create: (data: IAppointment) =>
     axios.post(`${API_URL}/appointments`, data, { withCredentials: true }),
-  put: (appointmentId: number, data: IAppointmentInfos) =>
+  put: (appointmentId: number, data: IAppointment): Promise<IAppointment> =>
     axios.put(`${API_URL}/appointments/${appointmentId}`, data, {
       withCredentials: true,
     }),
@@ -56,28 +56,28 @@ export const appointment = {
 //-------------------------Users----------------------------//
 export const users = {
   // get all users
-  getAll: (): Promise<IUserInfos[]> =>
+  getAll: (): Promise<IUser[]> =>
     axios.get(`${API_URL}/users`, { withCredentials: true }).then((res) => res.data),
   // get one user
-  getOne: (idUser: number): Promise<IUserInfos> =>
+  getOne: (idUser: number): Promise<IUser> =>
     axios
       .get(`${API_URL}/users/${idUser}`, { withCredentials: true })
       .then((res) => res.data),
-  appointments: (userId: number): Promise<IAppointmentInfos[]> =>
+  appointments: (userId: number): Promise<IAppointment[]> =>
     //  get all user's appointments
     axios
       .get(`${API_URL}/users/${userId}/appointments`, { withCredentials: true })
       .then((res) => res.data),
   //  get user witch doesn't hace any appointment
-  getUserWithoutAppointment: (): Promise<IUserInfos[]> =>
+  getUserWithoutAppointment: (): Promise<IUser[]> =>
     axios
       .get(`${API_URL}/users/?appointments=NULL`, { withCredentials: true })
       .then((res) => res.data),
   // create user
-  post: (data: IUserInfos): Promise<IUserInfos> =>
+  post: (data: IUser): Promise<IUser> =>
     axios.post(`${API_URL}/users`, data).then((res) => res.data),
   // update user informations
-  put: (userId: number, data: IUserInfos) =>
+  put: (userId: number, data: IUser) =>
     axios.put(`${API_URL}/users/${userId}`, data, { withCredentials: true }),
   // add garage to the favorite
   addFavorite: (userId: number, prosId: number) =>
@@ -89,7 +89,7 @@ export const users = {
         withCredentials: true,
       })
       .then((res) => res.data),
-  getVehicules: (userId: number): Promise<IVehiculeInfos[]> =>
+  getVehicules: (userId: number): Promise<IVehicule[]> =>
     axios
       .get(`${API_URL}/users/${userId}/vehicules`, { withCredentials: true })
       .then((res) => res.data),
@@ -114,13 +114,13 @@ export const pros = {
     axios
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
-  getAppointments: (userId: number): Promise<IAppointmentInfos[]> =>
+  getAppointments: (userId?: number): Promise<IAppointment[]> =>
     axios
       .get(`${API_URL}/pros/${userId}/appointments`, {
         withCredentials: true,
       })
       .then((res) => res.data),
-  getUsers: (userId: number): Promise<IUserInfos[]> =>
+  getUsers: (userId?: number): Promise<IUser[]> =>
     axios
       .get(`http://localhost:8000/api/pros/${userId}/users`, {
         withCredentials: true,
@@ -133,9 +133,9 @@ export const pros = {
 
 //----------------------------Vehicule----------------------//
 export const vehicule = {
-  getAll: (): Promise<IVehiculeInfos[]> =>
+  getAll: (): Promise<IVehicule[]> =>
     axios.get(`${API_URL}/vehicules`, { withCredentials: true }).then((res) => res.data),
-  getVehiculeNoValidate: (): Promise<IVehiculeInfos[]> =>
+  getVehiculeNoValidate: (): Promise<IVehicule[]> =>
     axios
       .get(`${API_URL}/vehicules/?noValidate=true`, { withCredentials: true })
       .then((res) => res.data),
@@ -157,7 +157,7 @@ export const vehicule = {
     axios
       .get(`${API_URL}/vehicules/?service_book=NULL`, { withCredentials: true })
       .then((res) => res.data),
-  post: (data: IVehiculeInfos): Promise<number> =>
+  post: (data: IVehicule): Promise<number> =>
     axios
       .post(`${API_URL}/vehicules`, data, { withCredentials: true })
       .then((res) => res.status),
@@ -171,12 +171,12 @@ export const brands = {
     axios
       .get(`${API_URL}/brands/${idBrand}`, { withCredentials: true })
       .then((res) => res.data),
-  getAll: (url?: string): Promise<IBrandInfos[]> => {
+  getAll: (url?: string): Promise<IBrand[]> => {
     let urlBrand = `${API_URL}/brands`;
     if (url) urlBrand += url;
     return axios.get(urlBrand, { withCredentials: true }).then((res) => res.data);
   },
-  getModels: (brandId: number): Promise<IModelInfos[]> =>
+  getModels: (brandId: number): Promise<IModel[]> =>
     axios
       .get(`${API_URL}/brands/${brandId}/models`, { withCredentials: true })
       .then((res) => res.data),
@@ -198,7 +198,7 @@ export const type = {
     axios
       .get(`${API_URL}/types/${idType}`, { withCredentials: true })
       .then((res) => res.data),
-  getAll: (): Promise<ITypeInfos[]> =>
+  getAll: (): Promise<IType[]> =>
     axios
       .get('http://localhost:8000/api/types', {
         withCredentials: true,
@@ -249,7 +249,7 @@ export const login = {
 
 //------------------------------User connected-------------------------//
 export const isLoggedIn = {
-  get: (): Promise<ICookieInfos> =>
+  get: (): Promise<ICookie> =>
     axios.get(`${API_URL}/connected`, { withCredentials: true }).then((res) => res.data),
 };
 //-------------------------------------------------------------------//

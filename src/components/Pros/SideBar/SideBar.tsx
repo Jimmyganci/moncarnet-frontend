@@ -19,7 +19,7 @@ const SideBar = () => {
       label: 'Mes RDVs',
       path: '/pros/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
     {
       label: 'Mon Profil',

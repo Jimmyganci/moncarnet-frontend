@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
 import { appointment } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
+import IAppointment from '../../../Interfaces/IAppointment';
 import {
   button,
   deleteButton,
@@ -11,15 +11,6 @@ import {
   input,
 } from '../../../variableTailwind';
 
-interface InfosRdv {
-  date: string;
-  user: string;
-  userId?: number;
-  comment: string;
-  id_appointment: number;
-  immat: string;
-}
-
 const ModalAppointment = ({
   date,
   user,
@@ -27,13 +18,14 @@ const ModalAppointment = ({
   id_appointment,
   immat,
   userId,
-}: InfosRdv) => {
-  const { setShowModal, prosLogin }: any = useContext(ProsContext);
-  const [changeMode, setChangeMode] = useState(false);
-  const [dayUpdate, setDayUpdate] = useState('');
-  const [hoursUpdate, setHoursUpdate] = useState('');
-  const [commentUpdate, setCommentUpdate] = useState('');
-  const [valideRdv, setValivRdv] = useState(true);
+}: IAppointment) => {
+
+  const { setShowModal, prosLoggedIn } = useContext(ProsContext);
+  const [changeMode, setChangeMode] = useState<boolean>(false);
+  const [dayUpdate, setDayUpdate] = useState<string>('');
+  const [hoursUpdate, setHoursUpdate] = useState<string>('');
+  const [commentUpdate, setCommentUpdate] = useState<string>('');
+  const [validAppointment, SetValidAppointment] = useState<boolean>(true);
 
   // Close Modal with background
 
@@ -41,20 +33,19 @@ const ModalAppointment = ({
     setShowModal(false);
   };
 
-  const handleChildClick = (item: any) => {
-    item.stopPropagation(item);
+  const handleChildClick = (item : React.MouseEvent<HTMLElement, MouseEvent>) => {
+    item.stopPropagation();
   };
 
   // Delete Appointment
 
-  let appointmentDate = `${dayUpdate}T${hoursUpdate}:00.000Z`;
+  let appointmentDate: Date = new Date(`${dayUpdate}T${hoursUpdate}:00.000Z`);
 
   async function deleteAppointment() {
     try {
-      const res = await appointment.delete(id_appointment);
+      const res = id_appointment && await appointment.delete(id_appointment);
       setTimeout(() => location.reload(), 1500);
-      console.log(res);
-      if (res.status === 200) toast.success('Votre rendez-vous a bien été supprimé');
+      if (res) toast.success('Votre rendez-vous a bien été supprimé');
     } catch (err) {
       if (err) toast.error('Impossible de supprimer ce rendez-vous');
     }
@@ -65,14 +56,14 @@ const ModalAppointment = ({
   async function updateAppointment() {
     if (dayUpdate && hoursUpdate && commentUpdate && userId) {
       try {
-        const res = await appointment.put(id_appointment, {
-          date: new Date(appointmentDate) || date,
+        const res = id_appointment && await appointment.put(id_appointment, {
+          date: appointmentDate || date,
           comment: commentUpdate || comment,
-          prosId: prosLogin.id_user,
+          prosId: prosLoggedIn.id_pros!,
           userId: userId,
           immat: immat,
         });
-        if (res.status === 200) {
+        if (res) {
           toast.success('Votre rendez-vous a bien été modifié');
           setTimeout(() => {
             location.reload();
@@ -88,15 +79,15 @@ const ModalAppointment = ({
     }
   }
 
-  let today = new Date().toISOString();
+  const today : Date = new Date();
 
-  // Check validity of rdv's date :
+  // Check validity of appointment's date :
 
-  const dateCompare = (today: string, appointmentDate: string) => {
+  const dateCompare = (today: Date, appointmentDate: Date) => {
     if (today < appointmentDate) {
-      setValivRdv(true);
+      SetValidAppointment(true);
     } else {
-      setValivRdv(false);
+      SetValidAppointment(false);
     }
   };
 
@@ -132,7 +123,7 @@ const ModalAppointment = ({
               placeholder="Choisissez une heure"
               onChange={(e) => setHoursUpdate(e.target.value)}
             />
-            {valideRdv ? (
+            {validAppointment ? (
               ''
             ) : (
               <p className="text-red-700">

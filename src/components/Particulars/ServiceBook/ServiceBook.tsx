@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { brands, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
   button,
   glassMorphism,
@@ -24,7 +24,7 @@ const ServiceBook = () => {
   const getVehiculeSelected = (immat: string) => {
     infosUserVehicule &&
       setVehiculeSelected(
-        infosUserVehicule.filter((el: IVehiculeAllInfos) => el.immat.includes(immat)),
+        infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
       );
   };
 
@@ -32,7 +32,7 @@ const ServiceBook = () => {
     infosUserVehicule &&
       setInfosVehicule(
         infosUserVehicule.filter(
-          (ele: IVehiculeAllInfos) => ele.immat === vehiculeImmatToUpdate,
+          (ele: IVehiculeAndUser) => ele.immat === vehiculeImmatToUpdate,
         ),
       );
   }

@@ -4,8 +4,8 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 import { isLoggedIn, users } from '../API/request';
 import { getVehicules } from '../API/requestVehicule';
-import IUserInfos from '../Interfaces/IUserInfos';
-import IVehiculeAllInfos from '../Interfaces/IVehiculeAllInfos';
+import IUser from '../Interfaces/IUser';
+import IVehiculeAndUser from '../Interfaces/IVehiculeAndUser';
 
 const USER_LOGIN_EMPTY = {
   id_user: 0,
@@ -36,10 +36,10 @@ const VEHICULE_INFOS_EMPTY = {
 };
 
 interface AppContextInterface {
-  userLogin: IUserInfos;
-  setUserLogin: React.Dispatch<React.SetStateAction<IUserInfos>>;
-  infosUserVehicule?: IVehiculeAllInfos[];
-  setInfosUserVehicule: React.Dispatch<React.SetStateAction<IVehiculeAllInfos[]>>;
+  userLoggedIn: IUser;
+  setUserLoggedIn: React.Dispatch<React.SetStateAction<IUser>>;
+  infosUserVehicule?: IVehiculeAndUser[];
+  setInfosUserVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
   vehiculeDeleted: boolean;
   setVehiculeDeleted: React.Dispatch<React.SetStateAction<boolean>>;
   deleteAccount: boolean;
@@ -50,8 +50,8 @@ interface AppContextInterface {
 }
 
 const UserContext = createContext<AppContextInterface>({
-  userLogin: USER_LOGIN_EMPTY,
-  setUserLogin: () => {},
+  userLoggedIn: USER_LOGIN_EMPTY,
+  setUserLoggedIn: () => {},
   infosUserVehicule: [VEHICULE_INFOS_EMPTY],
   setInfosUserVehicule: () => {},
   vehiculeDeleted: false,
@@ -67,8 +67,8 @@ export default UserContext;
 
 type Props = { children: React.ReactNode };
 export const UserContextProvider: React.FC<Props> = ({ children }) => {
-  const [userLogin, setUserLogin] = useState<IUserInfos>(USER_LOGIN_EMPTY);
-  const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAllInfos[]>([]);
+  const [userLoggedIn, setUserLoggedIn] = useState<IUser>(USER_LOGIN_EMPTY);
+  const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAndUser[]>([]);
   const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false);
   const [posted, setPosted] = useState<boolean>(false);
   const [deleteAccount, setDeleteAccount] = useState<boolean>(false);
@@ -78,7 +78,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
 
   // set current user to nothing !
   const logout = (): void => {
-    setUserLogin(USER_LOGIN_EMPTY);
+    setUserLoggedIn(USER_LOGIN_EMPTY);
     removeCookie('user_token');
     navigate('/');
   };
@@ -92,7 +92,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
           try {
             const user = await users.getOne(res.id_user);
 
-            setUserLogin(user);
+            setUserLoggedIn(user);
             if (user) {
               const userVehicule = await users.getVehicules(res.id_user);
               if (userVehicule) {
@@ -117,8 +117,8 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        userLogin,
-        setUserLogin,
+        userLoggedIn,
+        setUserLoggedIn,
         infosUserVehicule,
         setInfosUserVehicule,
         deleteAccount,

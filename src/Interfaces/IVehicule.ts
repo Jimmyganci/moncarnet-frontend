@@ -1,4 +1,4 @@
-export default interface IVehiculeInfos {
+export default interface IVehicule {
   active: boolean;
   id_modelId: number;
   id_typeId: number;

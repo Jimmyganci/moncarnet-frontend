@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 
 import ProsContext from '../../../contexts/ProsContext';
-import IProsInfos from '../../../Interfaces/IProsInfos';
+import IAppointment from '../../../Interfaces/IAppointment';
 import { button, glassMorphism } from '../../../variableTailwind';
 
-type Props = IProsInfos;
+type Props = IAppointment;
 
-const ProRdv: React.FC<Props> = (props) => {
-  const { setShowModal, setRdvToDisplay }: any = useContext(ProsContext);
+const ProRdv: React.FC<Props> = (props : any) => {
+
+  const { setShowModal, setAppointmentToDisplay } = useContext(ProsContext);
 
   const handleSetModal = () => {
     setShowModal(true);
-    setRdvToDisplay([props.date, props.user, props.comment, props.id_appointment]);
+    setAppointmentToDisplay([props.date, props.user, props.comment, props.id_appointment]);
   };
 
   return (

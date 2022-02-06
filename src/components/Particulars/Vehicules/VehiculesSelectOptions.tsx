@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { brands } from '../../../API/request';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
-function VehiculesSelectOptions({ vehicule }: { vehicule: IVehiculeAllInfos }) {
+function VehiculesSelectOptions({ vehicule }: { vehicule: IVehiculeAndUser }) {
   const [brand, setBrand] = useState<string>('');
 
   async function getBrand() {

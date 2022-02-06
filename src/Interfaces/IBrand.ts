@@ -1,4 +1,4 @@
-export default interface IBrandInfos {
+export default interface IBrand {
   id_brand?: number;
   code: string;
   name: string;

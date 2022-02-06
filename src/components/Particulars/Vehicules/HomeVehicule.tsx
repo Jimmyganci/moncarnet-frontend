@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import car from '../../../assets/car.png';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism } from '../../../variableTailwind';
 
-function HomeVehicule({ vehiculesSlice }: { vehiculesSlice: IVehiculeAllInfos[] }) {
+function HomeVehicule({ vehiculesSlice }: { vehiculesSlice: IVehiculeAndUser[] }) {
   return (
     <div className={`flex flex-col items-center m-4 p-4 rounded-lg ${glassMorphism}`}>
       <img className="w-12" src={car} alt="car" />
