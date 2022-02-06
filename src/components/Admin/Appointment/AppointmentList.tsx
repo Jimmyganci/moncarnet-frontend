@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { appointment, pros, users } from '../../../API/request';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import VehiculeModal from '../ServiceBook/VehiculeModal';
 import AppointmentCard from './AppointmentCard';
@@ -20,7 +20,7 @@ function AppointmentList() {
   const [showUser, setShowUser] = useState(false);
   const [showPros, setShowPros] = useState(false);
   const [showVehicule, setShowVehicule] = useState(false);
-  const [oneVehicule, setOneVehicule] = useState<IVehiculeAllInfos[]>([]);
+  const [oneVehicule, setOneVehicule] = useState<IVehiculeAndUser[]>([]);
 
   async function getAppointments() {
     try {

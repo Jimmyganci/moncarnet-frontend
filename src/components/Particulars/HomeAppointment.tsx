@@ -3,15 +3,15 @@ import { BsArrowUpCircle } from 'react-icons/bs';
 
 import { pros, users } from '../../API/request';
 import UserContext from '../../contexts/UserContext';
-import IAppointmentInfos from '../../Interfaces/IAppointmentInfos';
+import IAppointment from '../../Interfaces/IAppointment';
 import IPros from '../../Interfaces/IPros';
 import { borderGlass, button, glassMorphism, h2, title } from '../../variableTailwind';
 import Plate from '../Plate';
 import ProsAppointment from './ProsAppointment';
 
 const HomeAppointment = () => {
-  const { userLogin } = useContext(UserContext);
-  const [infosAppointments, setInfosAppointments] = useState<IAppointmentInfos[]>([]);
+  const { userLoggedIn } = useContext(UserContext);
+  const [infosAppointments, setInfosAppointments] = useState<IAppointment[]>([]);
   const [prosData, setProsData] = useState<IPros[]>([]);
   const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -22,7 +22,7 @@ const HomeAppointment = () => {
   useEffect(() => {
     async function getAppointments() {
       try {
-        const res = userLogin.id_user && (await users.appointments(userLogin.id_user));
+        const res = userLoggedIn.id_user && (await users.appointments(userLoggedIn.id_user));
         if (res) {
           const resPros = await pros.getAll();
           setInfosAppointments(res);
@@ -33,20 +33,7 @@ const HomeAppointment = () => {
       }
     }
     getAppointments();
-  }, [userLogin]);
-
-  const dateDisplay = (element: Array<any>) => {
-    const wholeDate = element.slice(0, 10);
-    const day = wholeDate.slice(8, 10);
-    const month = wholeDate.slice(5, 7);
-    const year = wholeDate.slice(0, 4);
-    const orderedDate = `${day}/${month}/${year}`;
-    return orderedDate;
-  };
-  const hourDisplay = (element: Array<any>) => {
-    const hourDate = element.slice(11, 16);
-    return hourDate;
-  };
+  }, [userLoggedIn]);
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full pb-5 lg:-mt-20">
@@ -77,11 +64,11 @@ const HomeAppointment = () => {
                     <p>
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {dateDisplay(app.date)}
+                        {new Date(app.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {hourDisplay(app.date)}
+                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
                     <p className="text-black text-lg leading-[1] my-2">{app.comment}</p>
@@ -115,11 +102,11 @@ const HomeAppointment = () => {
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {dateDisplay(app.date)}
+                        {new Date(app.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {hourDisplay(app.date)}
+                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
                     <p className="text-black leading-[1] my-2">{app.comment}</p>
@@ -183,11 +170,11 @@ const HomeAppointment = () => {
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {dateDisplay(app.date)}
+                        {new Date(app.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {hourDisplay(app.date)}
+                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
                     <p className="text-black leading-[1] my-2">{app.comment}</p>
@@ -220,11 +207,11 @@ const HomeAppointment = () => {
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {dateDisplay(app.date)}
+                        {new Date(app.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {hourDisplay(app.date)}
+                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
                     <p className="text-black leading-[1] my-2">{app.comment}</p>

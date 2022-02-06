@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import VehiculeCard from './VehiculeCard';
 
 const VehiculesWithoutServiceBook = () => {
-  const [dataVehicules, setDataVehicules] = useState<IVehiculeAllInfos[]>([]);
+  const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
 
   const [showUser, setShowUser] = useState(false);
   const [userId, setUserId] = useState(0);

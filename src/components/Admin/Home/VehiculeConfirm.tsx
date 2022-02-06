@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import car from '../../../assets/car.png';
-import IVehiculeInfos from '../../../Interfaces/IVehiculeInfos';
+import IVehicule from '../../../Interfaces/IVehicule';
 import { button, glassMorphism } from '../../../variableTailwind';
 
 function VehiculeConfirm({
   vehiculeToValidate,
 }: {
-  vehiculeToValidate: IVehiculeInfos[];
+  vehiculeToValidate: IVehicule[];
 }) {
   return (
     <div

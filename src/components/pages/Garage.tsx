@@ -19,9 +19,9 @@ function Garage() {
   const [garageList, setGarageList] = useState<IPros[]>();
   const [cityList, setCityList] = useState<ICityList[]>([]);
 
-  const [filtreActive, setFiltreActive] = useState<boolean>(false);
+  const [filterActive, setFilterActive] = useState<boolean>(false);
   const [searchGarage, setSearchGarage] = useState<string>('');
-  const [codePostal, setCodePostal] = useState<number>(0);
+  const [postalCode, setCostalCode] = useState<number>(0);
   const [city, setCity] = useState<string>('');
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Garage() {
     async function getCity() {
       try {
         const res = await axios.get(
-          `https://geo.api.gouv.fr/communes?codePostal=${codePostal}`,
+          `https://geo.api.gouv.fr/communes?postalCode=${postalCode}`,
         );
         setCityList(res.data);
       } catch (err) {
@@ -53,7 +53,7 @@ function Garage() {
     }
     getCity();
     getGarage();
-  }, [searchGarage, codePostal, city]);
+  }, [searchGarage, postalCode, city]);
   return (
     <div>
       <div className={`m-4 rounded-lg ${glassMorphism} p-5`}>
@@ -73,11 +73,11 @@ function Garage() {
           <div className="flex flex-col items-center">
             <button
               type="button"
-              onClick={() => setFiltreActive(!filtreActive)}
+              onClick={() => setFilterActive(!filterActive)}
               className="mt-4 underline">
               Plus de filtres
             </button>
-            {filtreActive === false ? (
+            {filterActive === false ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"
@@ -102,7 +102,7 @@ function Garage() {
                 />
               </svg>
             )}
-            {filtreActive && (
+            {filterActive && (
               <div className="w-full">
                 <label>
                   <input
@@ -111,10 +111,10 @@ function Garage() {
                     name="postalCode"
                     id="postalCode"
                     placeholder="Code postale"
-                    onChange={(e) => setCodePostal(parseInt(e.target.value))}
+                    onChange={(e) => setCostalCode(parseInt(e.target.value))}
                   />
                 </label>
-                {codePostal !== 0 && (
+                {postalCode !== 0 && (
                   <label>
                     <select
                       onChange={(e) => setCity(e.target.value)}

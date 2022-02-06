@@ -11,7 +11,7 @@ import Logo from '../../Logo';
 import SideLink from './SideLinkAdmin';
 
 const SideBarAdmin = () => {
-  const { logOut }: any = useContext(AdminContext);
+  const { logout }: any = useContext(AdminContext);
   const linkArray = [
     {
       label: 'Accueil',
@@ -29,7 +29,7 @@ const SideBarAdmin = () => {
       label: 'RDVs',
       path: '/admin/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
     {
       label: 'Vehicules',
@@ -60,7 +60,7 @@ const SideBarAdmin = () => {
             <button
               className="mt-4 text-xl font-medium tracking-widest"
               onClick={() => {
-                logOut();
+                logout();
               }}>
               Se déconnecter
             </button>

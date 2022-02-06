@@ -14,15 +14,16 @@ function Pros() {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logOut, showModal, rdvToDisplay }: any = useContext(ProsContext);
+  const { logout, showModal, AppointmentToDisplay } = useContext(ProsContext);
+  AppointmentToDisplay && console.log(AppointmentToDisplay);
+  
 
   return (
     <div className="flex items-center h-screen">
       <button
         onClick={() => {
-          logOut().then(() => {
-            return navigate('/login-pro');
-          });
+          logout();
+          navigate('/login-pro');
         }}
         className={`flex p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-10 ml-7 absolute top-2 text-white`}>
         <img src={returnArrow} alt="return" className="w-6 h-6 mr-2" />
@@ -35,13 +36,15 @@ function Pros() {
         className={`w-4/5 flex justify-center items-center rounded-lg h-5/6 mr-6 ${glassMorphism}`}>
         <Outlet />
       </div>
-      {showModal && rdvToDisplay && (
+      {showModal && AppointmentToDisplay && (
         <ModalAppointment
-          date={rdvToDisplay[0]}
-          user={rdvToDisplay[1]}
-          comment={rdvToDisplay[2]}
-          id_appointment={rdvToDisplay[3]}
-          immat={rdvToDisplay}
+          date={AppointmentToDisplay[0].date}
+          user={AppointmentToDisplay[1].user}
+          comment={AppointmentToDisplay[2].comment}
+          id_appointment={AppointmentToDisplay[3].id_appointment}
+          immat={AppointmentToDisplay[4].immat}
+          prosId={AppointmentToDisplay[5].prosId}
+          userId={0}
         />
       )}
     </div>

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { brands, vehicule } from '../../../API/request';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button } from '../../../variableTailwind';
 
 interface VehiculeToValidateProps {
-  vehiculeData: IVehiculeAllInfos;
+  vehiculeData: IVehiculeAndUser;
   setUserId: React.Dispatch<React.SetStateAction<number>>;
   setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
 }

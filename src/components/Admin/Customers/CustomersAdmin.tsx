@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { pros, users } from '../../../API/request';
 import IPros from '../../../Interfaces/IPros';
 import ProsInfos from '../../../Interfaces/IPros';
-import IUserInfos from '../../../Interfaces/IUserInfos';
-import UserInfos from '../../../Interfaces/IUserInfos';
+import IUser from '../../../Interfaces/IUser';
+import UserInfos from '../../../Interfaces/IUser';
 import { glassMorphism } from '../../../variableTailwind';
 
 interface ICustomers {
-  particular: IUserInfos[];
+  particular: IUser[];
   pros: IPros[];
 }
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { brands } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
   clearedGreenButton,
   glassMorphism,
@@ -13,12 +13,12 @@ import Plate from '../../Plate';
 import ModalDeleteVehicule from '../ParticularInfos/ModalDeleteVehicule';
 
 interface Props {
-  vehiculeSelect: IVehiculeAllInfos;
+  vehiculeSelect: IVehiculeAndUser;
 }
 
 const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-  const { userLogin, vehiculeDeleted }: any = useContext(UserContext);
+  const { userLoggedIn, vehiculeDeleted }: any = useContext(UserContext);
   const { setPosted }: any = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
 
@@ -55,7 +55,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                   <Plate
                     immat={vehiculeSelect.immat}
-                    postalCode={userLogin && userLogin.postal_code}
+                    postalCode={userLoggedIn && userLoggedIn.postal_code}
                   />
                 </div>
               </div>

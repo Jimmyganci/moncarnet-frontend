@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { brands } from '../../../API/request';
 import carLogo from '../../../assets/minimalist_logos/car.svg';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism } from '../../../variableTailwind';
 
 interface IProps {
-  vehicule: IVehiculeAllInfos[];
+  vehicule: IVehiculeAndUser[];
   setShowVehicule: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

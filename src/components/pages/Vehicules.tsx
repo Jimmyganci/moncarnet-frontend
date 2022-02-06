@@ -3,18 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import IVehiculeAllInfos from '../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../Interfaces/IVehiculeAndUser';
 import { select, title } from '../../variableTailwind';
 import CardVehicule from '../Particulars/Vehicules/CardVehicule';
 import VehiculesSelectOptions from '../Particulars/Vehicules/VehiculesSelectOptions';
 
 function Vehicules() {
-  const { infosUserVehicule }: any = useContext(UserContext);
-  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAllInfos[]>([]);
+  const { infosUserVehicule } = useContext(UserContext);
+  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser[]>([]);
 
   const handleChangeVehicule = (immat: string) => {
-    setVehiculeSelected(
-      infosUserVehicule.filter((el: IVehiculeAllInfos) => el.immat.includes(immat)),
+    infosUserVehicule && setVehiculeSelected(
+      infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
     );
   };
 

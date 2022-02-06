@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
-import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import IProsInfos from '../../../Interfaces/IPros';
-import IUserInfos from '../../../Interfaces/IUserInfos';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IAppointment from '../../../Interfaces/IAppointment';
+import IAppointment from '../../../Interfaces/IPros';
+import IUser from '../../../Interfaces/IUser';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {
-  appointment: IAppointmentInfos;
-  user: IUserInfos;
-  pros: IProsInfos;
+  appointment: IAppointment;
+  user: IUser;
+  pros: IAppointment;
   setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
   setProsId: React.Dispatch<React.SetStateAction<number | undefined>>;
   setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
   setShowPros: React.Dispatch<React.SetStateAction<boolean>>;
-  setOneVehicule: React.Dispatch<React.SetStateAction<IVehiculeAllInfos[]>>;
+  setOneVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
   setShowVehicule: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

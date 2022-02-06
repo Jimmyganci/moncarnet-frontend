@@ -1,49 +1,39 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import IAppointment from '../../../Interfaces/IAppointment'
 import { pros } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import ProsContext from '../../../contexts/ProsContext';
 import { h1 } from '../../../variableTailwind';
 import { button } from '../../../variableTailwind';
-import RdvDisplay from './RdvDisplay';
+import AppointmentDisplay from './AppointmentDisplay';
+import IUser from '../../../Interfaces/IUser';
 
-function Appointments() {
-  const { prosLogin }: any = useContext(ProsContext);
-  const [rdvArray, setRdvArray] = useState<any>([]);
-  const [users, setUsers] = useState<any>([]);
+const Appointments = () => {
+  
+  const { prosLoggedIn } = useContext(ProsContext);
 
+  const [appointmentArray, setAppointmentArray] = useState<IAppointment[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
+ 
   // Date of the day
 
-  let today = new Date().toISOString();
-
-  // Search RDV from this pro
-  // Search user's from this pro
+  const today: Date = new Date();
 
   async function getProsAndUsers() {
     const res = await Promise.all([
-      pros.getAppointments(prosLogin.id_user),
-      pros.getUsers(prosLogin.id_user),
+        // Search RDV from this pro
+      pros.getAppointments(prosLoggedIn.id_user),
+        // Search user's from this pro
+      pros.getUsers(prosLoggedIn.id_user),
     ]);
-    setRdvArray(res[0]);
+    setAppointmentArray(res[0]);
     setUsers(res[1]);
-  }
+  };
 
   useEffect(() => {
-    if (prosLogin.id_user !== undefined) getProsAndUsers();
-  }, [prosLogin]);
-
-  // Display correctly the date
-
-  const dateDisplay = (element: any) => {
-    const wholeDate = element.date.slice(0, 10);
-    const day = wholeDate.slice(8, 10);
-    const month = wholeDate.slice(5, 7);
-    const year = wholeDate.slice(0, 4);
-    const orderedDate = `${day}-${month}-${year}`;
-    const hourDate = element.date.slice(11, 16);
-    return `${orderedDate} à ${hourDate}`;
-  };
+    prosLoggedIn && getProsAndUsers();
+  }, [prosLoggedIn]);
 
   return (
     <div className="w-5/6 h-full">
@@ -52,29 +42,25 @@ function Appointments() {
         <h1 className={`${h1}`}>Mes RDVs</h1>
       </div>
       <main className="w-full overflow-x-auto h-4/6">
-        {rdvArray.length !== 0 &&
+        {appointmentArray.length !== 0 &&
           users.length !== 0 &&
-          rdvArray
-            .filter((rdvfilter: any) => rdvfilter.date > today)
-            .sort(function (a: any, b: any) {
-              a = new Date(a.date);
-              b = new Date(b.date);
-              return a > b ? -1 : b < a ? 1 : 0;
+          appointmentArray
+            .filter((appointmentfilter: IAppointment) => appointmentfilter.date > today)
+            .sort((a: IAppointment, b:IAppointment) => {
+              const dateA : Date = new Date(a.date);
+              const dateB : Date = new Date(b.date);
+              return dateA > dateB ? -1 : dateB < dateA ? 1 : 0;
             })
             .reverse()
-            .map((rdv: any, i: number) => (
-              <RdvDisplay
-                key={i}
-                id_appointment={rdv.id_appointment}
-                date={dateDisplay(rdv)}
-                comment={rdv.comment}
-                userId={users.id_user}
-                user={
-                  users.find((el: any) => el.id_user === rdv.userId).firstname +
-                  ' ' +
-                  users.find((el: any) => el.id_user === rdv.userId).lastname
-                }
-                immat={rdv.immat}
+            .map((appointment, index) => (
+              <AppointmentDisplay
+                key={index}
+                id_appointment={appointment.id_appointment}
+                date={appointment.date}
+                comment={appointment.comment}
+                userId={appointment.userId}
+                prosId={appointment.prosId}
+                immat={appointment.immat}
               />
             ))}
       </main>

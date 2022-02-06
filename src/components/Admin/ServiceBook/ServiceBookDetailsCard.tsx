@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { pros } from '../../../API/request';
-import IProsInfos from '../../../Interfaces/IPros';
+import IAppointment from '../../../Interfaces/IPros';
 import ServiceBookInfos from '../../../Interfaces/IServiceBook';
 
 type CardProps = {
@@ -11,7 +11,7 @@ type CardProps = {
 };
 
 function ServiceBookDetailsCard({ serviceBook, setShowPros, setProsId }: CardProps) {
-  const [prosData, setProsData] = useState<IProsInfos>();
+  const [prosData, setProsData] = useState<IAppointment>();
   async function getPros() {
     const res = await pros.getOne(serviceBook.id_pros);
     setProsData(res);

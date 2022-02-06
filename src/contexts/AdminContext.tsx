@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 import { admin, isLoggedIn } from '../API/request';
-import IAdminInfos from '../Interfaces/IAdminInfos';
+import IAdmin from '../Interfaces/IAdmin';
 
 type Props = { children: React.ReactNode };
 
@@ -16,8 +16,8 @@ const adminLoginEmpty = {
 };
 
 type AdminContent = {
-  adminLogin: IAdminInfos;
-  setAdminLogin: React.Dispatch<React.SetStateAction<IAdminInfos>>;
+  adminLogin: IAdmin;
+  setAdminLogin: React.Dispatch<React.SetStateAction<IAdmin>>;
   logout: () => void;
 };
 

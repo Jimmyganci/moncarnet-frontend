@@ -1,7 +1,7 @@
-import IVehiculeInfos from '../Interfaces/IVehiculeInfos';
+import IVehicule from '../Interfaces/IVehicule';
 import { model, type, users, vehicule } from './request';
 
-export const getVehicules = async (vehicules: IVehiculeInfos[]) => {
+export const getVehicules = async (vehicules: IVehicule[]) => {
   const results = Promise.all(
     vehicules.map(async (vehic) => [
       await vehicule.getOne(vehic.immat),

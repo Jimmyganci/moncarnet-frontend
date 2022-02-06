@@ -17,7 +17,7 @@ const ParticularSideBar = () => {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logOut }: any = useContext(UserContext);
+  const { logout }: any = useContext(UserContext);
 
   const linkArray = [
     {
@@ -48,7 +48,7 @@ const ParticularSideBar = () => {
       label: 'Mes RDVs',
       path: '/particular/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
   ];
 
@@ -68,7 +68,7 @@ const ParticularSideBar = () => {
           <button
             className="mt-4 text-2xl font-medium tracking-widest"
             onClick={() => {
-              logOut().then(() => {
+              logout().then(() => {
                 return navigate('/');
               });
             }}>

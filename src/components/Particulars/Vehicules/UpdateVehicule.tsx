@@ -4,12 +4,12 @@ import { Link, useParams } from 'react-router-dom';
 
 import { brands, type, upload } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
-import IBrandInfos from '../../../Interfaces/IBrandInfos';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IBrand from '../../../Interfaces/IBrand';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism, input, title } from '../../../variableTailwind';
 
 function UpdateVehicule() {
-  const [brandList, setBrandList] = useState<IBrandInfos[]>([]);
+  const [brandList, setBrandList] = useState<IBrand[]>([]);
   const [modelList, setModelList] = useState<any>([]);
   const [typeList, setTypeList] = useState<any>([]);
   const [immat, setImmat] = useState('');
@@ -21,7 +21,7 @@ function UpdateVehicule() {
   const { infosUserVehicule }: any = useContext(UserContext);
   const { posted, setPosted }: any = useContext(UserContext);
   const { vehiculeImmatToUpdate }: any = useParams();
-  const [infosVehicule, setInfosVehicule] = useState<IVehiculeAllInfos>();
+  const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [brand, setBrand] = useState<string>('');
   const refDate: any = useRef();
   const refCard: any = useRef();
