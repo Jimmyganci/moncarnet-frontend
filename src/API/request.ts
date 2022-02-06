@@ -95,9 +95,11 @@ export const users = {
       .then((res) => res.data),
   // delete garage of the favorite
   deleteGarage: (userId: number, prosId: number) =>
-    axios.delete(`${API_URL}/users/${userId}/prosDeleted/${prosId}`, {
-      withCredentials: true,
-    }),
+    axios
+      .delete(`${API_URL}/users/${userId}/prosDeleted/${prosId}`, {
+        withCredentials: true,
+      })
+      .then((res) => res),
 };
 //----------------------------------------------------------//
 
