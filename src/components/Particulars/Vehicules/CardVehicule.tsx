@@ -19,12 +19,12 @@ interface Props {
 const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const { userLogin, vehiculeDeleted }: any = useContext(UserContext);
+  const { setPosted }: any = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
-  console.log(vehiculeSelect);
 
   async function getBrand() {
     const res = await brands.getOne(vehiculeSelect.brandId);
-    setBrand(res.name);
+    if (res) setBrand(res.name);
   }
 
   useEffect(() => {
@@ -97,7 +97,9 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   </Link>
                 </button>
                 <div className="flex items-center justify-between w-full my-2">
-                  <button className={`w-full mr-1 py-2 uppercase ${clearedGreenButton}`}>
+                  <button
+                    onClick={() => setPosted(false)}
+                    className={`w-full mr-1 py-2 uppercase ${clearedGreenButton}`}>
                     <Link
                       className="w-full h-full p-0 m-0"
                       to={`/particular/vehicules/${vehiculeSelect.immat}/update`}>

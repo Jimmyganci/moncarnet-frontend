@@ -3,12 +3,15 @@ import axios from 'axios';
 import IAdminInfos from '../Interfaces/IAdminInfos';
 import IAppointmentInfos from '../Interfaces/IAppointmentInfos';
 import AppointmentInfos from '../Interfaces/IAppointmentInfos';
+import IBrandInfos from '../Interfaces/IBrandInfos';
 import BrandInfos from '../Interfaces/IBrandInfos';
 import { ICookieInfos } from '../Interfaces/ICookieInfos';
+import IModelInfos from '../Interfaces/IModelInfos';
 import ModelInfos from '../Interfaces/IModelInfos';
 import IPros from '../Interfaces/IPros';
 import IServiceBookInfos from '../Interfaces/IServiceBook';
 import ServiceBookInfos from '../Interfaces/IServiceBook';
+import ITypeInfos from '../Interfaces/ITypeInfos';
 import TypeInfos from '../Interfaces/ITypeInfos';
 import IUserInfos from '../Interfaces/IUserInfos';
 import IVehiculeInfos from '../Interfaces/IVehiculeInfos';
@@ -99,9 +102,10 @@ export const users = {
 //----------------------------------------------------------//
 
 //----------------------------Pros--------------------------//
-let urlPros = `${API_URL}/pros`;
+
 export const pros = {
   getAll: (url?: string): Promise<IPros[]> => {
+    let urlPros = `${API_URL}/pros`;
     if (url) urlPros += url;
     return axios.get(urlPros, { withCredentials: true }).then((res) => res.data);
   },
@@ -161,10 +165,20 @@ export const vehicule = {
 //--------------------------------------------------------//
 
 //-----------------------------Brands-------------------------------//
+
 export const brands = {
   getOne: (idBrand: number): Promise<BrandInfos> =>
     axios
       .get(`${API_URL}/brands/${idBrand}`, { withCredentials: true })
+      .then((res) => res.data),
+  getAll: (url?: string): Promise<IBrandInfos[]> => {
+    let urlBrand = `${API_URL}/brands`;
+    if (url) urlBrand += url;
+    return axios.get(urlBrand, { withCredentials: true }).then((res) => res.data);
+  },
+  getModels: (brandId: number): Promise<IModelInfos[]> =>
+    axios
+      .get(`${API_URL}/brands/${brandId}/models`, { withCredentials: true })
       .then((res) => res.data),
 };
 //------------------------------------------------------------------//
@@ -183,6 +197,12 @@ export const type = {
   getOne: (idType: number): Promise<TypeInfos> =>
     axios
       .get(`${API_URL}/types/${idType}`, { withCredentials: true })
+      .then((res) => res.data),
+  getAll: (): Promise<ITypeInfos[]> =>
+    axios
+      .get('http://localhost:8000/api/types', {
+        withCredentials: true,
+      })
       .then((res) => res.data),
 };
 //------------------------------------------------------------------//

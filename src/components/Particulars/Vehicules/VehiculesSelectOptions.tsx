@@ -4,11 +4,11 @@ import { brands } from '../../../API/request';
 import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 
 function VehiculesSelectOptions({ vehicule }: { vehicule: IVehiculeAllInfos }) {
-  const [brand, setBrand] = useState<string>();
+  const [brand, setBrand] = useState<string>('');
 
   async function getBrand() {
     const res = await brands.getOne(vehicule.brandId);
-    setBrand(res.name);
+    if (res) setBrand(res.name);
   }
 
   useEffect(() => {

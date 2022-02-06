@@ -44,7 +44,7 @@ function ModalDelete({
       });
       if (putVehicule === 204) {
         setVehiculeDeleted(true);
-        toast.success('Véhicule modifié');
+        toast.success('Véhicule Supprimé');
       } else {
         console.log(putVehicule);
         toast.error("Une erreur s'est produite");

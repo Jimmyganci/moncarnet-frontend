@@ -12,15 +12,16 @@ function Vehicules() {
   const { infosUserVehicule }: any = useContext(UserContext);
   const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAllInfos[]>([]);
 
-  useEffect(() => {
-    infosUserVehicule && setVehiculeSelected(infosUserVehicule);
-  }, [infosUserVehicule]);
-
   const handleChangeVehicule = (immat: string) => {
     setVehiculeSelected(
       infosUserVehicule.filter((el: IVehiculeAllInfos) => el.immat.includes(immat)),
     );
   };
+
+  useEffect(() => {
+    infosUserVehicule && setVehiculeSelected(infosUserVehicule);
+  }, [infosUserVehicule]);
+
   return (
     <div className="h-full lg:h-fit">
       <div className="flex items-center justify-center h-full lg:h-fit">

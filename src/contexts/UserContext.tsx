@@ -68,9 +68,7 @@ export default UserContext;
 type Props = { children: React.ReactNode };
 export const UserContextProvider: React.FC<Props> = ({ children }) => {
   const [userLogin, setUserLogin] = useState<IUserInfos>(USER_LOGIN_EMPTY);
-  const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAllInfos[]>([
-    VEHICULE_INFOS_EMPTY,
-  ]);
+  const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAllInfos[]>([]);
   const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false);
   const [posted, setPosted] = useState<boolean>(false);
   const [deleteAccount, setDeleteAccount] = useState<boolean>(false);
@@ -100,7 +98,9 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
               if (userVehicule) {
                 const results = await getVehicules(userVehicule);
 
-                setInfosUserVehicule(results);
+                setInfosUserVehicule(
+                  results.filter((vehicule) => vehicule.active === true),
+                );
               }
             }
           } catch (err) {

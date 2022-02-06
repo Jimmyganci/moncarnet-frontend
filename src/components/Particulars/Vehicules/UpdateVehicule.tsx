@@ -2,15 +2,18 @@ import axios from 'axios';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { brands, type, upload } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IBrandInfos from '../../../Interfaces/IBrandInfos';
+import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
 import { button, glassMorphism, input, title } from '../../../variableTailwind';
 
 function UpdateVehicule() {
-  const [brandList, setBrandList] = useState<any>([]);
+  const [brandList, setBrandList] = useState<IBrandInfos[]>([]);
   const [modelList, setModelList] = useState<any>([]);
   const [typeList, setTypeList] = useState<any>([]);
   const [immat, setImmat] = useState('');
-  const [type, setType] = useState('');
+  const [typeVehicule, setTypeVehicule] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
   const [model, setModel] = useState<any>([]);
   const [registrationDate, setRegistrationDate] = useState('');
@@ -18,37 +21,44 @@ function UpdateVehicule() {
   const { infosUserVehicule }: any = useContext(UserContext);
   const { posted, setPosted }: any = useContext(UserContext);
   const { vehiculeImmatToUpdate }: any = useParams();
-  const [infosVehicule, setInfosVehicule] = useState<any>([]);
+  const [infosVehicule, setInfosVehicule] = useState<IVehiculeAllInfos>();
+  const [brand, setBrand] = useState<string>('');
   const refDate: any = useRef();
   const refCard: any = useRef();
 
-  useEffect(() => {
-    async function getInfosVehicule() {
-      setInfosVehicule(
-        infosUserVehicule.filter((ele: any) => ele.immat === vehiculeImmatToUpdate),
-      );
+  async function getInfosVehicule() {
+    const filter = await infosUserVehicule.filter(
+      (ele: any) => ele.immat === vehiculeImmatToUpdate,
+    );
+    setInfosVehicule(filter[0]);
+  }
+
+  async function getBrand() {
+    if (infosVehicule) {
+      const res = await brands.getOne(infosVehicule.brandId);
+      setBrand(res.name);
     }
-    getInfosVehicule();
-  }, [infosUserVehicule]);
+  }
+
+  useEffect(() => {
+    infosUserVehicule && getInfosVehicule();
+    getBrand();
+  }, [infosUserVehicule, infosVehicule]);
 
   useEffect(() => {
     async function getBrandModel() {
-      let urlBrand = 'http://localhost:8000/api/brands';
-      if (brandFilter) urlBrand += `?name=${brandFilter}`;
+      let urlBrands = '';
+      if (brandFilter) urlBrands += `?name=${brandFilter}`;
       try {
-        const getBrand = await axios.get(urlBrand, {
-          withCredentials: true,
-        });
-        setBrandList(getBrand.data);
-        const getType = await axios.get('http://localhost:8000/api/types', {
-          withCredentials: true,
-        });
-        setTypeList(getType.data);
-        if (getBrand.data.length === 1) {
-          let urlModel = `http://localhost:8000/api/brands/${getBrand.data[0].id_brand}/models`;
+        const getBrands = await brands.getAll(urlBrands);
+        setBrandList(getBrands);
+        const getTypes = await type.getAll();
+        setTypeList(getTypes);
+        if (getBrands.length === 1) {
           try {
-            const getModel = await axios.get(urlModel, { withCredentials: true });
-            setModelList(getModel.data);
+            const getModels =
+              getBrands[0].id_brand && (await brands.getModels(getBrands[0].id_brand));
+            setModelList(getModels);
           } catch (err) {
             console.log(err);
           }
@@ -68,11 +78,7 @@ function UpdateVehicule() {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('immat', vehiculeImmatToUpdate);
-        const resUpload = await axios.post(
-          `http://localhost:8000/api/vehicules/${vehiculeImmatToUpdate}/upload`,
-          formData,
-          { withCredentials: true },
-        );
+        const resUpload = await upload.post(vehiculeImmatToUpdate, formData);
         uploadedGreenCard = resUpload.data.url;
       }
 
@@ -80,12 +86,13 @@ function UpdateVehicule() {
         `http://localhost:8000/api/vehicules/${vehiculeImmatToUpdate}`,
         {
           immat: immat.toUpperCase() || vehiculeImmatToUpdate,
-          registration_date: registrationDate || infosVehicule[0].registration_date,
+          registration_date:
+            registrationDate || (infosVehicule && infosVehicule.registrationDate),
           url_vehiculeRegistration:
-            uploadedGreenCard || infosVehicule[0].url_vehiculeRegistration,
-          id_modelId: parseInt(model) || infosVehicule[0].id_modelId,
-          id_typeId: parseInt(type) || infosVehicule[0].id_typeId,
-          id_userId: parseInt(infosVehicule[0].id_userId),
+            uploadedGreenCard || (infosVehicule && infosVehicule.urlGreenCard),
+          id_modelId: parseInt(model) || (infosVehicule && infosVehicule.modelId),
+          id_typeId: parseInt(typeVehicule) || (infosVehicule && infosVehicule.typeId),
+          id_userId: infosVehicule && infosVehicule.userId,
           active: true,
           validate: false,
         },
@@ -103,7 +110,7 @@ function UpdateVehicule() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      {posted === false && (
+      {posted === false && infosVehicule && (
         <div className="flex flex-col items-center w-full h-full m-auto">
           <h1 className={title}>Modifier votre véhicule</h1>
           <form
@@ -128,8 +135,8 @@ function UpdateVehicule() {
                 className={`${input}`}
                 name="type"
                 id="type"
-                onChange={(e) => setType(e.target.value)}>
-                <option value="">{infosVehicule.length && infosVehicule[0].type}</option>
+                onChange={(e) => setTypeVehicule(e.target.value)}>
+                <option value="">{infosVehicule.type}</option>
                 {typeList.map((el: any) => (
                   <option key={el.id_type} value={el.id_type}>
                     {el.name_type}
@@ -146,7 +153,7 @@ function UpdateVehicule() {
                 id="brand"
                 list="listBrands"
                 value={brandFilter}
-                placeholder={infosVehicule.length && infosVehicule[0].brand}
+                placeholder={brand}
                 onChange={(e) => setBrandFilter(e.target.value)}
                 onClick={() => setBrandFilter('')}
               />
@@ -165,9 +172,7 @@ function UpdateVehicule() {
                 name="model"
                 id="model"
                 onChange={(e) => setModel(e.target.value)}>
-                <option value={model}>
-                  {infosVehicule.length && infosVehicule[0].model}
-                </option>
+                <option value={model}>{brandFilter ? '' : infosVehicule.model}</option>
                 {modelList.map((el: any) => (
                   <option key={el.id_model} value={el.id_model}>
                     {el.name}
@@ -185,9 +190,9 @@ function UpdateVehicule() {
                 onBlur={() => (refDate.current.type = 'text')}
                 name="registrationDate"
                 id="registrationDate"
-                placeholder={
-                  infosVehicule.length && infosVehicule[0].registration_date.slice(0, 10)
-                }
+                placeholder={new Date(
+                  infosVehicule.registrationDate,
+                ).toLocaleDateString()}
                 onChange={(e) => setRegistrationDate(e.target.value)}
               />
             </label>
@@ -201,13 +206,7 @@ function UpdateVehicule() {
                 ref={refCard}
                 onFocus={() => (refCard.current.type = 'file')}
                 onBlur={() => (refCard.current.type = 'file')}
-                placeholder={
-                  infosVehicule.length &&
-                  infosVehicule[0].url_vehiculeRegistration.slice(
-                    81,
-                    infosVehicule[0].url_vehiculeRegistration.length,
-                  )
-                }
+                placeholder={infosVehicule.urlGreenCard}
                 accept=".jpg, .jpeg, .png"
                 onChange={(e) => setFile(e.target.files![0])}
               />
