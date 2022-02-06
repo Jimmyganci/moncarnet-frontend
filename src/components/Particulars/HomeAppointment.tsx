@@ -1,16 +1,18 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsArrowUpCircle } from 'react-icons/bs';
 
-import { users } from '../../API/request';
+import { pros, users } from '../../API/request';
 import UserContext from '../../contexts/UserContext';
+import IAppointmentInfos from '../../Interfaces/IAppointmentInfos';
+import IPros from '../../Interfaces/IPros';
 import { borderGlass, button, glassMorphism, h2, title } from '../../variableTailwind';
 import Plate from '../Plate';
+import ProsAppointment from './ProsAppointment';
 
 const HomeAppointment = () => {
-  const { userLogin }: any = useContext(UserContext);
-  const [infosAppointments, setInfosAppointments] = useState<any>([]);
-  const [pros, setPros] = useState<any>([]);
+  const { userLogin } = useContext(UserContext);
+  const [infosAppointments, setInfosAppointments] = useState<IAppointmentInfos[]>([]);
+  const [prosData, setProsData] = useState<IPros[]>([]);
   const [showPastAppointments, setShowPastAppointments] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
   const [showAllPast, setShowAllPast] = useState<boolean>(false);
@@ -20,13 +22,11 @@ const HomeAppointment = () => {
   useEffect(() => {
     async function getAppointments() {
       try {
-        const res = await users.appointments(userLogin.id_user);
+        const res = userLogin.id_user && (await users.appointments(userLogin.id_user));
         if (res) {
-          const resPros = await axios.get(`http://localhost:8000/api/pros/`, {
-            withCredentials: true,
-          });
+          const resPros = await pros.getAll();
           setInfosAppointments(res);
-          setPros(resPros.data);
+          setProsData(resPros);
         }
       } catch (err) {
         console.log(err);
@@ -59,7 +59,7 @@ const HomeAppointment = () => {
           <div className="flex flex-col items-center justify-around">
             <h2 className={`${h2}`}>Mes prochains rendez-vous</h2>
             {infosAppointments.length !== 0 &&
-              pros.length !== 0 &&
+              prosData.length !== 0 &&
               infosAppointments
                 .filter((e: any) => e.date > today)
                 .sort(function (a: any, b: any) {
@@ -88,13 +88,14 @@ const HomeAppointment = () => {
                     <p>
                       {'Avec '}
                       <span className="text-xl font-medium underline">
-                        {pros.find((el: any) => el.id_pros === app.prosId).name}
+                        {/* {prosData.find((el: any) => el.id_pros === app.prosId).name} */}
+                        <ProsAppointment prosId={app.prosId} />
                       </span>
                     </p>
                   </div>
                 ))}
             {infosAppointments.length !== 0 &&
-              pros.length !== 0 &&
+              prosData.length !== 0 &&
               infosAppointments
                 .filter((e: any) => e.date > today)
                 .sort(function (a: any, b: any) {
@@ -125,7 +126,7 @@ const HomeAppointment = () => {
                     <p className="">
                       {'Avec '}
                       <span className="text-xl font-medium underline">
-                        {pros.find((el: any) => el.id_pros === app.prosId).name}
+                        <ProsAppointment prosId={app.prosId} />
                       </span>
                     </p>
                   </div>
@@ -160,7 +161,7 @@ const HomeAppointment = () => {
               )}
             </button>
             {infosAppointments.length !== 0 &&
-              pros.length !== 0 &&
+              prosData.length !== 0 &&
               infosAppointments
                 .filter((e: any) => e.date < today)
                 .sort(function (a: any, b: any) {
@@ -192,14 +193,12 @@ const HomeAppointment = () => {
                     <p className="text-black leading-[1] my-2">{app.comment}</p>
                     <p className="">
                       {'Avec '}
-                      <span className="text-xl font-medium underline">
-                        {pros.find((el: any) => el.id_pros === app.prosId).name}
-                      </span>
+                      <ProsAppointment prosId={app.prosId} />
                     </p>
                   </div>
                 ))}
             {infosAppointments.length !== 0 &&
-              pros.length !== 0 &&
+              prosData.length !== 0 &&
               infosAppointments
                 .filter((e: any) => e.date < today)
                 .sort(function (a: any, b: any) {
@@ -231,9 +230,7 @@ const HomeAppointment = () => {
                     <p className="text-black leading-[1] my-2">{app.comment}</p>
                     <p className="">
                       {'Avec '}
-                      <span className="text-xl font-medium underline">
-                        {pros.find((el: any) => el.id_pros === app.prosId).name}
-                      </span>
+                      <ProsAppointment prosId={app.prosId} />
                     </p>
                   </div>
                 ))}
