@@ -3,6 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 
 import { pros, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IPros from '../../../Interfaces/IPros';
+import IServiceBook from '../../../Interfaces/IServiceBook';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
   button,
   glassMorphism,
@@ -10,23 +13,23 @@ import {
 } from '../../../variableTailwind';
 
 const ServiceDetail = () => {
-  const { vehiculeImmatToUpdate, id_service_book }: any = useParams();
-  const [infosService, setInfosService] = useState<any>([]);
-  const { infosUserVehicule }: any = useContext(UserContext);
-  const [infosVehicule, setInfosVehicule] = useState<any>([]);
-  const [infosPro, setInfosPro] = useState<any>('');
+  const { vehiculeImmatToUpdate, id_service_book } = useParams();
+  const [infosService, setInfosService] = useState<IServiceBook>();
+  const { infosUserVehicule } = useContext(UserContext);
+  const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
+  const [infosPro, setInfosPro] = useState<IPros>();
 
   useEffect(() => {
     async function getInfosVehicule() {
       setInfosVehicule(
-        infosUserVehicule.filter((ele: any) => ele.immat === vehiculeImmatToUpdate),
+        infosUserVehicule && infosUserVehicule.filter((vehicule: any) => vehicule.immat === vehiculeImmatToUpdate)[0],
       );
     }
 
     async function getservice() {
       if (id_service_book !== undefined) {
         try {
-          const res = await service_book.getOne(id_service_book);
+          const res = await service_book.getOne(Number(id_service_book));
           setInfosService(res);
         } catch (err) {
           console.log(err);
@@ -39,7 +42,7 @@ const ServiceDetail = () => {
 
   useEffect(() => {
     async function getInfosPro() {
-      if (infosService.id_pros !== undefined) {
+      if (infosService) {
         try {
           const res = await pros.getOne(infosService.id_pros);
           setInfosPro(res);
@@ -57,11 +60,11 @@ const ServiceDetail = () => {
         className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}>
         <h3>
           <span className="pr-2 text-2xl border-r-2 border-background">
-            {infosVehicule.length &&
-              infosVehicule[0].brand + ' ' + infosVehicule[0].model}
+            {infosVehicule &&
+              infosVehicule.brand + ' ' + infosVehicule.model}
           </span>
           <span className="pl-2 text-2xl">
-            {infosVehicule.length && infosVehicule[0].immat}
+            {infosVehicule && infosVehicule.immat}
           </span>
         </h3>
         <form
@@ -69,35 +72,32 @@ const ServiceDetail = () => {
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Date</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosService.date &&
-                `${infosService.date.slice(8, 10)}/${infosService.date.slice(
-                  5,
-                  7,
-                )}/${infosService.date.slice(0, 4)}`}
+              {infosService &&
+                `${new Date(infosService.date).toLocaleDateString()}`}
             </div>
           </label>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Kilométrage</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosService.date && `${infosService.kilometrage}`}
+              {infosService && `${infosService.kilometrage}`}
             </div>
           </label>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Service</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosService.date && `${infosService.service}`}
+              {infosService && `${infosService.service}`}
             </div>
           </label>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Observations</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosService.date && `${infosService.observations}`}
+              {infosService && `${infosService.observations}`}
             </div>
           </label>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Réalisé par</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosPro.name && `${infosPro.name}`}
+              {infosPro && `${infosPro.name}`}
             </div>
           </label>
         </form>

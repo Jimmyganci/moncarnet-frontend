@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { pros } from '../../../API/request';
 import IAppointment from '../../../Interfaces/IPros';
-import ServiceBookInfos from '../../../Interfaces/IServiceBook';
+import ServiceBook from '../../../Interfaces/IServiceBook';
 
 type CardProps = {
-  serviceBook: ServiceBookInfos;
+  serviceBook: ServiceBook;
   setShowPros: React.Dispatch<React.SetStateAction<boolean>>;
   setProsId: React.Dispatch<React.SetStateAction<number>>;
 };

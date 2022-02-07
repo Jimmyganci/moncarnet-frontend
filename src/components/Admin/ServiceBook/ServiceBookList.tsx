@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { service_book } from '../../../API/request';
-import ServiceBookInfos from '../../../Interfaces/IServiceBook';
+import ServiceBook from '../../../Interfaces/IServiceBook';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import ServiceBookDetailsCard from './ServiceBookDetailsCard';
 
 function ServiceBookList() {
-  const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
+  const [serviceBookList, setServiceBookList] = useState<ServiceBook[]>();
   const [showPros, setShowPros] = useState<boolean>(false);
   const [prosId, setProsId] = useState<number>(0);
 

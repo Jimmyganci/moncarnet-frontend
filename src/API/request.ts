@@ -2,20 +2,14 @@ import axios from 'axios';
 
 import IAdmin from '../Interfaces/IAdmin';
 import IAppointment from '../Interfaces/IAppointment';
-import AppointmentInfos from '../Interfaces/IAppointment';
 import IBrand from '../Interfaces/IBrand';
-import BrandInfos from '../Interfaces/IBrand';
-import { ICookie } from '../Interfaces/ICookie';
+import ICookie from '../Interfaces/ICookie';
 import IModel from '../Interfaces/IModel';
-import ModelInfos from '../Interfaces/IModel';
 import IPros from '../Interfaces/IPros';
-import IServiceBookInfos from '../Interfaces/IServiceBook';
-import ServiceBookInfos from '../Interfaces/IServiceBook';
+import IServiceBook from '../Interfaces/IServiceBook';
 import IType from '../Interfaces/IType';
-import TypeInfos from '../Interfaces/IType';
 import IUser from '../Interfaces/IUser';
 import IVehicule from '../Interfaces/IVehicule';
-import VehiculeInfos from '../Interfaces/IVehicule';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -32,11 +26,11 @@ export const admin = {
 
 //----------------------Appointment---------------------------//
 export const appointment = {
-  getAll: (): Promise<AppointmentInfos[]> =>
+  getAll: (): Promise<IAppointment[]> =>
     axios
       .get(`${API_URL}/appointments`, { withCredentials: true })
       .then((res) => res.data),
-  getOne: (appointmentId: number): Promise<AppointmentInfos> =>
+  getOne: (appointmentId: number): Promise<IAppointment> =>
     axios
       .get(`${API_URL}/appointments/${appointmentId}`, { withCredentials: true })
       .then((res) => res.data),
@@ -82,6 +76,7 @@ export const users = {
   // add garage to the favorite
   addFavorite: (userId: number, prosId: number) =>
     axios.put(`${API_URL}/users/${userId}/pros/${prosId}`, {}, { withCredentials: true }),
+
   // get all user's garage
   getGarage: (userId: number): Promise<IPros[]> =>
     axios
@@ -116,6 +111,8 @@ export const pros = {
     axios
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
+
+
   getAppointments: (userId?: number): Promise<IAppointment[]> =>
     axios
       .get(`${API_URL}/pros/${userId}/appointments`, {
@@ -141,11 +138,11 @@ export const vehicule = {
     axios
       .get(`${API_URL}/vehicules/?noValidate=true`, { withCredentials: true })
       .then((res) => res.data),
-  getOne: (immat: string): Promise<VehiculeInfos> =>
+  getOne: (immat: string): Promise<IVehicule> =>
     axios
       .get(`${API_URL}/vehicules/${immat}`, { withCredentials: true })
       .then((res) => res.data),
-  putOne: (immat: string, data: VehiculeInfos) =>
+  putOne: (immat: string, data: IVehicule) =>
     axios
       .put(
         `${API_URL}/vehicules/${immat}`,
@@ -155,7 +152,7 @@ export const vehicule = {
         { withCredentials: true },
       )
       .then((res) => res.status),
-  getVehiculeWithoutServiceBook: (): Promise<VehiculeInfos[]> =>
+  getVehiculeWithoutServiceBook: (): Promise<IVehicule[]> =>
     axios
       .get(`${API_URL}/vehicules/?service_book=NULL`, { withCredentials: true })
       .then((res) => res.data),
@@ -169,7 +166,7 @@ export const vehicule = {
 //-----------------------------Brands-------------------------------//
 
 export const brands = {
-  getOne: (idBrand: number): Promise<BrandInfos> =>
+  getOne: (idBrand: number): Promise<IBrand> =>
     axios
       .get(`${API_URL}/brands/${idBrand}`, { withCredentials: true })
       .then((res) => res.data),
@@ -187,7 +184,7 @@ export const brands = {
 
 //-----------------------------Model------------------------------//
 export const model = {
-  getOne: (idModel: number): Promise<ModelInfos> =>
+  getOne: (idModel: number): Promise<IModel> =>
     axios
       .get(`${API_URL}/models/${idModel}`, { withCredentials: true })
       .then((res) => res.data),
@@ -196,7 +193,7 @@ export const model = {
 
 //------------------------------types------------------------------------//
 export const type = {
-  getOne: (idType: number): Promise<TypeInfos> =>
+  getOne: (idType: number): Promise<IType> =>
     axios
       .get(`${API_URL}/types/${idType}`, { withCredentials: true })
       .then((res) => res.data),
@@ -211,15 +208,15 @@ export const type = {
 
 //----------------------------Service_Book----------------------------//
 export const service_book = {
-  getAll: (): Promise<IServiceBookInfos[]> =>
+  getAll: (): Promise<IServiceBook[]> =>
     axios
       .get(`${API_URL}/service_books`, { withCredentials: true })
       .then((res) => res.data),
-  getServiceBookVehicule: (immat: string): Promise<ServiceBookInfos[]> =>
+  getServiceBookVehicule: (immat: string): Promise<IServiceBook[]> =>
     axios
       .get(`${API_URL}/vehicules/${immat}/service_book`, { withCredentials: true })
       .then((res) => res.data),
-  getOne: (idServiceBook: number): Promise<ServiceBookInfos> =>
+  getOne: (idServiceBook: number): Promise<IServiceBook> =>
     axios
       .get(`${API_URL}/service_books/${idServiceBook}`, { withCredentials: true })
       .then((res) => res.data),

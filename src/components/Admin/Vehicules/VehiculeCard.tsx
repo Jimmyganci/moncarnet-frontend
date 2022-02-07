@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { brands, service_book } from '../../../API/request';
-import ServiceBookInfos from '../../../Interfaces/IServiceBook';
+import ServiceBook from '../../../Interfaces/IServiceBook';
 import { button } from '../../../variableTailwind';
 
 interface VehiculeProps {
@@ -13,7 +13,7 @@ interface VehiculeProps {
 
 function VehiculeCard({ vehicule, setUserId, setShowUser }: VehiculeProps) {
   const [brand, setBrand] = useState('');
-  const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
+  const [serviceBookList, setServiceBookList] = useState<ServiceBook[]>();
 
   async function getBrand() {
     const getBrand = await brands.getOne(vehicule.brandId);
