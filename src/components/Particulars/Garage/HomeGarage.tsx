@@ -9,7 +9,6 @@ import { button, glassMorphism, input } from '../../../variableTailwind';
 function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
   const [resultsSearchGarage, setResultsSearchGarage] = useState<IPros[]>([]);
-  console.log(resultsSearchGarage)
   const handleSearchGarage = async (e: React.FormEvent) => {
     e.preventDefault();
     let url: string = `?namePros=${searchGarage}`;

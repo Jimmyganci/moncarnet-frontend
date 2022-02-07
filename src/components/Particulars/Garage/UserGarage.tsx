@@ -6,10 +6,12 @@ import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, title } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
   const { userLoggedIn } = useContext(UserContext);
+  const [deletedGarage, setDeletedGarage] = useState<boolean>(false);
 
   useEffect(() => {
     async function getUsersGarage() {
@@ -24,18 +26,19 @@ function UserGarage() {
       }
     }
     getUsersGarage();
-  }, [userLoggedIn]);
+  }, [userLoggedIn, deletedGarage]);
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
       const res = userLoggedIn.id_user && await users.deleteGarage(userLoggedIn.id_user, idPros);
       res && toast.success(res);
+      setDeletedGarage(false)
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
     }
   };
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center'>
       <div className="flex items-center justify-around">
         <h1 className={`${title}`}>Mes garages</h1>
         <Link to="/particular/garage">
@@ -69,7 +72,7 @@ function UserGarage() {
                 <Link to={`/particular/garage-details/${garage.id_pros}`}>
                   <button className={` mt-0 ${button}`}>Details</button>
                 </Link>
-                <button onClick={() => garage.id_pros && handleDeleteGarage(garage.id_pros)}>
+                <button onClick={() => {garage.id_pros && handleDeleteGarage(garage.id_pros); setDeletedGarage(true)}}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"
@@ -110,6 +113,7 @@ function UserGarage() {
           </>
         )}
       </div>
+      <div className='text-md font-inter max-w-md mb-2 w-[60%] flex justify-center mt-4'><ReturnButton target={'/particular/home'}/></div>
     </div>
   );
 }

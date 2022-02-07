@@ -208,7 +208,7 @@ function UpdateVehicule() {
                 ref={refCard}
                 onFocus={() => refCard.current && (refCard.current.type = 'file')}
                 onBlur={() => refCard.current && (refCard.current.type = 'file')}
-                placeholder={infosVehicule.urlGreenCard}
+                placeholder={infosVehicule.urlGreenCard.slice(81,infosVehicule.urlGreenCard && infosVehicule.urlGreenCard.length-1)}
                 accept=".jpg, .jpeg, .png"
                 onChange={(e) => setFile(e.target.files![0])}
               />
