@@ -22,8 +22,7 @@ const HomeAppointment = () => {
   useEffect(() => {
     async function getAppointments() {
       try {
-        const res =
-          userLoggedIn.id_user && (await users.appointments(userLoggedIn.id_user));
+        const res = userLoggedIn.id_user && (await users.appointments(userLoggedIn.id_user));
         if (res) {
           const resPros = await pros.getAll();
           setInfosAppointments(res);
