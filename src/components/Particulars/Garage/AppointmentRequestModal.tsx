@@ -34,7 +34,7 @@ const AppointmentRequestModal: React.FC<AppointmentRequestProps> = ({garageId, s
                 <div
                 className={`w-full rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
                     <p className='mb-4'>Afin de prendre rendez-vous merci de contacter directement le garage via les coordonnées ci-dessous :</p>
-                <div className='flex justify-center items-center w-full mb-8'>
+                <div className='flex justify-center items-center w-full mb-6'>
                     <div>
                       <img className="w-20 mr-4" src={garageLogo} alt="logo_user" />
                     </div>
@@ -42,22 +42,17 @@ const AppointmentRequestModal: React.FC<AppointmentRequestProps> = ({garageId, s
                       <p className="text-2xl ">{garageInfos.name}</p>
                     </div>
                 </div>
-               
-                    <div className='w-4/6 flex flex-col items-start justify-evenly'>
+                    <div className='w-full flex flex-col items-start justify-center ml-20'>
                         <div className='flex justify-start items-center'>
                             <img className="w-8 mr-2" src={email} alt="email" />
                             <p> : {garageInfos.email}</p>
                         </div>
-                     
-                     
                         <div className='flex justify-start items-center'>
                             <img className="w-8 mr-2" src={phone} alt="phone" />
                             <p> : {garageInfos.phone}</p>
                         </div>
                     </div>
-                  
                 </div>
-    
                 <button
                   onClick={() => setShowAppointmentRequest && setShowAppointmentRequest(false)}
                   className={`${button} mt-16`}>
