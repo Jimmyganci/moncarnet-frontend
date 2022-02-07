@@ -24,7 +24,7 @@ const ServiceDetail = () => {
     setInfosVehicule(
       infosUserVehicule &&
         infosUserVehicule.filter(
-          (vehicule: any) => vehicule.immat === vehiculeImmatToUpdate,
+          (vehicule) => vehicule.immat === vehiculeImmatToUpdate,
         )[0],
     );
   }
