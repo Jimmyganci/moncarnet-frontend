@@ -27,7 +27,7 @@ function ModalDelete({
   deleteConfirmation,
   setDeleteConfirmation,
 }: ModalProps) {
-  const { vehiculeDeleted, setVehiculeDeleted }: any = useContext(UserContext);
+  const { vehiculeDeleted, setVehiculeDeleted } = useContext(UserContext);
 
   const handleDeleteVehicule = async (e: React.MouseEvent) => {
     e.preventDefault();

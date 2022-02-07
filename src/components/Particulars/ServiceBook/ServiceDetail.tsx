@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { pros, service_book } from '../../../API/request';
+import { brands, pros, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import IPros from '../../../Interfaces/IPros';
 import IServiceBook from '../../../Interfaces/IServiceBook';
@@ -18,30 +18,40 @@ const ServiceDetail = () => {
   const { infosUserVehicule } = useContext(UserContext);
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [infosPro, setInfosPro] = useState<IPros>();
+  const [brand, setBrand] = useState<string>('');
 
-  console.log(infosService);
-  
+  async function getInfosVehicule() {
+    setInfosVehicule(
+      infosUserVehicule &&
+        infosUserVehicule.filter(
+          (vehicule) => vehicule.immat === vehiculeImmatToUpdate,
+        )[0],
+    );
+  }
 
-  useEffect(() => {
-    async function getInfosVehicule() {
-      setInfosVehicule(
-        infosUserVehicule && infosUserVehicule.filter((vehicule: any) => vehicule.immat === vehiculeImmatToUpdate)[0],
-      );
-    }
-
-    async function getservice() {
-      if (id_service_book !== undefined) {
-        try {
-          const res = await service_book.getOne(Number(id_service_book));
-          setInfosService(res);
-        } catch (err) {
-          console.log(err);
-        }
+  async function getservice() {
+    if (id_service_book !== undefined) {
+      try {
+        const res = await service_book.getOne(Number(id_service_book));
+        setInfosService(res);
+      } catch (err) {
+        console.log(err);
       }
     }
+  }
+
+  async function getBrand() {
+    if (infosVehicule) {
+      const brand = await brands.getOne(infosVehicule?.brandId);
+      if (brand) setBrand(brand.name);
+    }
+  }
+
+  useEffect(() => {
     getInfosVehicule();
     getservice();
-  }, [infosUserVehicule]);
+    getBrand();
+  }, [infosUserVehicule, infosVehicule]);
 
   useEffect(() => {
     async function getInfosPro() {
@@ -63,20 +73,16 @@ const ServiceDetail = () => {
         className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}>
         <h3>
           <span className="pr-2 text-2xl border-r-2 border-background">
-            {infosVehicule &&
-              infosVehicule.brand + ' ' + infosVehicule.model}
+            {infosVehicule && brand + ' ' + infosVehicule.model}
           </span>
-          <span className="pl-2 text-2xl">
-            {infosVehicule && infosVehicule.immat}
-          </span>
+          <span className="pl-2 text-2xl">{infosVehicule && infosVehicule.immat}</span>
         </h3>
         <form
           className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 mt-4 items-center justify-center`}>
           <label className="flex flex-col w-full">
             <span className="text-lg font-semibold">Date</span>
             <div className={`${glassMorphismWhiteShadow} h-fit py-1 my-2`}>
-              {infosService &&
-                `${new Date(infosService.date).toLocaleDateString()}`}
+              {infosService && `${new Date(infosService.date).toLocaleDateString()}`}
             </div>
           </label>
           <label className="flex flex-col w-full">

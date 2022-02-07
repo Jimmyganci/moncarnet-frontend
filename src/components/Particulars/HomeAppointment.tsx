@@ -18,7 +18,7 @@ const HomeAppointment = () => {
   const [showAllPast, setShowAllPast] = useState<boolean>(false);
 
   // Date of the day
-  let today = new Date().toISOString();
+  let today = new Date();
   useEffect(() => {
     async function getAppointments() {
       try {
@@ -49,35 +49,39 @@ const HomeAppointment = () => {
             {infosAppointments.length !== 0 &&
               prosData.length !== 0 &&
               infosAppointments
-                .filter((e: any) => e.date > today)
-                .sort(function (a: any, b: any) {
-                  a = new Date(a.date);
-                  b = new Date(b.date);
-                  return a > b ? 1 : -1;
+                .filter(
+                  (e) => new Date(e.date).toISOString() > new Date(today).toISOString(),
+                )
+                .sort((a, b) => {
+                  return a.date > b.date ? 1 : -1;
                 })
                 .slice(0, 2)
-                .map((app: any, index: number) => (
+                .map((appointment, index: number) => (
                   <div key={index} className={`${borderGlass} w-11/12 mb-2 lg:mt-6`}>
                     <div
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
-                      <Plate immat={app.immat} postalCode={'64'} />
+                      <Plate
+                        immat={appointment.immat}
+                        postalCode={userLoggedIn.postal_code}
+                      />
                     </div>
                     <p>
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleDateString()}
+                        {new Date(appointment.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
+                        {new Date(appointment.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
-                    <p className="text-black text-lg leading-[1] my-2">{app.comment}</p>
+                    <p className="text-black text-lg leading-[1] my-2">
+                      {appointment.comment}
+                    </p>
                     <p>
                       {'Avec '}
                       <span className="text-xl font-medium underline">
-                        {/* {prosData.find((el: any) => el.id_pros === app.prosId).name} */}
-                        <ProsAppointment prosId={app.prosId} />
+                        <ProsAppointment prosId={appointment.prosId} />
                       </span>
                     </p>
                   </div>
@@ -85,36 +89,37 @@ const HomeAppointment = () => {
             {infosAppointments.length !== 0 &&
               prosData.length !== 0 &&
               infosAppointments
-                .filter((e: any) => e.date > today)
-                .sort(function (a: any, b: any) {
-                  a = new Date(a.date);
-                  b = new Date(b.date);
-                  return a > b ? 1 : -1;
+                .filter((e) => e.date > today)
+                .sort((a, b) => {
+                  return a.date > b.date ? 1 : -1;
                 })
                 .slice(2, infosAppointments.length - 1)
-                .map((app: any, index: number) => (
+                .map((appointment, index: number) => (
                   <div
                     key={index}
                     className={`${borderGlass} w-11/12 mb-2 ${showAll ? '' : 'hidden'}`}>
                     <div
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
-                      <Plate immat={app.immat} postalCode={'64'} />
+                      <Plate
+                        immat={appointment.immat}
+                        postalCode={userLoggedIn.postal_code}
+                      />
                     </div>
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleDateString()}
+                        {new Date(appointment.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
+                        {new Date(appointment.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
-                    <p className="text-black leading-[1] my-2">{app.comment}</p>
+                    <p className="text-black leading-[1] my-2">{appointment.comment}</p>
                     <p className="">
                       {'Avec '}
                       <span className="text-xl font-medium underline">
-                        <ProsAppointment prosId={app.prosId} />
+                        <ProsAppointment prosId={appointment.prosId} />
                       </span>
                     </p>
                   </div>
@@ -151,14 +156,12 @@ const HomeAppointment = () => {
             {infosAppointments.length !== 0 &&
               prosData.length !== 0 &&
               infosAppointments
-                .filter((e: any) => e.date < today)
-                .sort(function (a: any, b: any) {
-                  a = new Date(a.date);
-                  b = new Date(b.date);
-                  return a < b ? 1 : -1;
+                .filter((e) => e.date < today)
+                .sort((a, b) => {
+                  return a.date < b.date ? 1 : -1;
                 })
                 .slice(0, 2)
-                .map((app: any, index: number) => (
+                .map((appointment, index: number) => (
                   <div
                     key={index}
                     className={`${borderGlass} w-11/12 mb-2 ${
@@ -166,36 +169,37 @@ const HomeAppointment = () => {
                     }`}>
                     <div
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
-                      <Plate immat={app.immat} postalCode={'64'} />
+                      <Plate
+                        immat={appointment.immat}
+                        postalCode={userLoggedIn.postal_code}
+                      />
                     </div>
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleDateString()}
+                        {new Date(appointment.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
+                        {new Date(appointment.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
-                    <p className="text-black leading-[1] my-2">{app.comment}</p>
+                    <p className="text-black leading-[1] my-2">{appointment.comment}</p>
                     <p className="">
                       {'Avec '}
-                      <ProsAppointment prosId={app.prosId} />
+                      <ProsAppointment prosId={appointment.prosId} />
                     </p>
                   </div>
                 ))}
             {infosAppointments.length !== 0 &&
               prosData.length !== 0 &&
               infosAppointments
-                .filter((e: any) => e.date < today)
-                .sort(function (a: any, b: any) {
-                  a = new Date(a.date);
-                  b = new Date(b.date);
-                  return a < b ? 1 : -1;
+                .filter((e) => e.date < today)
+                .sort((a, b) => {
+                  return new Date(a.date) < new Date(b.date) ? 1 : -1;
                 })
                 .slice(2, infosAppointments.length - 1)
-                .map((app: any, index: number) => (
+                .map((appointment, index: number) => (
                   <div
                     key={index}
                     className={`${borderGlass} w-11/12 mb-2 ${
@@ -203,22 +207,25 @@ const HomeAppointment = () => {
                     }`}>
                     <div
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
-                      <Plate immat={app.immat} postalCode={'64'} />
+                      <Plate
+                        immat={appointment.immat}
+                        postalCode={userLoggedIn.postal_code}
+                      />
                     </div>
                     <p className="">
                       {'le '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleDateString()}
+                        {new Date(appointment.date).toLocaleDateString()}
                       </span>
                       {' à '}
                       <span className="text-xl font-medium underline">
-                        {new Date(app.date).toLocaleTimeString().slice(0, 5)}
+                        {new Date(appointment.date).toLocaleTimeString().slice(0, 5)}
                       </span>
                     </p>
-                    <p className="text-black leading-[1] my-2">{app.comment}</p>
+                    <p className="text-black leading-[1] my-2">{appointment.comment}</p>
                     <p className="">
                       {'Avec '}
-                      <ProsAppointment prosId={app.prosId} />
+                      <ProsAppointment prosId={appointment.prosId} />
                     </p>
                   </div>
                 ))}

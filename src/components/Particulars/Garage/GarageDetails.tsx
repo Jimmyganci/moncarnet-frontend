@@ -19,14 +19,14 @@ function GarageDetails() {
         if (prosId) {
           const res = await pros.getOne(Number(prosId));
           setInfosPros(res);
-        }          
+        }
       } catch (err) {
         console.log(err);
       }
     }
     getInfosGarage();
   }, []);
-  console.log(infosPros)
+  console.log(infosPros);
 
   const handleChoiceGarage = async () => {
     if (userLoggedIn.id_user && infosPros && infosPros.id_pros) {

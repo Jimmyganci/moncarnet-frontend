@@ -5,32 +5,34 @@ import { Link, useParams } from 'react-router-dom';
 import { brands, type, upload } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import IBrand from '../../../Interfaces/IBrand';
+import IModel from '../../../Interfaces/IModel';
+import IType from '../../../Interfaces/IType';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism, input, title } from '../../../variableTailwind';
 
 function UpdateVehicule() {
   const [brandList, setBrandList] = useState<IBrand[]>([]);
-  const [modelList, setModelList] = useState<any>([]);
-  const [typeList, setTypeList] = useState<any>([]);
+  const [modelList, setModelList] = useState<IModel[]>([]);
+  const [typeList, setTypeList] = useState<IType[]>([]);
   const [immat, setImmat] = useState('');
   const [typeVehicule, setTypeVehicule] = useState('');
   const [brandFilter, setBrandFilter] = useState('');
-  const [model, setModel] = useState<any>([]);
-  const [registrationDate, setRegistrationDate] = useState('');
-  const [file, setFile] = useState<any>();
-  const { infosUserVehicule }: any = useContext(UserContext);
-  const { posted, setPosted }: any = useContext(UserContext);
-  const { vehiculeImmatToUpdate }: any = useParams();
+  const [model, setModel] = useState<string>('');
+  const [registrationDate, setRegistrationDate] = useState<Date>(new Date());
+  const [file, setFile] = useState<Blob>();
+  const { infosUserVehicule } = useContext(UserContext);
+  const { posted, setPosted } = useContext(UserContext);
+  const { vehiculeImmatToUpdate } = useParams();
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [brand, setBrand] = useState<string>('');
-  const refDate: any = useRef();
-  const refCard: any = useRef();
+  const refDate = useRef<HTMLInputElement>(null);
+  const refCard = useRef<HTMLInputElement>(null);
 
   async function getInfosVehicule() {
-    const filter = await infosUserVehicule.filter(
-      (ele: any) => ele.immat === vehiculeImmatToUpdate,
-    );
-    setInfosVehicule(filter[0]);
+    const filter =
+      infosUserVehicule &&
+      (await infosUserVehicule.filter((ele) => ele.immat === vehiculeImmatToUpdate));
+    if (filter) setInfosVehicule(filter[0]);
   }
 
   async function getBrand() {
@@ -58,7 +60,7 @@ function UpdateVehicule() {
           try {
             const getModels =
               getBrands[0].id_brand && (await brands.getModels(getBrands[0].id_brand));
-            setModelList(getModels);
+            if (getModels) setModelList(getModels);
           } catch (err) {
             console.log(err);
           }
@@ -72,9 +74,9 @@ function UpdateVehicule() {
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    let uploadedGreenCard: any = undefined;
+    let uploadedGreenCard = undefined;
     try {
-      if (file !== undefined) {
+      if (file !== undefined && vehiculeImmatToUpdate) {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('immat', vehiculeImmatToUpdate);
@@ -137,7 +139,7 @@ function UpdateVehicule() {
                 id="type"
                 onChange={(e) => setTypeVehicule(e.target.value)}>
                 <option value="">{infosVehicule.type}</option>
-                {typeList.map((el: any) => (
+                {typeList.map((el) => (
                   <option key={el.id_type} value={el.id_type}>
                     {el.name_type}
                   </option>
@@ -158,7 +160,7 @@ function UpdateVehicule() {
                 onClick={() => setBrandFilter('')}
               />
               <datalist id="listBrands">
-                {brandList.map((el: any) => (
+                {brandList.map((el) => (
                   <option key={el.id_brand} value={el.name}>
                     {el.name}
                   </option>
@@ -173,7 +175,7 @@ function UpdateVehicule() {
                 id="model"
                 onChange={(e) => setModel(e.target.value)}>
                 <option value={model}>{brandFilter ? '' : infosVehicule.model}</option>
-                {modelList.map((el: any) => (
+                {modelList.map((el) => (
                   <option key={el.id_model} value={el.id_model}>
                     {el.name}
                   </option>
@@ -186,14 +188,14 @@ function UpdateVehicule() {
                 className={`${input} w-full`}
                 type="text"
                 ref={refDate}
-                onFocus={() => (refDate.current.type = 'date')}
-                onBlur={() => (refDate.current.type = 'text')}
+                onFocus={() => refDate.current && (refDate.current.type = 'date')}
+                onBlur={() => refDate.current && (refDate.current.type = 'text')}
                 name="registrationDate"
                 id="registrationDate"
                 placeholder={new Date(
                   infosVehicule.registrationDate,
                 ).toLocaleDateString()}
-                onChange={(e) => setRegistrationDate(e.target.value)}
+                onChange={(e) => setRegistrationDate(new Date(e.target.value))}
               />
             </label>
             <label className="flex flex-col w-full text-lg font-semibold">
@@ -204,8 +206,8 @@ function UpdateVehicule() {
                 name="file"
                 id="file"
                 ref={refCard}
-                onFocus={() => (refCard.current.type = 'file')}
-                onBlur={() => (refCard.current.type = 'file')}
+                onFocus={() => refCard.current && (refCard.current.type = 'file')}
+                onBlur={() => refCard.current && (refCard.current.type = 'file')}
                 placeholder={infosVehicule.urlGreenCard}
                 accept=".jpg, .jpeg, .png"
                 onChange={(e) => setFile(e.target.files![0])}

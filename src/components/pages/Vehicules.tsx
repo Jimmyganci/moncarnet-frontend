@@ -49,7 +49,7 @@ function Vehicules() {
         id="listVehicule"
         onChange={(e) => handleChangeVehicule(e.target.value)}>
         {infosUserVehicule &&
-          infosUserVehicule.map((vehicule: any, index: number) => (
+          infosUserVehicule.map((vehicule, index: number) => (
             <VehiculesSelectOptions key={index} vehicule={vehicule} />
           ))}
       </select>

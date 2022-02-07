@@ -112,7 +112,6 @@ export const pros = {
       .get(`${API_URL}/pros/${prosId}`, { withCredentials: true })
       .then((res) => res.data),
 
-
   getAppointments: (userId?: number): Promise<IAppointment[]> =>
     axios
       .get(`${API_URL}/pros/${userId}/appointments`, {
