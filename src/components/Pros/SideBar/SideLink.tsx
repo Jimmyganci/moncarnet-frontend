@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import IProsLinks from '../../../Interfaces/IProsLinks';
 
 type Props = IProsLinks;

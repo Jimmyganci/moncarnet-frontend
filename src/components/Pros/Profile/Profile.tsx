@@ -3,16 +3,15 @@ import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
+import IPros from '../../../Interfaces/IUser';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
-import IPros from '../../../Interfaces/IUser';
 
 const Profile = () => {
-
   const { prosLoggedIn } = useContext(ProsContext);
 
-  const [infoUser, setInfoUser]= useState<IPros[]>([]);
+  const [infoUser, setInfoUser] = useState<IPros[]>([]);
   const [changeMode, setChangeMode] = useState<boolean>(false);
   const [addressUpdate, setAddressUpdate] = useState<string>('');
   const [postalUpdate, setPostalUpdate] = useState<string>('');
@@ -22,15 +21,13 @@ const Profile = () => {
   const [nameUpdate, setNameUpdate] = useState<string>('');
   const [siretUpdate, setSiretUpdate] = useState<string>('');
 
-
-  async function getOne () {
-    const res = await pros.getOne(prosLoggedIn.id_user)
+  async function getOne() {
+    const res = await pros.getOne(prosLoggedIn.id_user);
     setInfoUser(res);
   }
 
   useEffect(() => {
-    prosLoggedIn &&
-    getOne();
+    prosLoggedIn && getOne();
   }, [prosLoggedIn]);
 
   const handleInfosUser = () => {
@@ -52,7 +49,7 @@ const Profile = () => {
         city: cityUpdate || infoUser.city,
         phone: phoneUpdate || infoUser.phone,
         siret: siretUpdate || infoUser.siret,
-        id_user: 0
+        id_user: 0,
       });
       if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
 

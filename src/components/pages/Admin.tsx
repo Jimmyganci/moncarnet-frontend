@@ -22,7 +22,7 @@ function Admin() {
   return (
     <div className="flex min-h-screen">
       <SideBarAdmin />
-      <Outlet context={[vehiculeToValidate, setVehiculeToValidate]} />
+      <Outlet context={vehiculeToValidate} />
     </div>
   );
 }
