@@ -19,7 +19,7 @@ const DeleteAccountModal = ({
   setDeleteAccount,
   getInfosParticular,
 }: modalDeleteAccountProps) => {
-  const { logout }: any = useContext(UserContext);
+  const { logout } = useContext(UserContext);
   const navigateFromDeleteAccount: NavigateFunction = useNavigate();
   return (
     <div className="flex justify-center w-full h-full">
@@ -55,9 +55,8 @@ const DeleteAccountModal = ({
             <button
               onClick={() => {
                 setDeleteAccount && setDeleteAccount(false);
-                logout().then(() => {
-                  return navigateFromDeleteAccount('/');
-                });
+                logout();
+                return navigateFromDeleteAccount('/');
               }}
               className={`${button} flex justify-center items-center mt-6 w-[45%]`}>
               <Link to="/particular/vehicules" className="w-full h-full">

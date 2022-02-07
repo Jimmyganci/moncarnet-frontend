@@ -18,8 +18,7 @@ interface Props {
 
 const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-  const { userLoggedIn, vehiculeDeleted }: any = useContext(UserContext);
-  const { setPosted }: any = useContext(UserContext);
+  const { userLoggedIn, vehiculeDeleted, setPosted } = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
 
   async function getBrand() {
