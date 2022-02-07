@@ -12,7 +12,7 @@ import {
   input,
 } from '../../../variableTailwind';
 
-function ModalAppointment({ deleteAppointment }: { deleteAppointment: Function }) {
+function ModalAppointment() {
   const { setShowModal, prosLoggedIn } = useContext(ProsContext);
   const [changeMode, setChangeMode] = useState<boolean>(false);
   const [dayUpdate, setDayUpdate] = useState<string>('');
@@ -45,6 +45,14 @@ function ModalAppointment({ deleteAppointment }: { deleteAppointment: Function }
   }
 
   // Delete Appointment
+  async function deleteAppointment(appointmentId: number) {
+    try {
+      const res = await appointment.delete(appointmentId);
+      if (res) toast.success('Votre rendez-vous a bien été supprimé');
+    } catch (err) {
+      if (err) toast.error('Impossible de supprimer ce rendez-vous');
+    }
+  }
 
   let appointmentDate: Date = new Date(`${dayUpdate}T${hoursUpdate}:00.000Z`);
 
@@ -64,10 +72,7 @@ function ModalAppointment({ deleteAppointment }: { deleteAppointment: Function }
           }));
         if (res) {
           toast.success('Votre rendez-vous a bien été modifié');
-          setTimeout(() => {
-            location.reload();
-            setChangeMode(false);
-          }, 1500);
+          setChangeMode(false);
         }
       } catch (err) {
         console.log(err);

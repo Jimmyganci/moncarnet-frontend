@@ -18,16 +18,6 @@ function Pros() {
   // access userContext !
   const { logout, showModal, appointmentToDisplay } = useContext(ProsContext);
 
-  async function deleteAppointment(appointmentId: number) {
-    try {
-      const res = await appointment.delete(appointmentId);
-      setTimeout(() => location.reload(), 1500);
-      if (res) toast.success('Votre rendez-vous a bien été supprimé');
-    } catch (err) {
-      if (err) toast.error('Impossible de supprimer ce rendez-vous');
-    }
-  }
-
   return (
     <div className="flex items-center h-screen">
       <button
@@ -47,7 +37,7 @@ function Pros() {
         <Outlet />
       </div>
       {showModal && appointmentToDisplay && (
-        <ModalAppointment deleteAppointment={deleteAppointment} />
+        <ModalAppointment/>
       )}
     </div>
   );

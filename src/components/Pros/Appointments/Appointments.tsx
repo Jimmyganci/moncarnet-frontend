@@ -32,9 +32,8 @@ const Appointments = () => {
             .sort((a: IAppointment, b: IAppointment) => {
               const dateA: Date = new Date(a.date);
               const dateB: Date = new Date(b.date);
-              return dateA > dateB ? -1 : dateB < dateA ? 1 : 0;
+              return dateB > dateA ? -1 : dateB < dateA ? 1 : 0;
             })
-            .reverse()
             .map((appointment, index) => (
               <AppointmentDisplay
                 key={index}
