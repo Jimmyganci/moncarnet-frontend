@@ -1,6 +1,7 @@
 export default interface IVehiculeAndUser {
   active: boolean;
   brandId: number;
+  brand?: string;
   immat: string;
   model: string;
   modelId: number;
