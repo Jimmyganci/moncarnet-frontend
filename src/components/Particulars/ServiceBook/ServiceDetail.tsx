@@ -19,6 +19,9 @@ const ServiceDetail = () => {
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [infosPro, setInfosPro] = useState<IPros>();
 
+  console.log(infosService);
+  
+
   useEffect(() => {
     async function getInfosVehicule() {
       setInfosVehicule(

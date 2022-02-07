@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
-import IPros from '../../../Interfaces/IUser';
+import IPros from '../../../Interfaces/IPros';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
@@ -73,7 +73,6 @@ const Profile = () => {
             champ={'name'}
             lineName={infoUser.name}
             changeMode={changeMode}
-            setChangeMode={setChangeMode}
             modif={nameUpdate}
             setModif={setNameUpdate}
           />
@@ -82,7 +81,6 @@ const Profile = () => {
             champ={'siret'}
             lineName={infoUser.siret}
             changeMode={changeMode}
-            setChangeMode={setChangeMode}
             modif={siretUpdate}
             setModif={setSiretUpdate}
           />
@@ -93,7 +91,6 @@ const Profile = () => {
                 champ={'adresse'}
                 lineName={infoUser.address}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={addressUpdate}
                 setModif={setAddressUpdate}
               />
@@ -101,7 +98,6 @@ const Profile = () => {
                 champ={'code postal'}
                 lineName={infoUser.postal_code}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={postalUpdate}
                 setModif={setPostalUpdate}
               />
@@ -109,7 +105,6 @@ const Profile = () => {
                 champ={'Ville'}
                 lineName={infoUser.city}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={cityUpdate}
                 setModif={setCityUpdate}
               />
@@ -120,7 +115,6 @@ const Profile = () => {
                 champ={'Téléphone'}
                 lineName={infoUser.phone}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={phoneUpdate}
                 setModif={setPhoneUpdate}
               />
@@ -128,7 +122,6 @@ const Profile = () => {
                 champ={'email'}
                 lineName={infoUser.email}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={emailUpdate}
                 setModif={setEmailUpdate}
               />

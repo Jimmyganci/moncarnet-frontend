@@ -6,4 +6,5 @@ export default interface IAppointment {
   date: Date;
   immat: string;
   user?: string;
+  pastApp?:boolean;
 }

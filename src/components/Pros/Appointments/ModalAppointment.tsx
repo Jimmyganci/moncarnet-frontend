@@ -13,7 +13,7 @@ import {
 } from '../../../variableTailwind';
 
 function ModalAppointment() {
-  const { setShowModal, prosLoggedIn } = useContext(ProsContext);
+  const { setShowModal, prosLoggedIn, appointmentId } = useContext(ProsContext);
   const [changeMode, setChangeMode] = useState<boolean>(false);
   const [dayUpdate, setDayUpdate] = useState<string>('');
   const [hoursUpdate, setHoursUpdate] = useState<string>('');
@@ -21,8 +21,6 @@ function ModalAppointment() {
   const [validAppointment, SetValidAppointment] = useState<boolean>(true);
   const [appointmentUnique, setAppointmentUnique] = useState<IAppointment>();
   const [userAppointment, setUserAppointment] = useState<string>('');
-
-  const { appointmentId } = useContext(ProsContext);
 
   // Close Modal with background
 

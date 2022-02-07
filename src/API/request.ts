@@ -220,6 +220,10 @@ export const service_book = {
     axios
       .get(`${API_URL}/service_books/${idServiceBook}`, { withCredentials: true })
       .then((res) => res.data),
+  post: (data: IServiceBook): Promise<IServiceBook> =>
+    axios
+    .post(`${API_URL}/service_books`, data, { withCredentials: true })
+      .then((res) => res.data),
 };
 //---------------------------------------------------------------//
 

@@ -1,5 +1,5 @@
 export default interface IServiceBook {
-  id_service_book: number;
+  id_service_book?: number;
   date: Date;
   service: string;
   observations: string;

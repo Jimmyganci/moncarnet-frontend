@@ -9,8 +9,10 @@ import { button } from '../../../variableTailwind';
 type Props = IAppointment;
 
 const AppointmentDisplay: React.FC<Props> = (props) => {
+
+  const [pastApp, setPastApp] = useState<boolean>(false);
   const { setAppointmentId } = useContext(ProsContext);
-  const { setShowModal } = useContext(ProsContext);
+  const { setShowModal, setShowModalServiceBook } = useContext(ProsContext);
   const [userName, setUserName] = useState<string>('');
 
   const handleSetModal = () => {
@@ -18,10 +20,24 @@ const AppointmentDisplay: React.FC<Props> = (props) => {
     setShowModal(true);
   };
 
+  const handleSetModalServiceBook = () => {
+    setAppointmentId(props.id_appointment || 0);
+    setShowModalServiceBook(true);
+  };
+
   async function getUser() {
     const user = await users.getOne(props.userId);
     setUserName(`${user.lastname} ${user.firstname}`);
   }
+
+  // Date of the day
+  const today: Date = new Date();
+
+  useEffect(() => {
+    if (new Date(props.date).toISOString() < new Date(today).toISOString()) {
+      setPastApp(true)
+    }
+  }, [props])
 
   useEffect(() => {
     getUser();
@@ -42,10 +58,13 @@ const AppointmentDisplay: React.FC<Props> = (props) => {
       <div className="flex justify-center w-1/4">
         <p>{props.comment.slice(0, 20) + '...'}</p>
       </div>
-      <div className="flex justify-center w-1/4 mb-2">
-        <button className={`${button} p-3`} onClick={() => handleSetModal()}>
+      <div className="flex flex-col justify-center items-center w-1/4">
+        <button className={`${button} w-full`} onClick={() => handleSetModal()}>
           Détails
         </button>
+       { pastApp && <button className={`${button} w-full`} onClick={() => handleSetModalServiceBook()}>
+          Créer un entretien
+        </button>}
       </div>
     </div>
   );

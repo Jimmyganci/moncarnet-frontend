@@ -27,6 +27,8 @@ interface AppContextInterface {
   appointmentId: number;
   setAppointmentId: React.Dispatch<React.SetStateAction<number>>;
   logout: () => void;
+  showModalServiceBook: boolean;
+  setShowModalServiceBook: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProsContext = createContext<AppContextInterface>({
@@ -39,6 +41,8 @@ const ProsContext = createContext<AppContextInterface>({
   appointmentId: 0,
   setAppointmentId: () => {},
   logout: () => {},
+  showModalServiceBook: false,
+  setShowModalServiceBook: () => {},
 });
 
 export default ProsContext;
@@ -60,6 +64,8 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [appointmentToDisplay, setAppointmentToDisplay] = useState<IAppointment[]>([]);
   const [appointmentId, setAppointmentId] = useState<number>(0);
+  const [showModalServiceBook, setShowModalServiceBook] = useState(false);
+  
 
   // Login Pro
 
@@ -94,6 +100,8 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
         setAppointmentToDisplay,
         setAppointmentId,
         appointmentId,
+        showModalServiceBook,
+        setShowModalServiceBook
       }}>
       {children}
     </ProsContext.Provider>
