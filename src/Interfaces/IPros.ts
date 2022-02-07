@@ -8,5 +8,5 @@ export default interface IPros {
   siret: string;
   phone: string;
   id_pros?: number;
-  hashedPassword?:string;
+  password?: string;
 }

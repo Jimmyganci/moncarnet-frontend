@@ -86,6 +86,13 @@ function HomeAdmin() {
               pros={dataLength[0].pros}
             />
           </div>
+          <div>
+            <Link to="/admin/addPros">
+              <button className={`${button} w-full py-4`}>
+                Ajouter un professionnel
+              </button>
+            </Link>
+          </div>
           <div
             className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}>
             <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
@@ -100,6 +107,7 @@ function HomeAdmin() {
               <button className={`${button}`}>Accéder au rendez-vous</button>
             </Link>
           </div>
+
           <div
             className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}>
             <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
