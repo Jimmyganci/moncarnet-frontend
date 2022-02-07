@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 import { pros, users } from '../../../API/request';
 import garage from '../../../assets/garage.png';
 import UserContext from '../../../contexts/UserContext';
 import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function GarageDetails() {
   const { userLoggedIn } = useContext(UserContext);
@@ -69,9 +69,7 @@ function GarageDetails() {
           <button onClick={handleChoiceGarage} className={button}>
             Ajouter aux favoris
           </button>
-          <button className={button}>
-            <Link to="/particular/garage">Retour</Link>
-          </button>
+          <ReturnButton target={''}/>
         </div>
       )}
     </div>

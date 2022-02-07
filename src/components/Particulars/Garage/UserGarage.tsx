@@ -10,6 +10,7 @@ import { button, glassMorphism, title } from '../../../variableTailwind';
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
   const { userLoggedIn } = useContext(UserContext);
+  const [deletedGarage, setDeletedGarage] = useState<boolean>(false);
 
   useEffect(() => {
     async function getUsersGarage() {
@@ -24,12 +25,13 @@ function UserGarage() {
       }
     }
     getUsersGarage();
-  }, [userLoggedIn]);
+  }, [userLoggedIn, deletedGarage]);
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
       const res = userLoggedIn.id_user && await users.deleteGarage(userLoggedIn.id_user, idPros);
       res && toast.success(res);
+      setDeletedGarage(false)
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
     }
@@ -69,7 +71,7 @@ function UserGarage() {
                 <Link to={`/particular/garage-details/${garage.id_pros}`}>
                   <button className={` mt-0 ${button}`}>Details</button>
                 </Link>
-                <button onClick={() => garage.id_pros && handleDeleteGarage(garage.id_pros)}>
+                <button onClick={() => {garage.id_pros && handleDeleteGarage(garage.id_pros); setDeletedGarage(true)}}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"

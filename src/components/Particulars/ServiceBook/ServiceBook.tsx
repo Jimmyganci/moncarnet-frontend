@@ -19,10 +19,10 @@ const ServiceBook = () => {
   const { infosUserVehicule } = useContext(UserContext);
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [services, setServices] = useState<IServiceBook[]>();
-  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser>();
-  const [brand, setBrand] = useState<string>('');
+  const [brand, setBrand] = useState<string>(''); 
+  const [selectedImmat, setSelectedImmat]= useState<string>(vehiculeImmatToUpdate || '');
 
-  async function getInfosVehicule() {
+  function getInfosVehicule() {
     infosUserVehicule &&
       setInfosVehicule(
         infosUserVehicule.filter(
@@ -32,37 +32,34 @@ const ServiceBook = () => {
   }
 
   async function getBrand() {
-    const res = vehiculeSelected && (await brands.getOne(vehiculeSelected.brandId));
+    const res = infosVehicule && await brands.getOne(infosVehicule.brandId);
     res && setBrand(res.name);
   }
 
   useEffect(() => {
     getInfosVehicule();
-    vehiculeSelected && getBrand();
-  }, [infosUserVehicule, vehiculeSelected, vehiculeImmatToUpdate]);
+    infosVehicule && getBrand();
+  }, [infosUserVehicule, vehiculeImmatToUpdate]);
 
   useEffect(() => {
     async function getservices() {
       try {
-        const res =
-          infosVehicule &&
-          (await service_book.getServiceBookVehicule(
-            vehiculeSelected ? vehiculeSelected.immat : infosVehicule.immat,
-          ));
+        const res = infosVehicule && await service_book.getServiceBookVehicule(
+          infosVehicule.immat,
+        );
         setServices(res);
       } catch (err) {
         console.log(err);
       }
     }
-    vehiculeSelected && infosVehicule && getservices();
-  }, [infosVehicule, vehiculeSelected]);
-
+    infosVehicule && infosVehicule && getservices();
+  }, [infosVehicule]);
+  
   const handleVehiculeSelected = (immat: string) => {
-    infosUserVehicule &&
-      setVehiculeSelected(
-        infosUserVehicule.filter((vehicule: IVehiculeAndUser) =>
-          vehicule.immat.includes(immat),
-        )[0],
+      setSelectedImmat(immat);
+      infosUserVehicule &&
+      setInfosVehicule(
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat))[0],
       );
   };
 
@@ -72,9 +69,7 @@ const ServiceBook = () => {
         <h2 className={title}>Mon carnet d&apos;entretien</h2>
         <select
           className={select}
-          defaultValue={
-            infosVehicule && `${brand} ${infosVehicule.model} | ${infosVehicule.immat}`
-          }
+          value={selectedImmat}
           name="listVehicule"
           id="listVehicule"
           onChange={(e) => infosUserVehicule && handleVehiculeSelected(e.target.value)}>
@@ -84,15 +79,14 @@ const ServiceBook = () => {
               <VehiculesSelectOptions key={index} vehicule={vehicule} />
             ))}
         </select>
-        {services && infosVehicule && (
+        {services && services.length && infosVehicule ? (
           <div
             className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}>
             <h3 className={`m-4 text-xl font-bold font-inter text-background`}>
               <span className="pr-2 border-r-2 border-background">
-                {((vehiculeSelected && brand) || (infosVehicule && brand)) +
+                {((infosVehicule && brand) +
                   ' ' +
-                  ((vehiculeSelected && vehiculeSelected.model) ||
-                    (infosVehicule && infosVehicule.model))}
+                  (infosVehicule && infosVehicule.model))}
               </span>
               <span className="pl-2">{infosVehicule && infosVehicule.immat}</span>
             </h3>
@@ -121,7 +115,7 @@ const ServiceBook = () => {
                       <Link
                         className="w-1/4 mx-1 h-2/5"
                         to={`/particular/vehicules/${
-                          vehiculeSelected ? vehiculeSelected.immat : infosVehicule.immat
+                          infosVehicule && infosVehicule.immat
                         }/serviceBook/${service.id_service_book}`}>
                         <div className="flex items-center justify-center w-full h-full p-2 text-sm leading-5 break-words rounded-lg bg-primary text-background">
                           Voir détails
@@ -132,8 +126,7 @@ const ServiceBook = () => {
                 ))}
             </div>
           </div>
-        )}
-        {!services && (
+        ) : (
           <div
             className={`${glassMorphism} w-11/12 h-full mx-4 mt-6 p-4 flex flex-col justify-center items-center rounded-lg`}>
             <p>{`Vous n'avez pas encore enregistré d'entretien sur ce véhicule`}</p>

@@ -10,7 +10,7 @@ import {
   glassMorphismWhiteShadow,
 } from '../../../variableTailwind';
 import Plate from '../../Plate';
-import ModalDeleteVehicule from '../ParticularInfos/ModalDeleteVehicule';
+import ModalDeleteVehicule from './ModalDeleteVehicule';
 
 interface Props {
   vehiculeSelect: IVehiculeAndUser;
