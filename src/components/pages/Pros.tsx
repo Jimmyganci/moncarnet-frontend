@@ -2,9 +2,8 @@ import { useContext } from 'react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
-import ModalServiceBook from '../Pros/Appointments/ModalServiceBook'
-// import { appointment } from '../../API/request';
+import ModalServiceBook from '../Pros/Customers/ModalServiceBook';
+import ModalCustomer from '../Pros/Customers/ModalCustomer';
 import returnArrow from '../../assets/return.png';
 import ProsContext from '../../contexts/ProsContext';
 import { glassMorphism } from '../../variableTailwind';
@@ -12,11 +11,12 @@ import ModalAppointment from '../Pros/Appointments/ModalAppointment';
 import SideBar from '../Pros/SideBar/SideBar';
 
 function Pros() {
+  
   // Return Home after logout !
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logout, showModal, appointmentToDisplay, showModalServiceBook } = useContext(ProsContext);
+  const { logout, showModal, appointmentToDisplay, showModalServiceBook, showCustomer } = useContext(ProsContext);
 
   return (
     <div className="flex items-center h-screen">
@@ -41,6 +41,9 @@ function Pros() {
       )}
        {showModalServiceBook && (
         <ModalServiceBook/>
+      )}
+      {showCustomer && (
+        <ModalCustomer/>
       )}
     </div>
   );
