@@ -25,14 +25,14 @@ const ServiceBook = () => {
   async function getInfosVehicule() {
     infosUserVehicule &&
       setInfosVehicule(
-         infosUserVehicule.filter(
+        infosUserVehicule.filter(
           (vehicule: IVehiculeAndUser) => vehicule.immat === vehiculeImmatToUpdate,
         )[0],
       );
   }
 
   async function getBrand() {
-    const res = vehiculeSelected && await brands.getOne(vehiculeSelected.brandId);
+    const res = vehiculeSelected && (await brands.getOne(vehiculeSelected.brandId));
     res && setBrand(res.name);
   }
 
@@ -44,9 +44,11 @@ const ServiceBook = () => {
   useEffect(() => {
     async function getservices() {
       try {
-        const res = infosVehicule && await service_book.getServiceBookVehicule(
-          vehiculeSelected ? vehiculeSelected.immat : infosVehicule.immat,
-        );
+        const res =
+          infosVehicule &&
+          (await service_book.getServiceBookVehicule(
+            vehiculeSelected ? vehiculeSelected.immat : infosVehicule.immat,
+          ));
         setServices(res);
       } catch (err) {
         console.log(err);
@@ -54,11 +56,13 @@ const ServiceBook = () => {
     }
     vehiculeSelected && infosVehicule && getservices();
   }, [infosVehicule, vehiculeSelected]);
-  
+
   const handleVehiculeSelected = (immat: string) => {
     infosUserVehicule &&
       setVehiculeSelected(
-        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat))[0],
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) =>
+          vehicule.immat.includes(immat),
+        )[0],
       );
   };
 
@@ -69,8 +73,7 @@ const ServiceBook = () => {
         <select
           className={select}
           defaultValue={
-            infosVehicule &&
-            `${infosVehicule.brand} ${infosVehicule.model} | ${infosVehicule.immat}`
+            infosVehicule && `${brand} ${infosVehicule.model} | ${infosVehicule.immat}`
           }
           name="listVehicule"
           id="listVehicule"
@@ -86,15 +89,12 @@ const ServiceBook = () => {
             className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}>
             <h3 className={`m-4 text-xl font-bold font-inter text-background`}>
               <span className="pr-2 border-r-2 border-background">
-                {((vehiculeSelected && brand) ||
-                  (infosVehicule && infosVehicule.brand)) +
+                {((vehiculeSelected && brand) || (infosVehicule && brand)) +
                   ' ' +
                   ((vehiculeSelected && vehiculeSelected.model) ||
                     (infosVehicule && infosVehicule.model))}
               </span>
-              <span className="pl-2">
-                {infosVehicule && infosVehicule.immat}
-              </span>
+              <span className="pl-2">{infosVehicule && infosVehicule.immat}</span>
             </h3>
             <div className="flex flex-col-reverse items-center justify-center w-full h-full">
               {services &&
@@ -104,7 +104,9 @@ const ServiceBook = () => {
                     className={`${glassMorphismWhiteShadow} h-1/4 w-11/12 max-w-lg flex flex-col justify-center items-center p-3 my-2 mb-4`}>
                     <div className="flex items-center justify-between w-full h-full">
                       <div className="flex flex-col items-center justify-center w-full h-full -ml-3 text-sm leading-7">
-                        <p className="underline">{`Révision du ${new Date(service.date).toLocaleDateString()}`}</p>
+                        <p className="underline">{`Révision du ${new Date(
+                          service.date,
+                        ).toLocaleDateString()}`}</p>
                         <p className="-mt-1">{service.service}</p>
                         <p className="-mt-2">
                           Kilométrage :{' '}
@@ -119,9 +121,7 @@ const ServiceBook = () => {
                       <Link
                         className="w-1/4 mx-1 h-2/5"
                         to={`/particular/vehicules/${
-                          vehiculeSelected
-                            ? vehiculeSelected.immat
-                            : infosVehicule.immat
+                          vehiculeSelected ? vehiculeSelected.immat : infosVehicule.immat
                         }/serviceBook/${service.id_service_book}`}>
                         <div className="flex items-center justify-center w-full h-full p-2 text-sm leading-5 break-words rounded-lg bg-primary text-background">
                           Voir détails
