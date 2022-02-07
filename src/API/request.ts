@@ -41,10 +41,10 @@ export const appointment = {
       withCredentials: true,
     }),
   delete: (appointmentId: number) =>
-    axios.delete(`http://localhost:8000/api/appointments/${appointmentId}`, {
+    axios.delete(`${API_URL}/appointments/${appointmentId}`, {
       withCredentials: true,
     }),
-};
+  };
 //-----------------------------------------------------------//
 
 //-------------------------Users----------------------------//
@@ -80,7 +80,7 @@ export const users = {
   // get all user's garage
   getGarage: (userId: number): Promise<IPros[]> =>
     axios
-      .get(`http://localhost:8000/api/users/${userId}/pros`, {
+      .get(`${API_URL}/users/${userId}/pros`, {
         withCredentials: true,
       })
       .then((res) => res.data),
@@ -120,7 +120,7 @@ export const pros = {
       .then((res) => res.data),
   getUsers: (userId?: number): Promise<IUser[]> =>
     axios
-      .get(`http://localhost:8000/api/pros/${userId}/users`, {
+      .get(`${API_URL}/pros/${userId}/users`, {
         withCredentials: true,
       })
       .then((res) => res.data),
@@ -200,7 +200,7 @@ export const type = {
       .then((res) => res.data),
   getAll: (): Promise<IType[]> =>
     axios
-      .get('http://localhost:8000/api/types', {
+      .get(`${API_URL}/types`, {
         withCredentials: true,
       })
       .then((res) => res.data),
@@ -220,6 +220,10 @@ export const service_book = {
   getOne: (idServiceBook: number): Promise<IServiceBook> =>
     axios
       .get(`${API_URL}/service_books/${idServiceBook}`, { withCredentials: true })
+      .then((res) => res.data),
+  post: (data: IServiceBook): Promise<IServiceBook> =>
+    axios
+    .post(`${API_URL}/service_books`, data, { withCredentials: true })
       .then((res) => res.data),
 };
 //---------------------------------------------------------------//
@@ -242,7 +246,7 @@ export const login = {
       .then((res) => res.data),
   pros: (pros: { email: string; password: string }) =>
     axios
-      .post('http://localhost:8000/api/login_pro', pros, { withCredentials: true })
+      .post(`${API_URL}/login_pro`, pros, { withCredentials: true })
       .then((res) => res.data),
 };
 //--------------------------------------------------------------//
