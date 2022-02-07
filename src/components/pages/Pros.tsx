@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-
-import { appointment } from '../../API/request';
+// import { toast } from 'react-toastify';
+import ModalServiceBook from '../Pros/Appointments/ModalServiceBook'
+// import { appointment } from '../../API/request';
 import returnArrow from '../../assets/return.png';
 import ProsContext from '../../contexts/ProsContext';
 import { glassMorphism } from '../../variableTailwind';
@@ -16,17 +16,7 @@ function Pros() {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logout, showModal, appointmentToDisplay } = useContext(ProsContext);
-
-  async function deleteAppointment(appointmentId: number) {
-    try {
-      const res = await appointment.delete(appointmentId);
-      setTimeout(() => location.reload(), 1500);
-      if (res) toast.success('Votre rendez-vous a bien été supprimé');
-    } catch (err) {
-      if (err) toast.error('Impossible de supprimer ce rendez-vous');
-    }
-  }
+  const { logout, showModal, appointmentToDisplay, showModalServiceBook } = useContext(ProsContext);
 
   return (
     <div className="flex items-center h-screen">
@@ -47,7 +37,10 @@ function Pros() {
         <Outlet />
       </div>
       {showModal && appointmentToDisplay && (
-        <ModalAppointment deleteAppointment={deleteAppointment} />
+        <ModalAppointment/>
+      )}
+       {showModalServiceBook && (
+        <ModalServiceBook/>
       )}
     </div>
   );
