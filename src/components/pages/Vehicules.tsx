@@ -30,7 +30,7 @@ function Vehicules() {
         <Link to="/particular/addVehicule">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 ml-4 text-background"
+            className="w-6 h-6 ml-4 text-background border-2 border-background rounded-full hover:bg-white hover:text-primary transition-all"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
