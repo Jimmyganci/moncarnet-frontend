@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import { getVehicules } from '../../../API/requestVehicule';
+import IVehicule from '../../../Interfaces/IVehicule';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import ItemVehiculeToValidate from './ItemVehiculeToValidate';
 
 function VehiculeToValidate() {
-  const [vehiculeToValidate] = useOutletContext<Array<any>>();
-  const [dataVehicules, setDataVehicules] = useState<Array<any>>([]);
-  const [userId, setUserId] = useState<number>();
+  const vehiculeToValidate = useOutletContext<IVehicule[]>();
+  const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
+  const [userId, setUserId] = useState<number>(0);
   const [showUser, setShowUser] = useState(false);
 
   async function getVehiculeDetails() {
-    try {
-      const res = await getVehicules(vehiculeToValidate);
-      setDataVehicules(res);
-    } catch (err) {
-      console.log(err);
+    if (vehiculeToValidate) {
+      try {
+        const res = await getVehicules(vehiculeToValidate);
+        setDataVehicules(res);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
@@ -32,7 +36,7 @@ function VehiculeToValidate() {
           <h1 className="text-3xl uppercase text-background">Vehicules</h1>
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
-          {vehiculeToValidate.length > 0 ? (
+          {vehiculeToValidate && vehiculeToValidate.length > 0 ? (
             <div className={`grid grid-cols-7 pt-2 pb-2 ${glassMorphism} rounded-lg`}>
               <p>Immatriculation</p>
               <p>Type</p>

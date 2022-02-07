@@ -4,7 +4,7 @@ import logo from '../../../assets/logo.svg';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import home from '../../../assets/minimalist_logos/home.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
-import { glassMorphism, h3 } from '../../../variableTailwind';
+import { glassMorphism } from '../../../variableTailwind';
 import SideLink from './SideLink';
 
 const SideBar = () => {
@@ -19,7 +19,7 @@ const SideBar = () => {
       label: 'Mes RDVs',
       path: '/pros/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
     {
       label: 'Mon Profil',

@@ -8,8 +8,8 @@ import ServiceBookDetailsCard from './ServiceBookDetailsCard';
 
 function ServiceBookList() {
   const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
-  const [showPros, setShowPros] = useState(false);
-  const [prosId, setProsId] = useState<number>();
+  const [showPros, setShowPros] = useState<boolean>(false);
+  const [prosId, setProsId] = useState<number>(0);
 
   async function getServiceBook() {
     const res = await service_book.getAll();

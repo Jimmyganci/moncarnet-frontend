@@ -3,26 +3,32 @@ import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
+import IPros from '../../../Interfaces/IUser';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
 
 const Profile = () => {
-  const { prosLogin }: any = useContext(ProsContext);
-  const [infoUser, setInfoUser]: Array<any> = useState([]);
-  const [changeMode, setChangeMode] = useState(false);
-  const [addressUpdate, setAddressUpdate] = useState('');
-  const [postalUpdate, setPostalUpdate] = useState('');
-  const [cityUpdate, setCityUpdate] = useState('');
-  const [phoneUpdate, setPhoneUpdate] = useState('');
-  const [emailUpdate, setEmailUpdate] = useState('');
-  const [nameUpdate, setNameUpdate] = useState('');
-  const [siretUpdate, setSiretUpdate] = useState('');
+  const { prosLoggedIn } = useContext(ProsContext);
+
+  const [infoUser, setInfoUser] = useState<IPros[]>([]);
+  const [changeMode, setChangeMode] = useState<boolean>(false);
+  const [addressUpdate, setAddressUpdate] = useState<string>('');
+  const [postalUpdate, setPostalUpdate] = useState<string>('');
+  const [cityUpdate, setCityUpdate] = useState<string>('');
+  const [phoneUpdate, setPhoneUpdate] = useState<string>('');
+  const [emailUpdate, setEmailUpdate] = useState<string>('');
+  const [nameUpdate, setNameUpdate] = useState<string>('');
+  const [siretUpdate, setSiretUpdate] = useState<string>('');
+
+  async function getOne() {
+    const res = await pros.getOne(prosLoggedIn.id_user);
+    setInfoUser(res);
+  }
 
   useEffect(() => {
-    prosLogin.length !== 0 &&
-      pros.getOne(prosLogin.id_user).then((data) => setInfoUser(data));
-  }, [prosLogin]);
+    prosLoggedIn && getOne();
+  }, [prosLoggedIn]);
 
   const handleInfosUser = () => {
     getInfosPros();
@@ -35,7 +41,7 @@ const Profile = () => {
 
   async function getInfosPros() {
     try {
-      const res = await pros.put(prosLogin.id_user, {
+      const res = await pros.put(prosLoggedIn.id_user, {
         name: nameUpdate || infoUser.name,
         email: emailUpdate || infoUser.email,
         address: addressUpdate || infoUser.address,
@@ -43,6 +49,7 @@ const Profile = () => {
         city: cityUpdate || infoUser.city,
         phone: phoneUpdate || infoUser.phone,
         siret: siretUpdate || infoUser.siret,
+        id_user: 0,
       });
       if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
 

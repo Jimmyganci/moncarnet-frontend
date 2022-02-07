@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
 import { pros, users } from '../../../API/request';
+import IPros from '../../../Interfaces/IPros';
 import ProsInfos from '../../../Interfaces/IPros';
-import UserInfos from '../../../Interfaces/IUserInfos';
+import IUser from '../../../Interfaces/IUser';
+import UserInfos from '../../../Interfaces/IUser';
 import { glassMorphism } from '../../../variableTailwind';
 
+interface ICustomers {
+  particular: IUser[];
+  pros: IPros[];
+}
+
 function CustomersAdmin() {
-  const [dataCustomers, setDataCustomers] = useState([{ particular: [], pros: [] }]);
+  const [dataCustomers, setDataCustomers] = useState<ICustomers[]>();
   const [dataSelect, setDataSelect] = useState('particular');
 
   async function getCustomers() {
@@ -31,16 +38,14 @@ function CustomersAdmin() {
               onClick={() => setDataSelect('particular')}
               className={`w-1/2 p-4 rounded-tl-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'particular' ? 'bg-primary-focus' : ''
-              }`}
-            >
+              }`}>
               Particulier
             </button>
             <button
               onClick={() => setDataSelect('pros')}
               className={`w-1/2 p-4 rounded-tr-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'pros' ? 'bg-primary-focus' : ''
-              }`}
-            >
+              }`}>
               Professionnels
             </button>
           </div>
@@ -69,8 +74,8 @@ function CustomersAdmin() {
               <p>Status</p>
             </div>
           )}
-          {dataSelect === 'particular'
-            ? dataCustomers[0].particular.map((user: UserInfos, index) => (
+          {dataSelect === 'particular' && dataCustomers
+            ? dataCustomers[0].particular.map((user: UserInfos, index: number) => (
                 <div className="grid grid-cols-9 pt-2 pb-2 " key={index}>
                   <p>{user.id_user}</p>
                   <p>{user.lastname}</p>
@@ -85,7 +90,8 @@ function CustomersAdmin() {
                   <p>non bloqué</p>
                 </div>
               ))
-            : dataCustomers[0].pros.map((pro: ProsInfos, index) => (
+            : dataCustomers &&
+              dataCustomers[0].pros.map((pro: ProsInfos, index: number) => (
                 <div className="grid grid-cols-9 pt-2 pb-2 " key={index}>
                   <p>{pro.id_pros}</p>
                   <p className="overflow-hidden whitespace-nowrap text-ellipsis">

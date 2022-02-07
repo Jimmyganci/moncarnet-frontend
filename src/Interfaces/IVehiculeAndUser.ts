@@ -1,4 +1,4 @@
-export default interface IVehiculeAllInfos {
+export default interface IVehiculeAndUser {
   active: boolean;
   brandId: number;
   immat: string;

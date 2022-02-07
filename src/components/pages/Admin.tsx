@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { vehicule } from '../../API/request';
-import IVehiculeInfos from '../../Interfaces/IVehiculeInfos';
+import IVehicule from '../../Interfaces/IVehicule';
 import SideBarAdmin from '../Admin/SideBar/SideBarAdmin';
 
 function Admin() {
-  const [vehiculeToValidate, setVehiculeToValidate] = useState<IVehiculeInfos[]>();
+  const [vehiculeToValidate, setVehiculeToValidate] = useState<IVehicule[]>();
 
   useEffect(() => {
     async function getVoitureToValidate() {
@@ -22,7 +22,7 @@ function Admin() {
   return (
     <div className="flex min-h-screen">
       <SideBarAdmin />
-      <Outlet context={[vehiculeToValidate, setVehiculeToValidate]} />
+      <Outlet context={vehiculeToValidate} />
     </div>
   );
 }

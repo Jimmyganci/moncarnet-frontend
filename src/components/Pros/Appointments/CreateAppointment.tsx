@@ -4,31 +4,32 @@ import { toast } from 'react-toastify';
 
 import { appointment, pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
-import IVehiculeInfos from '../../../Interfaces/IVehiculeInfos';
+import IUser from '../../../Interfaces/IUser';
+import IVehicule from '../../../Interfaces/IVehicule';
 import { h1, input } from '../../../variableTailwind';
 
 function CreateAppointments() {
-  const { prosLogin }: any = useContext(ProsContext);
-  const [customer, setCustomer] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [details, setDetails] = useState('');
-  const [customersList, setCustomersList]: Array<any> = useState([]);
-  const [chosenCustomer, setChosenCustomer] = useState('');
-  const [valideRdv, setValivRdv] = useState(true);
-  const [userVehicules, setUserVehicules] = useState<IVehiculeInfos[]>();
+  const { prosLoggedIn } = useContext(ProsContext);
+  const [customer, setCustomer] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [details, setDetails] = useState<string>('');
+  const [customersList, setCustomersList] = useState<IUser[]>([]);
+  const [chosenCustomer, setChosenCustomer] = useState<string>('');
+  const [validAppointment, SetValidAppointment] = useState<boolean>(true);
+  const [userVehicules, setUserVehicules] = useState<IVehicule[]>();
   const [chosenImmat, setChosenImmat] = useState<string>();
-  let appointmentDate = `${date}T${time}:00.000Z`;
+  let appointmentDate: Date = new Date(`${date}T${time}:00.000Z`);
 
-  let today = new Date().toISOString();
+  const today: string = new Date().toISOString();
 
-  // Check validity of rdv's date :
+  // Check validity of appointment's date :
 
   const dateCompare = (today: string, date: string) => {
     if (today < date) {
-      setValivRdv(true);
+      SetValidAppointment(true);
     } else {
-      setValivRdv(false);
+      SetValidAppointment(false);
     }
   };
 
@@ -38,21 +39,32 @@ function CreateAppointments() {
 
   // Looking for customers in database
 
-  useEffect(() => {
-    prosLogin.id_user &&
-      pros.getUsers(prosLogin.id_user).then((data) => setCustomersList(data));
-  }, [prosLogin]);
+  async function getUsers() {
+    const res = await pros.getUsers(prosLoggedIn.id_user);
+    setCustomersList(res);
+  }
 
-  // Create rdv in database
+  useEffect(() => {
+    prosLoggedIn.id_user && getUsers();
+  }, [prosLoggedIn]);
+
+  // Create appointment in database
 
   const handleCreateRdv = (e: React.FormEvent) => {
     e.preventDefault();
-    if (valideRdv && details && date && chosenCustomer && prosLogin && chosenImmat) {
+    if (
+      validAppointment &&
+      details &&
+      date &&
+      chosenCustomer &&
+      prosLoggedIn.id_user &&
+      chosenImmat
+    ) {
       appointment
         .create({
           userId: parseInt(chosenCustomer),
-          prosId: prosLogin.id_user,
-          date: new Date(appointmentDate),
+          prosId: prosLoggedIn.id_user,
+          date: appointmentDate,
           comment: details,
           immat: chosenImmat,
         })
@@ -99,10 +111,12 @@ function CreateAppointments() {
           onChange={(e) => setChosenCustomer(e.target.value)}>
           <option defaultValue={''}>Aucun client sélectionné</option>
           {customersList
-            .filter((e: any) => e.lastname.toLowerCase().includes(customer.toLowerCase()))
-            .map((client: any) => (
-              <option value={client.id_user} key={client.id_user}>
-                {client.lastname} {client.firstname}
+            .filter((user) =>
+              user.lastname.toLowerCase().includes(customer.toLowerCase()),
+            )
+            .map((user) => (
+              <option value={user.id_user} key={user.id_user}>
+                {user.lastname} {user.firstname}
               </option>
             ))}
         </select>
@@ -119,7 +133,7 @@ function CreateAppointments() {
               onChange={(e) => setChosenImmat(e.target.value)}>
               <option defaultValue={''}>Aucun véhicule sélectionné</option>
               {userVehicules &&
-                userVehicules.map((vehicule: any) => (
+                userVehicules.map((vehicule) => (
                   <option value={vehicule.immat} key={vehicule.immat}>
                     {vehicule.immat}
                   </option>
@@ -144,7 +158,7 @@ function CreateAppointments() {
           placeholder="Choisissez une heure"
           onChange={(e) => setTime(e.target.value)}
         />
-        {valideRdv ? (
+        {validAppointment ? (
           ''
         ) : (
           <p className="text-red-700">

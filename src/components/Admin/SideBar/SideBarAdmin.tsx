@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Navigate, NavigateFunction, useNavigate } from 'react-router-dom';
 
 import car from '../../../assets/car.png';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
@@ -12,8 +11,7 @@ import Logo from '../../Logo';
 import SideLink from './SideLinkAdmin';
 
 const SideBarAdmin = () => {
-const navigate: NavigateFunction = useNavigate();  
-const { logOut }: any = useContext(AdminContext);
+  const { logout }: any = useContext(AdminContext);
   const linkArray = [
     {
       label: 'Accueil',
@@ -31,7 +29,7 @@ const { logOut }: any = useContext(AdminContext);
       label: 'RDVs',
       path: '/admin/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
     {
       label: 'Vehicules',
@@ -59,12 +57,13 @@ const { logOut }: any = useContext(AdminContext);
             {linkArray.map((e, i) => (
               <SideLink key={i} label={e.label} path={e.path} logo={e.logo} alt={e.alt} />
             ))}
-            <button className="mt-4 text-xl font-medium tracking-widest" onClick={() => {
-            logOut && logOut().then( () =>{
-            return navigate("/")
-            })
-            }}>Se déconnecter
-           </button>
+            <button
+              className="mt-4 text-xl font-medium tracking-widest"
+              onClick={() => {
+                logout();
+              }}>
+              Se déconnecter
+            </button>
           </ul>
         </nav>
       </div>

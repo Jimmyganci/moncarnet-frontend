@@ -8,7 +8,7 @@ import DeleteAccountModal from './../DeleteAccountModal';
 import InfosLine from './InfosLine';
 
 function ParticularInfos() {
-  const { userLogin }: any = useContext(UserContext);
+  const { userLoggedIn }: any = useContext(UserContext);
   const [changeMode, setChangeMode] = useState<boolean>(false);
   const [firstNameModif, setFirstNameModif] = useState<string>('');
   const [lastNameModif, setLastNameModif] = useState<string>('');
@@ -26,15 +26,15 @@ function ParticularInfos() {
   };
   async function getInfosParticular() {
     try {
-      const res = await users.put(userLogin.id_user, {
-        firstname: firstNameModif || userLogin.firstname,
-        lastname: lastNameModif || userLogin.lastname,
-        email: emailModif || userLogin.email,
-        phone: phoneModif || userLogin.phone,
-        address: addressModif || userLogin.address,
-        postal_code: parseInt(postalCodeModif) || userLogin.postal_code,
-        city: cityModif || userLogin.city,
-        active: deleteAccountModal ? false : userLogin.active,
+      const res = await users.put(userLoggedIn.id_user, {
+        firstname: firstNameModif || userLoggedIn.firstname,
+        lastname: lastNameModif || userLoggedIn.lastname,
+        email: emailModif || userLoggedIn.email,
+        phone: phoneModif || userLoggedIn.phone,
+        address: addressModif || userLoggedIn.address,
+        postal_code: parseInt(postalCodeModif) || userLoggedIn.postal_code,
+        city: cityModif || userLoggedIn.city,
+        active: deleteAccountModal ? false : userLoggedIn.active,
       });
       toast.success(`${res.data.firstname} vos modifications ont été modifiés`);
     } catch (err) {
@@ -50,7 +50,7 @@ function ParticularInfos() {
           className={`w-10/12 rounded-lg ${glassMorphism} flex flex-col items-center justify-center py-6 max-w-xl`}>
           <InfosLine
             champ={'prénom'}
-            lineName={userLogin.firstname}
+            lineName={userLoggedIn.firstname}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={firstNameModif}
@@ -58,7 +58,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'nom'}
-            lineName={userLogin.lastname}
+            lineName={userLoggedIn.lastname}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={lastNameModif}
@@ -66,7 +66,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'adresse mail'}
-            lineName={userLogin.email}
+            lineName={userLoggedIn.email}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={emailModif}
@@ -74,7 +74,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'numéro de téléphone'}
-            lineName={userLogin.phone}
+            lineName={userLoggedIn.phone}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={phoneModif}
@@ -82,7 +82,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'adresse postale'}
-            lineName={userLogin.address}
+            lineName={userLoggedIn.address}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={addressModif}
@@ -90,7 +90,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'code postale'}
-            lineName={userLogin.postal_code}
+            lineName={userLoggedIn.postal_code}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={postalCodeModif}
@@ -98,7 +98,7 @@ function ParticularInfos() {
           />
           <InfosLine
             champ={'ville'}
-            lineName={userLogin.city}
+            lineName={userLoggedIn.city}
             changeMode={changeMode}
             setChangeMode={setChangeMode}
             modif={cityModif}

@@ -3,20 +3,26 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
+import IVehiculeAndUser from '../../Interfaces/IVehiculeAndUser';
 import { select, title } from '../../variableTailwind';
 import CardVehicule from '../Particulars/Vehicules/CardVehicule';
+import VehiculesSelectOptions from '../Particulars/Vehicules/VehiculesSelectOptions';
 
 function Vehicules() {
-  const { infosUserVehicule }: any = useContext(UserContext);
-  const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
+  const { infosUserVehicule } = useContext(UserContext);
+  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser[]>([]);
+
+  const handleChangeVehicule = (immat: string) => {
+    infosUserVehicule &&
+      setVehiculeSelected(
+        infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
+      );
+  };
 
   useEffect(() => {
-    setVehiculeSelected(infosUserVehicule);
+    infosUserVehicule && setVehiculeSelected(infosUserVehicule);
   }, [infosUserVehicule]);
 
-  const getVehiculeSelected = (immat: string) => {
-    setVehiculeSelected(infosUserVehicule.filter((el: any) => el.immat.includes(immat)));
-  };
   return (
     <div className="h-full lg:h-fit">
       <div className="flex items-center justify-center h-full lg:h-fit">
@@ -41,12 +47,11 @@ function Vehicules() {
         className={select}
         name="listVehicule"
         id="listVehicule"
-        onChange={(e) => getVehiculeSelected(e.target.value)}>
-        {infosUserVehicule.map((el: any) => (
-          <option className="text-black" key={el.immat} value={el.immat}>
-            {`${el.brand} ${el.model} | ${el.immat}`}
-          </option>
-        ))}
+        onChange={(e) => handleChangeVehicule(e.target.value)}>
+        {infosUserVehicule &&
+          infosUserVehicule.map((vehicule: any, index: number) => (
+            <VehiculesSelectOptions key={index} vehicule={vehicule} />
+          ))}
       </select>
       <div>
         <CardVehicule vehiculeSelect={vehiculeSelected[0]} />

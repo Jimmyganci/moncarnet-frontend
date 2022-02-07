@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 import { glassMorphism } from '../variableTailwind';
@@ -10,11 +9,8 @@ import Logo from './Logo';
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Return Home after logout !
-  const navigate: NavigateFunction = useNavigate();
-
   // access userContext !
-  const { logOut }: any = useContext(UserContext);
+  const { logout } = useContext(UserContext);
 
   const spanBurgerMenu = 'w-full h-1.5 bg-text-darker rounded-lg';
   return (
@@ -82,9 +78,7 @@ const Header = () => {
         <button
           className="mt-4 text-2xl font-medium tracking-widest"
           onClick={() => {
-            logOut().then(() => {
-              return navigate('/');
-            });
+            logout();
           }}>
           Se déconnecter
         </button>
