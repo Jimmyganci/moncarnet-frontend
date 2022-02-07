@@ -6,6 +6,7 @@ import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, title } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
@@ -37,7 +38,7 @@ function UserGarage() {
     }
   };
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center'>
       <div className="flex items-center justify-around">
         <h1 className={`${title}`}>Mes garages</h1>
         <Link to="/particular/garage">
@@ -112,6 +113,7 @@ function UserGarage() {
           </>
         )}
       </div>
+      <div className='text-md font-inter max-w-md mb-2 w-[60%] flex justify-center mt-4'><ReturnButton target={'/particular/home'}/></div>
     </div>
   );
 }

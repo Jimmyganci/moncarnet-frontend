@@ -14,12 +14,12 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({target}) => {
 }
 
     return (
-           target === "" ? <button className={`w-fit h-fit p-2 px-4 mx-2 ${button}`} onClick={() => navigateBack()}>
+           target === "" ? <button className={`w-full h-fit p-2 px-4 ${button}`} onClick={() => navigateBack()}>
             Retour
           </button>
            :
-           <Link to={target}>
-            <button className={`w-fit h-fit p-2 px-4 mx-2 ${button}`}>
+           <Link className='w-full flex justify-center' to={target}>
+            <button className={`w-full h-fit p-2 px-4 ${button}`}>
               Retour
             </button>
           </Link>

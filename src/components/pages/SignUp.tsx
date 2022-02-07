@@ -31,7 +31,6 @@ function SignUp() {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const navigate: NavigateFunction = useNavigate();
-  console.log(addressList);
 
   async function getAdresse() {
     const res = await axios.get(
@@ -194,11 +193,11 @@ function SignUp() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <button className={`${button} mx-2`} type="submit">
+        <button className={`${button} w-1/2`} type="submit">
           Valider
         </button>
-        <ReturnButton target='/login-particular' />
       </form>
+      <div className='w-1/2 mb-5 flex justify-center'><ReturnButton target='/login-particular' /></div>
     </div>
   );
 }

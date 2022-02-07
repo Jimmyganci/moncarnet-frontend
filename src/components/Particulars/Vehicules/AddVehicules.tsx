@@ -13,6 +13,7 @@ import {
   input,
   title,
 } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function AddVehicules() {
   const [brandList, setBrandList] = useState<IBrand[]>([]);
@@ -86,7 +87,7 @@ function AddVehicules() {
       {posted === false && (
         <form
           onSubmit={(e) => handleUpload(e)}
-          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center lg:p-8 ${glassMorphism}`}>
+          className={`flex flex-col w-11/12 m-4 rounded-lg p-4 items-center lg:p-8 ${glassMorphism}`}>
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
@@ -101,11 +102,11 @@ function AddVehicules() {
               required
             />
           </label>
-          <div className='flex flex-col lg:flex-row lg:justify-evenly lg:items-center'>
-            <label className="flex flex-col w-full lg:w-1/4 text-lg font-semibold">
+          <div className='flex flex-col w-full lg:flex-row lg:justify-between lg:items-center'>
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
               Type de véhicule
               <select
-                className={`${input} lg:mb-2 lg:h-2/6 lg:text-sm mx-1`}
+                className={`${input} lg:mb-2 lg:w-[100%] lg:text-sm mx-1`}
                 name="type"
                 id="type"
                 required
@@ -118,7 +119,7 @@ function AddVehicules() {
                 ))}
               </select>
             </label>
-            <label className="flex flex-col w-full lg:w-1/4 text-lg font-semibold">
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
               Marque
               <input
                 className={`${input} lg:text-sm mx-1`}
@@ -138,7 +139,7 @@ function AddVehicules() {
                 ))}
               </datalist>
             </label>
-            <label className="flex flex-col w-full lg:w-1/4 text-lg font-semibold">
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
               Modèle
               <select
                 className={`${input} lg:text-sm mx-1`}
@@ -179,6 +180,7 @@ function AddVehicules() {
             />
           </label>
           <button className={`w-1/2 ${button}`}>Ajouter</button>
+          <div className='w-1/2 flex justify-center items-center'><ReturnButton target='' /></div>
         </form>
       )}
       {posted && (

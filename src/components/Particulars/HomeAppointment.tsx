@@ -7,6 +7,7 @@ import IAppointment from '../../Interfaces/IAppointment';
 import IPros from '../../Interfaces/IPros';
 import { borderGlass, button, glassMorphism, h2, title } from '../../variableTailwind';
 import Plate from '../Plate';
+import ReturnButton from '../ReturnButton';
 import ProsAppointment from './ProsAppointment';
 
 const HomeAppointment = () => {
@@ -41,7 +42,7 @@ const HomeAppointment = () => {
       <div className="flex items-center justify-center lg:mb-10">
         <h1 className={`${title}`}>Mes rendez-vous</h1>
       </div>
-      <div className="flex flex-col justify-center w-11/12 lg:h-4/6 lg:ml-20 lg:flex-row lg:justify-around">
+      <div className="flex flex-col justify-center items-center w-11/12 lg:h-4/6 lg:ml-20 lg:flex-row lg:justify-around">
         <div
           className={`${glassMorphism} w-full max-w-xl rounded-lg pb-4 lg:w-5/12 lg:h-fit`}>
           <div className="flex flex-col items-center justify-around">
@@ -62,7 +63,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code}
+                        postalCode={userLoggedIn.postal_code.toString()}
                       />
                     </div>
                     <p>
@@ -102,7 +103,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code}
+                        postalCode={userLoggedIn.postal_code.toString()}
                       />
                     </div>
                     <p className="">
@@ -171,7 +172,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code}
+                        postalCode={userLoggedIn.postal_code.toString()}
                       />
                     </div>
                     <p className="">
@@ -209,7 +210,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code}
+                        postalCode={userLoggedIn.postal_code.toString()}
                       />
                     </div>
                     <p className="">
@@ -241,6 +242,7 @@ const HomeAppointment = () => {
           </p>
         </div>
       </div>
+      <div className='text-md font-inter max-w-md mb-2 w-[60%] flex justify-center -mt-4'><ReturnButton target={''}/></div>
     </div>
   );
 };

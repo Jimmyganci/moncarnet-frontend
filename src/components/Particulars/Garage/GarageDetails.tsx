@@ -69,7 +69,7 @@ function GarageDetails() {
           <button onClick={handleChoiceGarage} className={button}>
             Ajouter aux favoris
           </button>
-          <ReturnButton target={''}/>
+          <div className='w-1/2'><ReturnButton target={''}/></div>
         </div>
       )}
     </div>
