@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 
 import { input } from '../../../variableTailwind';
+type Props = {
+  lineName: string;
+  champ: string;
+  changeMode: boolean;
+  modif: string;
+  setModif: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const InfosLine = (props: any) => {
+const InfosLine: React.FC<Props> = (props) => {
   const { lineName, champ, changeMode, modif, setModif } = props;
   const [lineChangeMode, setLineChangeMode] = useState(false);
 

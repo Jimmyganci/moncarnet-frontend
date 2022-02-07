@@ -1,4 +1,4 @@
-export default interface IServiceBookInfos {
+export default interface IServiceBook {
   id_service_book: number;
   date: Date;
   service: string;

@@ -9,7 +9,7 @@ import { button, glassMorphism, title } from '../../../variableTailwind';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
-  const { userLoggedIn }: any = useContext(UserContext);
+  const { userLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     async function getUsersGarage() {
@@ -28,8 +28,8 @@ function UserGarage() {
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
-      const res = await users.deleteGarage(userLoggedIn.id_user, idPros);
-      res.status === 200 && toast.success(res.data);
+      const res = userLoggedIn.id_user && await users.deleteGarage(userLoggedIn.id_user, idPros);
+      res && toast.success(res);
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
     }
@@ -57,19 +57,19 @@ function UserGarage() {
 
       <div className="m-4">
         {usersGarage && usersGarage.length > 0 ? (
-          usersGarage.map((el: any) => (
+          usersGarage.map((garage: IPros) => (
             <div
               className={`flex flex-col mt-4 mb-4 rounded-lg ${glassMorphism}`}
-              key={el.id_pros}>
+              key={garage.id_pros}>
               <div className="flex items-center justify-around p-4">
                 <div className="flex flex-col justify-center w-1/2">
-                  <p>{el.name}</p>
-                  <p>{el.city}</p>
+                  <p>{garage.name}</p>
+                  <p>{garage.city}</p>
                 </div>
-                <Link to={`/particular/garage-details/${el.id_pros}`}>
+                <Link to={`/particular/garage-details/${garage.id_pros}`}>
                   <button className={` mt-0 ${button}`}>Details</button>
                 </Link>
-                <button onClick={() => handleDeleteGarage(el.id_pros)}>
+                <button onClick={() => garage.id_pros && handleDeleteGarage(garage.id_pros)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"

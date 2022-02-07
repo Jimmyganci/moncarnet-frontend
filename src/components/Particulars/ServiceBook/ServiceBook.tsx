@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { brands, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IServiceBook from '../../../Interfaces/IServiceBook';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
   button,
@@ -14,25 +15,25 @@ import {
 import VehiculesSelectOptions from '../Vehicules/VehiculesSelectOptions';
 
 const ServiceBook = () => {
-  const { vehiculeImmatToUpdate } = useParams();
+  const { vehiculeImmatToUpdate } = useParams<string>();
   const { infosUserVehicule } = useContext(UserContext);
-  const [infosVehicule, setInfosVehicule] = useState<any>([]);
-  const [services, setServices] = useState<any>([]);
-  const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
+  const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser[]>();
+  const [services, setServices] = useState<IServiceBook[]>();
+  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser>();
   const [brand, setBrand] = useState<string>('');
 
   const getVehiculeSelected = (immat: string) => {
     infosUserVehicule &&
       setVehiculeSelected(
-        infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat)),
       );
   };
 
   async function getInfosVehicule() {
     infosUserVehicule &&
       setInfosVehicule(
-        infosUserVehicule.filter(
-          (ele: IVehiculeAndUser) => ele.immat === vehiculeImmatToUpdate,
+         infosUserVehicule.filter(
+          (vehicule: IVehiculeAndUser) => vehicule.immat === vehiculeImmatToUpdate,
         ),
       );
   }
@@ -44,21 +45,21 @@ const ServiceBook = () => {
 
   useEffect(() => {
     getInfosVehicule();
-    vehiculeSelected.length && getBrand();
+    vehiculeSelected && getBrand();
   }, [infosUserVehicule, vehiculeSelected, vehiculeImmatToUpdate]);
 
   useEffect(() => {
     async function getservices() {
       try {
-        const res = await service_book.getServiceBookVehicule(
-          vehiculeSelected.length ? vehiculeSelected[0].immat : infosVehicule[0].immat,
+        const res = infosVehicule && await service_book.getServiceBookVehicule(
+          vehiculeSelected ? vehiculeSelected[0].immat : infosVehicule[0].immat,
         );
         setServices(res);
       } catch (err) {
         console.log(err);
       }
     }
-    vehiculeSelected.length && infosVehicule.length && getservices();
+    vehiculeSelected && infosVehicule && getservices();
   }, [infosVehicule, vehiculeSelected]);
 
   return (
@@ -68,7 +69,7 @@ const ServiceBook = () => {
         <select
           className={select}
           defaultValue={
-            infosVehicule.length &&
+            infosVehicule &&
             `${infosVehicule[0].brand} ${infosVehicule[0].model} | ${infosVehicule[0].immat}`
           }
           name="listVehicule"
@@ -80,7 +81,7 @@ const ServiceBook = () => {
               <VehiculesSelectOptions key={index} vehicule={el} />
             ))}
         </select>
-        {services.length !== 0 && (
+        {services && infosVehicule && (
           <div
             className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}>
             <h3 className={`m-4 text-xl font-bold font-inter text-background`}>
@@ -96,7 +97,7 @@ const ServiceBook = () => {
               </span>
             </h3>
             <div className="flex flex-col-reverse items-center justify-center w-full h-full">
-              {services.length &&
+              {services &&
                 services.map((service: any, index: number) => (
                   <div
                     key={index}
@@ -135,7 +136,7 @@ const ServiceBook = () => {
             </div>
           </div>
         )}
-        {!services.length && (
+        {!services && (
           <div
             className={`${glassMorphism} w-11/12 h-full mx-4 mt-6 p-4 flex flex-col justify-center items-center rounded-lg`}>
             <p>{`Vous n'avez pas encore enregistré d'entretien sur ce véhicule`}</p>
