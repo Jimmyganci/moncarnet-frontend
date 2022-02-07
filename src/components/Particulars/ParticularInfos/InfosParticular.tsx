@@ -26,16 +26,18 @@ function ParticularInfos() {
   };
   async function getInfosParticular() {
     try {
-      const res = userLoggedIn.id_user && await users.put(userLoggedIn.id_user, {
-        firstname: firstNameModif || userLoggedIn.firstname,
-        lastname: lastNameModif || userLoggedIn.lastname,
-        email: emailModif || userLoggedIn.email,
-        phone: phoneModif || userLoggedIn.phone,
-        address: addressModif || userLoggedIn.address,
-        postal_code: parseInt(postalCodeModif) || userLoggedIn.postal_code,
-        city: cityModif || userLoggedIn.city,
-        active: deleteAccountModal ? false : userLoggedIn.active,
-      });
+      const res =
+        userLoggedIn.id_user &&
+        (await users.put(userLoggedIn.id_user, {
+          firstname: firstNameModif || userLoggedIn.firstname,
+          lastname: lastNameModif || userLoggedIn.lastname,
+          email: emailModif || userLoggedIn.email,
+          phone: phoneModif || userLoggedIn.phone,
+          address: addressModif || userLoggedIn.address,
+          postal_code: parseInt(postalCodeModif) || userLoggedIn.postal_code,
+          city: cityModif || userLoggedIn.city,
+          active: deleteAccountModal ? false : userLoggedIn.active,
+        }));
       toast.success(`${res} vos modifications ont été modifiés`);
     } catch (err) {
       if (err) toast.error("Une erreur s'est produite!");

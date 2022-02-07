@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
-import IPros from '../../../Interfaces/IUser';
+import IPros from '../../../Interfaces/IPros';
 import { h1 } from '../../../variableTailwind';
 import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
@@ -11,7 +11,7 @@ import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
 const Profile = () => {
   const { prosLoggedIn } = useContext(ProsContext);
 
-  const [infoUser, setInfoUser] = useState<IPros[]>([]);
+  const [infoUser, setInfoUser] = useState<IPros>();
   const [changeMode, setChangeMode] = useState<boolean>(false);
   const [addressUpdate, setAddressUpdate] = useState<string>('');
   const [postalUpdate, setPostalUpdate] = useState<string>('');
@@ -22,8 +22,10 @@ const Profile = () => {
   const [siretUpdate, setSiretUpdate] = useState<string>('');
 
   async function getOne() {
-    const res = await pros.getOne(prosLoggedIn.id_user);
-    setInfoUser(res);
+    if (prosLoggedIn.id_user) {
+      const res = await pros.getOne(prosLoggedIn.id_user);
+      setInfoUser(res);
+    }
   }
 
   useEffect(() => {
@@ -40,26 +42,28 @@ const Profile = () => {
   }
 
   async function getInfosPros() {
-    try {
-      const res = await pros.put(prosLoggedIn.id_user, {
-        name: nameUpdate || infoUser.name,
-        email: emailUpdate || infoUser.email,
-        address: addressUpdate || infoUser.address,
-        postal_code: parseInt(postalUpdate) || parseInt(infoUser.postal_code),
-        city: cityUpdate || infoUser.city,
-        phone: phoneUpdate || infoUser.phone,
-        siret: siretUpdate || infoUser.siret,
-        id_user: 0,
-      });
-      if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
+    if (infoUser && prosLoggedIn.id_user) {
+      try {
+        const res = await pros.put(prosLoggedIn.id_user, {
+          name: nameUpdate || infoUser.name,
+          email: emailUpdate || infoUser.email,
+          address: addressUpdate || infoUser.address,
+          postal_code: Number(postalUpdate) || Number(infoUser.postal_code),
+          city: cityUpdate || infoUser.city,
+          phone: phoneUpdate || infoUser.phone,
+          siret: siretUpdate || infoUser.siret,
+          id_user: 0,
+        });
+        if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
 
-      refreshPage();
-    } catch (err) {
-      console.log(err);
-      if (err)
-        toast.error(
-          "Une erreur s'est produite, vos informations n'ont pas été modifiées!",
-        );
+        refreshPage();
+      } catch (err) {
+        console.log(err);
+        if (err)
+          toast.error(
+            "Une erreur s'est produite, vos informations n'ont pas été modifiées!",
+          );
+      }
     }
   }
 
@@ -73,7 +77,6 @@ const Profile = () => {
             champ={'name'}
             lineName={infoUser.name}
             changeMode={changeMode}
-            setChangeMode={setChangeMode}
             modif={nameUpdate}
             setModif={setNameUpdate}
           />
@@ -82,7 +85,6 @@ const Profile = () => {
             champ={'siret'}
             lineName={infoUser.siret}
             changeMode={changeMode}
-            setChangeMode={setChangeMode}
             modif={siretUpdate}
             setModif={setSiretUpdate}
           />
@@ -93,15 +95,13 @@ const Profile = () => {
                 champ={'adresse'}
                 lineName={infoUser.address}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={addressUpdate}
                 setModif={setAddressUpdate}
               />
               <InfosLine
                 champ={'code postal'}
-                lineName={infoUser.postal_code}
+                lineName={infoUser.postal_code.toString()}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={postalUpdate}
                 setModif={setPostalUpdate}
               />
@@ -109,7 +109,6 @@ const Profile = () => {
                 champ={'Ville'}
                 lineName={infoUser.city}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={cityUpdate}
                 setModif={setCityUpdate}
               />
@@ -120,7 +119,6 @@ const Profile = () => {
                 champ={'Téléphone'}
                 lineName={infoUser.phone}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={phoneUpdate}
                 setModif={setPhoneUpdate}
               />
@@ -128,7 +126,6 @@ const Profile = () => {
                 champ={'email'}
                 lineName={infoUser.email}
                 changeMode={changeMode}
-                setChangeMode={setChangeMode}
                 modif={emailUpdate}
                 setModif={setEmailUpdate}
               />
