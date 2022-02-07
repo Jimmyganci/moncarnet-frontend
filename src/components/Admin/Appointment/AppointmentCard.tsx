@@ -2,20 +2,21 @@ import React, { useEffect } from 'react';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
-import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import IProsInfos from '../../../Interfaces/IPros';
-import IUserInfos from '../../../Interfaces/IUserInfos';
+import IAppointment from '../../../Interfaces/IAppointment';
+import IAppointment from '../../../Interfaces/IPros';
+import IUser from '../../../Interfaces/IUser';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {
-  appointment: IAppointmentInfos;
-  user: IUserInfos;
-  pros: IProsInfos;
-  setUserId: Function;
-  setProsId: Function;
-  setShowUser: Function;
-  setShowPros: Function;
-  setOneVehicule: Function;
-  setShowVehicule: Function;
+  appointment: IAppointment;
+  user: IUser;
+  pros: IAppointment;
+  setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setProsId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowPros: React.Dispatch<React.SetStateAction<boolean>>;
+  setOneVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
+  setShowVehicule: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function AppointmentCard({
@@ -48,8 +49,7 @@ function AppointmentCard({
       <p>{appointment.id_appointment}</p>
       <button
         onClick={() => setShowVehicule(true)}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {appointment.immat}
       </button>
       <p>{new Date(appointment.date).toLocaleDateString()}</p>
@@ -58,8 +58,7 @@ function AppointmentCard({
           setUserId(user.id_user);
           setShowUser(true);
         }}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {user.lastname.toUpperCase() +
           ' ' +
           user.firstname.charAt(0).toUpperCase() + // format firstname and lastname
@@ -70,8 +69,7 @@ function AppointmentCard({
           setProsId(pros.id_pros);
           setShowPros(true);
         }}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {pros.name}
       </button>
       <p>{appointment.comment}</p>

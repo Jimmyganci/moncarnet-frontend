@@ -5,15 +5,15 @@ import email from '../../../assets/minimalist_logos/email.svg';
 import house from '../../../assets/minimalist_logos/house.svg';
 import phone from '../../../assets/minimalist_logos/phone.svg';
 import profilLogo from '../../../assets/minimalist_logos/profile.svg';
-import IProsInfos from '../../../Interfaces/IPros';
-import UserInfos from '../../../Interfaces/IUserInfos';
+import IAppointment from '../../../Interfaces/IPros';
+import UserInfos from '../../../Interfaces/IUser';
 import { button } from '../../../variableTailwind';
 
 interface ModalProps {
   showUser?: boolean | null;
-  setShowUser?: Function | null;
+  setShowUser?: React.Dispatch<React.SetStateAction<boolean>>;
   showPros?: boolean | null;
-  setShowPros?: Function | null;
+  setShowPros?: React.Dispatch<React.SetStateAction<boolean>>;
   userId?: number | null;
   prosId?: number | null;
 }
@@ -27,7 +27,7 @@ function ModalInfos({
   prosId,
 }: ModalProps) {
   const [userData, setUserData] = useState<UserInfos>();
-  const [prosData, setProsData] = useState<IProsInfos>();
+  const [prosData, setProsData] = useState<IAppointment>();
 
   async function getUserOrPros() {
     //  condition for get users information or pros information
@@ -49,11 +49,9 @@ function ModalInfos({
     <div>
       {showUser && userData && (
         <div
-          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}
-        >
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
           <div
-            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}
-          >
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
             <div>
               <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
@@ -80,8 +78,7 @@ function ModalInfos({
 
             <button
               onClick={() => setShowUser && setShowUser(false)}
-              className={`${button}`}
-            >
+              className={`${button}`}>
               Fermer
             </button>
           </div>
@@ -89,11 +86,9 @@ function ModalInfos({
       )}
       {showPros && prosData && (
         <div
-          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}
-        >
+          className={`backdrop-filter backdrop-blur-xl fixed flex justify-center items-center top-0 left-0 w-full h-full p-4`}>
           <div
-            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}
-          >
+            className={`w-2/3 rounded-lg flex flex-col items-center justify-around bg-background/30 p-4`}>
             <div>
               <img className="w-32" src={profilLogo} alt="logo_user" />
             </div>
@@ -120,8 +115,7 @@ function ModalInfos({
 
             <button
               onClick={() => setShowPros && setShowPros(false)}
-              className={`${button}`}
-            >
+              className={`${button}`}>
               Fermer
             </button>
           </div>

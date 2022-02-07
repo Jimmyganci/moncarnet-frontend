@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { appointment, pros, service_book, users, vehicule } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import AdminContext from '../../../contexts/AdminContext';
+import IVehicule from '../../../Interfaces/IVehicule';
 import { button, glassMorphism } from '../../../variableTailwind';
 import CountAppointment from './CountAppointment';
 import CountCustomers from './CountCustomers';
@@ -14,8 +15,8 @@ import VehiculeConfirm from './VehiculeConfirm';
 import VehiculeWithoutServiceBook from './VehiculeWithoutServiceBook';
 
 function HomeAdmin() {
-  const { adminLogin }: any = useContext(AdminContext);
-  const [vehiculeToValidate] = useOutletContext<Array<any>>();
+  const { adminLogin } = useContext(AdminContext);
+  const vehiculeToValidate = useOutletContext<IVehicule[]>();
 
   const [dataLength, setDataLength] = useState([
     {

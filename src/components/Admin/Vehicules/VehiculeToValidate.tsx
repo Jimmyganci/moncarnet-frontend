@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import { getVehicules } from '../../../API/requestVehicule';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
+import IVehicule from '../../../Interfaces/IVehicule';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import ItemVehiculeToValidate from './ItemVehiculeToValidate';
 
 function VehiculeToValidate() {
-  const [vehiculeToValidate] = useOutletContext<Array<any>>();
-  const [dataVehicules, setDataVehicules] = useState<Array<any>>([]);
-  const [userId, setUserId] = useState<number>();
+  const vehiculeToValidate = useOutletContext<IVehicule[]>();
+  const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
+  const [userId, setUserId] = useState<number>(0);
   const [showUser, setShowUser] = useState(false);
 
   async function getVehiculeDetails() {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { users } from '../../../API/request';
-import IUserInfos from '../../../Interfaces/IUserInfos';
+import IUser from '../../../Interfaces/IUser';
 import { glassMorphism } from '../../../variableTailwind';
 import WithoutAppointmentCard from './WithoutAppointmentCard';
 
 function UsersWithoutAppointment() {
-  const [dataUsers, setDataUsers] = useState<Array<IUserInfos>>([]);
+  const [dataUsers, setDataUsers] = useState<IUser[]>([]);
 
   //  get all users witch doesn't never had an appointment
   async function getUsersWithoutAppointment() {

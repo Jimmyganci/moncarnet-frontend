@@ -8,7 +8,7 @@ import UserContext from '../../../contexts/UserContext';
 import { button, glassMorphism } from '../../../variableTailwind';
 
 function GarageDetails() {
-  const { userLogin }: any = useContext(UserContext);
+  const { userLoggedIn }: any = useContext(UserContext);
   const [infosPros, setInfosPros] = useState<any>([]);
   let { prosId } = useParams();
   const [message, setMessage] = useState<string>('');
@@ -29,7 +29,7 @@ function GarageDetails() {
 
   const handleChoiceGarage = async () => {
     try {
-      const res = await users.addFavorite(userLogin.id_user, infosPros.id_pros);
+      const res = await users.addFavorite(userLoggedIn.id_user, infosPros.id_pros);
       setMessage(res.data);
       if (res.status === 204) {
         toast.success(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);

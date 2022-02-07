@@ -1,8 +1,9 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { brands, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
   button,
   glassMorphism,
@@ -10,42 +11,54 @@ import {
   select,
   title,
 } from '../../../variableTailwind';
+import VehiculesSelectOptions from '../Vehicules/VehiculesSelectOptions';
 
 const ServiceBook = () => {
-  const { vehiculeImmatToUpdate }: any = useParams();
-  const { infosUserVehicule }: any = useContext(UserContext);
+  const { vehiculeImmatToUpdate } = useParams();
+  const { infosUserVehicule } = useContext(UserContext);
   const [infosVehicule, setInfosVehicule] = useState<any>([]);
   const [services, setServices] = useState<any>([]);
   const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
+  const [brand, setBrand] = useState<string>('');
 
   const getVehiculeSelected = (immat: string) => {
-    setVehiculeSelected(infosUserVehicule.filter((el: any) => el.immat.includes(immat)));
+    infosUserVehicule &&
+      setVehiculeSelected(
+        infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
+      );
   };
 
-  useEffect(() => {
-    async function getInfosVehicule() {
+  async function getInfosVehicule() {
+    infosUserVehicule &&
       setInfosVehicule(
-        infosUserVehicule.filter((ele: any) => ele.immat === vehiculeImmatToUpdate),
+        infosUserVehicule.filter(
+          (ele: IVehiculeAndUser) => ele.immat === vehiculeImmatToUpdate,
+        ),
       );
-    }
+  }
+
+  async function getBrand() {
+    const res = await brands.getOne(vehiculeSelected[0].brandId);
+    setBrand(res.name);
+  }
+
+  useEffect(() => {
     getInfosVehicule();
-  }, [infosUserVehicule]);
+    vehiculeSelected.length && getBrand();
+  }, [infosUserVehicule, vehiculeSelected, vehiculeImmatToUpdate]);
 
   useEffect(() => {
     async function getservices() {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/vehicules/${
-            vehiculeSelected.length ? vehiculeSelected[0].immat : infosVehicule[0].immat
-          }/service_book`,
-          { withCredentials: true },
+        const res = await service_book.getServiceBookVehicule(
+          vehiculeSelected.length ? vehiculeSelected[0].immat : infosVehicule[0].immat,
         );
-        setServices(res.data);
+        setServices(res);
       } catch (err) {
         console.log(err);
       }
     }
-    getservices();
+    vehiculeSelected.length && infosVehicule.length && getservices();
   }, [infosVehicule, vehiculeSelected]);
 
   return (
@@ -60,20 +73,11 @@ const ServiceBook = () => {
           }
           name="listVehicule"
           id="listVehicule"
-          onChange={(e) => getVehiculeSelected(e.target.value)}>
+          onChange={(e) => infosUserVehicule && getVehiculeSelected(e.target.value)}>
           {infosVehicule &&
-            infosUserVehicule.map((el: any) => (
-              <option
-                className="text-black"
-                key={el.immat}
-                value={el.immat}
-                selected={
-                  infosVehicule.length && el.immat === infosVehicule[0].immat
-                    ? true
-                    : false
-                }>
-                {`${el.brand} ${el.model} | ${el.immat}`}
-              </option>
+            infosUserVehicule &&
+            infosUserVehicule.map((el: any, index: number) => (
+              <VehiculesSelectOptions key={index} vehicule={el} />
             ))}
         </select>
         {services.length !== 0 && (
@@ -81,7 +85,7 @@ const ServiceBook = () => {
             className={`${glassMorphism} w-11/12 h-full m-4 flex flex-col justify-center items-center rounded-lg`}>
             <h3 className={`m-4 text-xl font-bold font-inter text-background`}>
               <span className="pr-2 border-r-2 border-background">
-                {((vehiculeSelected.length && vehiculeSelected[0].brand) ||
+                {((vehiculeSelected.length && brand) ||
                   (infosVehicule.length && infosVehicule[0].brand)) +
                   ' ' +
                   ((vehiculeSelected.length && vehiculeSelected[0].model) ||

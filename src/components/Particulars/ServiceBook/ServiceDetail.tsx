@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { pros, service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import {
   button,
@@ -26,11 +26,8 @@ const ServiceDetail = () => {
     async function getservice() {
       if (id_service_book !== undefined) {
         try {
-          const res = await axios.get(
-            `http://localhost:8000/api/service_books/${id_service_book}`,
-            { withCredentials: true },
-          );
-          setInfosService(res.data);
+          const res = await service_book.getOne(id_service_book);
+          setInfosService(res);
         } catch (err) {
           console.log(err);
         }
@@ -44,11 +41,8 @@ const ServiceDetail = () => {
     async function getInfosPro() {
       if (infosService.id_pros !== undefined) {
         try {
-          const res = await axios.get(
-            `http://localhost:8000/api/pros/${infosService.id_pros}`,
-            { withCredentials: true },
-          );
-          setInfosPro(res.data);
+          const res = await pros.getOne(infosService.id_pros);
+          setInfosPro(res);
         } catch (err) {
           console.log(err);
         }
@@ -56,9 +50,6 @@ const ServiceDetail = () => {
     }
     getInfosPro();
   }, [infosService]);
-
-  infosService && console.log(infosService);
-  infosPro && console.log(infosPro);
 
   return (
     <div className="flex items-center justify-center w-screen h-full lg:h-screen">

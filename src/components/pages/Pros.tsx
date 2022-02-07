@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { appointment } from '../../API/request';
 import returnArrow from '../../assets/return.png';
 import ProsContext from '../../contexts/ProsContext';
 import { glassMorphism } from '../../variableTailwind';
@@ -14,15 +16,24 @@ function Pros() {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logOut, showModal, rdvToDisplay }: any = useContext(ProsContext);
+  const { logout, showModal, appointmentToDisplay } = useContext(ProsContext);
+
+  async function deleteAppointment(appointmentId: number) {
+    try {
+      const res = await appointment.delete(appointmentId);
+      setTimeout(() => location.reload(), 1500);
+      if (res) toast.success('Votre rendez-vous a bien été supprimé');
+    } catch (err) {
+      if (err) toast.error('Impossible de supprimer ce rendez-vous');
+    }
+  }
 
   return (
     <div className="flex items-center h-screen">
       <button
         onClick={() => {
-          logOut().then(() => {
-            return navigate('/login-pro');
-          });
+          logout();
+          navigate('/login-pro');
         }}
         className={`flex p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-10 ml-7 absolute top-2 text-white`}>
         <img src={returnArrow} alt="return" className="w-6 h-6 mr-2" />
@@ -35,14 +46,8 @@ function Pros() {
         className={`w-4/5 flex justify-center items-center rounded-lg h-5/6 mr-6 ${glassMorphism}`}>
         <Outlet />
       </div>
-      {showModal && rdvToDisplay && (
-        <ModalAppointment
-          date={rdvToDisplay[0]}
-          user={rdvToDisplay[1]}
-          comment={rdvToDisplay[2]}
-          id_appointment={rdvToDisplay[3]}
-          immat={rdvToDisplay}
-        />
+      {showModal && appointmentToDisplay && (
+        <ModalAppointment deleteAppointment={deleteAppointment} />
       )}
     </div>
   );

@@ -6,15 +6,10 @@ import { Link } from 'react-router-dom';
 
 import { button, glassMorphism } from '../../../variableTailwind';
 
-interface ServiceBookProps {
-  percentage: number;
-}
-
-function VehiculeWithoutServiceBook({ percentage }: ServiceBookProps) {
+function VehiculeWithoutServiceBook({ percentage }: { percentage: number }) {
   return (
     <div
-      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}
-    >
+      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}>
       <div className="w-1/5">
         <CircularProgressbar
           value={percentage}

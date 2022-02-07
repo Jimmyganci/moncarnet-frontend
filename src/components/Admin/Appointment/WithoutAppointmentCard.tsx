@@ -1,9 +1,9 @@
 import React from 'react';
 
-import IUserInfos from '../../../Interfaces/IUserInfos';
+import IUser from '../../../Interfaces/IUser';
 
 interface WithoutAppointmentCardProps {
-  user: IUserInfos;
+  user: IUser;
 }
 
 function WithoutAppointmentCard({ user }: WithoutAppointmentCardProps) {

@@ -15,7 +15,7 @@ function ServiceBookDetails() {
   const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
 
   const [showPros, setShowPros] = useState(false);
-  const [prosId, setProsId] = useState<number>();
+  const [prosId, setProsId] = useState<number>(0);
 
   const { immat } = useParams<DetailsParams>();
 

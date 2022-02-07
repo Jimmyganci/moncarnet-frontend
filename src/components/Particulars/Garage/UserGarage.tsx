@@ -9,14 +9,13 @@ import { button, glassMorphism, title } from '../../../variableTailwind';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
-  const { userLogin }: any = useContext(UserContext);
+  const { userLoggedIn }: any = useContext(UserContext);
 
   useEffect(() => {
     async function getUsersGarage() {
-      if (userLogin.id_user !== undefined) {
+      if (userLoggedIn.id_user !== undefined) {
         try {
-          const res = await users.getGarage(userLogin.id_user);
-          console.log(res);
+          const res = await users.getGarage(userLoggedIn.id_user);
 
           setUsersGarage(res);
         } catch (err) {
@@ -25,11 +24,11 @@ function UserGarage() {
       }
     }
     getUsersGarage();
-  }, [userLogin]);
+  }, [userLoggedIn]);
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
-      const res = await users.deleteGarage(userLogin.id_user, idPros);
+      const res = await users.deleteGarage(userLoggedIn.id_user, idPros);
       res.status === 200 && toast.success(res.data);
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
