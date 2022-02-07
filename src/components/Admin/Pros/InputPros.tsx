@@ -7,9 +7,18 @@ interface IProps {
   onChange: (_e: React.FormEvent<HTMLInputElement>) => void;
   placeholder: string;
   widthLabel: string;
+  minLength: number;
 }
 
-function InputPros({ type, onChange, className, name, placeholder, widthLabel }: IProps) {
+function InputPros({
+  type,
+  onChange,
+  className,
+  name,
+  placeholder,
+  widthLabel,
+  minLength,
+}: IProps) {
   return (
     <label className={widthLabel}>
       <input
@@ -17,7 +26,8 @@ function InputPros({ type, onChange, className, name, placeholder, widthLabel }:
         type={type}
         onChange={onChange}
         name={name}
-        className={className}
+        className={`${className} valid:outline-primary-focus invalid:outline-red-500`}
+        minLength={minLength}
       />
     </label>
   );
