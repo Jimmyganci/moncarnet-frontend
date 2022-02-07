@@ -13,10 +13,9 @@ function Vehicules() {
   const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser[]>([]);
 
   const handleChangeVehicule = (immat: string) => {
-    infosUserVehicule &&
-      setVehiculeSelected(
-        infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
-      );
+    infosUserVehicule && setVehiculeSelected(
+      infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
+    );
   };
 
   useEffect(() => {

@@ -5,7 +5,11 @@ import car from '../../../assets/car.png';
 import IVehicule from '../../../Interfaces/IVehicule';
 import { button, glassMorphism } from '../../../variableTailwind';
 
-function VehiculeConfirm({ vehiculeToValidate }: { vehiculeToValidate: IVehicule[] }) {
+function VehiculeConfirm({
+  vehiculeToValidate,
+}: {
+  vehiculeToValidate: IVehicule[];
+}) {
   return (
     <div
       className={`${glassMorphism} justify-between flex-1 rounded-lg p-2 flex flex-col items-center`}>

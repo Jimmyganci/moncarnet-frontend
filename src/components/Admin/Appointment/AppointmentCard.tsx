@@ -3,14 +3,14 @@ import React, { useEffect } from 'react';
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
 import IAppointment from '../../../Interfaces/IAppointment';
-import IPros from '../../../Interfaces/IPros';
+import IAppointment from '../../../Interfaces/IPros';
 import IUser from '../../../Interfaces/IUser';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {
   appointment: IAppointment;
   user: IUser;
-  pros: IPros;
+  pros: IAppointment;
   setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
   setProsId: React.Dispatch<React.SetStateAction<number | undefined>>;
   setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
