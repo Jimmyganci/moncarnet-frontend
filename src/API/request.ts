@@ -8,7 +8,7 @@ import IModel from '../Interfaces/IModel';
 import IPros from '../Interfaces/IPros';
 import IServiceBook from '../Interfaces/IServiceBook';
 import IType from '../Interfaces/IType';
-import IUser from '../Interfaces/IUser';
+import IUser from '../Interfaces/Iuser';
 import IVehicule from '../Interfaces/IVehicule';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -126,6 +126,8 @@ export const pros = {
       .then((res) => res.data),
   put: (prosId: number, data: IPros) =>
     axios.put(`${API_URL}/pros/${prosId}`, data, { withCredentials: true }),
+  post: (data: IPros) =>
+    axios.post(`${API_URL}/pros`, data, { withCredentials: true }).then((res) => res),
 };
 //----------------------------------------------------------//
 
