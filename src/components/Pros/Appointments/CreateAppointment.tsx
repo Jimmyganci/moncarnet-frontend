@@ -19,9 +19,9 @@ function CreateAppointments() {
   const [validAppointment, SetValidAppointment] = useState<boolean>(true);
   const [userVehicules, setUserVehicules] = useState<IVehicule[]>();
   const [chosenImmat, setChosenImmat] = useState<string>();
-  let appointmentDate : string = `${date}T${time}:00.000Z`;
+  let appointmentDate: Date = new Date(`${date}T${time}:00.000Z`);
 
-  const today : string = new Date().toISOString();
+  const today: string = new Date().toISOString();
 
   // Check validity of appointment's date :
 
@@ -39,20 +39,27 @@ function CreateAppointments() {
 
   // Looking for customers in database
 
-  async function getUsers () {
+  async function getUsers() {
     const res = await pros.getUsers(prosLoggedIn.id_user);
-        setCustomersList(res);
+    setCustomersList(res);
   }
 
   useEffect(() => {
-    prosLoggedIn.id_user && getUsers()
+    prosLoggedIn.id_user && getUsers();
   }, [prosLoggedIn]);
 
   // Create appointment in database
 
   const handleCreateRdv = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validAppointment && details && date && chosenCustomer && prosLoggedIn && chosenImmat) {
+    if (
+      validAppointment &&
+      details &&
+      date &&
+      chosenCustomer &&
+      prosLoggedIn.id_user &&
+      chosenImmat
+    ) {
       appointment
         .create({
           userId: parseInt(chosenCustomer),
@@ -104,7 +111,9 @@ function CreateAppointments() {
           onChange={(e) => setChosenCustomer(e.target.value)}>
           <option defaultValue={''}>Aucun client sélectionné</option>
           {customersList
-            .filter((user) => user.lastname.toLowerCase().includes(customer.toLowerCase()))
+            .filter((user) =>
+              user.lastname.toLowerCase().includes(customer.toLowerCase()),
+            )
             .map((user) => (
               <option value={user.id_user} key={user.id_user}>
                 {user.lastname} {user.firstname}
