@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import { button, glassMorphism, title } from '../../../variableTailwind';
-import DeleteAccountModal from './../DeleteAccountModal';
+import DeleteAccountModal from './DeleteAccountModal';
 import InfosLine from './InfosLine';
 
 function ParticularInfos() {

@@ -11,6 +11,7 @@ import {
 } from '../../../variableTailwind';
 import Plate from '../../Plate';
 import ModalDeleteVehicule from './ModalDeleteVehicule';
+import ModalGiveVehicule from './ModalGiveVehicule';
 
 interface Props {
   vehiculeSelect: IVehiculeAndUser;
@@ -18,6 +19,7 @@ interface Props {
 
 const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
+  const [giveConfirmation, setGiveConfirmation] = useState<boolean>(false);
   const { userLoggedIn, vehiculeDeleted, setPosted } = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
 
@@ -54,12 +56,12 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                   <Plate
                     immat={vehiculeSelect.immat}
-                    postalCode={userLoggedIn && userLoggedIn.postal_code}
+                    postalCode={userLoggedIn && userLoggedIn.postal_code.toString()}
                   />
                 </div>
               </div>
             )}
-            {!deleteConfirmation ? (
+            {!deleteConfirmation && !giveConfirmation ? (
               <div>
                 <p>
                   <span>{`Mise en circulation le `}</span>
@@ -77,18 +79,30 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                 </div>
               </div>
             ) : (
-              <ModalDeleteVehicule
-                immat={vehiculeSelect.immat}
-                registration_date={vehiculeSelect.registrationDate}
-                url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
-                model_id={vehiculeSelect.modelId}
-                type_id={vehiculeSelect.typeId}
-                user_id={vehiculeSelect.userId}
-                deleteConfirmation={deleteConfirmation}
-                setDeleteConfirmation={setDeleteConfirmation}
-              />
+              <>
+                <ModalDeleteVehicule
+                  immat={vehiculeSelect.immat}
+                  registration_date={vehiculeSelect.registrationDate}
+                  url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
+                  model_id={vehiculeSelect.modelId}
+                  type_id={vehiculeSelect.typeId}
+                  user_id={vehiculeSelect.userId}
+                  deleteConfirmation={deleteConfirmation}
+                  setDeleteConfirmation={setDeleteConfirmation}
+                />
+                <ModalGiveVehicule
+                  immat={vehiculeSelect.immat}
+                  registration_date={vehiculeSelect.registrationDate}
+                  url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
+                  model_id={vehiculeSelect.modelId}
+                  type_id={vehiculeSelect.typeId}
+                  user_id={vehiculeSelect.userId}
+                  giveConfirmation={giveConfirmation}
+                  setGiveConfirmation={setGiveConfirmation}
+                />
+              </>
             )}
-            {!deleteConfirmation && (
+            {!deleteConfirmation && !giveConfirmation && (
               <div className="w-11/12">
                 <button className={`${clearedGreenButton} w-full py-2`}>
                   <Link to={`/particular/vehicules/${vehiculeSelect.immat}/serviceBook`}>
@@ -105,7 +119,9 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                       Modifier
                     </Link>
                   </button>
-                  <button className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}>
+                  <button 
+                    className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}
+                    onClick={() => vehiculeSelect && setGiveConfirmation(true)}>  
                     Céder
                   </button>
                 </div>
