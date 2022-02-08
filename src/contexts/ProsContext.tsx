@@ -3,10 +3,11 @@ import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
 import IPros from '../Interfaces/IPros';
-import IUser from '../Interfaces/IUser';
+import IUser from '../Interfaces/Iuser';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
@@ -83,10 +84,9 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   // set current user to nothing !
   const logout = (): void => {
     setProsLoggedIn(PRO_LOGIN_EMPTY);
-    removeCookie('user_token');
+    removeCookie('user_token', { path: '/' });
     navigate('/');
   };
-  
 
   // Display The modal Appointment
 

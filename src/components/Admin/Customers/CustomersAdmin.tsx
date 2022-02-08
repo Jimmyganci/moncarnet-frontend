@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { pros, users } from '../../../API/request';
 import AdminContext from '../../../contexts/AdminContext';
 import IPros from '../../../Interfaces/IPros';
-import IUser from '../../../Interfaces/IUser';
+import IUser from '../../../Interfaces/Iuser';
 import { button, glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 
@@ -82,14 +82,14 @@ function CustomersAdmin() {
               className={`w-1/2 p-4 rounded-tl-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'particular' ? 'bg-primary-focus' : ''
               }`}>
-              Particulier
+              {`Particulier(s)`}
             </button>
             <button
               onClick={() => setDataSelect('pros')}
               className={`w-1/2 p-4 rounded-tr-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'pros' ? 'bg-primary-focus' : ''
               }`}>
-              Professionnels
+              {`Professionnel(s)`}
             </button>
           </div>
           {dataSelect === 'particular' ? (
@@ -98,8 +98,6 @@ function CustomersAdmin() {
               <p>Nom</p>
               <p>Prénom</p>
               <p>Email</p>
-              <p>Infos</p>
-              <p>Status</p>
             </div>
           ) : (
             <div className="grid grid-cols-6 pt-2 pb-2 bg-background/30">
@@ -107,8 +105,6 @@ function CustomersAdmin() {
               <p>Siret</p>
               <p>name</p>
               <p>Email</p>
-              <p>Infos</p>
-              <p></p>
             </div>
           )}
           {dataSelect === 'particular' && dataCustomers
