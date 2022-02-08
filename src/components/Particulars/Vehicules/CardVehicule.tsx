@@ -119,9 +119,9 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                       Modifier
                     </Link>
                   </button>
-                  <button 
+                  <button
                     className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}
-                    onClick={() => vehiculeSelect && setGiveConfirmation(true)}>  
+                    onClick={() => vehiculeSelect && setGiveConfirmation(true)}>
                     Céder
                   </button>
                 </div>

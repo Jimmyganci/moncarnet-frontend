@@ -85,7 +85,9 @@ function VehiculeCard({ oneVehicule, setUserId, setShowUser }: VehiculeProps) {
         )}
         <button
           onClick={() => handleDeletedVehicule(oneVehicule.immat, oneVehicule)}
-          className={`${button} ${oneVehicule.active ? 'bg-red-500 ' : ''}`}>
+          className={`${button} ml-4 ${
+            oneVehicule.active ? ' bg-red-500 hover:bg-secondary-hovered ' : ''
+          }`}>
           {oneVehicule.active ? 'Désactiver' : 'Activer'}
         </button>
       </div>
