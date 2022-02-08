@@ -52,6 +52,7 @@ export const AdminContextProvider: React.FC<Props> = ({ children }) => {
     async function getAdminLogin() {
       try {
         const res = await isLoggedIn.get();
+
         const getInfosAdmin = await admin.getOne(res.id_user);
         setAdminLogin(getInfosAdmin);
       } catch (err: any) {
