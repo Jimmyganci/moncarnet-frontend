@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { admin, isLoggedIn } from '../API/request';
 import IAdmin from '../Interfaces/IAdmin';
@@ -51,15 +52,19 @@ export const AdminContextProvider: React.FC<Props> = ({ children }) => {
     async function getAdminLogin() {
       try {
         const res = await isLoggedIn.get();
+        if (res) toast.success('Vous êtes connecté');
 
         const getInfosAdmin = await admin.getOne(res.id_user);
         setAdminLogin(getInfosAdmin);
-      } catch (err) {
-        console.log(err);
+      } catch (err: any) {
+        if (err.response.status === 500) {
+          toast.error('Merci de vous connecter!');
+          navigate('/');
+        }
       }
     }
     getAdminLogin();
-  }, []);
+  }, [removeCookie]);
 
   return (
     <AdminContext.Provider

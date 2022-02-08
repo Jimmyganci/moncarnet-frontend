@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
+import AdminContext from '../../../contexts/AdminContext';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
+import { button } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import VehiculeCard from './VehiculeCard';
 
@@ -11,6 +14,8 @@ function VehiculeList() {
   const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
   const [userId, setUserId] = useState<number>(0);
   const [showUser, setShowUser] = useState(false);
+  const [filterVehiculesDeleted, setFilterVehiculesDeleted] = useState<boolean>(false);
+  const { renderState } = useContext(AdminContext);
 
   async function getAllVehicules() {
     const vehiculeWithoutSB = await vehicule.getAll();
@@ -18,19 +23,30 @@ function VehiculeList() {
       const vehiculeData = await getVehicules(vehiculeWithoutSB);
       setDataVehicules(vehiculeData);
     } catch (err) {
-      console.log(err);
+      if (err) toast.error("Une erreur s'est produite!");
     }
   }
 
   useEffect(() => {
     getAllVehicules();
-  }, []);
+  }, [renderState]);
 
   return (
     <div className="flex flex-col items-end w-full">
       <div className="w-5/6 h-full p-2">
         <div>
-          <h1 className="text-3xl uppercase text-background">Vehicules</h1>
+          <h1 className="text-3xl uppercase text-background">
+            {filterVehiculesDeleted ? 'Véhicules Supprimés' : 'Véhicules Actifs'}
+          </h1>
+        </div>
+        <div>
+          <button
+            onClick={() => setFilterVehiculesDeleted(!filterVehiculesDeleted)}
+            className={`${button}`}>
+            {!filterVehiculesDeleted
+              ? 'Voir les véhicules supprimés'
+              : 'Voir les véhicules actifs'}
+          </button>
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
           <div
@@ -43,14 +59,20 @@ function VehiculeList() {
             <p>Utilisateur</p>
             <p>Status</p>
           </div>
-          {dataVehicules.map((vehicule, index) => (
-            <VehiculeCard
-              key={index}
-              vehicule={vehicule}
-              setUserId={setUserId}
-              setShowUser={setShowUser}
-            />
-          ))}
+          {dataVehicules
+            .filter((vehicule) =>
+              filterVehiculesDeleted
+                ? !vehicule.active && vehicule.validate
+                : vehicule.active && vehicule.validate,
+            )
+            .map((vehicule, index) => (
+              <VehiculeCard
+                key={index}
+                oneVehicule={vehicule}
+                setUserId={setUserId}
+                setShowUser={setShowUser}
+              />
+            ))}
         </div>
       </div>
       <ModalInfos showUser={showUser} setShowUser={setShowUser} userId={userId} />

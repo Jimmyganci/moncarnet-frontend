@@ -58,7 +58,7 @@ function App() {
     { path: 'appointments', component: <AppointmentList /> },
     { path: 'users/withoutAppointment', component: <UsersWithoutAppointment /> },
     { path: 'profil', component: <ProfilAdmin /> },
-    { path: 'vehicule/serviceBook/:immat', component: <ServiceBookDetails /> },
+    { path: 'vehicule/:immat/serviceBook', component: <ServiceBookDetails /> },
     { path: 'serviceBook', component: <ServiceBookList /> },
     { path: 'addPros', component: <AddPros /> },
   ];
