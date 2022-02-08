@@ -121,7 +121,7 @@ function UserGarage() {
           <>
             {!showAppointmentRequest && (
               <div>
-                <p>{`Vous n'avez aucu garage enregistré dans vos favoris`}</p>
+                <p>{`Vous n'avez aucun garage enregistré dans vos favoris`}</p>
                 <Link to="/particular/garage">
                   <button className={button}>Afficher la liste des garages</button>
                 </Link>

@@ -112,9 +112,9 @@ function UpdateVehicule() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full h-full max-w-6xl lg:h-screen lg:flex lg:flex-col lg:justify-center lg:items-center">
       {posted === false && infosVehicule && (
-        <div className="flex flex-col items-center w-full h-full m-auto">
+        <div className="flex flex-col items-center w-full h-full lg:h-5/6 m-auto">
           <h1 className={title}>Modifier votre véhicule</h1>
           <form
             onSubmit={(e) => handleUpdate(e)}
@@ -132,57 +132,59 @@ function UpdateVehicule() {
                 onChange={(e) => setImmat(e.target.value)}
               />
             </label>
-            <label className="flex flex-col w-full text-lg font-semibold">
-              Type de véhicule
-              <select
-                className={`${input}`}
-                name="type"
-                id="type"
-                onChange={(e) => setTypeVehicule(e.target.value)}>
-                <option value="">{infosVehicule.type}</option>
-                {typeList.map((el) => (
-                  <option key={el.id_type} value={el.id_type}>
-                    {el.name_type}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col w-full text-lg font-semibold">
-              Marque
-              <input
-                className={input}
-                type="text"
-                name="brand"
-                id="brand"
-                list="listBrands"
-                value={brandFilter}
-                placeholder={brand}
-                onChange={(e) => setBrandFilter(e.target.value)}
-                onClick={() => setBrandFilter('')}
-              />
-              <datalist id="listBrands">
-                {brandList.map((el) => (
-                  <option key={el.id_brand} value={el.name}>
-                    {el.name}
-                  </option>
-                ))}
-              </datalist>
-            </label>
-            <label className="flex flex-col w-full text-lg font-semibold">
-              Modèle
-              <select
-                className={input}
-                name="model"
-                id="model"
-                onChange={(e) => setModel(e.target.value)}>
-                <option value={model}>{brandFilter ? '' : infosVehicule.model}</option>
-                {modelList.map((el) => (
-                  <option key={el.id_model} value={el.id_model}>
-                    {el.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div className={`flex flex-col w-full lg:flex-row lg:justify-evenly`}>
+              <label className="flex flex-col w-full text-lg font-semibold">
+                Type de véhicule
+                <select
+                  className={`${input} appearance-none`}
+                  name="type"
+                  id="type"
+                  onChange={(e) => setTypeVehicule(e.target.value)}>
+                  <option value="">{infosVehicule.type}</option>
+                  {typeList.map((el) => (
+                    <option key={el.id_type} value={el.id_type}>
+                      {el.name_type}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex flex-col w-full text-lg font-semibold">
+                Marque
+                <input
+                  className={`${input} flex pl-[10%] lg:pl-[3%] appearance-none`}
+                  type="text"
+                  name="brand"
+                  id="brand"
+                  list="listBrands"
+                  value={brandFilter}
+                  placeholder={brand}
+                  onChange={(e) => setBrandFilter(e.target.value)}
+                  onClick={() => setBrandFilter('')}
+                />
+                <datalist id="listBrands">
+                  {brandList.map((el) => (
+                    <option key={el.id_brand} value={el.name}>
+                      {el.name}
+                    </option>
+                  ))}
+                </datalist>
+              </label>
+              <label className="flex flex-col w-full text-lg font-semibold">
+                Modèle
+                <select
+                  className={`${input} appearance-none`}
+                  name="model"
+                  id="model"
+                  onChange={(e) => setModel(e.target.value)}>
+                  <option value={model}>{brandFilter ? '' : infosVehicule.model}</option>
+                  {modelList.map((el) => (
+                    <option key={el.id_model} value={el.id_model}>
+                      {el.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
             <label className="flex flex-col w-full text-lg font-semibold">
               Date de mise en circulation
               <input
@@ -214,9 +216,9 @@ function UpdateVehicule() {
                 onChange={(e) => setFile(e.target.files![0])}
               />
             </label>
-            <button className={`w-1/2 ${button}`}>Valider les modifications</button>
+            <button className={`w-1/2 lg:max-w-xs ${button}`}>Valider les modifications</button>
           </form>
-          <div className='w-1/2 mt-2 mb-5'><ReturnButton target='' /></div>
+          <div className='w-1/2 mt-2 mb-5 lg:max-w-xs'><ReturnButton target='' /></div>
         </div>
       )}
       {posted && (

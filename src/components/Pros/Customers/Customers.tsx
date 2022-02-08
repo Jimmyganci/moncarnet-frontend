@@ -17,7 +17,6 @@ function Customers() {
     const usersToDisplay = await pros.getUsers(prosLoggedIn.id_user);
     setUserArray(usersToDisplay);
   };
-  console.log(userArray);
 
   useEffect(() => {
     getUsersFromPro()   

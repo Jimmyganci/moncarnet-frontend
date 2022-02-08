@@ -10,7 +10,7 @@ interface IPlate {
 
 const Plate: React.FC<IPlate> = ({ immat, postalCode }) => {
   return (
-    <div className="box-border flex items-center justify-between w-full h-full p-0 m-0 overflow-hidden rounded-lg">
+    <div className="box-border flex items-center justify-between w-full h-full p-0 m-0 overflow-hidden rounded-lg border-[1px] border-black">
       <div className="h-full w-[15%] m-0 pb-2 bg-gradient-to-tr from-blue-500 to-blue-700 text-background flex flex-col-reverse justify-center items-center overflow-hidden box-border">
         <p className="text-base font-bold h-3/6">F</p>
         <div className="box-border flex items-center justify-center w-full overflow-hidden h-3/6">
@@ -21,7 +21,7 @@ const Plate: React.FC<IPlate> = ({ immat, postalCode }) => {
         {immat}
       </div>
       <div className="h-full w-[15%] px-[0.5px] pb-[4%] bg-gradient-to-tr from-blue-500 to-blue-700 text-background flex flex-col-reverse justify-center items-center overflow-hidden box-border">
-        <p className="pt-2 text-xl leading-3 h-3/6">
+        <p className="pt-2 text-[85%] font-medium leading-3 h-3/6">
           {postalCode && postalCode.toString().slice(0, 2)}
         </p>
         <div className="box-border flex items-center justify-center w-full overflow-hidden h-3/6">

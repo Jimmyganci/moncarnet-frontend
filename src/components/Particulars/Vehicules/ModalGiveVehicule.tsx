@@ -56,7 +56,6 @@ function ModalGive({
     try {
       if (lastname && vehiculeGivenInfos) {
         const res = await users.getByLastName(lastname);
-        console.log(res[0].id_user);
           if (res[0].firstname !== firstname) {
             toast.error("Le prénom associé ne correspond pas");
           }
@@ -82,7 +81,6 @@ function ModalGive({
         });
         setVehiculeGiven(false);
       } else {
-        console.log(giveVehiculeToUser);
         toast.error("Une erreur s'est produite");
       }
         }
@@ -102,10 +100,12 @@ function ModalGive({
             <p>Veuillez entrer le nom, prénom et l'adresse mail de la personne à qui vous souhaitez céder votre véhicule, puis cliquez sur Valider.</p>
             <div className="flex items-center justify-between px-2 my-4">
       <form onSubmit={(e) => handleGiveVehicule(e)} className={`w-full flex flex-col items-center justify-start`} >
-        <label className='w-full' htmlFor="lastname"><input className={`${input} w-full`} type="text" id='lastname' placeholder='Nom de famille' onChange={(e) => setLastname(e.target.value)} /></label>
-        <label className='w-full' htmlFor="firstname"><input className={`${input} w-full`} type="text" id='firstname' placeholder='Prénom' onChange={(e) => setFirstname(e.target.value)} /></label>
+        <div className='w-full flex flex-col items-center justify-center lg:flex-row lg:justify-evenly'>
+          <label className='w-full' htmlFor="lastname"><input className={`${input} w-full`} type="text" id='lastname' placeholder='Nom de famille' onChange={(e) => setLastname(e.target.value)} /></label>
+          <label className='w-full' htmlFor="firstname"><input className={`${input} w-full`} type="text" id='firstname' placeholder='Prénom' onChange={(e) => setFirstname(e.target.value)} /></label>
+        </div>
         <label className='w-full' htmlFor="email"><input className={`${input} w-full`} type="text" id='email' placeholder='Adresse mail' onChange={(e) => setEmail(e.target.value)} /></label>
-                <div className='w-5/6 flex justify-between items-center'>
+                <div className='flex items-center justify-between w-5/6 lg:-mb-5'>
                   <button
                     onClick={() => setGiveConfirmation && setGiveConfirmation(false)}
                     className={`px-4 p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-background text-primary lg:hover:bg-primary lg:hover:text-background flex justify-center items-center w-[45%]`}>
@@ -122,25 +122,6 @@ function ModalGive({
           </div>
         </div>
       )}
-      {/* {giveConfirmation && vehiculeGiven && (
-        <div className={`w-full h-full flex flex-col justify-center items-center`}>
-          <div
-            className={`w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
-            {`Le véhicule immatriculé :`} <br /> {`${immat}`} <br />{' '}
-            {`vient d'être supprimé.`}
-            <button
-              onClick={() => {
-                setGiveConfirmation && setGiveConfirmation(false);
-                setVehiculeGiven(false);
-              }}
-              className={`${button} flex justify-center items-center mt-6 w-[45%]`}>
-              <Link to="/particular/vehicules" className="w-full h-full">
-                Retour
-              </Link>
-            </button>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

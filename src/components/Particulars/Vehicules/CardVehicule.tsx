@@ -35,7 +35,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
   return (
     <div className="w-full h-full pb-5 lg:h-fit">
       <div
-        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
+        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-3xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
           <div className="flex flex-col items-center w-11/12">
             {!vehiculeDeleted && (
@@ -53,7 +53,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   <p className="font-bold uppercase">{vehiculeSelect.model}</p>
                 </div>
                 <div
-                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
+                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4`}>
                   <Plate
                     immat={vehiculeSelect.immat}
                     postalCode={userLoggedIn && userLoggedIn.postal_code}
