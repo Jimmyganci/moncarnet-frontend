@@ -23,7 +23,7 @@ function GarageDetails() {
         setInfosPros(res);
       }
     } catch (err) {
-      if (err) toast.error("Une erreur s'est produite!");
+      console.log(err);
     }
   }
 
@@ -37,7 +37,7 @@ function GarageDetails() {
         setUserGarage(garage);
       }
     } catch (err) {
-      if (err) toast.error("Une erreur s'est produite!");
+      console.log(err);
     }
   }
 

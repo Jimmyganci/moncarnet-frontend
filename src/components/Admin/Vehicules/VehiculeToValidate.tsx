@@ -7,12 +7,15 @@ import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import ItemVehiculeToValidate from './ItemVehiculeToValidate';
+import ModalImage from './ModalImage';
 
 function VehiculeToValidate() {
   const vehiculeToValidate = useOutletContext<IVehicule[]>();
   const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
   const [userId, setUserId] = useState<number>(0);
   const [showUser, setShowUser] = useState(false);
+  const [urlImage, setUrlImage] = useState<string>('');
+  const [showModalImage, setShowModalImage] = useState<boolean>(false);
 
   async function getVehiculeDetails() {
     if (vehiculeToValidate) {
@@ -57,12 +60,19 @@ function VehiculeToValidate() {
                 vehiculeData={vehicule}
                 setUserId={setUserId}
                 setShowUser={setShowUser}
+                setUrlImage={setUrlImage}
+                setShowModalImage={setShowModalImage}
               />
             ))}
           </div>
         </div>
       </div>
       <ModalInfos showUser={showUser} setShowUser={setShowUser} userId={userId} />
+      <ModalImage
+        url={urlImage}
+        showModalImage={showModalImage}
+        setShowModalImage={setShowModalImage}
+      />
     </div>
   );
 }

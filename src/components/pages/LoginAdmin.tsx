@@ -1,8 +1,8 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { isLoggedIn, login } from '../../API/request';
+import { login } from '../../API/request';
 import logo from '../../assets/logo.svg';
 import Return from '../../assets/return.png';
 import { appear, button, glassMorphism, input } from '../../variableTailwind';
@@ -19,14 +19,6 @@ function LoginAdmin() {
     });
     if (loginAdmin === 200) navigate('/admin/home');
   };
-
-  useEffect(() => {
-    async function test() {
-      const res = await isLoggedIn.get();
-      console.log(res);
-    }
-    test();
-  }, []);
   return (
     <div
       className={`${glassMorphism} min-h-screen flex justify-center flex-col items-center relative`}>

@@ -10,12 +10,16 @@ interface VehiculeToValidateProps {
   vehiculeData: IVehiculeAndUser;
   setUserId: React.Dispatch<React.SetStateAction<number>>;
   setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setUrlImage: React.Dispatch<React.SetStateAction<string>>;
+  setShowModalImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ItemVehiculeToValidate({
   vehiculeData,
   setUserId,
   setShowUser,
+  setUrlImage,
+  setShowModalImage,
 }: VehiculeToValidateProps) {
   const [brand, setBrand] = useState<string>();
   const { setRenderState, renderState } = useContext(AdminContext);
@@ -67,9 +71,14 @@ function ItemVehiculeToValidate({
         {vehiculeData.userName}
       </button>
       <div className="flex justify-center">
-        <div className="w-10 p-1 cursor-pointer hover:bg-background">
+        <button
+          onClick={() => {
+            setShowModalImage(true);
+            setUrlImage(vehiculeData.urlGreenCard);
+          }}
+          className="w-10 p-1 cursor-pointer hover:bg-background">
           <img className="" src={vehiculeData.urlGreenCard} alt="green-card" />
-        </div>
+        </button>
       </div>
       <button onClick={() => handleValidate()} className={`${button} m-1`}>
         Valider
