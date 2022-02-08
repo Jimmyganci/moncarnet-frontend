@@ -4,7 +4,7 @@ import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
 import IAppointment from '../../../Interfaces/IAppointment';
 import IPros from '../../../Interfaces/IPros';
-import IUser from '../../../Interfaces/IUser';
+import IUser from '../../../Interfaces/Iuser';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {
@@ -32,11 +32,16 @@ function AppointmentCard({
 }: AppointmentProps) {
   // get one Vehicule and call the getVehicules...
   //...functions to have all informations about this vehicule (put the array of vehicule in the parameter of this function)
-  async function getVehicule() {
-    const response = await vehicule.getOne(appointment.immat);
-    if (response) {
-      const vehiculeInfos = await getVehicules([response]);
-      setOneVehicule(vehiculeInfos);
+  async function getVehicule(immat?: string) {
+    if (immat) {
+      const vehiculeModal = await vehicule.getOne(immat);
+      const vehiculeInfosModal = await getVehicules([vehiculeModal]);
+      setOneVehicule(vehiculeInfosModal);
+      setShowVehicule(true);
+    } else {
+      const vehiculeCard = await vehicule.getOne(appointment.immat);
+      const vehiculeInfosCard = await getVehicules([vehiculeCard]);
+      setOneVehicule(vehiculeInfosCard);
     }
   }
 
@@ -48,7 +53,7 @@ function AppointmentCard({
     <div className="grid grid-cols-6 pt-2 pb-2 hover:bg-background/20">
       <p>{appointment.id_appointment}</p>
       <button
-        onClick={() => setShowVehicule(true)}
+        onClick={() => getVehicule(appointment.immat)}
         className="underline hover:text-background">
         {appointment.immat}
       </button>
