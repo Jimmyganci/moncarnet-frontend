@@ -48,7 +48,7 @@ const SideBarAdmin = () => {
   return (
     <div className={`${glassMorphism} w-1/6 h-screen fixed`}>
       <div className="flex items-center justify-center w-full pb-4 pl-3 pr-3 h-1/6">
-        <Logo />
+        <Logo location="admin" />
       </div>
       <span className="w-5/6 border-b-2"></span>
       <div className="w-full h-5/6">

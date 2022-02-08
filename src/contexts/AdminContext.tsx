@@ -18,12 +18,16 @@ const adminLoginEmpty = {
 type AdminContent = {
   adminLogin: IAdmin;
   setAdminLogin: React.Dispatch<React.SetStateAction<IAdmin>>;
+  renderState: boolean;
+  setRenderState: React.Dispatch<React.SetStateAction<boolean>>;
   logout: () => void;
 };
 
 const AdminContext = createContext<AdminContent>({
   adminLogin: adminLoginEmpty,
   setAdminLogin: () => {},
+  renderState: false,
+  setRenderState: () => {},
   logout: () => {},
 });
 
@@ -31,6 +35,7 @@ export default AdminContext;
 
 export const AdminContextProvider: React.FC<Props> = ({ children }) => {
   const [adminLogin, setAdminLogin] = useState(adminLoginEmpty);
+  const [renderState, setRenderState] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
 
   const removeCookie = useCookies(['user_token'])[2];
@@ -57,7 +62,14 @@ export const AdminContextProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   return (
-    <AdminContext.Provider value={{ adminLogin, setAdminLogin, logout }}>
+    <AdminContext.Provider
+      value={{
+        adminLogin,
+        setAdminLogin,
+        logout,
+        setRenderState,
+        renderState,
+      }}>
       {children}
     </AdminContext.Provider>
   );

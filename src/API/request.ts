@@ -44,7 +44,7 @@ export const appointment = {
     axios.delete(`${API_URL}/appointments/${appointmentId}`, {
       withCredentials: true,
     }),
-  };
+};
 //-----------------------------------------------------------//
 
 //-------------------------Users----------------------------//
@@ -54,7 +54,9 @@ export const users = {
     axios.get(`${API_URL}/users`, { withCredentials: true }).then((res) => res.data),
   // get user by lastname
   getByLastName: (lastname: string): Promise<IUser[]> =>
-    axios.get(`${API_URL}/users?lastname=${lastname}`, { withCredentials: true }).then((res) => res.data),
+    axios
+      .get(`${API_URL}/users?lastname=${lastname}`, { withCredentials: true })
+      .then((res) => res.data),
   // get one user
   getOne: (idUser: number): Promise<IUser> =>
     axios
@@ -131,6 +133,10 @@ export const pros = {
     axios.put(`${API_URL}/pros/${prosId}`, data, { withCredentials: true }),
   post: (data: IPros) =>
     axios.post(`${API_URL}/pros`, data, { withCredentials: true }).then((res) => res),
+  delete: (prosId: number) =>
+    axios
+      .delete(`${API_URL}/pros/${prosId}`, { withCredentials: true })
+      .then((res) => res),
 };
 //----------------------------------------------------------//
 
@@ -226,7 +232,7 @@ export const service_book = {
       .then((res) => res.data),
   post: (data: IServiceBook): Promise<IServiceBook> =>
     axios
-    .post(`${API_URL}/service_books`, data, { withCredentials: true })
+      .post(`${API_URL}/service_books`, data, { withCredentials: true })
       .then((res) => res.data),
 };
 //---------------------------------------------------------------//
