@@ -6,5 +6,5 @@ export default interface IServiceBook {
   kilometrage: number;
   url_invoice: string;
   id_pros: number;
-  immat: string;
+  immat_vehicule: string;
 }

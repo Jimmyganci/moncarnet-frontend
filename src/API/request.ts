@@ -8,7 +8,7 @@ import IModel from '../Interfaces/IModel';
 import IPros from '../Interfaces/IPros';
 import IServiceBook from '../Interfaces/IServiceBook';
 import IType from '../Interfaces/IType';
-import IUser from '../Interfaces/Iuser';
+import IUser from '../Interfaces/IUser';
 import IVehicule from '../Interfaces/IVehicule';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
