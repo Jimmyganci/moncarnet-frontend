@@ -24,9 +24,6 @@ const CustomerDisplay: React.FC<Props>  = (props) => {
                     <p>{props.postal_code}</p>
                 </div >
                 <div className="flex justify-center w-1/6">
-                    <p>{props.address}</p>
-                </div>
-                <div className="flex justify-center w-1/6">
                     <p>{props.city}</p>
                 </div>
                 <div className="flex justify-center w-1/6">
@@ -35,8 +32,11 @@ const CustomerDisplay: React.FC<Props>  = (props) => {
                 <div className="flex justify-center w-1/6">
                     <p>{props.phone}</p>
                 </div>        
+                <div className="flex justify-center w-1/6">
+                    <button className={`${button}`} onClick={() => handleShowCustomer()}>Détails</button>
+                </div>
             </div>
-            <button className={`${button}`} onClick={() => handleShowCustomer()}>Détails</button>
+            
         </li>
     )
 

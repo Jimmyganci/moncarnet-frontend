@@ -5,7 +5,7 @@ import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
 import IUser from '../Interfaces/IUser';
 import IPros from '../Interfaces/IPros';
-import IServiceBook from '../Interfaces/IServiceBook';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
@@ -78,11 +78,16 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
 
   const removeCookie = useCookies(['user_token'])[2];
 
+  // Return Home after logout !
+  const navigate: NavigateFunction = useNavigate();
+
   // set current user to nothing !
   const logout = (): void => {
     setProsLoggedIn(PRO_LOGIN_EMPTY);
     removeCookie('user_token');
+    return navigate('/');
   };
+  
 
   // Display The modal Appointment
 
