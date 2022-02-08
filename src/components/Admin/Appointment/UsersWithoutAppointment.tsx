@@ -28,8 +28,8 @@ function UsersWithoutAppointment() {
         </div>
         <div className={`${glassMorphism} mt-4 rounded-lg`}>
           <div className={`grid grid-cols-3 ${glassMorphism} rounded-lg pt-2 pb-2`}>
-            <p>Nom</p>
             <p>Prénoms</p>
+            <p>Nom</p>
             <p>Email</p>
           </div>
           <div>

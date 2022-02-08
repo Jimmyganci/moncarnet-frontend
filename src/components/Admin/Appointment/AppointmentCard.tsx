@@ -59,10 +59,11 @@ function AppointmentCard({
           setShowUser(true);
         }}
         className="underline hover:text-background">
-        {user.lastname.toUpperCase() +
+        {user.firstname.charAt(0).toUpperCase() + // format firstname and lastname
+          user.firstname.slice(1) +
           ' ' +
-          user.firstname.charAt(0).toUpperCase() + // format firstname and lastname
-          user.firstname.slice(1)}
+          user.lastname.charAt(0).toUpperCase() +
+          user.lastname.slice(1)}
       </button>
       <button
         onClick={() => {
