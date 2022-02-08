@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { isLoggedIn, users } from '../API/request';
 import { getVehicules } from '../API/requestVehicule';
-import IUser from '../Interfaces/IUser';
+import IUser from '../Interfaces/Iuser';
 import IVehiculeAndUser from '../Interfaces/IVehiculeAndUser';
 
 const USER_LOGIN_EMPTY = {
@@ -85,7 +85,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   // set current user to nothing !
   const logout = (): void => {
     setUserLoggedIn(USER_LOGIN_EMPTY);
-    removeCookie('user_token');
+    removeCookie('user_token', { path: '/' });
     navigate('/');
   };
 

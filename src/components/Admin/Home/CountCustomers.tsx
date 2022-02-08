@@ -15,17 +15,17 @@ function CountCustomers({ particular, pros }: DataLength) {
       className={`${glassMorphism} justify-between flex-1 rounded-lg p-2 flex flex-col items-center`}>
       <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
         <img className="w-10" src={usersLogo} alt="customers" />
-        <p className="ml-1">Utilisateurs</p>
+        <p className="ml-1">{`Utilisateur(s)`}</p>
       </div>
       <div className="flex justify-around w-full">
         <div className="flex flex-col items-center">
-          <p className="mb-2 text-background">Particuliers</p>
+          <p className="mb-2 text-background">{`Particulier(s)`}</p>
           <p className={`${glassMorphism} p-4 w-12 rounded-lg text-primary text-2xl`}>
             {particular}
           </p>
         </div>
         <div className="flex flex-col items-center">
-          <p className="mb-2 text-background">Professionnels</p>
+          <p className="mb-2 text-background">{`Professionnel(s)`}</p>
           <p className={`${glassMorphism} p-4 w-12 rounded-lg text-primary text-2xl`}>
             {pros}
           </p>

@@ -10,7 +10,7 @@ function CountAppointment({ appointment }: { appointment: number }) {
       <p className={`${glassMorphism} mt-2 mb-2 p-4 rounded-lg text-primary text-2xl`}>
         {appointment}
       </p>
-      <p>rendez-vous ont été pris sur la plateforme</p>
+      <p>{`rendez-vous ont été enregistré(s)`}</p>
     </div>
   );
 }

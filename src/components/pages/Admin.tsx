@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { vehicule } from '../../API/request';
 import AdminContext from '../../contexts/AdminContext';

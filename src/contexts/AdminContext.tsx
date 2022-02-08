@@ -42,9 +42,9 @@ export const AdminContextProvider: React.FC<Props> = ({ children }) => {
   const removeCookie = useCookies(['user_token'])[2];
 
   // set current user to nothing !
-  const logout = (): void => {
+  const logout = () => {
     setAdminLogin(adminLoginEmpty);
-    removeCookie('user_token');
+    removeCookie('user_token', { path: '/' });
     navigate('/');
   };
 

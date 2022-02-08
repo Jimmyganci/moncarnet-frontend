@@ -36,7 +36,7 @@ function VehiculeList() {
       <div className="w-5/6 h-full p-2">
         <div>
           <h1 className="text-3xl uppercase text-background">
-            {filterVehiculesDeleted ? 'Véhicules Supprimés' : 'Véhicules Actifs'}
+            {filterVehiculesDeleted ? 'Véhicule(s) Supprimé(s)' : 'Véhicule(s) Actif(s)'}
           </h1>
         </div>
         <div>
@@ -44,8 +44,8 @@ function VehiculeList() {
             onClick={() => setFilterVehiculesDeleted(!filterVehiculesDeleted)}
             className={`${button}`}>
             {!filterVehiculesDeleted
-              ? 'Voir les véhicules supprimés'
-              : 'Voir les véhicules actifs'}
+              ? 'Voir les véhicule(s) supprimé(s)'
+              : 'Voir les véhicule(s) actif(s)'}
           </button>
         </div>
         <div className={`${glassMorphism} rounded-lg mt-4`}>
@@ -61,9 +61,7 @@ function VehiculeList() {
           </div>
           {dataVehicules
             .filter((vehicule) =>
-              filterVehiculesDeleted
-                ? !vehicule.active && vehicule.validate
-                : vehicule.active && vehicule.validate,
+              filterVehiculesDeleted ? !vehicule.active : vehicule.active,
             )
             .map((vehicule, index) => (
               <VehiculeCard
