@@ -43,7 +43,7 @@ function ParticularInfos() {
   }
 
   return (
-    <div className="flex flex-col items-center w-screen h-screen">
+    <div className="flex flex-col items-center w-screen h-screen max-w-6xl lg:h-screen lg:flex lg:flex-col lg:justify-center lg:items-center">
       <h1 className={`${title}`}>Mon profil</h1>
       {!deleteAccountModal ? (
         <div

@@ -46,7 +46,6 @@ function ModalDelete({
         setVehiculeDeleted(true);
         toast.success('Véhicule Supprimé');
       } else {
-        console.log(putVehicule);
         toast.error("Une erreur s'est produite");
       }
     } catch (err) {
