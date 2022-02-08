@@ -47,14 +47,16 @@ const VehiculesWithoutServiceBook = () => {
           </div>
           <div>
             {dataVehicules.length > 0 &&
-              dataVehicules?.map((vehicule, index: number) => (
-                <VehiculeCard
-                  key={index}
-                  vehicule={vehicule}
-                  setShowUser={setShowUser}
-                  setUserId={setUserId}
-                />
-              ))}
+              dataVehicules
+                ?.filter((vehicule) => vehicule.active)
+                .map((vehicule, index: number) => (
+                  <VehiculeCard
+                    key={index}
+                    oneVehicule={vehicule}
+                    setShowUser={setShowUser}
+                    setUserId={setUserId}
+                  />
+                ))}
           </div>
         </div>
       </div>
