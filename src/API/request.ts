@@ -89,6 +89,10 @@ export const users = {
         withCredentials: true,
       })
       .then((res) => res.data),
+  getOneFavoriteGarage: (userId: number, prosId: number): Promise<IPros> =>
+    axios
+      .get(`${API_URL}/users/${userId}/pros/${prosId}`, { withCredentials: true })
+      .then((res) => res.data),
   getVehicules: (userId: number): Promise<IVehicule[]> =>
     axios
       .get(`${API_URL}/users/${userId}/vehicules`, { withCredentials: true })

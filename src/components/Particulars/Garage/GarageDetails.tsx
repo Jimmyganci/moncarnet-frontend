@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { pros, users } from '../../../API/request';
 import garage from '../../../assets/garage.png';
 import UserContext from '../../../contexts/UserContext';
@@ -11,22 +12,39 @@ import ReturnButton from '../../ReturnButton';
 function GarageDetails() {
   const { userLoggedIn } = useContext(UserContext);
   const [infosPros, setInfosPros] = useState<IPros>();
+  const [userGarage, setUserGarage] = useState<IPros>();
+  const [reRender, setReRender] = useState<boolean>(false);
   let { prosId } = useParams();
 
-  useEffect(() => {
-    async function getInfosGarage() {
-      try {
-        if (prosId) {
-          const res = await pros.getOne(Number(prosId));
-          setInfosPros(res);
-        }
-      } catch (err) {
-        console.log(err);
+  async function getInfosGarage() {
+    try {
+      if (prosId) {
+        const res = await pros.getOne(Number(prosId));
+        setInfosPros(res);
       }
+    } catch (err) {
+      if (err) toast.error("Une erreur s'est produite!");
     }
+  }
+
+  async function getOneGarageFavorite() {
+    try {
+      if (userLoggedIn.id_user) {
+        const garage = await users.getOneFavoriteGarage(
+          userLoggedIn.id_user,
+          Number(prosId),
+        );
+        setUserGarage(garage);
+      }
+    } catch (err) {
+      if (err) toast.error("Une erreur s'est produite!");
+    }
+  }
+
+  useEffect(() => {
     getInfosGarage();
-  }, []);
-  console.log(infosPros);
+    getOneGarageFavorite();
+  }, [prosId, reRender]);
 
   const handleChoiceGarage = async () => {
     if (userLoggedIn.id_user && infosPros && infosPros.id_pros) {
@@ -34,6 +52,7 @@ function GarageDetails() {
         const res = await users.addFavorite(userLoggedIn.id_user, infosPros.id_pros);
         if (res.status === 204) {
           toast.success(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
+          setReRender(!reRender);
         }
       } catch (err: any) {
         if (err.response.status === 409)
@@ -66,10 +85,14 @@ function GarageDetails() {
           </div>
           <p className="underline">SIRET</p>
           <p>{infosPros.siret}</p>
-          <button onClick={handleChoiceGarage} className={button}>
-            Ajouter aux favoris
-          </button>
-          <div className='w-1/2'><ReturnButton target={''}/></div>
+          {userGarage?.id_pros === undefined && (
+            <button onClick={handleChoiceGarage} className={button}>
+              Ajouter aux favoris
+            </button>
+          )}
+          <div className="w-1/2">
+            <ReturnButton target={''} />
+          </div>
         </div>
       )}
     </div>

@@ -95,7 +95,6 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
         const res = await isLoggedIn.get();
 
         if (res) {
-          toast.success('Vous êtes connecté!');
           try {
             const user = await users.getOne(res.id_user);
 
