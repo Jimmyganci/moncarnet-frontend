@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-
 import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
+import IUser from '../Interfaces/IUser';
 import IPros from '../Interfaces/IPros';
+import IServiceBook from '../Interfaces/IServiceBook';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
@@ -29,6 +30,18 @@ interface AppContextInterface {
   logout: () => void;
   showModalServiceBook: boolean;
   setShowModalServiceBook: React.Dispatch<React.SetStateAction<boolean>>;
+  showServiceBook: boolean;
+  setShowServiceBook: React.Dispatch<React.SetStateAction<boolean>>;
+  showCustomer: boolean;
+  setShowCustomer: React.Dispatch<React.SetStateAction<boolean>>;
+  userArray: IUser[];
+  setUserArray: React.Dispatch<React.SetStateAction<IUser[]>>;
+  searchCustomer: string;
+  setSearchCustomer: React.Dispatch<React.SetStateAction<string>>;
+  immatServiceBook: string;
+  setImmatServiceBook: React.Dispatch<React.SetStateAction<string>>;
+  modalCreateServiceBook: boolean;
+  setModalCreateServiceBook: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProsContext = createContext<AppContextInterface>({
@@ -43,6 +56,18 @@ const ProsContext = createContext<AppContextInterface>({
   logout: () => {},
   showModalServiceBook: false,
   setShowModalServiceBook: () => {},
+  showServiceBook: false,
+  setShowServiceBook: () => {},
+  showCustomer: false,
+  setShowCustomer: () => {},
+  userArray: [],
+  setUserArray: () => {},
+  searchCustomer: '',
+  setSearchCustomer: () => {},
+  immatServiceBook: '',
+  setImmatServiceBook: () => {},
+  modalCreateServiceBook: false,
+  setModalCreateServiceBook: () => {}
 });
 
 export default ProsContext;
@@ -63,9 +88,14 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [appointmentToDisplay, setAppointmentToDisplay] = useState<IAppointment[]>([]);
+  const [userArray, setUserArray] = useState<IUser[]>([]);
   const [appointmentId, setAppointmentId] = useState<number>(0);
   const [showModalServiceBook, setShowModalServiceBook] = useState(false);
-  
+  const [showServiceBook, setShowServiceBook] = useState<boolean>(false);
+  const [showCustomer, setShowCustomer] = useState<boolean>(false); 
+  const [searchCustomer, setSearchCustomer] = useState<string>('');
+  const [immatServiceBook, setImmatServiceBook] = useState<string>('');
+  const [modalCreateServiceBook, setModalCreateServiceBook] = useState<boolean>(false);
 
   // Login Pro
 
@@ -101,7 +131,19 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
         setAppointmentId,
         appointmentId,
         showModalServiceBook,
-        setShowModalServiceBook
+        setShowModalServiceBook,
+        showServiceBook,
+        setShowServiceBook,
+        showCustomer,
+        setShowCustomer,
+        userArray,
+        setUserArray,
+        searchCustomer,
+        setSearchCustomer,
+        immatServiceBook,
+        setImmatServiceBook,
+        modalCreateServiceBook,
+        setModalCreateServiceBook
       }}>
       {children}
     </ProsContext.Provider>

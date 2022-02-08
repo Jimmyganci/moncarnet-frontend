@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
@@ -29,7 +29,7 @@ const Appointments = () => {
   )
 
   return (
-    <div className="w-5/6 h-full">
+    <div className="w-5/6 h-full overflow-auto">
         <div className="flex justify-center mt-4">
           <img className="w-12" src={calendar} alt="calendar logo" />
           <h1 className={`${h2}`}>Mes prochains RDVs </h1>

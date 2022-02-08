@@ -39,7 +39,7 @@ import AddVehicules from './components/Particulars/Vehicules/AddVehicules';
 import UpdateVehicule from './components/Particulars/Vehicules/UpdateVehicule';
 import Appointments from './components/Pros/Appointments/Appointments';
 import CreateAppointments from './components/Pros/Appointments/CreateAppointment';
-import Customers from './components/Pros/Customers';
+import Customers from './components/Pros/Customers/Customers';
 import HomePros from './components/Pros/Home/HomePros';
 import Invoices from './components/Pros/Invoices';
 import Profile from './components/Pros/Profile/Profile';
