@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { brands, vehicule } from '../../../API/request';
+import AdminContext from '../../../contexts/AdminContext';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button } from '../../../variableTailwind';
 
@@ -17,13 +18,14 @@ function ItemVehiculeToValidate({
   setShowUser,
 }: VehiculeToValidateProps) {
   const [brand, setBrand] = useState<string>();
+  const { setRenderState, renderState } = useContext(AdminContext);
   async function getBrand() {
     const res = await brands.getOne(vehiculeData.brandId);
     setBrand(res.name);
   }
 
   const handleValidate = async () => {
-    const validateVehicule = await toast.promise(
+    const confirmVehicule = await toast.promise(
       vehicule.putOne(vehiculeData.immat, {
         immat: vehiculeData.immat,
         registration_date: vehiculeData.registrationDate,
@@ -35,15 +37,15 @@ function ItemVehiculeToValidate({
         validate: true,
       }),
       {
-        pending: 'Promise is pending',
-        success: 'Promise resolved 👌',
-        error: 'Promise rejected 🤯',
+        pending: 'En cours',
+        success: 'Véhicule modifié avec succés!',
+        error: `Une erreur s'est produite!`,
       },
       {
         position: toast.POSITION.BOTTOM_CENTER,
       },
     );
-    console.log(validateVehicule);
+    if (confirmVehicule) setRenderState(!renderState);
   };
 
   useEffect(() => {
