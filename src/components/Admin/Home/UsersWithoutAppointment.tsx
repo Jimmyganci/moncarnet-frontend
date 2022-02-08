@@ -22,7 +22,7 @@ function UsersWithoutAppointment({ percentage }: { percentage: number }) {
         />
       </div>
 
-      <p>{`% d'utilisateurs qui n'ont pas pris de rendez-vous sur la plateforme!`}</p>
+      <p>{`Utilisateur(s) sans rendez-vous`}</p>
       <Link to="/admin/users/withoutAppointment">
         <button className={`${button}`}>Voir</button>
       </Link>

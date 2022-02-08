@@ -22,7 +22,7 @@ function VehiculeWithoutServiceBook({ percentage }: { percentage: number }) {
         />
       </div>
 
-      <p>{`% de véhicules qui ont un carnet d'entretien vierge!`}</p>
+      <p>{`Véhicule(s) sans carnet d'entretien.`}</p>
       <button className={`${button}`}>
         <Link to="/admin/vehicules/withoutServiceBook"> Voir</Link>
       </button>

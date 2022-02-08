@@ -30,7 +30,7 @@ function AppointmentList() {
       let requestId: RequestId[] = [];
       getAll.map(async (appointment) => {
         requestId.push({
-          appointmentId: appointment.id_appointment,
+          appointmentId: appointment.id_appointment || 0,
           userId: appointment.userId,
           prosId: appointment.prosId,
         });
