@@ -112,7 +112,6 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
       if (prosLoggedIn.status === 200) {
         const appointments = await pros.getAppointments(prosLoggedIn.data.id_user);
         setAppointmentToDisplay(appointments);
-        toast.success('Vous êtes connecté!');
       }
     } catch (err: any) {
       if (err.response.status === 500) {

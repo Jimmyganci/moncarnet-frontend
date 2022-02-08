@@ -33,21 +33,22 @@ function UserGarage() {
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
-      const res = userLoggedIn.id_user && await users.deleteGarage(userLoggedIn.id_user, idPros);
+      const res =
+        userLoggedIn.id_user && (await users.deleteGarage(userLoggedIn.id_user, idPros));
       res && toast.success(res);
-      setDeletedGarage(false)
+      setDeletedGarage(false);
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
     }
   };
   return (
-    <div className='flex w-full max-w-lg flex-col items-center justify-center'>
-      <div className="w-full flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full max-w-lg">
+      <div className="flex items-center justify-center w-full">
         <h1 className={`${title}`}>Mes garages</h1>
         <Link to="/particular/garage">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 text-background border-2 border-background rounded-full hover:bg-white hover:text-primary transition-all"
+            className="w-6 h-6 transition-all border-2 rounded-full text-background border-background hover:bg-white hover:text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -75,7 +76,11 @@ function UserGarage() {
                 <Link to={`/particular/garage-details/${garage.id_pros}`}>
                   <button className={` mt-0 ${button}`}>Details</button>
                 </Link>
-                <button onClick={() => {garage.id_pros && handleDeleteGarage(garage.id_pros); setDeletedGarage(true)}}>
+                <button
+                  onClick={() => {
+                    garage.id_pros && handleDeleteGarage(garage.id_pros);
+                    setDeletedGarage(true);
+                  }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"
@@ -89,9 +94,12 @@ function UserGarage() {
                   </svg>
                 </button>
               </div>
-              <button 
-              onClick={() => {garage.id_pros && setGarageId(garage.id_pros); setShowAppointmentRequest(true)}}
-              className="flex justify-center p-2 duration-300 ease-in-out bg-opacity-50 rounded-b-lg hover:bg-primary-hovered bg-background">
+              <button
+                onClick={() => {
+                  garage.id_pros && setGarageId(garage.id_pros);
+                  setShowAppointmentRequest(true);
+                }}
+                className="flex justify-center p-2 duration-300 ease-in-out bg-opacity-50 rounded-b-lg hover:bg-primary-hovered bg-background">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6"
@@ -111,17 +119,29 @@ function UserGarage() {
           ))
         ) : (
           <>
-           {!showAppointmentRequest && (<div>
-              <p>{`Vous n'avez aucu garage enregistré dans vos favoris`}</p>
-              <Link to="/particular/garage">
-                <button className={button}>Afficher la liste des garages</button>
-              </Link>
-            </div>)}
+            {!showAppointmentRequest && (
+              <div>
+                <p>{`Vous n'avez aucu garage enregistré dans vos favoris`}</p>
+                <Link to="/particular/garage">
+                  <button className={button}>Afficher la liste des garages</button>
+                </Link>
+              </div>
+            )}
           </>
         )}
       </div>
-      <>{!showAppointmentRequest && (<div className='text-md font-inter max-w-md mb-2 w-[60%] flex justify-center mt-4'><ReturnButton target={'/particular/home'}/></div>)}</>
-      <AppointmentRequestModal garageId={garageId} showAppointmentRequest={showAppointmentRequest} setShowAppointmentRequest={setShowAppointmentRequest} />
+      <>
+        {!showAppointmentRequest && (
+          <div className="text-md font-inter max-w-md mb-2 w-[60%] flex justify-center mt-4">
+            <ReturnButton target={'/particular/home'} />
+          </div>
+        )}
+      </>
+      <AppointmentRequestModal
+        garageId={garageId}
+        showAppointmentRequest={showAppointmentRequest}
+        setShowAppointmentRequest={setShowAppointmentRequest}
+      />
     </div>
   );
 }
