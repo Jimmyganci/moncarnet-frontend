@@ -22,6 +22,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [giveConfirmation, setGiveConfirmation] = useState<boolean>(false);
   const { userLoggedIn, vehiculeDeleted, setPosted } = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
+  const [isActivated, setIsActivated] = useState<boolean>(false);
 
   async function getBrand() {
     const res = await brands.getOne(vehiculeSelect.brandId);
@@ -56,7 +57,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                   <Plate
                     immat={vehiculeSelect.immat}
-                    postalCode={userLoggedIn && userLoggedIn.postal_code.toString()}
+                    postalCode={userLoggedIn && userLoggedIn.postal_code}
                   />
                 </div>
               </div>
@@ -96,7 +97,6 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
                   model_id={vehiculeSelect.modelId}
                   type_id={vehiculeSelect.typeId}
-                  user_id={vehiculeSelect.userId}
                   giveConfirmation={giveConfirmation}
                   setGiveConfirmation={setGiveConfirmation}
                 />

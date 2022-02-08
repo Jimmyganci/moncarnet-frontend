@@ -22,7 +22,7 @@ const Logo: React.FC<HeaderProps> = ({ location }) => {
         } ${
           location == 'particularSideBar' &&
           'w-3/6 lg:flex lg:justify-end lg:items-center'
-        }`}>
+        } ${location === 'admin' && 'w-2/5'}`}>
         <img
           className={`${location == 'header' && 'w-full'} ${
             location !== 'header' && 'lg:w-4/6'
