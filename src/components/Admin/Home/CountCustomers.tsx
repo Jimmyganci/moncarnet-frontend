@@ -35,9 +35,15 @@ function CountCustomers({ particular, pros }: DataLength) {
         Félicitations, toutes ces personnes ne peuvent plus se passer de vous pour gérer
         leurs véhicules!
       </p>
-      <Link to="/admin/customers">
-        <button className={`${button}`}>Consulter la liste</button>
-      </Link>
+
+      <div className="flex flex-col">
+        <Link to="/admin/customers">
+          <button className={`${button}`}>Consulter la liste</button>
+        </Link>
+        <Link to="/admin/addPros">
+          <button className={`${button}`}>Ajouter un professionnel</button>
+        </Link>
+      </div>
     </div>
   );
 }

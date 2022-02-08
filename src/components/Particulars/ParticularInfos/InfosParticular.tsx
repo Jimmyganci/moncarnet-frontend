@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import { button, glassMorphism, title } from '../../../variableTailwind';
-import DeleteAccountModal from './../DeleteAccountModal';
+import DeleteAccountModal from './DeleteAccountModal';
 import InfosLine from './InfosLine';
 
 function ParticularInfos() {
@@ -26,19 +26,17 @@ function ParticularInfos() {
   };
   async function getInfosParticular() {
     try {
-      const res =
-        userLoggedIn.id_user &&
-        (await users.put(userLoggedIn.id_user, {
-          firstname: firstNameModif || userLoggedIn.firstname,
-          lastname: lastNameModif || userLoggedIn.lastname,
-          email: emailModif || userLoggedIn.email,
-          phone: phoneModif || userLoggedIn.phone,
-          address: addressModif || userLoggedIn.address,
-          postal_code: parseInt(postalCodeModif) || userLoggedIn.postal_code,
-          city: cityModif || userLoggedIn.city,
-          active: deleteAccountModal ? false : userLoggedIn.active,
-        }));
-      toast.success(`${res} vos modifications ont été modifiés`);
+      const res = userLoggedIn.id_user && await users.put(userLoggedIn.id_user, {
+        firstname: firstNameModif || userLoggedIn.firstname,
+        lastname: lastNameModif || userLoggedIn.lastname,
+        email: emailModif || userLoggedIn.email,
+        phone: phoneModif || userLoggedIn.phone,
+        address: addressModif || userLoggedIn.address,
+        postal_code: parseInt(postalCodeModif) || userLoggedIn.postal_code,
+        city: cityModif || userLoggedIn.city,
+        active: deleteAccountModal ? false : userLoggedIn.active,
+      });
+      toast.success(`${res && res.data.firstname}, vos informations ont bien été modifiées`);
     } catch (err) {
       if (err) toast.error("Une erreur s'est produite!");
     }

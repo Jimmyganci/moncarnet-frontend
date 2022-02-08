@@ -13,6 +13,7 @@ import {
   input,
   title,
 } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function AddVehicules() {
   const [brandList, setBrandList] = useState<IBrand[]>([]);
@@ -81,17 +82,17 @@ function AddVehicules() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full m-auto lg:max-w-lg">
+    <div className="flex flex-col items-center justify-center w-full h-full m-auto lg:max-w-fit">
       <h1 className={title}>Ajouter un véhicule</h1>
       {posted === false && (
         <form
           onSubmit={(e) => handleUpload(e)}
-          className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
+          className={`flex flex-col w-11/12 m-4 rounded-lg p-4 items-center lg:p-8 ${glassMorphism}`}>
           <label className="flex flex-col w-full text-lg font-semibold">
             Immatriculation
             <p className="text-sm">Format (AA-111-AA)</p>
             <input
-              className={`valid:outline-valid-500 invalid:outline-error-500 ${`${input} lg:mb-2 lg:h-2/6`}`}
+              className={`valid:outline-valid-500 invalid:outline-error-500 ${input}`}
               type="text"
               name="immat"
               id="immat"
@@ -101,62 +102,64 @@ function AddVehicules() {
               required
             />
           </label>
-          <label className="flex flex-col w-full text-lg font-semibold">
-            Type de véhicule
-            <select
-              className={`${`${input} lg:mb-2 lg:h-2/6`}`}
-              name="type"
-              id="type"
-              required
-              onChange={(e) => setTypeVehicule(e.target.value)}>
-              <option value="">Selectionnez un type de véhicule</option>
-              {typeList.map((el) => (
-                <option key={el.id_type} value={el.id_type}>
-                  {el.name_type}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="flex flex-col w-full text-lg font-semibold">
-            Marque
-            <input
-              className={`${input} lg:mb-2 lg:h-2/6`}
-              type="text"
-              name="brand"
-              id="brand"
-              list="listBrands"
-              placeholder="Selectionnez une marque"
-              required
-              onChange={(e) => setBrandFilter(e.target.value)}
-            />
-            <datalist id="listBrands">
-              {brandList.map((el) => (
-                <option key={el.id_brand} value={el.name}>
-                  {el.name}
-                </option>
-              ))}
-            </datalist>
-          </label>
-          <label className="flex flex-col w-full text-lg font-semibold">
-            Modèle
-            <select
-              className={`${input} lg:mb-2 lg:h-2/6`}
-              name="model"
-              id="model"
-              required
-              onChange={(e) => setModelId(e.target.value)}>
-              <option value="">Selectionner un modèle</option>
-              {modelList.map((el) => (
-                <option key={el.id_model} value={el.id_model}>
-                  {el.name}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className='flex flex-col w-full lg:flex-row lg:justify-between lg:items-center'>
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
+              Type de véhicule
+              <select
+                className={`${input} lg:mb-2 lg:w-[100%] lg:text-sm mx-1`}
+                name="type"
+                id="type"
+                required
+                onChange={(e) => setTypeVehicule(e.target.value)}>
+                <option value="">Selectionnez un type de véhicule</option>
+                {typeList.map((el: any) => (
+                  <option key={el.id_type} value={el.id_type}>
+                    {el.name_type}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
+              Marque
+              <input
+                className={`${input} lg:text-sm mx-1`}
+                type="text"
+                name="brand"
+                id="brand"
+                list="listBrands"
+                placeholder="Selectionnez une marque"
+                required
+                onChange={(e) => setBrandFilter(e.target.value)}
+              />
+              <datalist id="listBrands">
+                {brandList.map((el: any) => (
+                  <option key={el.id_brand} value={el.name}>
+                    {el.name}
+                  </option>
+                ))}
+              </datalist>
+            </label>
+            <label className="flex flex-col w-full lg:w-[30%] lg:h-full text-lg font-semibold">
+              Modèle
+              <select
+                className={`${input} lg:text-sm mx-1`}
+                name="model"
+                id="model"
+                required
+                onChange={(e) => setModelId(e.target.value)}>
+                <option value="">Selectionner un modèle</option>
+                {modelList.map((el: any) => (
+                  <option key={el.id_model} value={el.id_model}>
+                    {el.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <label className="flex flex-col w-full text-lg font-semibold">
             Date de mise en circulation
             <input
-              className={`${input} lg:mb-2 lg:h-2/6`}
+              className={`${input}`}
               type="date"
               name="registrationDate"
               id="registrationDate"
@@ -167,7 +170,7 @@ function AddVehicules() {
           <label className="flex flex-col w-full text-lg font-semibold">
             Télécharger votre carte grise
             <input
-              className={`${`${input} lg:mb-2 lg:h-2/6`} file:rounded-lg file:border-0 file:p-2 file:text-sm file:hover:cursor-pointer lg:file:mr-4`}
+              className={`${`${input}`} file:rounded-lg file:border-0 file:p-2 file:text-sm file:hover:cursor-pointer lg:file:mr-4`}
               type="file"
               name="file"
               id="file"
@@ -177,6 +180,7 @@ function AddVehicules() {
             />
           </label>
           <button className={`w-1/2 ${button}`}>Ajouter</button>
+          <div className='w-1/2 flex justify-center items-center'><ReturnButton target='' /></div>
         </form>
       )}
       {posted && (

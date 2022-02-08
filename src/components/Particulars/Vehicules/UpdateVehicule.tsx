@@ -9,6 +9,7 @@ import IModel from '../../../Interfaces/IModel';
 import IType from '../../../Interfaces/IType';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism, input, title } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
 
 function UpdateVehicule() {
   const [brandList, setBrandList] = useState<IBrand[]>([]);
@@ -31,7 +32,7 @@ function UpdateVehicule() {
   async function getInfosVehicule() {
     const filter =
       infosUserVehicule &&
-      (await infosUserVehicule.filter((ele) => ele.immat === vehiculeImmatToUpdate));
+      (await infosUserVehicule.filter((vehicule) => vehicule.immat === vehiculeImmatToUpdate));
     if (filter) setInfosVehicule(filter[0]);
   }
 
@@ -117,7 +118,7 @@ function UpdateVehicule() {
           <h1 className={title}>Modifier votre véhicule</h1>
           <form
             onSubmit={(e) => handleUpdate(e)}
-            className={`flex flex-col w-10/12 m-4 rounded-lg p-4 items-center ${glassMorphism}`}>
+            className={`flex flex-col w-10/12 mt-4 rounded-lg p-4 items-center ${glassMorphism}`}>
             <label className="flex flex-col w-full text-lg font-semibold">
               Immatriculation
               <p className="text-sm">Format (AA-111-AA)</p>
@@ -208,13 +209,14 @@ function UpdateVehicule() {
                 ref={refCard}
                 onFocus={() => refCard.current && (refCard.current.type = 'file')}
                 onBlur={() => refCard.current && (refCard.current.type = 'file')}
-                placeholder={infosVehicule.urlGreenCard}
+                placeholder={infosVehicule && infosVehicule.urlGreenCard.slice(81, infosVehicule.urlGreenCard && infosVehicule.urlGreenCard.length)}
                 accept=".jpg, .jpeg, .png"
                 onChange={(e) => setFile(e.target.files![0])}
               />
             </label>
             <button className={`w-1/2 ${button}`}>Valider les modifications</button>
           </form>
+          <div className='w-1/2 mt-2 mb-5'><ReturnButton target='' /></div>
         </div>
       )}
       {posted && (

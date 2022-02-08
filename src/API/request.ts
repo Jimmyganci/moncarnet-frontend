@@ -52,6 +52,9 @@ export const users = {
   // get all users
   getAll: (): Promise<IUser[]> =>
     axios.get(`${API_URL}/users`, { withCredentials: true }).then((res) => res.data),
+  // get user by lastname
+  getByLastName: (lastname: string): Promise<IUser[]> =>
+    axios.get(`${API_URL}/users?lastname=${lastname}`, { withCredentials: true }).then((res) => res.data),
   // get one user
   getOne: (idUser: number): Promise<IUser> =>
     axios

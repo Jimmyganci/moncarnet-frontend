@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
 import { button, glassMorphism, input } from '../../../variableTailwind';
@@ -14,7 +15,7 @@ function AddPros() {
   const [city, setCity] = useState<string>('');
   const [siret, setSiret] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
-  console.log(name, email, password, address, postalCode, city, siret, phone);
+  const [validData, setValidData] = useState<boolean>(false);
 
   const prosInpt = [
     {
@@ -35,12 +36,14 @@ function AddPros() {
       value: password,
       type: 'password',
       placeholder: 'Mot de passe',
+      minLength: 7,
       onChange: (e: React.FormEvent<HTMLInputElement>) =>
         setPassword((e.target as HTMLInputElement).value),
     },
     {
       value: confirmPassword,
       type: 'password',
+      minLength: 7,
       placeholder: 'Confirmez votre mot de passe',
       onChange: (e: React.FormEvent<HTMLInputElement>) =>
         setConfirmPassword((e.target as HTMLInputElement).value),
@@ -69,6 +72,8 @@ function AddPros() {
     {
       value: siret,
       type: 'text',
+      minLength: 14,
+      maxLength: 14,
       placeholder: 'Siret de la société',
       onChange: (e: React.FormEvent<HTMLInputElement>) =>
         setSiret((e.target as HTMLInputElement).value),
@@ -84,18 +89,49 @@ function AddPros() {
 
   const handlePostPros = async (e: React.FormEvent) => {
     e.preventDefault();
-    const createdPros = await pros.post({
-      name: name,
-      email: email,
-      password: password,
-      address: address,
-      postal_code: postalCode,
-      city: city,
-      siret: siret,
-      phone: phone,
-    });
-    console.log(createdPros);
+    try {
+      if (password === confirmPassword) {
+        const createdPros = await pros.post({
+          name: name,
+          email: email,
+          password: password,
+          address: address,
+          postal_code: postalCode,
+          city: city,
+          siret: siret,
+          phone: phone,
+        });
+        if (createdPros.status === 200) {
+          toast.success('Le professionnel a bien été ajouté.');
+          setName('');
+          setAddress('');
+          setCity('');
+          setPassword('');
+          setConfirmPassword('');
+          setPhone('');
+          setSiret('');
+          setPostalCode(0);
+        }
+      } else {
+        toast.error('Les mots de passe ne sont pas identiques.');
+      }
+    } catch (err: any) {
+      if (err.response.status === 409) toast.error('Cette email existe déjà!');
+      if (err.response.status === 422) toast.error('Veuillez remplir tous les champs!');
+    }
   };
+
+  const validate = () => {
+    if (name && email && password && address && postalCode && city && siret && phone) {
+      setValidData(true);
+    } else {
+      setValidData(false);
+    }
+  };
+
+  useEffect(() => {
+    validate();
+  }, [name, email, password, address, postalCode, city, siret, phone]);
 
   return (
     <div className="flex flex-col items-end w-full">
@@ -103,7 +139,7 @@ function AddPros() {
         <form
           onSubmit={handlePostPros}
           className={`${glassMorphism} w-2/3 p-4 rounded-lg flex flex-wrap items-center justify-center`}>
-          <h2 className="my-2 text-2xl text-background">Ajouter un pros</h2>
+          <h2 className="my-4 text-2xl text-background">Ajouter un pros</h2>
           {prosInpt.map((inpt, index: number) => (
             <InputPros
               widthLabel={
@@ -117,9 +153,18 @@ function AddPros() {
               type={inpt.type}
               placeholder={inpt.placeholder}
               onChange={inpt.onChange}
+              minLength={inpt.minLength ? inpt.minLength : 0}
             />
           ))}
-          <button className={`${button}`}>Valider</button>
+          <button
+            disabled={!validData}
+            className={`${
+              !validData
+                ? 'px-4 p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary/20 text-background/20'
+                : button
+            } `}>
+            Valider
+          </button>
         </form>
       </div>
     </div>

@@ -27,7 +27,7 @@ function ModalDelete({
   deleteConfirmation,
   setDeleteConfirmation,
 }: ModalProps) {
-  const { vehiculeDeleted, setVehiculeDeleted } = useContext(UserContext);
+  const { vehiculeDeleted, setVehiculeDeleted }: any = useContext(UserContext);
 
   const handleDeleteVehicule = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ function ModalDelete({
       {deleteConfirmation && vehiculeDeleted && (
         <div className={`w-full h-full flex flex-col justify-center items-center`}>
           <div
-            className={`backdrop-filter backdrop-blur-xl bg-background/30 w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
+            className={`w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
             {`Le véhicule immatriculé :`} <br /> {`${immat}`} <br />{' '}
             {`vient d'être supprimé.`}
             <button

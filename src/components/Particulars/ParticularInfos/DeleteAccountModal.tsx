@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
-
-import UserContext from '../../contexts/UserContext';
-import { button } from '../../variableTailwind';
+import UserContext from '../../../contexts/UserContext';
+import { button } from '../../../variableTailwind';
 
 interface modalDeleteAccountProps {
   deleteAccountModal: boolean;
