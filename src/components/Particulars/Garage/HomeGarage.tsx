@@ -30,7 +30,7 @@ function HomeGarage() {
             className={`p-2.5 ${input}`}
             type="search"
             value={searchGarage}
-            placeholder="Garage du centre"
+            placeholder="Ex : Garage du centre"
             onChange={(e) => setSearchGarage(e.target.value)}
           />
         </label>

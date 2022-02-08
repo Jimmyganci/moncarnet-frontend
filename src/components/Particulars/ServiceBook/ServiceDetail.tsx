@@ -11,11 +11,12 @@ import {
   glassMorphism,
   glassMorphismWhiteShadow,
 } from '../../../variableTailwind';
+import Plate from '../../Plate';
 
 const ServiceDetail = () => {
   const { vehiculeImmatToUpdate, id_service_book } = useParams();
   const [infosService, setInfosService] = useState<IServiceBook>();
-  const { infosUserVehicule } = useContext(UserContext);
+  const { infosUserVehicule, userLoggedIn } = useContext(UserContext);
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [infosPro, setInfosPro] = useState<IPros>();
   const [brand, setBrand] = useState<string>('');
@@ -71,12 +72,14 @@ const ServiceDetail = () => {
     <div className="flex items-center justify-center w-screen h-full lg:h-screen">
       <div
         className={`${glassMorphism} w-11/12 h-5/6 max-w-lg my-10 rounded-lg py-4 px-2 flex flex-col justify-center items-center`}>
-        <h3>
-          <span className="pr-2 text-2xl border-r-2 border-background">
+        <div className=' flex flex-col items-center justify-center'>
+          <div className='w-4/6 h-[11vw] mb-2'>
+            {infosVehicule && <Plate immat={infosVehicule.immat} postalCode={userLoggedIn && userLoggedIn.postal_code} />}
+          </div>
+          <p className="px-2 py-1 text-lg">
             {infosVehicule && brand + ' ' + infosVehicule.model}
-          </span>
-          <span className="pl-2 text-2xl">{infosVehicule && infosVehicule.immat}</span>
-        </h3>
+          </p>
+        </div>
         <form
           className={`flex flex-col w-11/12 h-fit mx-auto rounded-lg p-2 mt-4 items-center justify-center`}>
           <label className="flex flex-col w-full">
