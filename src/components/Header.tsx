@@ -28,7 +28,9 @@ const Header = () => {
           <span className={spanBurgerMenu}></span>
         </div>
         <div className="absolute -translate-x-1/2 cursor-pointer left-1/2">
-          <Link to="/particular/home">
+          <Link 
+            onClick={() => {showMenu? setShowMenu(false) : ""}}
+            to="/particular/home">
             <Logo location="header" />
           </Link>
         </div>

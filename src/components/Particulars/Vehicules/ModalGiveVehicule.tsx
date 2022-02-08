@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { users, vehicule } from '../../../API/request';
+import { users, vehicule, brands } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, input } from '../../../variableTailwind';
 
 interface ModalProps {
@@ -14,7 +14,6 @@ interface ModalProps {
   url_vehiculeRegistration: string;
   model_id: number;
   type_id: number;
-  user_id: number;
 }
 
 function ModalGive({
@@ -23,23 +22,49 @@ function ModalGive({
   url_vehiculeRegistration,
   model_id,
   type_id,
-  user_id,
   giveConfirmation,
   setGiveConfirmation,
 }: ModalProps) {
   const { vehiculeGiven, setVehiculeGiven } = useContext(UserContext);
+  const { infosUserVehicule } = useContext(UserContext);
   const [lastname, setLastname] = useState<string>('');
   const [firstname, setFirstname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [vehiculeGivenInfos, SetVehiculeGivenInfos] = useState<IVehiculeAndUser[]>();
+  const [brand, setBrand] = useState<string>('');
+
+  useEffect(() => {
+    function getvehiculeInfos (immat: string) {
+    infosUserVehicule &&
+      SetVehiculeGivenInfos(
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat)),
+      );
+    };
+    getvehiculeInfos(immat);
+  }, [immat]);
+
+    async function getBrand() {
+    const res = vehiculeGivenInfos && await brands.getOne(vehiculeGivenInfos[0].brandId);
+    if (res) setBrand(res.name);
+  }
+  useEffect(() => {
+    getBrand();
+  }, [vehiculeGivenInfos])
 
   const handleGiveVehicule = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (lastname) {
+      if (lastname && vehiculeGivenInfos) {
         const res = await users.getByLastName(lastname);
         console.log(res[0].id_user);
+          if (res[0].firstname !== firstname) {
+            toast.error("Le prénom associé ne correspond pas");
+          }
+          if (res[0].firstname === firstname && res[0].email !== email) {
+            toast.error("L'adresse mail associée ne correspond pas");
+          }
 
-        if (res[0].id_user) {
+        if (res[0].id_user && res[0].email === email && res[0].firstname === firstname) {
         const giveVehiculeToUser = await vehicule.putOne(immat, {
         immat: immat,
         registration_date: registration_date,
@@ -47,12 +72,15 @@ function ModalGive({
         id_modelId: model_id,
         id_typeId: type_id,
         id_userId: res[0].id_user,
-        active: true,
-        validate: true,
+        active: false,
+        validate: false,
       });
       if (giveVehiculeToUser === 204) {
         setVehiculeGiven(true);
-        toast.success('Véhicule Cédé');
+        toast.success(`Le véhicule ${brand} ${vehiculeGivenInfos[0].model} a été cédé avec succès à ${firstname} ${lastname}`, {
+          autoClose: 3000,
+        });
+        setVehiculeGiven(false);
       } else {
         console.log(giveVehiculeToUser);
         toast.error("Une erreur s'est produite");
@@ -94,7 +122,7 @@ function ModalGive({
           </div>
         </div>
       )}
-      {giveConfirmation && vehiculeGiven && (
+      {/* {giveConfirmation && vehiculeGiven && (
         <div className={`w-full h-full flex flex-col justify-center items-center`}>
           <div
             className={`w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
@@ -112,7 +140,7 @@ function ModalGive({
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
