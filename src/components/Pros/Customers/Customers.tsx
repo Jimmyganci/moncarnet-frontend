@@ -17,6 +17,7 @@ function Customers() {
     const usersToDisplay = await pros.getUsers(prosLoggedIn.id_user);
     setUserArray(usersToDisplay);
   };
+  console.log(userArray);
 
   useEffect(() => {
     getUsersFromPro()   
@@ -30,7 +31,7 @@ function Customers() {
   // }, [searchTerm]);
   
   return (
-    <div className="h-full w-full overflow-auto">
+    <div className="w-full h-full overflow-auto">
       <h1 className={`${h1}`}>
          Clients
       </h1>

@@ -22,7 +22,6 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [giveConfirmation, setGiveConfirmation] = useState<boolean>(false);
   const { userLoggedIn, vehiculeDeleted, setPosted } = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
-  const [isActivated, setIsActivated] = useState<boolean>(false);
 
   async function getBrand() {
     const res = await brands.getOne(vehiculeSelect.brandId);
@@ -49,7 +48,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   />
                 </div>
                 <div
-                  className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
+                  className={`flex w-5/6 lg:w-full justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
                   <p className="font-bold uppercase">{brand}</p>
                   <p className="font-bold uppercase">{vehiculeSelect.model}</p>
                 </div>
@@ -134,7 +133,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
             )}
           </div>
         ) : (
-          'Pas de véhicules enregistré'
+          'Pas de véhicule enregistré'
         )}
       </div>
     </div>

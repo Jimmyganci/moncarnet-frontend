@@ -92,7 +92,7 @@ const ServiceBook = () => {
             </h3>
             <div className="flex flex-col-reverse items-center justify-center w-full h-full">
               {services &&
-                services.map((service, index: number) => (
+                services.reverse().map((service, index: number) => (
                   <div
                     key={index}
                     className={`${glassMorphismWhiteShadow} h-1/4 w-11/12 max-w-lg flex flex-col justify-center items-center p-3 my-2 mb-4`}>

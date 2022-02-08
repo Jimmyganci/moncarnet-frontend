@@ -60,6 +60,7 @@ function GarageDetails() {
       }
     }
   };
+  console.log(userLoggedIn)
 
   return (
     <div className="flex justify-center w-full h-full py-5">

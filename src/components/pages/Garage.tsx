@@ -55,7 +55,7 @@ function Garage() {
     getGarage();
   }, [searchGarage, postalCode, city]);
   return (
-    <div>
+    <div className='pb-5'>
       <div className={`m-4 rounded-lg ${glassMorphism} p-5`}>
         <form
           className={`flex flex-col items-center w-full p-4 rounded-t-lg ${glassMorphism}`}>
