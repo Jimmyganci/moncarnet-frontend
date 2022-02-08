@@ -9,6 +9,7 @@ import ProsContext from '../../contexts/ProsContext';
 import { glassMorphism } from '../../variableTailwind';
 import ModalAppointment from '../Pros/Appointments/ModalAppointment';
 import SideBar from '../Pros/SideBar/SideBar';
+import ModalCreateServiceBook from '../Pros/Customers/ModalCreateServiceBook';
 
 function Pros() {
   
@@ -16,7 +17,7 @@ function Pros() {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logout, showModal, appointmentToDisplay, showModalServiceBook, showCustomer } = useContext(ProsContext);
+  const { logout, showModal, appointmentToDisplay, showModalServiceBook, showCustomer, modalCreateServiceBook } = useContext(ProsContext);
 
   return (
     <div className="flex items-center h-screen">
@@ -44,6 +45,9 @@ function Pros() {
       )}
       {showCustomer && (
         <ModalCustomer/>
+      )}
+      {modalCreateServiceBook && (
+        <ModalCreateServiceBook />
       )}
     </div>
   );
