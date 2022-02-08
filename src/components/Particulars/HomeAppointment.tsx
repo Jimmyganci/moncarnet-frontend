@@ -36,7 +36,7 @@ const HomeAppointment = () => {
     }
     getAppointments();
   }, [userLoggedIn]);
-
+ infosAppointments && console.log(infosAppointments)
   return (
     <div className="flex flex-col items-center justify-center w-full h-full pb-5 lg:-mt-20">
       <div className="flex items-center justify-center lg:mb-10">
@@ -63,7 +63,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code.toString()}
+                        postalCode={userLoggedIn.postal_code}
                       />
                     </div>
                     <p>
@@ -103,7 +103,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code.toString()}
+                        postalCode={userLoggedIn.postal_code}
                       />
                     </div>
                     <p className="">
@@ -172,7 +172,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code.toString()}
+                        postalCode={userLoggedIn.postal_code}
                       />
                     </div>
                     <p className="">
@@ -210,7 +210,7 @@ const HomeAppointment = () => {
                       className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg mx-auto overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
                       <Plate
                         immat={appointment.immat}
-                        postalCode={userLoggedIn.postal_code.toString()}
+                        postalCode={userLoggedIn.postal_code}
                       />
                     </div>
                     <p className="">
