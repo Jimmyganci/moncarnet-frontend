@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { vehicule } from '../../API/request';
 import AdminContext from '../../contexts/AdminContext';
@@ -14,8 +15,8 @@ function Admin() {
     try {
       const res = await vehicule.getVehiculeNoValidate();
       setVehiculeToValidate(res);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      if (err.response.status === 401) toast.error('Merci de vous connecter!');
     }
   }
 

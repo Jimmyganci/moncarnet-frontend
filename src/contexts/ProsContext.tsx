@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
-import IUser from '../Interfaces/IUser';
 import IPros from '../Interfaces/IPros';
-import IServiceBook from '../Interfaces/IServiceBook';
+import IUser from '../Interfaces/IUser';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
@@ -67,7 +69,7 @@ const ProsContext = createContext<AppContextInterface>({
   immatServiceBook: '',
   setImmatServiceBook: () => {},
   modalCreateServiceBook: false,
-  setModalCreateServiceBook: () => {}
+  setModalCreateServiceBook: () => {},
 });
 
 export default ProsContext;
@@ -75,6 +77,7 @@ export default ProsContext;
 type Props = { children: React.ReactNode };
 export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   const [prosLoggedIn, setProsLoggedIn] = useState<IPros>(PRO_LOGIN_EMPTY);
+  const navigate: NavigateFunction = useNavigate();
 
   const removeCookie = useCookies(['user_token'])[2];
 
@@ -82,6 +85,7 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   const logout = (): void => {
     setProsLoggedIn(PRO_LOGIN_EMPTY);
     removeCookie('user_token');
+    navigate('/');
   };
 
   // Display The modal Appointment
@@ -92,7 +96,7 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   const [appointmentId, setAppointmentId] = useState<number>(0);
   const [showModalServiceBook, setShowModalServiceBook] = useState(false);
   const [showServiceBook, setShowServiceBook] = useState<boolean>(false);
-  const [showCustomer, setShowCustomer] = useState<boolean>(false); 
+  const [showCustomer, setShowCustomer] = useState<boolean>(false);
   const [searchCustomer, setSearchCustomer] = useState<string>('');
   const [immatServiceBook, setImmatServiceBook] = useState<string>('');
   const [modalCreateServiceBook, setModalCreateServiceBook] = useState<boolean>(false);
@@ -108,9 +112,13 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
       if (prosLoggedIn.status === 200) {
         const appointments = await pros.getAppointments(prosLoggedIn.data.id_user);
         setAppointmentToDisplay(appointments);
+        toast.success('Vous êtes connecté!');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      if (err.response.status === 500) {
+        toast.error('Merci de vous connecter!');
+        navigate('/');
+      }
     }
   }
 
@@ -143,7 +151,7 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
         immatServiceBook,
         setImmatServiceBook,
         modalCreateServiceBook,
-        setModalCreateServiceBook
+        setModalCreateServiceBook,
       }}>
       {children}
     </ProsContext.Provider>

@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { isLoggedIn, users } from '../API/request';
 import { getVehicules } from '../API/requestVehicule';
-import IUser from '../Interfaces/Iuser';
+import IUser from '../Interfaces/IUser';
 import IVehiculeAndUser from '../Interfaces/IVehiculeAndUser';
 
 const USER_LOGIN_EMPTY = {
@@ -94,6 +95,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
         const res = await isLoggedIn.get();
 
         if (res) {
+          toast.success('Vous êtes connecté!');
           try {
             const user = await users.getOne(res.id_user);
 
@@ -113,6 +115,11 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
           }
         }
       } catch (err: any) {
+        if (err.response.status === 500) {
+          toast.error('Merci de vous connecter!');
+          navigate('/');
+        }
+
         navigate('/');
       }
     }

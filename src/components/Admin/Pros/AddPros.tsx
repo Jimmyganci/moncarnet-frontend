@@ -139,7 +139,7 @@ function AddPros() {
         <form
           onSubmit={handlePostPros}
           className={`${glassMorphism} w-2/3 p-4 rounded-lg flex flex-wrap items-center justify-center`}>
-          <h2 className="my-4 text-2xl text-background">Ajouter un pros</h2>
+          <h2 className="my-4 text-2xl text-background">Ajouter un professionnel</h2>
           {prosInpt.map((inpt, index: number) => (
             <InputPros
               widthLabel={
