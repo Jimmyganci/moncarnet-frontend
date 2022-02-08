@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { service_book } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
 import IServiceBook from '../../../Interfaces/IServiceBook';
-import ServiceBookDisplay from './ServiceBookDisplay';
 import { glassMorphism, button, h2 } from '../../../variableTailwind';
 
 function ModalCreateServiceBook() {

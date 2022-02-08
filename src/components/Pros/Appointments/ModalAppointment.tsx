@@ -37,7 +37,7 @@ function ModalAppointment() {
     setAppointmentUnique(oneAppointment);
     if (oneAppointment) {
       const userAppointment = await users.getOne(oneAppointment.userId);
-      setUserAppointment(`${userAppointment.lastname} ${userAppointment.firstname}`);
+      setUserAppointment(`${userAppointment.firstname} ${userAppointment.lastname}`);
     }
   }
 

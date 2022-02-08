@@ -116,7 +116,7 @@ function CreateAppointments() {
             )
             .map((user) => (
               <option value={user.id_user} key={user.id_user}>
-                {user.lastname} {user.firstname}
+                {user.firstname} {user.lastname}
               </option>
             ))}
         </select>
