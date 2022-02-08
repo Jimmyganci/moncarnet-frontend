@@ -3,6 +3,8 @@ import { users } from '../../../API/request';
 import ProsContext from '../../../contexts/ProsContext';
 import IUser from '../../../Interfaces/IUser';
 import IVehicule from '../../../Interfaces/IVehicule';
+import { toast } from 'react-toastify';
+
 import {
   button,
   glassMorphism,
@@ -25,7 +27,7 @@ const CUSTOMER_EMPTY = {
 
 function ModalCustomer() {
 
-    const { setShowModalServiceBook, setShowCustomer, searchCustomer, userArray, setImmatServiceBook } = useContext(ProsContext);
+    const { setShowModalServiceBook, setShowCustomer, searchCustomer, userArray, setImmatServiceBook, immatServiceBook } = useContext(ProsContext);
 
     const [customer, setCustomer] = useState<IUser>(CUSTOMER_EMPTY);   
     const [vehicules, setVehicules] = useState<IVehicule[]>([]);    
@@ -65,9 +67,13 @@ function ModalCustomer() {
  // Switch Modal
 
  const handleSwitchModal = () => {
+   if (!immatServiceBook) {           
+    toast.error("Veuillez sélectionner un véhicule")
+   } else {
     setShowModalServiceBook(true);
     setShowCustomer(false);
- }
+   }  
+  } 
   
   return (
     <main
@@ -86,6 +92,7 @@ function ModalCustomer() {
             <p>{customer.email}</p>
             <h2 className={`${h2}`}>Véhicules</h2>
         <select name="immat" id="immat" onChange={(e) => setImmatServiceBook(e.target.value)}>
+            <option value="0">Choisir un véhicule</option>
             {vehicules.map((vehicule, index) => (
                 <option key={index} value={vehicule.immat}>{vehicule.immat}</option>
             ))}

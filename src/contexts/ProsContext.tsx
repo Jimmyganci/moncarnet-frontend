@@ -5,6 +5,7 @@ import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
 import IUser from '../Interfaces/IUser';
 import IPros from '../Interfaces/IPros';
+import IServiceBook from '../Interfaces/IServiceBook';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
@@ -39,6 +40,8 @@ interface AppContextInterface {
   setSearchCustomer: React.Dispatch<React.SetStateAction<string>>;
   immatServiceBook: string;
   setImmatServiceBook: React.Dispatch<React.SetStateAction<string>>;
+  modalCreateServiceBook: boolean;
+  setModalCreateServiceBook: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProsContext = createContext<AppContextInterface>({
@@ -62,7 +65,9 @@ const ProsContext = createContext<AppContextInterface>({
   searchCustomer: '',
   setSearchCustomer: () => {},
   immatServiceBook: '',
-  setImmatServiceBook: () => {}
+  setImmatServiceBook: () => {},
+  modalCreateServiceBook: false,
+  setModalCreateServiceBook: () => {}
 });
 
 export default ProsContext;
@@ -90,6 +95,7 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
   const [showCustomer, setShowCustomer] = useState<boolean>(false); 
   const [searchCustomer, setSearchCustomer] = useState<string>('');
   const [immatServiceBook, setImmatServiceBook] = useState<string>('');
+  const [modalCreateServiceBook, setModalCreateServiceBook] = useState<boolean>(false);
 
   // Login Pro
 
@@ -135,7 +141,9 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
         searchCustomer,
         setSearchCustomer,
         immatServiceBook,
-        setImmatServiceBook
+        setImmatServiceBook,
+        modalCreateServiceBook,
+        setModalCreateServiceBook
       }}>
       {children}
     </ProsContext.Provider>

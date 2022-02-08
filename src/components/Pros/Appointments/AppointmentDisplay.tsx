@@ -12,7 +12,7 @@ const AppointmentDisplay: React.FC<Props> = (props) => {
 
   const [pastApp, setPastApp] = useState<boolean>(false);
   const { setAppointmentId } = useContext(ProsContext);
-  const { setShowModal, setShowModalServiceBook } = useContext(ProsContext);
+  const { setShowModal, setModalCreateServiceBook } = useContext(ProsContext);
   const [userName, setUserName] = useState<string>('');
 
   const handleSetModal = () => {
@@ -22,7 +22,7 @@ const AppointmentDisplay: React.FC<Props> = (props) => {
 
   const handleSetModalServiceBook = () => {
     setAppointmentId(props.id_appointment || 0);
-    setShowModalServiceBook(true);
+    setModalCreateServiceBook(true);
   };
 
   async function getUser() {

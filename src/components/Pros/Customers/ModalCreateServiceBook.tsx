@@ -5,16 +5,16 @@ import IServiceBook from '../../../Interfaces/IServiceBook';
 import ServiceBookDisplay from './ServiceBookDisplay';
 import { glassMorphism, button, h2 } from '../../../variableTailwind';
 
-function ModalServiceBook() {
+function ModalCreateServiceBook() {
 
-    const { immatServiceBook, setShowModalServiceBook, setShowCustomer } = useContext(ProsContext);
+    const { immatServiceBook, setModalCreateServiceBook } = useContext(ProsContext);
 
     const [serviceBooks, setServiceBooks] = useState<IServiceBook[]>([]);
 
   // Close Modal with background
 
   const handleParentsClick = () => {
-    setShowModalServiceBook(false);
+    setModalCreateServiceBook(false);
   };
 
   const handleChildClick = (item: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -34,11 +34,6 @@ function ModalServiceBook() {
 
  // Return Button 
 
- const handleSwitchModal = () => {
-  setShowCustomer(true);
-  setShowModalServiceBook(false);  
- }
-
   return (
     <main
       className="fixed inset-0 z-10 flex justify-center w-screen h-screen align-middle"
@@ -48,31 +43,11 @@ function ModalServiceBook() {
         className={`m-16 p-8  rounded-lg w-4/6 ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
         role="presentation">
-        <div className='flex flex-col justify-around items-center h-5/6 w-full overflow-auto'>
-          {serviceBooks.length ? 
-          serviceBooks.map((serviceBook, index) => (
-              <ServiceBookDisplay 
-                  id_service_book={serviceBook.id_service_book}
-                  date={serviceBook.date}
-                  service={serviceBook.service}
-                  observations={serviceBook.observations}
-                  kilometrage={serviceBook.kilometrage}
-                  url_invoice={serviceBook.url_invoice}
-                  id_pros={serviceBook.id_pros}
-                  immat_vehicule={serviceBook.immat_vehicule}
-                  key={index}
-              />
-          ))
-          :
-          <div className='flex flex-col justify-around items-center'>
-            <p className={`${h2}`}>Ce véhicule ne possède pas encore d'entretien</p>
-          </div>
-          }
-        </div>
-        <button className={`${button}`} onClick={() => handleSwitchModal()}>Retour</button>
+        
+        <button className={`${button}`} onClick={() => setModalCreateServiceBook(false)}>Retour</button>
       </section>
     </main>
   );
 }
 
-export default ModalServiceBook;
+export default ModalCreateServiceBook;
