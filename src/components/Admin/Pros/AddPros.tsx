@@ -74,13 +74,14 @@ function AddPros() {
       type: 'text',
       minLength: 14,
       maxLength: 14,
+      pattern: 'siret',
       placeholder: 'Siret de la société',
       onChange: (e: React.FormEvent<HTMLInputElement>) =>
         setSiret((e.target as HTMLInputElement).value),
     },
     {
       value: phone,
-      type: 'phone',
+      type: 'tel',
       placeholder: 'Téléphone de la société',
       onChange: (e: React.FormEvent<HTMLInputElement>) =>
         setPhone((e.target as HTMLInputElement).value),
@@ -154,6 +155,7 @@ function AddPros() {
               placeholder={inpt.placeholder}
               onChange={inpt.onChange}
               minLength={inpt.minLength ? inpt.minLength : 0}
+              pattern={inpt.pattern && inpt.pattern}
             />
           ))}
           <button
