@@ -16,6 +16,7 @@ export const title = 'm-4 text-3xl font-bold font-inter text-background';
 export const h1 = 'm-4 text-3xl font-bold font-inter';
 export const h2 = 'm-4 text-2xl font-bold font-inter';
 export const h3 = 'm-2 text-xl font-bold font-inter';
+export const h4 = 'm-2 text-lg font-inter font-bold';
 export const h1LandingPage = 'text-3xl font-bold font-inter';
 export const h2LandingPage = 'text-2xl font-bold font-inter';
 export const dataGlass =

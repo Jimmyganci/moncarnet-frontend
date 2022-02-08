@@ -7,6 +7,7 @@ import ProsContext from '../../../contexts/ProsContext';
 function Customers() {  
 
   // user list
+
   const [searchTerm, setSearchTerm] = useState<string>('');
   const { prosLoggedIn, userArray, setUserArray } = useContext(ProsContext);
 
@@ -19,7 +20,7 @@ function Customers() {
 
   useEffect(() => {
     getUsersFromPro()   
-  }, []);
+  }, [searchTerm]);
 
   // Filter users
 

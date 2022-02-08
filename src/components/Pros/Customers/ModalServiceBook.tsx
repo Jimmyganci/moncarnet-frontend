@@ -7,7 +7,7 @@ import { glassMorphism, button, h2 } from '../../../variableTailwind';
 
 function ModalServiceBook() {
 
-    const { immatServiceBook, setShowModalServiceBook, setShowCustomer } = useContext(ProsContext);
+    const { immatServiceBook, setShowModalServiceBook, setShowCustomer, setImmatServiceBook } = useContext(ProsContext);
 
     const [serviceBooks, setServiceBooks] = useState<IServiceBook[]>([]);
 
@@ -15,6 +15,7 @@ function ModalServiceBook() {
 
   const handleParentsClick = () => {
     setShowModalServiceBook(false);
+    setImmatServiceBook("");
   };
 
   const handleChildClick = (item: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -36,7 +37,8 @@ function ModalServiceBook() {
 
  const handleSwitchModal = () => {
   setShowCustomer(true);
-  setShowModalServiceBook(false);  
+  setShowModalServiceBook(false); 
+  setImmatServiceBook(""); 
  }
 
   return (
@@ -48,7 +50,7 @@ function ModalServiceBook() {
         className={`m-16 p-8  rounded-lg w-4/6 ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
         role="presentation">
-        <div className='flex flex-col justify-around items-center h-5/6 w-full overflow-auto'>
+        <div className='flex flex-col items-center h-5/6 w-full overflow-auto'>
           {serviceBooks.length ? 
           serviceBooks.map((serviceBook, index) => (
               <ServiceBookDisplay 
@@ -69,7 +71,9 @@ function ModalServiceBook() {
           </div>
           }
         </div>
-        <button className={`${button}`} onClick={() => handleSwitchModal()}>Retour</button>
+        <div className='flex justify-center items-center h-1/6'>
+          <button className={`${button}`} onClick={() => handleSwitchModal()}>Retour</button>
+        </div>
       </section>
     </main>
   );

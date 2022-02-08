@@ -52,7 +52,6 @@ const Profile = () => {
           city: cityUpdate || infoUser.city,
           phone: phoneUpdate || infoUser.phone,
           siret: siretUpdate || infoUser.siret,
-          id_user: 0,
         });
         if (res.status === 200) toast.success('Vos informations ont bien été modifiées');
 

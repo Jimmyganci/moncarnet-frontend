@@ -78,48 +78,51 @@ function ModalAppointment() {
       className="fixed inset-0 z-10 flex justify-center w-screen h-screen align-middle"
       onClick={() => handleParentsClick()}
       role="presentation">
-      <form className={`m-16 p-8 rounded-lg w-4/6 flex flex-col items-center justify-around ${glassMorphism}`}
+      <form className={`m-16 p-8 rounded-lg w-4/6 flex flex-col items-center ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
         role="presentation">
-       <h2 className={`m-2 ${h3} `}>Client :</h2>
-       <p>{userAppointment}</p>
-       <h2 className={`m-2 ${h3} `}>Immatriculation du véhicule :</h2>
-       <p>{appointmentUnique && appointmentUnique.immat}</p>
-       <label htmlFor="kilometrage">Kilométrage</label>
-       <input
-        className={`w-3/4 ${input}`}
-        type="text"
-        name="kilometrage"
-        id="kilometrage"
-        onChange={(e) => setKilometrage(parseInt(e.target.value))}
-        />
-        <label htmlFor="date">Date des travaux</label>
-       <input
-        className={`w-3/4 ${input}`}
-        type="date"
-        name="date"
-        id="date"
-        onChange={(e) => setDayUpdate(e.target.value)}
-        />
-       <label htmlFor="service">Service</label>
-       <input
-        className={`w-3/4 ${input}`}
-        type="text"
-        name="service"
-        id="service"
-        placeholder="Renseignez le service effectué"
-        onChange={(e) => setServiceUpdate(e.target.value)}
-        />
-        <label htmlFor="Observations">Observations</label>
-       <textarea
-        className={`w-3/4 h-1/3 p-2 border rounded-md bg-primary-hovered border-primary outline-primary-focus lg:mb-2 lg:h-2/6';
-        pl-0`}
-        name="Observations"
-        id="Observations"
-        placeholder="Description des travaux effectués"
-        onChange={(e) => setObservationUpdate(e.target.value)}
-        />
-        <button type='submit' className={`w-32 h-12 ${button}`} onClick={() => createServiceBook()}>Valider</button>
+        <div className='overflow-auto flex flex-col items-center w-full h-5/6'>
+          <h2 className={`m-2 ${h3} `}>Client :</h2>
+          <p>{userAppointment}</p>
+          <h2 className={`m-2 ${h3} `}>Immatriculation du véhicule :</h2>
+          <p>{appointmentUnique && appointmentUnique.immat}</p>
+          <label htmlFor="kilometrage" className={`m-2 ${h3} `}>Kilométrage</label>
+          <input
+            className={`w-3/4 ${input}`}
+            type="text"
+            name="kilometrage"
+            id="kilometrage"
+            onChange={(e) => setKilometrage(parseInt(e.target.value))}
+            />
+            <label htmlFor="date" className={`m-2 ${h3}`}>Date des travaux</label>
+          <input
+            className={`w-3/4 ${input} py-6`}
+            type="date"
+            name="date"
+            id="date"
+            onChange={(e) => setDayUpdate(e.target.value)}
+            />
+          <label htmlFor="service" className={`m-2 ${h3} `}>Service</label>
+          <input
+            className={`w-3/4 ${input}`}
+            type="text"
+            name="service"
+            id="service"
+            placeholder="Renseignez le service effectué"
+            onChange={(e) => setServiceUpdate(e.target.value)}
+            />
+            <label htmlFor="Observations" className={`m-2 ${h3}`}>Observations</label>
+          <textarea
+            className={`w-3/4 p-2 border rounded-md bg-primary-hovered border-primary outline-primary-focus pb-20 text`}
+            name="Observations"
+            id="Observations"
+            placeholder="Description des travaux effectués"
+            onChange={(e) => setObservationUpdate(e.target.value)}
+            />
+            </div>
+            <div className=' flex item h-1/6'>
+              <button type='submit' className={`w-32 h-12 ${button}`} onClick={() => createServiceBook()}>Valider</button>
+            </div>
       </form>
     </main>
   )

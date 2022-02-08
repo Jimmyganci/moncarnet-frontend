@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import {
   button,
   glassMorphism,
-  h2,
+  h4,
 } from '../../../variableTailwind';
 
 const CUSTOMER_EMPTY = {
@@ -73,7 +73,7 @@ function ModalCustomer() {
     setShowModalServiceBook(true);
     setShowCustomer(false);
    }  
-  } 
+  }  
   
   return (
     <main
@@ -81,22 +81,26 @@ function ModalCustomer() {
       onClick={() => handleParentsClick()}
       role="presentation">
       <section
-        className={`m-16 p-8 flex flex-col justify-around items-center rounded-lg w-4/6 ${glassMorphism}`}
+        className={`m-16 p-8 flex flex-col items-center justify-around rounded-lg w-4/6 ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
         role="presentation">
-            <p>{customer.firstname + ' ' + customer.lastname}</p>
-            <p>{customer.address}</p>
-            <p>{customer.postal_code}</p>
-            <p>{customer.city}</p>
-            <p>{customer.phone}</p>
-            <p>{customer.email}</p>
-            <h2 className={`${h2}`}>Véhicules</h2>
+          <div>
+            <p className={`${h4} my-2`}>{customer.firstname + ' ' + customer.lastname}</p>
+            <p className='my-2'>{customer.address}</p>
+            <p className='my-2'>{customer.postal_code}</p>
+            <p className='my-2'>{customer.city}</p>
+            <p className='my-2'>{customer.phone}</p>
+            <p className='my-2'>{customer.email}</p>
+          </div>
+          <div>
+          <h4 className={`${h4}`}>Véhicules</h4>
         <select name="immat" id="immat" onChange={(e) => setImmatServiceBook(e.target.value)}>
             <option value="0">Choisir un véhicule</option>
             {vehicules.map((vehicule, index) => (
                 <option key={index} value={vehicule.immat}>{vehicule.immat}</option>
             ))}
         </select>
+        </div>
         <button className={`${button}`} onClick={() => handleSwitchModal() }>Voir les entretiens</button>
       </section>
     </main>

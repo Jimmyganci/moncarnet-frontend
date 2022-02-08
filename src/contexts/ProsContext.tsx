@@ -3,7 +3,6 @@ import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
 import IPros from '../Interfaces/IPros';
@@ -87,6 +86,7 @@ export const ProsContextProvider: React.FC<Props> = ({ children }) => {
     removeCookie('user_token');
     navigate('/');
   };
+  
 
   // Display The modal Appointment
 
