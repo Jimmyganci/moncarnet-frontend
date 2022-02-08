@@ -33,7 +33,7 @@ function Customers() {
       <h1 className={`${h1}`}>
          Clients
       </h1>
-        <input onChange={(event) => {setSearchTerm(event.target.value)}}></input>
+        {/* <input onChange={(event) => {setSearchTerm(event.target.value)}}></input> */}
       <ul className='w-full'>
         {userArray && userArray
         .map((user) => (

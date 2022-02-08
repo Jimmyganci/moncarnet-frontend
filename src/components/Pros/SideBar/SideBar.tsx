@@ -23,16 +23,16 @@ const SideBar = () => {
       alt: 'appointment logo',
     },
     {
-      label: 'Mon Profil',
-      path: '/pros/profile',
-      logo: profile,
-      alt: 'profil logo',
-    },
-    {
       label: 'Mes Clients',
       path: '/pros/customers',
       logo: customers,
       alt: 'customers logo',
+    },
+    {
+      label: 'Mon Profil',
+      path: '/pros/profile',
+      logo: profile,
+      alt: 'profil logo',
     },
   ];
 
