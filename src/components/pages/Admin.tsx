@@ -16,7 +16,7 @@ function Admin() {
       const res = await vehicule.getVehiculeNoValidate();
       setVehiculeToValidate(res);
     } catch (err: any) {
-      if (err.response.status === 401) toast.error('Merci de vous connecter!');
+      console.log(err);
     }
   }
 
