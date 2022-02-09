@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { pros, users } from '../../../API/request';
@@ -54,20 +54,20 @@ function GarageDetails() {
           toast.success(`Le garage "${infosPros.name}" a été ajouté à vos favoris`);
           setReRender(!reRender);
         }
-      } catch (err: any) {
-        if (err.response.status === 409)
-          toast.error("Ce garage est déjà l'un de vos favoris");
-      }
+    } catch (err: any) {
+      if (err.response.status === 409)
+        toast.error("Ce garage est déjà l'un de vos favoris");
     }
   };
+}
 
   return (
     <div className="flex justify-center w-full h-full py-5">
-      {infosPros && (
-        <div
-          className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}>
-          <img className="w-2/6 m-4" src={garage} alt="garage" />
-          <h1 className="text-3xl">{infosPros.name}</h1>
+      {infosPros && 
+      <div
+        className={`w-11/12 h-full flex flex-col items-center rounded-lg p-4 ${glassMorphism}`}>
+        <img className="w-2/6 m-4" src={garage} alt="garage" />
+        <h1 className="text-3xl">{infosPros.name}</h1>
 
           <div className="mt-4 mb-4">
             <p className="underline">Adresse</p>
@@ -93,8 +93,15 @@ function GarageDetails() {
           <div className="w-1/2">
             <ReturnButton target={''} />
           </div>
-        </div>
-      )}
+        <p className="underline">SIRET</p>
+        <p>{infosPros.siret}</p>
+        <button onClick={handleChoiceGarage} className={button}>
+          Ajouter aux favoris
+        </button>
+        <button className={button}>
+          <Link to="/particular/garage">Retour</Link>
+        </button>
+      </div>}
     </div>
   );
 }

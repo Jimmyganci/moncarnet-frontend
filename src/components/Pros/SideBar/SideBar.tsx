@@ -7,7 +7,7 @@ import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import customers from '../../../assets/minimalist_logos/customers.svg';
 import home from '../../../assets/minimalist_logos/home.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
-import { glassMorphism } from '../../../variableTailwind';
+import { glassMorphism, h3 } from '../../../variableTailwind';
 import SideLink from './SideLink';
 
 const SideBar = () => {

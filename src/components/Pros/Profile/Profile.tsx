@@ -9,6 +9,7 @@ import { button, h2 } from '../../../variableTailwind';
 import InfosLine from '../../Particulars/ParticularInfos/InfosLine';
 
 const Profile = () => {
+
   const { prosLoggedIn } = useContext(ProsContext);
 
   const [infoUser, setInfoUser] = useState<IPros>();
@@ -29,7 +30,8 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    prosLoggedIn && getOne();
+    prosLoggedIn &&
+    getOne();
   }, [prosLoggedIn]);
 
   const handleInfosUser = () => {

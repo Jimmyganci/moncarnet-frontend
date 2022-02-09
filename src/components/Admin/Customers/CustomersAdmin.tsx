@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { pros, users } from '../../../API/request';
 import AdminContext from '../../../contexts/AdminContext';
 import IPros from '../../../Interfaces/IPros';
-import IUser from '../../../Interfaces/Iuser';
+import IUser from '../../../Interfaces/IUser';
 import { button, glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 

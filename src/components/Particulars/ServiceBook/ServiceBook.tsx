@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { brands, service_book } from '../../../API/request';
+import {service_book } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
-import IAppointment from '../../../Interfaces/IAppointment';
 import IServiceBook from '../../../Interfaces/IServiceBook';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import {
@@ -20,7 +19,6 @@ const ServiceBook = () => {
   const { infosUserVehicule } = useContext(UserContext);
   const [infosVehicule, setInfosVehicule] = useState<IVehiculeAndUser>();
   const [services, setServices] = useState<IServiceBook[]>();
-  const [brand, setBrand] = useState<string>(''); 
   const [selectedImmat, setSelectedImmat]= useState<string>(vehiculeImmatToUpdate || '');
 
   function getInfosVehicule() {
@@ -32,19 +30,9 @@ const ServiceBook = () => {
       );
   }
 
-  async function getBrand() {
-    const res = infosVehicule && await brands.getOne(infosVehicule.brandId);
-    res && setBrand(res.name);
-  }
-  console.log(brand)
-
   useEffect(() => {
     getInfosVehicule();
   }, [infosUserVehicule, vehiculeImmatToUpdate]);
-
-    useEffect(() => {
-      getBrand();
-  }, [infosVehicule]);
 
   useEffect(() => {
     async function getservices() {

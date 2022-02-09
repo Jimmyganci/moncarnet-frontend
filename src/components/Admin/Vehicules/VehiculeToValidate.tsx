@@ -18,6 +18,7 @@ function VehiculeToValidate() {
   const [urlImage, setUrlImage] = useState<string>('');
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const { renderState } = useContext(AdminContext);
+  
 
   async function getVehiculeDetails() {
     if (vehiculeToValidate) {
