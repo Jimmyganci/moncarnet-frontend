@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 import { getVehicules } from '../../../API/requestVehicule';
+import AdminContext from '../../../contexts/AdminContext';
 import IVehicule from '../../../Interfaces/IVehicule';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
@@ -16,6 +17,7 @@ function VehiculeToValidate() {
   const [showUser, setShowUser] = useState(false);
   const [urlImage, setUrlImage] = useState<string>('');
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
+  const { renderState } = useContext(AdminContext);
 
   async function getVehiculeDetails() {
     if (vehiculeToValidate) {
@@ -30,7 +32,7 @@ function VehiculeToValidate() {
 
   useEffect(() => {
     getVehiculeDetails();
-  }, [vehiculeToValidate]);
+  }, [vehiculeToValidate, renderState]);
 
   return (
     <div className="flex flex-col items-end w-full">

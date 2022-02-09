@@ -42,7 +42,7 @@ function VehiculeCard({ oneVehicule, setUserId, setShowUser }: VehiculeProps) {
       });
       if (deletedVehicule === 204) {
         setRenderState(!renderState);
-        toast.success('Véhicule supprimé avec succées');
+        toast.success('Véhicule supprimé avec succès');
       }
     } catch (err) {
       if (err) toast.error("Une erreur s'est produite!");

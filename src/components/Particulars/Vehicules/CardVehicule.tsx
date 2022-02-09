@@ -53,7 +53,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   <p className="font-bold uppercase">{vehiculeSelect.model}</p>
                 </div>
                 <div
-                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4`}>
+                  className={`w-56 h-11 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4`}>
                   <Plate
                     immat={vehiculeSelect.immat}
                     postalCode={userLoggedIn && userLoggedIn.postal_code}
