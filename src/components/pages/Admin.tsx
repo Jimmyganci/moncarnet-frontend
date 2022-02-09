@@ -13,7 +13,7 @@ function Admin() {
   async function getVoitureToValidate() {
     try {
       const res = await vehicule.getVehiculeNoValidate();
-      setVehiculeToValidate(res);
+      setVehiculeToValidate(res);      
     } catch (err: any) {
       console.log(err);
     }
