@@ -1,5 +1,5 @@
 export default interface IPros {
-  id_pros: number;
+  id_user?: number;
   name: string;
   address: string;
   email: string;
@@ -7,4 +7,6 @@ export default interface IPros {
   postal_code: number;
   siret: string;
   phone: string;
+  id_pros?: number;
+  password?: string;
 }

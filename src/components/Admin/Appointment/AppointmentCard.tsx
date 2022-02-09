@@ -2,20 +2,21 @@ import React, { useEffect } from 'react';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
-import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import IProsInfos from '../../../Interfaces/IPros';
-import IUserInfos from '../../../Interfaces/IUserInfos';
+import IAppointment from '../../../Interfaces/IAppointment';
+import IPros from '../../../Interfaces/IPros';
+import IUser from '../../../Interfaces/Iuser';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {
-  appointment: IAppointmentInfos;
-  user: IUserInfos;
-  pros: IProsInfos;
-  setUserId: Function;
-  setProsId: Function;
-  setShowUser: Function;
-  setShowPros: Function;
-  setOneVehicule: Function;
-  setShowVehicule: Function;
+  appointment: IAppointment;
+  user: IUser;
+  pros: IPros;
+  setUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setProsId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowPros: React.Dispatch<React.SetStateAction<boolean>>;
+  setOneVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
+  setShowVehicule: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function AppointmentCard({
@@ -29,11 +30,18 @@ function AppointmentCard({
   setOneVehicule,
   setShowVehicule,
 }: AppointmentProps) {
-  async function getVehicule() {
-    const response = await vehicule.getOne(appointment.immat);
-    if (response) {
-      const vehiculeInfos = await getVehicules([response]);
-      setOneVehicule(vehiculeInfos);
+  // get one Vehicule and call the getVehicules...
+  //...functions to have all informations about this vehicule (put the array of vehicule in the parameter of this function)
+  async function getVehicule(immat?: string) {
+    if (immat) {
+      const vehiculeModal = await vehicule.getOne(immat);
+      const vehiculeInfosModal = await getVehicules([vehiculeModal]);
+      setOneVehicule(vehiculeInfosModal);
+      setShowVehicule(true);
+    } else {
+      const vehiculeCard = await vehicule.getOne(appointment.immat);
+      const vehiculeInfosCard = await getVehicules([vehiculeCard]);
+      setOneVehicule(vehiculeInfosCard);
     }
   }
 
@@ -45,9 +53,8 @@ function AppointmentCard({
     <div className="grid grid-cols-6 pt-2 pb-2 hover:bg-background/20">
       <p>{appointment.id_appointment}</p>
       <button
-        onClick={() => setShowVehicule(true)}
-        className="underline hover:text-background"
-      >
+        onClick={() => getVehicule(appointment.immat)}
+        className="underline hover:text-background">
         {appointment.immat}
       </button>
       <p>{new Date(appointment.date).toLocaleDateString()}</p>
@@ -56,20 +63,19 @@ function AppointmentCard({
           setUserId(user.id_user);
           setShowUser(true);
         }}
-        className="underline hover:text-background"
-      >
-        {user.lastname.toUpperCase() +
+        className="underline hover:text-background">
+        {user.firstname.charAt(0).toUpperCase() + // format firstname and lastname
+          user.firstname.slice(1) +
           ' ' +
-          user.firstname.charAt(0).toUpperCase() +
-          user.firstname.slice(1)}
+          user.lastname.charAt(0).toUpperCase() +
+          user.lastname.slice(1)}
       </button>
       <button
         onClick={() => {
           setProsId(pros.id_pros);
           setShowPros(true);
         }}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {pros.name}
       </button>
       <p>{appointment.comment}</p>

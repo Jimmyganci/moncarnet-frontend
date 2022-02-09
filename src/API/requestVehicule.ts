@@ -1,20 +1,7 @@
-// import IModelInfos from '../Interfaces/IModelInfos';
-// import ITypeInfos from '../Interfaces/ITypeInfos';
-// import IUserInfos from '../Interfaces/IuserInfos';
-import IVehiculeInfos from '../Interfaces/IVehiculeInfos';
+import IVehicule from '../Interfaces/IVehicule';
 import { model, type, users, vehicule } from './request';
 
-type infosRequested = {
-  immat: string;
-  model: string;
-  type: string;
-  userId: number;
-  userName: string;
-};
-
-export const getVehicules = async (
-  vehicules: IVehiculeInfos[],
-): Promise<infosRequested[]> => {
+export const getVehicules = async (vehicules: IVehicule[]) => {
   const results = Promise.all(
     vehicules.map(async (vehic) => [
       await vehicule.getOne(vehic.immat),
@@ -22,7 +9,7 @@ export const getVehicules = async (
       await type.getOne(vehic.id_typeId),
       await users.getOne(vehic.id_userId),
     ]),
-  ).then((results: any) =>
+  ).then((results) =>
     results.map(([vehicule, model, type, user]: any) => {
       return {
         immat: vehicule.immat,

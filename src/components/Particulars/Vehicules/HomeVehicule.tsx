@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import car from '../../../assets/car.png';
+import UserContext from '../../../contexts/UserContext';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button, glassMorphism } from '../../../variableTailwind';
+import HomeVehiculesDetails from './HomeVehiculesDetails';
 
-interface VehiculeProps {
-  vehiculesSlice: Array<any>;
-}
-
-function HomeVehicule({ vehiculesSlice }: VehiculeProps) {
+function HomeVehicule({ vehiculesSlice }: { vehiculesSlice: IVehiculeAndUser[] }) {
+  const { setPosted } = useContext(UserContext);
   return (
     <div className={`flex flex-col items-center m-4 p-4 rounded-lg ${glassMorphism}`}>
       <img className="w-12" src={car} alt="car" />
       <h2 className="mb-4 text-2xl text-background">Mes véhicules</h2>
-      {vehiculesSlice.map((el) => (
-        <p
-          className="w-full p-2 my-2 text-lg rounded-lg opacity-90 backdrop-filter backdrop-blur-sm shadow-second text-background shadow-background"
-          key={el.immat}
-        >{`${el.brand} ${el.model} ${el.immat}`}</p>
+      {vehiculesSlice.map((vehicule, index: number) => (
+        <HomeVehiculesDetails key={index} vehicule={vehicule} />
       ))}
       <Link to="/particular/vehicules">
         <button className={button}>Voir tout</button>
       </Link>
       <Link to="/particular/addVehicule">
-        <button className="underline p-2">Ajouter un véhicule</button>
+        <button onClick={() => setPosted(false)} className="p-2 underline">
+          Ajouter un véhicule
+        </button>
       </Link>
     </div>
   );

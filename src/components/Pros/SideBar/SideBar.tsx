@@ -1,13 +1,19 @@
 import React from 'react';
-
+import { useContext } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import ProsContext from '../../../contexts/ProsContext';
 import logo from '../../../assets/logo.svg';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import customers from '../../../assets/minimalist_logos/customers.svg';
 import home from '../../../assets/minimalist_logos/home.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
 import { glassMorphism } from '../../../variableTailwind';
 import SideLink from './SideLink';
 
 const SideBar = () => {
+  // access userContext !
+  const { logout } = useContext(ProsContext);
+
   const linkArray = [
     {
       label: 'Accueil',
@@ -19,7 +25,13 @@ const SideBar = () => {
       label: 'Mes RDVs',
       path: '/pros/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
+    },
+    {
+      label: 'Mes Clients',
+      path: '/pros/customers',
+      logo: customers,
+      alt: 'customers logo',
     },
     {
       label: 'Mon Profil',
@@ -36,15 +48,26 @@ const SideBar = () => {
         <p className="ml-4 text-lg text-white">Mon Carnet</p>
       </div>
       <span className="w-5/6 border-b-2"></span>
-      <div className="w-full h-5/6">
-        <nav className="h-full">
-          <ul className="h-full ">
-            {linkArray.map((e, i) => (
-              <SideLink key={i} label={e.label} path={e.path} logo={e.logo} alt={e.alt} />
-            ))}
-          </ul>
-        </nav>
-      </div>
+      <nav className="h-5/6">
+        <ul className="h-full ">
+          {linkArray.map((link, index) => (
+            <SideLink
+              key={index}
+              label={link.label}
+              path={link.path}
+              logo={link.logo}
+              alt={link.alt}
+            />
+          ))}
+        </ul>
+        <button
+          className="mt-4 text-2xl font-medium tracking-widest"
+          onClick={() => {
+            logout();
+          }}>
+          Se déconnecter
+        </button>
+      </nav>
     </div>
   );
 };

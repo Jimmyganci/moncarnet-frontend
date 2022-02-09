@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
+import AdminContext from '../../../contexts/AdminContext';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import VehiculeCard from './VehiculeCard';
 
 const VehiculesWithoutServiceBook = () => {
-  const [dataVehicules, setDataVehicules] = useState<any[]>([]);
+  const [dataVehicules, setDataVehicules] = useState<IVehiculeAndUser[]>([]);
+  const { renderState } = useContext(AdminContext);
 
   const [showUser, setShowUser] = useState(false);
   const [userId, setUserId] = useState(0);
@@ -24,7 +27,7 @@ const VehiculesWithoutServiceBook = () => {
 
   useEffect(() => {
     getServiceBook();
-  }, [userId, showUser]);
+  }, [userId, showUser, renderState]);
 
   return (
     <div className="flex flex-col items-end w-full">
@@ -46,14 +49,16 @@ const VehiculesWithoutServiceBook = () => {
           </div>
           <div>
             {dataVehicules.length > 0 &&
-              dataVehicules?.map((vehicule, index: number) => (
-                <VehiculeCard
-                  key={index}
-                  vehicule={vehicule}
-                  setShowUser={setShowUser}
-                  setUserId={setUserId}
-                />
-              ))}
+              dataVehicules
+                ?.filter((vehicule) => vehicule.active)
+                .map((vehicule, index: number) => (
+                  <VehiculeCard
+                    key={index}
+                    oneVehicule={vehicule}
+                    setShowUser={setShowUser}
+                    setUserId={setUserId}
+                  />
+                ))}
           </div>
         </div>
       </div>

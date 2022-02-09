@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import ModalInfos from '../Admin/Appointment/ModalInfos';
+
 import Header from '../Header';
 import ParticularSideBar from '../Particulars/SideBar/ParticularSideBar';
 

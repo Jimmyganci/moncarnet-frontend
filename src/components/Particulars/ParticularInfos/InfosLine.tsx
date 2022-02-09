@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import { input } from '../../../variableTailwind';
 
-const InfosLine = (props: any) => {
+import { input } from '../../../variableTailwind';
+type Props = {
+  lineName: string;
+  champ: string;
+  changeMode: boolean;
+  modif: string;
+  setModif: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const InfosLine: React.FC<Props> = (props) => {
   const { lineName, champ, changeMode, modif, setModif } = props;
   const [lineChangeMode, setLineChangeMode] = useState(false);
 
@@ -12,10 +20,13 @@ const InfosLine = (props: any) => {
           onClick={() => {
             changeMode && !lineChangeMode ? setLineChangeMode(!lineChangeMode) : '';
           }}
+          onKeyDown={() => {
+            changeMode && !lineChangeMode ? setLineChangeMode(!lineChangeMode) : '';
+          }}
+          role="presentation"
           className={`${lineChangeMode && changeMode ? 'hidden w-full' : ''} ${
             changeMode ? 'cursor-pointer opacity-50' : ''
-          } p-2 mb-4 text-center truncate overflow-hidden border rounded-md h-full w-5/6 bg-slate-50/75 hover:h-fit hover:overflow-visible hover:whitespace-pre-wrap`}
-        >
+          } p-2 mb-4 text-center truncate overflow-hidden border rounded-md h-full w-5/6 bg-slate-50/75 hover:h-fit hover:overflow-visible hover:whitespace-pre-wrap`}>
           {modif || lineName}
         </p>
         <input
@@ -26,11 +37,9 @@ const InfosLine = (props: any) => {
           name={lineName}
           id={lineName}
           value={modif}
-          autoFocus
           placeholder={`modifier votre ${champ}`}
           onChange={(e) => setModif(e.target.value)}
-          required
-        ></input>
+          required></input>
       </label>
     </div>
   );

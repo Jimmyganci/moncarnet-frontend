@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { service_book } from '../../../API/request';
-// import ProsInfos from '../../../Interfaces/IPros';
-import ServiceBookInfos from '../../../Interfaces/IServiceBook';
+import ServiceBook from '../../../Interfaces/IServiceBook';
 import { glassMorphism } from '../../../variableTailwind';
 import ModalInfos from '../Appointment/ModalInfos';
 import ServiceBookDetailsCard from './ServiceBookDetailsCard';
@@ -13,10 +12,10 @@ type DetailsParams = {
 };
 
 function ServiceBookDetails() {
-  const [serviceBookList, setServiceBookList] = useState<ServiceBookInfos[]>();
+  const [serviceBookList, setServiceBookList] = useState<ServiceBook[]>();
 
   const [showPros, setShowPros] = useState(false);
-  const [prosId, setProsId] = useState<number>();
+  const [prosId, setProsId] = useState<number>(0);
 
   const { immat } = useParams<DetailsParams>();
 

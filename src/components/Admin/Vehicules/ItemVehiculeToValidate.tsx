@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { brands, vehicule } from '../../../API/request';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import AdminContext from '../../../contexts/AdminContext';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { button } from '../../../variableTailwind';
 
 interface VehiculeToValidateProps {
-  vehiculeData: IVehiculeAllInfos;
-  setUserId: Function;
-  setShowUser: Function;
+  vehiculeData: IVehiculeAndUser;
+  setUserId: React.Dispatch<React.SetStateAction<number>>;
+  setShowUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setUrlImage: React.Dispatch<React.SetStateAction<string>>;
+  setShowModalImage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ItemVehiculeToValidate({
   vehiculeData,
   setUserId,
   setShowUser,
+  setUrlImage,
+  setShowModalImage,
 }: VehiculeToValidateProps) {
   const [brand, setBrand] = useState<string>();
+  const { setRenderState, renderState } = useContext(AdminContext);
+
   async function getBrand() {
     const res = await brands.getOne(vehiculeData.brandId);
     setBrand(res.name);
   }
 
   const handleValidate = async () => {
-    const validateVehicule = await toast.promise(
+    const confirmVehicule = await toast.promise(
       vehicule.putOne(vehiculeData.immat, {
         immat: vehiculeData.immat,
         registration_date: vehiculeData.registrationDate,
@@ -35,20 +42,20 @@ function ItemVehiculeToValidate({
         validate: true,
       }),
       {
-        pending: 'Promise is pending',
-        success: 'Promise resolved 👌',
-        error: 'Promise rejected 🤯',
+        pending: 'En cours',
+        success: 'Véhicule modifié avec succés!',
+        error: `Une erreur s'est produite!`,
       },
       {
         position: toast.POSITION.BOTTOM_CENTER,
       },
     );
-    console.log(validateVehicule);
+    if (confirmVehicule) setRenderState(!renderState);
   };
 
   useEffect(() => {
     getBrand();
-  }, []);
+  }, [renderState, vehiculeData]);
 
   return (
     <div className={`grid grid-cols-7 items-center hover:bg-background/30`}>
@@ -61,14 +68,18 @@ function ItemVehiculeToValidate({
           setUserId(vehiculeData.userId);
           setShowUser(true);
         }}
-        className="underline hover:text-background"
-      >
+        className="underline hover:text-background">
         {vehiculeData.userName}
       </button>
       <div className="flex justify-center">
-        <div className="w-10 p-1 cursor-pointer hover:bg-background">
+        <button
+          onClick={() => {
+            setShowModalImage(true);
+            setUrlImage(vehiculeData.urlGreenCard);
+          }}
+          className="w-10 p-1 cursor-pointer hover:bg-background">
           <img className="" src={vehiculeData.urlGreenCard} alt="green-card" />
-        </div>
+        </button>
       </div>
       <button onClick={() => handleValidate()} className={`${button} m-1`}>
         Valider

@@ -1,68 +1,86 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import { users } from '../../API/request';
 import { button, glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
+import ReturnButton from '../ReturnButton';
+
+interface IAddressSelect {
+  city: string;
+  name: string;
+  postcode: string;
+  label: string;
+}
+
+interface IAddressList {
+  geometry: object;
+  properties: IAddressSelect;
+}
 
 function SignUp() {
   const [lastname, setLastname] = useState<string>('');
   const [firstname, setFirstname] = useState<string>('');
   const [address, setAddress] = useState<string>('');
-  const [addressList, setAddressList] = useState<Array<any>>([]);
-  const [addressSelect, setAddressSelect] = useState<any>([]);
+  const [addressList, setAddressList] = useState<IAddressList[]>([]);
+  const [addressSelect, setAddressSelect] = useState<IAddressSelect>();
   const [email, setEmail] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
+
+  async function getAdresse() {
+    const res = await axios.get(
+      `https://api-adresse.data.gouv.fr/search/?q=${address}&type=housenumber&autocomplete=1`,
+    );
+
+    setAddressList(res.data.features);
+  }
 
   useEffect(() => {
-    address &&
-      axios
-        .get(
-          `https://api-adresse.data.gouv.fr/search/?q=${address}&type=housenumber&autocomplete=1`,
-        )
-        .then((res) => res.data)
-        .then((data) => setAddressList(data.features));
+    getAdresse();
   }, [address]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      try {
-        const postUser: any = await axios.post('http://localhost:8000/api/users', {
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-          password: password,
-          address: addressSelect.name,
-          phone: phone,
-          postal_code: parseInt(addressSelect.postcode),
-          city: addressSelect.city,
-        });
-        setMessage(`Merci ${postUser.data.firstname}, votre compte a bien été ajouté`);
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-      } catch (err: any) {
-        if (err.response.status === 409) setMessage('Cet email existe déjà!');
+      if (addressSelect) {
+        try {
+          const postUser = await users.post({
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+            address: addressSelect.name,
+            phone: phone,
+            postal_code: parseInt(addressSelect.postcode),
+            city: addressSelect.city,
+          });
+          toast(`Merci ${postUser.firstname}, votre compte a bien été ajouté`);
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+        } catch (err: any) {
+          if (err.response.status === 409) toast.error('Cet email existe déjà!');
+          if (err.response.status === 422)
+            toast.error('Veuillez remplir tout les champs!');
+        }
       }
     } else {
-      setMessage('Vos mots de passe ne sont pas identiques!');
+      toast.error('Vos mots de passe ne sont pas identiques!');
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-around h-full">
-      <Logo />
-
+        <Logo/>
       <form
-        className={`w-11/12 mt-4 rounded-lg p-2 ${glassMorphism}`}
-        onSubmit={(e: React.FormEvent) => handleSignUp(e)}
-      >
-        <h1 className="pt-4 pb-4 mb-4 text-2xl border-b border-background/25">
+        className={`w-11/12 h-4/6 my-6 rounded-lg p-5 ${glassMorphism}`}
+        onSubmit={(e: React.FormEvent) => handleSignUp(e)}>
+        <h1 className="py-2 mb-4 text-2xl border-b border-background/25">
           Créer mon compte
         </h1>
         <div className="flex">
@@ -101,13 +119,12 @@ function SignUp() {
         {address && (
           <select
             className="w-11/12 rounded-lg bg-background/30"
-            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}
-          >
+            onChange={(e) => setAddressSelect(JSON.parse(e.target.value))}>
             <option value="">{addressList.length} adresses trouvées</option>
             {addressList.length >= 0 &&
-              addressList.map((el, index) => (
-                <option key={index} value={JSON.stringify(el.properties)}>
-                  {el.properties.label}
+              addressList.map((address, index) => (
+                <option key={index} value={JSON.stringify(address.properties)}>
+                  {address.properties.label}
                 </option>
               ))}
           </select>
@@ -121,7 +138,7 @@ function SignUp() {
               name="postalCode"
               id="postalCode"
               readOnly
-              value={addressSelect.postcode || ''}
+              value={(addressSelect && addressSelect.postcode) || ''}
             />
           </label>
           <label className="w-1/2" id="city">
@@ -132,7 +149,7 @@ function SignUp() {
               name="city"
               id="city"
               readOnly
-              value={addressSelect.city || ''}
+              value={(addressSelect && addressSelect.city) || ''}
             />
           </label>
         </div>
@@ -159,10 +176,7 @@ function SignUp() {
         <label id="password">
           Mot de passe
           <input
-            className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' &&
-              'border-error-600'
-            }`}
+            className={`w-full ${input} `}
             type="password"
             name="password"
             id="password"
@@ -172,23 +186,18 @@ function SignUp() {
         <label id="confirmPassword">
           Confirmez mot de passe
           <input
-            className={`w-full ${input} ${
-              message === 'Vos mots de passe ne sont pas identiques!' &&
-              'border-error-600'
-            }`}
+            className={`w-full ${input}`}
             type="password"
             name="confirmPassword"
             id="confirmPassword"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <p className={message.includes('Merci') ? 'text-green-500' : 'text-error-600'}>
-          {message}
-        </p>
-        <button className={button} type="submit">
+        <button className={`${button} w-1/2`} type="submit">
           Valider
         </button>
       </form>
+      <div className='w-1/2 mb-5 flex justify-center'><ReturnButton target='/login-particular' /></div>
     </div>
   );
 }

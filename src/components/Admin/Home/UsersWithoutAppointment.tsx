@@ -6,15 +6,10 @@ import { Link } from 'react-router-dom';
 
 import { button, glassMorphism } from '../../../variableTailwind';
 
-interface UserAppointmentProps {
-  percentage: number;
-}
-
-function UsersWithoutAppointment({ percentage }: UserAppointmentProps) {
+function UsersWithoutAppointment({ percentage }: { percentage: number }) {
   return (
     <div
-      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}
-    >
+      className={`flex flex-col items-center justify-between flex-1 p-4 rounded-lg ${glassMorphism}`}>
       <div className="w-1/5">
         <CircularProgressbar
           value={percentage}
@@ -27,7 +22,7 @@ function UsersWithoutAppointment({ percentage }: UserAppointmentProps) {
         />
       </div>
 
-      <p>{`% d'utilisateurs qui n'ont pas pris de rendez-vous sur la plateforme!`}</p>
+      <p>{`Utilisateur(s) sans rendez-vous`}</p>
       <Link to="/admin/users/withoutAppointment">
         <button className={`${button}`}>Voir</button>
       </Link>

@@ -1,52 +1,52 @@
 import React, { useEffect, useState } from 'react';
 
 import { appointment, pros, users } from '../../../API/request';
-import IAppointmentInfos from '../../../Interfaces/IAppointmentInfos';
-import IProsInfos from '../../../Interfaces/IProsInfos';
-import IUserInfos from '../../../Interfaces/IUserInfos';
-import IVehiculeAllInfos from '../../../Interfaces/IVehiculeAllInfos';
+import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 import { glassMorphism } from '../../../variableTailwind';
 import VehiculeModal from '../ServiceBook/VehiculeModal';
 import AppointmentCard from './AppointmentCard';
 import ModalInfos from './ModalInfos';
 
 interface RequestId {
-  appointment: number;
+  appointmentId: number;
   userId: number;
   prosId: number;
 }
 
-type DataAppointment = [(IAppointmentInfos | IUserInfos | IProsInfos)[]];
-
 function AppointmentList() {
-  const [dataAppointment, setDataAppointment] = useState<DataAppointment>();
+  const [dataAppointment, setDataAppointment] = useState([]);
   const [userId, setUserId] = useState<number>();
   const [prosId, setProsId] = useState<number>();
   const [showUser, setShowUser] = useState(false);
   const [showPros, setShowPros] = useState(false);
   const [showVehicule, setShowVehicule] = useState(false);
-  const [oneVehicule, setOneVehicule] = useState<IVehiculeAllInfos>();
+  const [oneVehicule, setOneVehicule] = useState<IVehiculeAndUser[]>([]);
 
   async function getAppointments() {
     try {
+      //  get all appointment
       const getAll = await appointment.getAll();
-
-      let requestId: Array<RequestId> = [];
-      getAll.map(async (appointment: IAppointmentInfos) => {
-        requestId.push({
-          appointment: appointment.id_appointment,
-          userId: appointment.userId,
-          prosId: appointment.prosId,
+      //  push in an array to map it and make a promise all for have the all informations of appointments
+      if (getAll) {
+        let requestId: RequestId[] = [];
+        getAll.map(async (appointment) => {
+          requestId.push({
+            appointmentId: appointment.id_appointment || 0,
+            userId: appointment.userId,
+            prosId: appointment.prosId,
+          });
         });
-      });
 
-      Promise.all(
-        requestId.map(async (id) => [
-          await appointment.getOne(id.appointment),
-          await users.getOne(id.userId),
-          await pros.getOne(id.prosId),
-        ]),
-      ).then((res) => setDataAppointment(res));
+        Promise.all(
+          requestId.map(async (id) => [
+            await appointment.getOne(id.appointmentId && id.appointmentId),
+            await users.getOne(id.userId),
+            await pros.getOne(id.prosId),
+          ]),
+        ).then((res: any) => {
+          setDataAppointment(res);
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ function AppointmentList() {
 
   useEffect(() => {
     getAppointments();
-  }, []);
+  }, [showVehicule]);
 
   return (
     <div className="flex flex-col items-end w-full">
@@ -97,7 +97,11 @@ function AppointmentList() {
         prosId={prosId}
       />
       {showVehicule && (
-        <VehiculeModal vehicule={oneVehicule} setShowVehicule={setShowVehicule} />
+        <VehiculeModal
+          showVehicule={showVehicule}
+          vehicule={oneVehicule}
+          setShowVehicule={setShowVehicule}
+        />
       )}
     </div>
   );

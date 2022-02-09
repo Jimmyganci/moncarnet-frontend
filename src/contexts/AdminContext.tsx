@@ -1,42 +1,79 @@
-import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { admin, isLoggin } from '../API/request';
-import AppContextInterface from '../Interfaces/IAdminContext';
+import { admin, isLoggedIn } from '../API/request';
+import IAdmin from '../Interfaces/IAdmin';
 
-const AdminContext = createContext<AppContextInterface | null>(null);
+type Props = { children: React.ReactNode };
+
+const adminLoginEmpty = {
+  id_admin: 0,
+  firstname: '',
+  lastname: '',
+  email: '',
+  hashedPassword: '',
+};
+
+type AdminContent = {
+  adminLogin: IAdmin;
+  setAdminLogin: React.Dispatch<React.SetStateAction<IAdmin>>;
+  renderState: boolean;
+  setRenderState: React.Dispatch<React.SetStateAction<boolean>>;
+  logout: () => void;
+};
+
+const AdminContext = createContext<AdminContent>({
+  adminLogin: adminLoginEmpty,
+  setAdminLogin: () => {},
+  renderState: false,
+  setRenderState: () => {},
+  logout: () => {},
+});
 
 export default AdminContext;
 
-export const AdminContextProvider = ({ children }: any) => {
-  const [adminLogin, setAdminLogin] = useState([]);
+export const AdminContextProvider: React.FC<Props> = ({ children }) => {
+  const [adminLogin, setAdminLogin] = useState(adminLoginEmpty);
+  const [renderState, setRenderState] = useState<boolean>(false);
+  const navigate: NavigateFunction = useNavigate();
+
+  const removeCookie = useCookies(['user_token'])[2];
 
   // set current user to nothing !
-  const logOut = async function () {
-    return await axios.post(
-      'http://localhost:8000/api/auth/logout',
-      {},
-      { withCredentials: true },
-    );
+  const logout = () => {
+    setAdminLogin(adminLoginEmpty);
+    removeCookie('user_token', { path: '/' });
+    navigate('/');
   };
 
   useEffect(() => {
     async function getAdminLogin() {
       try {
-        const response = await isLoggin.get();
-        if (response) {
-          const getInfosAdmin = await admin.getOne(response.id_user);
-          setAdminLogin(getInfosAdmin);
+        const res = await isLoggedIn.get();
+
+        const getInfosAdmin = await admin.getOne(res.id_user);
+        setAdminLogin(getInfosAdmin);
+      } catch (err: any) {
+        if (err.response.status === 500) {
+          toast.error('Merci de vous connecter!');
+          navigate('/');
         }
-      } catch (err) {
-        console.log(err);
       }
     }
     getAdminLogin();
-  }, []);
+  }, [removeCookie]);
 
   return (
-    <AdminContext.Provider value={{ adminLogin, setAdminLogin, logOut }}>
+    <AdminContext.Provider
+      value={{
+        adminLogin,
+        setAdminLogin,
+        logout,
+        setRenderState,
+        renderState,
+      }}>
       {children}
     </AdminContext.Provider>
   );

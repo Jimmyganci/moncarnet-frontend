@@ -1,94 +1,112 @@
-import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { isLoggedIn, users } from '../API/request';
+import { getVehicules } from '../API/requestVehicule';
+import IUser from '../Interfaces/IUser';
+import IVehiculeAndUser from '../Interfaces/IVehiculeAndUser';
+
+const USER_LOGIN_EMPTY = {
+  id_user: 0,
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  address: '',
+  phone: '',
+  postal_code: 0,
+  city: '',
+  active: false,
+};
+
+const VEHICULE_INFOS_EMPTY = {
+  active: false,
+  brandId: 0,
+  immat: '',
+  model: '',
+  modelId: 0,
+  registrationDate: new Date(),
+  type: '',
+  typeId: 0,
+  urlGreenCard: '',
+  userId: 0,
+  userName: '',
+  validate: false,
+};
 
 interface AppContextInterface {
-  userLogin: any;
-  setUserLogin: Function;
-  infosUserVehicule: Array<object>;
-  setInfosUserVehicule: Function;
+  userLoggedIn: IUser;
+  setUserLoggedIn: React.Dispatch<React.SetStateAction<IUser>>;
+  infosUserVehicule?: IVehiculeAndUser[];
+  setInfosUserVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
   vehiculeDeleted: boolean;
-  setVehiculeDeleted: Function;
+  setVehiculeDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+  vehiculeGiven: boolean;
+  setVehiculeGiven: React.Dispatch<React.SetStateAction<boolean>>;
   deleteAccount: boolean;
-  setDeleteAccount: Function;
+  setDeleteAccount: React.Dispatch<React.SetStateAction<boolean>>;
   posted: boolean;
-  setPosted: Function;
-  logOut: Function;
+  setPosted: React.Dispatch<React.SetStateAction<boolean>>;
+  logout: () => void;
 }
 
-const UserContext = createContext<AppContextInterface | null>(null);
+const UserContext = createContext<AppContextInterface>({
+  userLoggedIn: USER_LOGIN_EMPTY,
+  setUserLoggedIn: () => {},
+  infosUserVehicule: [VEHICULE_INFOS_EMPTY],
+  setInfosUserVehicule: () => {},
+  vehiculeDeleted: false,
+  setVehiculeDeleted: () => {},
+  vehiculeGiven: false,
+  setVehiculeGiven: () => {},
+  deleteAccount: false,
+  setDeleteAccount: () => {},
+  posted: false,
+  setPosted: () => {},
+  logout: () => {},
+});
 
 export default UserContext;
 
-export const UserContextProvider = ({ children }: any) => {
-  const [userLogin, setUserLogin] = useState<Array<object>>([]);
-  const [infosUserVehicule, setInfosUserVehicule] = useState<Array<object>>([]);
+type Props = { children: React.ReactNode };
+export const UserContextProvider: React.FC<Props> = ({ children }) => {
+  const [userLoggedIn, setUserLoggedIn] = useState<IUser>(USER_LOGIN_EMPTY);
+  const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAndUser[]>([]);
   const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false);
-  const [posted, setPosted] = useState(false);
+  const [vehiculeGiven, setVehiculeGiven] = useState<boolean>(false);
+  const [posted, setPosted] = useState<boolean>(false);
   const [deleteAccount, setDeleteAccount] = useState<boolean>(false);
-  const navigate = useNavigate();
-  let data: Array<object> = [];
+  const navigate: NavigateFunction = useNavigate();
+
+  const removeCookie = useCookies(['user_token'])[2];
 
   // set current user to nothing !
-  const logOut = async function () {
-    return await axios.post(
-      'http://localhost:8000/api/auth/logout',
-      {},
-      { withCredentials: true },
-    );
+  const logout = (): void => {
+    setUserLoggedIn(USER_LOGIN_EMPTY);
+    removeCookie('user_token', { path: '/' });
+    navigate('/');
   };
 
   useEffect(() => {
     async function getUserLogin() {
       try {
-        const response = await axios.get('http://localhost:8000/api/auth/login', {
-          withCredentials: true,
-        });
+        const res = await isLoggedIn.get();
 
-        if (response.status === 200) {
+        if (res) {
           try {
-            const user = await axios.get(
-              `http://localhost:8000/api/users/${response.data.id_user}`,
-              { withCredentials: true },
-            );
-            user.data.active && setUserLogin(user.data);
-            if (user.status === 200 && user.data.active === true) {
-              const userVehicule = await axios.get(
-                `http://localhost:8000/api/users/vehicules/${response.data.id_user}`,
-                { withCredentials: true },
-              );
-              if (userVehicule.status === 200) {
-                const results = await userVehicule.data
-                  .filter((veh: any) => veh.active === true)
-                  .map(async (el: any) => {
-                    const promise1 = axios.get(
-                      `http://localhost:8000/api/vehicules/${el.immat}/brand`,
-                      { withCredentials: true },
-                    );
-                    const promise2 = axios.get(
-                      `http://localhost:8000/api/vehicules/${el.immat}/model`,
-                      { withCredentials: true },
-                    );
-                    const promise3 = axios.get(
-                      `http://localhost:8000/api/vehicules/${el.immat}/type`,
-                      { withCredentials: true },
-                    );
-                    const getInfosVehicule = await Promise.all([
-                      promise1,
-                      promise2,
-                      promise3,
-                    ]);
+            const user = await users.getOne(res.id_user);
 
-                    data.push({
-                      ...el,
-                      brand: getInfosVehicule[0].data.models.brand.name,
-                      model: getInfosVehicule[1].data.models.name,
-                      type: getInfosVehicule[2].data.types.name_type,
-                    });
-                    if (data.length === results.length) {
-                      setInfosUserVehicule(data);
-                    }
-                  });
+            setUserLoggedIn(user);
+            if (user) {
+              const userVehicule = await users.getVehicules(res.id_user);
+              if (userVehicule) {
+                const results = await getVehicules(userVehicule);
+
+                setInfosUserVehicule(
+                  results.filter((vehicule) => vehicule.active === true),
+                );
               }
             }
           } catch (err) {
@@ -96,28 +114,34 @@ export const UserContextProvider = ({ children }: any) => {
           }
         }
       } catch (err: any) {
+        if (err.response.status === 500) {
+          toast.error('Merci de vous connecter!');
+          navigate('/');
+        }
+
         navigate('/');
       }
     }
     getUserLogin();
-  }, [vehiculeDeleted, posted, deleteAccount]);
+  }, [vehiculeDeleted, vehiculeGiven, posted, deleteAccount]);
 
   return (
     <UserContext.Provider
       value={{
-        userLogin,
-        setUserLogin,
+        userLoggedIn,
+        setUserLoggedIn,
         infosUserVehicule,
         setInfosUserVehicule,
         deleteAccount,
         setDeleteAccount,
         vehiculeDeleted,
         setVehiculeDeleted,
+        vehiculeGiven,
+        setVehiculeGiven,
         posted,
         setPosted,
-        logOut,
-      }}
-    >
+        logout,
+      }}>
       {children}
     </UserContext.Provider>
   );

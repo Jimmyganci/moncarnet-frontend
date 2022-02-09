@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { appointment, pros, service_book, users, vehicule } from '../../../API/request';
 import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import AdminContext from '../../../contexts/AdminContext';
+import IVehicule from '../../../Interfaces/IVehicule';
 import { button, glassMorphism } from '../../../variableTailwind';
 import CountAppointment from './CountAppointment';
 import CountCustomers from './CountCustomers';
@@ -14,8 +15,8 @@ import VehiculeConfirm from './VehiculeConfirm';
 import VehiculeWithoutServiceBook from './VehiculeWithoutServiceBook';
 
 function HomeAdmin() {
-  const { adminLogin }: any = useContext(AdminContext);
-  const [vehiculeToValidate] = useOutletContext<Array<any>>();
+  const { adminLogin } = useContext(AdminContext);
+  const vehiculeToValidate = useOutletContext<IVehicule[]>();
 
   const [dataLength, setDataLength] = useState([
     {
@@ -71,50 +72,52 @@ function HomeAdmin() {
 
   return (
     <div className="flex flex-col items-end w-full">
-      <div className={`w-5/6 p-2`}>
-        <div className="mt-4 mb-4">
-          <h1 className="text-3xl text-white uppercase ">
-            Bienvenue {adminLogin.firstname}
-          </h1>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <VehiculeConfirm vehiculeToValidate={vehiculeToValidate} />
-          <CountCustomers
-            particular={dataLength[0].particular}
-            pros={dataLength[0].pros}
-          />
-        </div>
-        <div
-          className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}
-        >
-          <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
-            <img className="w-10" src={calendar} alt="calendar" />
-            <p className="ml-1">Rendez-vous</p>
+      {adminLogin && (
+        <div className={`w-5/6 p-2`}>
+          <div className="mt-4 mb-4">
+            <h1 className="text-3xl text-white uppercase ">
+              Bienvenue {adminLogin.firstname}
+            </h1>
           </div>
-          <div className="flex w-full gap-2 mt-4">
-            <CountAppointment appointment={dataLength[0].appointment} />
-            <UsersWithoutAppointment percentage={percentageAppointment} />
+          <div className="flex flex-wrap gap-2">
+            <VehiculeConfirm vehiculeToValidate={vehiculeToValidate} />
+            <CountCustomers
+              particular={dataLength[0].particular}
+              pros={dataLength[0].pros}
+            />
           </div>
-          <Link to="/admin/appointments">
-            <button className={`${button}`}>Accéder au rendez-vous</button>
-          </Link>
+
+          <div
+            className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}>
+            <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
+              <img className="w-10" src={calendar} alt="calendar" />
+              <p className="ml-1">Rendez-vous</p>
+            </div>
+            <div className="flex w-full gap-2 mt-4">
+              <CountAppointment appointment={dataLength[0].appointment} />
+              <UsersWithoutAppointment percentage={percentageAppointment} />
+            </div>
+            <Link to="/admin/appointments">
+              <button className={`${button}`}>Accéder au rendez-vous</button>
+            </Link>
+          </div>
+
+          <div
+            className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}>
+            <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
+              <img className="w-10" src={calendar} alt="calendar" />
+              <p className="ml-1">{`Carnet d'entretien`}</p>
+            </div>
+            <div className="flex flex-row-reverse w-full gap-2 mt-4">
+              <CountServiceBook serviceBook={dataLength[0].serviceBook} />
+              <VehiculeWithoutServiceBook percentage={percentageServiceBook} />
+            </div>
+            <Link to="/admin/serviceBook">
+              <button className={`${button}`}>Liste des carnets</button>
+            </Link>
+          </div>
         </div>
-        <div
-          className={`${glassMorphism} justify-between mt-2 flex-1 rounded-lg p-2 flex flex-col items-center`}
-        >
-          <div className="flex items-center justify-center w-full rounded-lg bg-background/50">
-            <img className="w-10" src={calendar} alt="calendar" />
-            <p className="ml-1">{`Carnet d'entretien`}</p>
-          </div>
-          <div className="flex flex-row-reverse w-full gap-2 mt-4">
-            <CountServiceBook serviceBook={dataLength[0].serviceBook} />
-            <VehiculeWithoutServiceBook percentage={percentageServiceBook} />
-          </div>
-          <Link to="/admin/serviceBook">
-            <button className={`${button}`}>Liste des carnets</button>
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,26 +1,21 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { pros } from '../../../API/request';
+import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, input } from '../../../variableTailwind';
 
 function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
-  const [resultsSearchGarage, setResultsSearchGarage] = useState<any>([]);
-  const [message, setMessage] = useState<string>('');
-
+  const [resultsSearchGarage, setResultsSearchGarage] = useState<IPros[]>([]);
   const handleSearchGarage = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage('');
+    let url: string = `?namePros=${searchGarage}`;
     try {
-      const res = await axios.get(
-        `http://localhost:8000/api/pros?namePros=${searchGarage}`,
-        {
-          withCredentials: true,
-        },
-      );
-      if (res.data.length === 0)
-        setMessage('Aucun garage ne correspond à votre recherche!');
-      setResultsSearchGarage(res.data);
+      const res = await pros.getAll(url);
+      if (res.length === 0) toast('Aucun garage ne correspond à votre recherche!');
+      setResultsSearchGarage(res);
     } catch (err) {
       console.log(err);
     }
@@ -34,10 +29,10 @@ function HomeGarage() {
           <input
             className={`p-2.5 ${input}`}
             type="search"
-            placeholder="Garage du centre"
+            value={searchGarage}
+            placeholder="Ex : Garage du centre"
             onChange={(e) => setSearchGarage(e.target.value)}
           />
-          <p>{message}</p>
         </label>
         <div className="flex flex-col items-center">
           {resultsSearchGarage.length === 1 && (
@@ -48,7 +43,7 @@ function HomeGarage() {
               </Link>
             </>
           )}
-          {searchGarage && (
+          {searchGarage !== '' && (
             <>
               <button className={`w-1/2 ${button}`} type="submit">
                 Chercher

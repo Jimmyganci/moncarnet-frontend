@@ -1,22 +1,23 @@
 import React from 'react';
-import SideLink from './ParticularSideLink';
-import { glassMorphism } from '../../../variableTailwind';
-import Logo from '../../Logo';
-import home from '../../../assets/minimalist_logos/home.svg';
+import { useContext } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+
+import calendar from '../../../assets/minimalist_logos/calendar.svg';
 import car from '../../../assets/minimalist_logos/car.svg';
 import garage from '../../../assets/minimalist_logos/garage.svg';
-import calendar from '../../../assets/minimalist_logos/calendar.svg';
+import home from '../../../assets/minimalist_logos/home.svg';
 import profile from '../../../assets/minimalist_logos/profile.svg';
-import { useContext } from 'react';
 import UserContext from '../../../contexts/UserContext';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { glassMorphism } from '../../../variableTailwind';
+import Logo from '../../Logo';
+import SideLink from './ParticularSideLink';
 
 const ParticularSideBar = () => {
   // Return Home after logout !
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logOut }: any = useContext(UserContext);
+  const { logout } = useContext(UserContext);
 
   const linkArray = [
     {
@@ -39,7 +40,7 @@ const ParticularSideBar = () => {
     },
     {
       label: 'Mes Garages',
-      path: '/particular/garage',
+      path: '/particular/mygarages',
       logo: garage,
       alt: 'garage logo',
     },
@@ -47,17 +48,17 @@ const ParticularSideBar = () => {
       label: 'Mes RDVs',
       path: '/particular/appointments',
       logo: calendar,
-      alt: 'rdv logo',
+      alt: 'appointment logo',
     },
   ];
 
   return (
     <div className={`${glassMorphism} w-5/6 h-5/6 rounded-lg flex flex-col items-center`}>
-      <div className="w-full h-1/6 flex justify-center items-center pb-4 pr-3 pl-3">
+      <div className="flex items-center justify-center w-full pb-4 pl-3 pr-3 h-1/6">
         <Logo location="particularSideBar" />
       </div>
-      <span className="w-5/6 border-b-2 my-8"></span>
-      <div className="h-5/6 w-full">
+      <span className="w-5/6 my-8 border-b-2"></span>
+      <div className="w-full h-5/6">
         <nav className="h-full">
           <ul className="h-full ">
             {linkArray.map((e, i) => (
@@ -67,11 +68,9 @@ const ParticularSideBar = () => {
           <button
             className="mt-4 text-2xl font-medium tracking-widest"
             onClick={() => {
-              logOut().then(() => {
-                return navigate('/');
-              });
-            }}
-          >
+              logout();
+              return navigate('/');
+            }}>
             Se déconnecter
           </button>
         </nav>

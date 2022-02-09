@@ -1,29 +1,26 @@
-import React, { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { appointment, users } from '../../../API/request';
+import ProsContext from '../../../contexts/ProsContext';
+import IAppointment from '../../../Interfaces/IAppointment';
 import {
-  glassMorphism,
-  h3,
   button,
   deleteButton,
+  glassMorphism,
+  h3,
   input,
 } from '../../../variableTailwind';
-import ProsContext from '../../../contexts/ProsContext';
 
-interface InfosRdv {
-  date: string;
-  user: string;
-  comment: string;
-  id_appointment: number;
-}
-
-const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => {
-  const { setShowModal }: any = useContext(ProsContext);
-  const [changeMode, setChangeMode] = useState(false);
-  const [dayUpdate, setDayUpdate] = useState('');
-  const [hoursUpdate, setHoursUpdate] = useState('');
-  const [message, setMessage] = useState(0);
-  const [commentUpdate, setCommentUpdate] = useState('');
-  const [valideRdv, setValivRdv] = useState(true);
+function ModalAppointment() {
+  const { setShowModal, prosLoggedIn, appointmentId } = useContext(ProsContext);
+  const [changeMode, setChangeMode] = useState<boolean>(false);
+  const [dayUpdate, setDayUpdate] = useState<string>('');
+  const [hoursUpdate, setHoursUpdate] = useState<string>('');
+  const [commentUpdate, setCommentUpdate] = useState<string>('');
+  const [validAppointment, SetValidAppointment] = useState<boolean>(true);
+  const [appointmentUnique, setAppointmentUnique] = useState<IAppointment>();
+  const [userAppointment, setUserAppointment] = useState<string>('');
 
   // Close Modal with background
 
@@ -31,69 +28,73 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
     setShowModal(false);
   };
 
-  const handleChildClick = (item: any) => {
-    item.stopPropagation(item);
+  const handleChildClick = (item: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    item.stopPropagation();
   };
+
+  // Get One Appointment
+  async function getAppointmentAndUser() {
+    const oneAppointment = await appointment.getOne(appointmentId);
+    setAppointmentUnique(oneAppointment);
+    if (oneAppointment) {
+      const userAppointment = await users.getOne(oneAppointment.userId);
+      setUserAppointment(`${userAppointment.firstname} ${userAppointment.lastname}`);
+    }
+  }
 
   // Delete Appointment
+  async function deleteAppointment(appointmentId: number) {
+    try {
+      const res = await appointment.delete(appointmentId);
+      if (res) toast.success('Votre rendez-vous a bien été supprimé');
+    } catch (err) {
+      if (err) toast.error('Impossible de supprimer ce rendez-vous');
+    }
+  }
 
-  let appointmentDate = `${dayUpdate}T${hoursUpdate}:00.000Z`;
-
-  const [deleteRdvStatus, setDeleteRdvStatus] = useState(0);
-
-  const deleteAppointment = () => {
-    axios
-      .delete(`http://localhost:8000/api/appointment/${id_appointment}`, {
-        withCredentials: true,
-      })
-      .then((res) => res.status)
-      .then((el) => setDeleteRdvStatus(el))
-      .catch(() => setDeleteRdvStatus(500));
-    setTimeout(() => location.reload(), 1500);
-  };
+  let appointmentDate: Date = new Date(`${dayUpdate}T${hoursUpdate}:00.000Z`);
 
   // Update Appointment
 
   async function updateAppointment() {
-    try {
-      const res = await axios
-        .put(
-          `http://localhost:8000/api/appointment/${id_appointment}`,
-          {
-            date: appointmentDate || date,
-            comment: commentUpdate || comment,
-            user: user,
-          },
-          {
-            withCredentials: true,
-          },
-        )
-        .then((res) => setMessage(res.status))
-        .then(() => {
-          setTimeout(() => {
-            location.reload();
-            setChangeMode(false);
-          }, 1500);
-        });
-    } catch (err) {
-      console.log(err);
-      setMessage(500);
+    if (dayUpdate && hoursUpdate && commentUpdate && appointmentUnique?.userId) {
+      try {
+        const res =
+          appointmentId &&
+          (await appointment.put(appointmentId, {
+            date: appointmentDate || appointmentUnique?.date,
+            comment: commentUpdate || appointmentUnique?.comment,
+            prosId: prosLoggedIn.id_pros!,
+            userId: appointmentUnique?.userId,
+            immat: appointmentUnique?.immat,
+          }));
+        if (res) {
+          toast.success('Votre rendez-vous a bien été modifié');
+          setChangeMode(false);
+        }
+      } catch (err) {
+        console.log(err);
+        if (err) toast.error('Impossible de modifier ce rendez-vous');
+      }
+    } else {
+      toast.error('Veuillez remplir tous les champs!');
     }
   }
 
-  let today = new Date().toISOString();
+  const today: Date = new Date();
 
-  // Check validity of rdv's date :
+  // Check validity of appointment's date :
 
-  const dateCompare = (today: string, appointmentDate: string) => {
+  const dateCompare = (today: Date, appointmentDate: Date) => {
     if (today < appointmentDate) {
-      setValivRdv(true);
+      SetValidAppointment(true);
     } else {
-      setValivRdv(false);
+      SetValidAppointment(false);
     }
   };
 
   useEffect(() => {
+    getAppointmentAndUser();
     dateCompare(today, appointmentDate);
   }, [appointmentDate]);
 
@@ -101,15 +102,15 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
     <main
       className="fixed inset-0 z-10 flex justify-center w-screen h-screen align-middle"
       onClick={() => handleParentsClick()}
-    >
+      role="presentation">
       <section
         className={`m-16 p-8 rounded-lg w-4/6 ${glassMorphism}`}
         onClick={(e) => handleChildClick(e)}
-      >
+        role="presentation">
         {changeMode ? (
           <div className="flex flex-col items-center justify-around h-full">
             <h2 className={`m-2 ${h3} `}>Client :</h2>
-            <p className="mb-6">{user}</p>
+            <p className="mb-6">{userAppointment}</p>
             <input
               className={`w-3/4 ${input}`}
               type="date"
@@ -125,11 +126,11 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
               placeholder="Choisissez une heure"
               onChange={(e) => setHoursUpdate(e.target.value)}
             />
-            {valideRdv ? (
+            {validAppointment ? (
               ''
             ) : (
               <p className="text-red-700">
-                La date sélectionnée est antérieure à aujourd'hui
+                {`La date sélectionnée est antérieure à aujourd'hui`}
               </p>
             )}
             <label htmlFor="details">Détails</label>
@@ -138,53 +139,46 @@ const ModalAppointment = ({ date, user, comment, id_appointment }: InfosRdv) => 
             pl-0`}
               name="details"
               id="details"
-              placeholder={comment}
+              placeholder={appointmentUnique && appointmentUnique.comment}
               onChange={(e) => setCommentUpdate(e.target.value)}
             />
-            {message === 200 && (
-              <p className="text-green-700">Votre rendez-vous a bien été modifié</p>
-            )}
-            {message === 500 && (
-              <p className="text-red-500">Impossible de modifier ce rendez-vous</p>
-            )}
             <button className={`w-32 ${button}`} onClick={() => updateAppointment()}>
               Valider
             </button>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-around h-full">
-            <h2 className={`${h3} `}>Le {date}</h2>
-            <h2 className={`m-2 ${h3} `}>Client :</h2>
-            <p>{user}</p>
-            <h2 className={`m-2 ${h3} `}>Description :</h2>
-            <p className="mb-6">{comment}</p>
-            <div className="flex mb-4">
-              <button
-                className={`w-32 h-12 ${button}`}
-                onClick={() =>
-                  !changeMode ? setChangeMode(!changeMode) : updateAppointment()
-                }
-              >
-                {changeMode ? 'Valider' : 'Modifier'}
-              </button>
-              <button
-                className={`${deleteButton} w-32 mx-4 mt-2 px-4 p-2 h-12 bg-secondary hover:bg-secondary-hovered`}
-                onClick={() => deleteAppointment()}
-              >
-                Supprimer
-              </button>
+          appointmentUnique && (
+            <div className="flex flex-col items-center justify-around h-full">
+              <h2 className={`${h3} `}>
+                Le{' '}
+                {new Date(appointmentUnique.date).toLocaleDateString() +
+                  ' à ' +
+                  new Date(appointmentUnique.date).toLocaleTimeString().slice(0, 5)}
+              </h2>
+              <h2 className={`m-2 ${h3} `}>Client :</h2>
+              <p>{userAppointment}</p>
+              <h2 className={`m-2 ${h3} `}>Description :</h2>
+              <p className="mb-6">{appointmentUnique.comment}</p>
+              <div className="flex mb-4">
+                <button
+                  className={`w-32 h-12 ${button}`}
+                  onClick={() =>
+                    !changeMode ? setChangeMode(!changeMode) : updateAppointment()
+                  }>
+                  {changeMode ? 'Valider' : 'Modifier'}
+                </button>
+                <button
+                  className={`${deleteButton} w-32 mx-4 mt-2 px-4 p-2 h-12 bg-secondary hover:bg-secondary-hovered`}
+                  onClick={() => deleteAppointment(appointmentId)}>
+                  Supprimer
+                </button>
+              </div>
             </div>
-            {deleteRdvStatus === 200 && (
-              <p className="text-green-700">Votre rendez-vous a bien été supprimé</p>
-            )}
-            {deleteRdvStatus === 500 && (
-              <p className="text-red-500">Impossible de supprimer ce rendez-vous</p>
-            )}
-          </div>
+          )
         )}
       </section>
     </main>
   );
-};
+}
 
 export default ModalAppointment;

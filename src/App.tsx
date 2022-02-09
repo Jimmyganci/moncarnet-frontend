@@ -11,8 +11,8 @@ import AppointmentList from './components/Admin/Appointment/AppointmentList';
 import UsersWithoutAppointment from './components/Admin/Appointment/UsersWithoutAppointment';
 import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
-import LoginAdmin from './components/Admin/LoginAdmin';
 import ProfilAdmin from './components/Admin/profil/ProfilAdmin';
+import AddPros from './components/Admin/Pros/AddPros';
 import ServiceBookList from './components/Admin/ServiceBook/ServiceBookList';
 import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookVehiculeList';
 import VehiculeList from './components/Admin/Vehicules/VehiculeList';
@@ -21,24 +21,25 @@ import VehiculeToValidate from './components/Admin/Vehicules/VehiculeToValidate'
 import Admin from './components/pages/Admin';
 import Garage from './components/pages/Garage';
 import LandingPage from './components/pages/LandingPage';
+import LoginAdmin from './components/pages/LoginAdmin';
 import Login from './components/pages/LoginParticular';
 import LoginPro from './components/pages/LoginPro';
 import Particular from './components/pages/Particular';
 import Pros from './components/pages/Pros';
 import SignUp from './components/pages/SignUp';
 import Vehicules from './components/pages/Vehicules';
-import AddVehicules from './components/Particulars/Vehicules/AddVehicules';
 import GarageDetails from './components/Particulars/Garage/GarageDetails';
+import UserGarage from './components/Particulars/Garage/UserGarage';
 import HomeAppointment from './components/Particulars/HomeAppointment';
 import HomeCard from './components/Particulars/HomeCard';
 import InfosParticular from './components/Particulars/ParticularInfos/InfosParticular';
 import ServiceBook from './components/Particulars/ServiceBook/ServiceBook';
 import ServiceDetail from './components/Particulars/ServiceBook/ServiceDetail';
+import AddVehicules from './components/Particulars/Vehicules/AddVehicules';
 import UpdateVehicule from './components/Particulars/Vehicules/UpdateVehicule';
-import UserGarage from './components/Particulars/Garage/UserGarage';
 import Appointments from './components/Pros/Appointments/Appointments';
 import CreateAppointments from './components/Pros/Appointments/CreateAppointment';
-import Customers from './components/Pros/Customers';
+import Customers from './components/Pros/Customers/Customers';
 import HomePros from './components/Pros/Home/HomePros';
 import Invoices from './components/Pros/Invoices';
 import Profile from './components/Pros/Profile/Profile';
@@ -57,12 +58,13 @@ function App() {
     { path: 'appointments', component: <AppointmentList /> },
     { path: 'users/withoutAppointment', component: <UsersWithoutAppointment /> },
     { path: 'profil', component: <ProfilAdmin /> },
-    { path: 'vehicule/serviceBook/:immat', component: <ServiceBookDetails /> },
+    { path: 'vehicule/:immat/serviceBook', component: <ServiceBookDetails /> },
     { path: 'serviceBook', component: <ServiceBookList /> },
+    { path: 'addPros', component: <AddPros /> },
   ];
   return (
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">
-      <ToastContainer />
+      <ToastContainer position="top-center" limit={1} autoClose={2000} />
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -76,8 +78,7 @@ function App() {
               <UserContextProvider>
                 <Particular />
               </UserContextProvider>
-            }
-          >
+            }>
             <Route path="home" element={<HomeCard />} />
             <Route path="infos" element={<InfosParticular />} />
             <Route path="vehicules" element={<Vehicules />} />
@@ -105,8 +106,7 @@ function App() {
               <ProsContextProvider>
                 <Pros />
               </ProsContextProvider>
-            }
-          >
+            }>
             <Route path="home" element={<HomePros />} />
             <Route path="profile" element={<Profile />} />
             <Route path="appointments" element={<Appointments />} />
@@ -121,8 +121,7 @@ function App() {
               <AdminContextProvider>
                 <Admin />
               </AdminContextProvider>
-            }
-          >
+            }>
             {RouteAdmin.map((route, index) => (
               <Route key={index} path={route.path} element={route.component} />
             ))}

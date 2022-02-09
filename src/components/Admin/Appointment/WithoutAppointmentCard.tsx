@@ -1,16 +1,16 @@
 import React from 'react';
 
-import IUserInfos from '../../../Interfaces/IUserInfos';
+import IUser from '../../../Interfaces/IUser';
 
 interface WithoutAppointmentCardProps {
-  user: IUserInfos;
+  user: IUser;
 }
 
 function WithoutAppointmentCard({ user }: WithoutAppointmentCardProps) {
   return (
     <div className="grid grid-cols-3 pt-2 pb-2 hover:bg-background/30">
-      <p>{user.lastname}</p>
       <p>{user.firstname}</p>
+      <p>{user.lastname}</p>
       <p>{user.email}</p>
     </div>
   );

@@ -3,20 +3,26 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import { title, select } from '../../variableTailwind';
+import IVehiculeAndUser from '../../Interfaces/IVehiculeAndUser';
+import { select, title } from '../../variableTailwind';
 import CardVehicule from '../Particulars/Vehicules/CardVehicule';
+import VehiculesSelectOptions from '../Particulars/Vehicules/VehiculesSelectOptions';
 
 function Vehicules() {
-  const { infosUserVehicule, vehiculeDeleted }: any = useContext(UserContext);
-  const [vehiculeSelected, setVehiculeSelected] = useState<Array<any>>([]);
+  const { infosUserVehicule } = useContext(UserContext);
+  const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser[]>([]);
+
+  const handleChangeVehicule = (immat: string) => {
+    infosUserVehicule &&
+      setVehiculeSelected(
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat)),
+      );
+  };
 
   useEffect(() => {
-    setVehiculeSelected(infosUserVehicule);
+    infosUserVehicule && setVehiculeSelected(infosUserVehicule);
   }, [infosUserVehicule]);
 
-  const getVehiculeSelected = (immat: string) => {
-    setVehiculeSelected(infosUserVehicule.filter((el: any) => el.immat.includes(immat)));
-  };
   return (
     <div className="h-full lg:h-fit">
       <div className="flex items-center justify-center h-full lg:h-fit">
@@ -24,11 +30,10 @@ function Vehicules() {
         <Link to="/particular/addVehicule">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 ml-4 text-background"
+            className="w-6 h-6 ml-4 text-background border-2 border-background rounded-full hover:bg-white hover:text-primary transition-all"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+            stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -42,13 +47,11 @@ function Vehicules() {
         className={select}
         name="listVehicule"
         id="listVehicule"
-        onChange={(e) => getVehiculeSelected(e.target.value)}
-      >
-        {infosUserVehicule.map((el: any) => (
-          <option className="text-black" key={el.immat} value={el.immat}>
-            {`${el.brand} ${el.model} | ${el.immat}`}
-          </option>
-        ))}
+        onChange={(e) => handleChangeVehicule(e.target.value)}>
+        {infosUserVehicule &&
+          infosUserVehicule.map((vehicule, index: number) => (
+            <VehiculesSelectOptions key={index} vehicule={vehicule} />
+          ))}
       </select>
       <div>
         <CardVehicule vehiculeSelect={vehiculeSelected[0]} />
