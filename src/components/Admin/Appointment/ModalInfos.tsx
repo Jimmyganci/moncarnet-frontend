@@ -75,7 +75,6 @@ function ModalInfos({
               <p>{userData.postal_code}</p>
               <p>{userData.city}</p>
             </div>
-
             <button
               onClick={() => setShowUser && setShowUser(false)}
               className={`${button}`}>

@@ -12,8 +12,8 @@ function ModalImage({ url, showModalImage, setShowModalImage }: IProps) {
   return (
     <>
       {showModalImage && (
-        <div className="fixed top-0 left-0 flex flex-col items-center justify-center w-full h-full p-4 backdrop-filter backdrop-blur-xl">
-          <img className="w-1/4" src={url} alt="greenCard" />
+        <div className="fixed top-0 left-0 flex flex-col items-center justify-center w-full max-h-full p-4 overflow-y-scroll backdrop-filter backdrop-blur-xl">
+          <img src={url} alt="greenCard" />
           <button onClick={() => setShowModalImage(false)} className={`${button}`}>
             Fermer
           </button>

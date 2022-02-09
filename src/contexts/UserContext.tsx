@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { isLoggedIn, users } from '../API/request';
 import { getVehicules } from '../API/requestVehicule';
-import IUser from '../Interfaces/Iuser';
+import IUser from '../Interfaces/IUser';
 import IVehiculeAndUser from '../Interfaces/IVehiculeAndUser';
 
 const USER_LOGIN_EMPTY = {

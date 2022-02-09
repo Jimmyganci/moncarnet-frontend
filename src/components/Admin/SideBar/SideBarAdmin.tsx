@@ -12,7 +12,6 @@ import SideLink from './SideLinkAdmin';
 
 const SideBarAdmin = () => {
   const { logout } = useContext(AdminContext);
-  console.log(logout);
 
   const linkArray = [
     {
