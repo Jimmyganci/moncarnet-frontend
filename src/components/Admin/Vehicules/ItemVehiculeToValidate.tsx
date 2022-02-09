@@ -23,6 +23,7 @@ function ItemVehiculeToValidate({
 }: VehiculeToValidateProps) {
   const [brand, setBrand] = useState<string>();
   const { setRenderState, renderState } = useContext(AdminContext);
+
   async function getBrand() {
     const res = await brands.getOne(vehiculeData.brandId);
     setBrand(res.name);
@@ -54,7 +55,7 @@ function ItemVehiculeToValidate({
 
   useEffect(() => {
     getBrand();
-  }, []);
+  }, [renderState, vehiculeData]);
 
   return (
     <div className={`grid grid-cols-7 items-center hover:bg-background/30`}>

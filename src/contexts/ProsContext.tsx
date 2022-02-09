@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { pros } from '../API/request';
 import IAppointment from '../Interfaces/IAppointment';
 import IPros from '../Interfaces/IPros';
-import IUser from '../Interfaces/Iuser';
+import IUser from '../Interfaces/IUser';
 
 const PRO_LOGIN_EMPTY = {
   id_user: 0,
