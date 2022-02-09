@@ -12,6 +12,7 @@ import UsersWithoutAppointment from './components/Admin/Appointment/UsersWithout
 import CustomersAdmin from './components/Admin/Customers/CustomersAdmin';
 import HomeAdmin from './components/Admin/Home/HomeAdmin';
 import ProfilAdmin from './components/Admin/profil/ProfilAdmin';
+import AddPros from './components/Admin/Pros/AddPros';
 import ServiceBookList from './components/Admin/ServiceBook/ServiceBookList';
 import ServiceBookDetails from './components/Admin/ServiceBook/ServiceBookVehiculeList';
 import VehiculeList from './components/Admin/Vehicules/VehiculeList';
@@ -38,7 +39,7 @@ import AddVehicules from './components/Particulars/Vehicules/AddVehicules';
 import UpdateVehicule from './components/Particulars/Vehicules/UpdateVehicule';
 import Appointments from './components/Pros/Appointments/Appointments';
 import CreateAppointments from './components/Pros/Appointments/CreateAppointment';
-import Customers from './components/Pros/Customers';
+import Customers from './components/Pros/Customers/Customers';
 import HomePros from './components/Pros/Home/HomePros';
 import Invoices from './components/Pros/Invoices';
 import Profile from './components/Pros/Profile/Profile';
@@ -57,8 +58,9 @@ function App() {
     { path: 'appointments', component: <AppointmentList /> },
     { path: 'users/withoutAppointment', component: <UsersWithoutAppointment /> },
     { path: 'profil', component: <ProfilAdmin /> },
-    { path: 'vehicule/serviceBook/:immat', component: <ServiceBookDetails /> },
+    { path: 'vehicule/:immat/serviceBook', component: <ServiceBookDetails /> },
     { path: 'serviceBook', component: <ServiceBookList /> },
+    { path: 'addPros', component: <AddPros /> },
   ];
   return (
     <div className="min-h-screen text-center bg-center bg-no-repeat bg-cover bg-main">

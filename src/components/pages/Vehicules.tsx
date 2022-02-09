@@ -13,9 +13,10 @@ function Vehicules() {
   const [vehiculeSelected, setVehiculeSelected] = useState<IVehiculeAndUser[]>([]);
 
   const handleChangeVehicule = (immat: string) => {
-    infosUserVehicule && setVehiculeSelected(
-      infosUserVehicule.filter((el: IVehiculeAndUser) => el.immat.includes(immat)),
-    );
+    infosUserVehicule &&
+      setVehiculeSelected(
+        infosUserVehicule.filter((vehicule: IVehiculeAndUser) => vehicule.immat.includes(immat)),
+      );
   };
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function Vehicules() {
         <Link to="/particular/addVehicule">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 ml-4 text-background"
+            className="w-6 h-6 ml-4 text-background border-2 border-background rounded-full hover:bg-white hover:text-primary transition-all"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -48,7 +49,7 @@ function Vehicules() {
         id="listVehicule"
         onChange={(e) => handleChangeVehicule(e.target.value)}>
         {infosUserVehicule &&
-          infosUserVehicule.map((vehicule: any, index: number) => (
+          infosUserVehicule.map((vehicule, index: number) => (
             <VehiculesSelectOptions key={index} vehicule={vehicule} />
           ))}
       </select>

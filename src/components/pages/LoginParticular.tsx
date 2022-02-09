@@ -76,7 +76,14 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <nav>
-            <Link to="/signup">Pas encore membre ? Créer un compte</Link>
+            <Link to="/signup">
+              <p>
+                <span className="hover:cursor-default">Pas encore membre ?</span>{' '}
+                <span className="underline lg:no-underline hover:underline">
+                  Créer un compte
+                </span>
+              </p>
+            </Link>
           </nav>
           <button
             className={`p-4 mt-4 duration-300 ease-in-out rounded-lg shadow-lg bg-primary hover:bg-primary-hovered`}

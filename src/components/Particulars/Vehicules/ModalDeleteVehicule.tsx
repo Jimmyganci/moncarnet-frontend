@@ -46,7 +46,6 @@ function ModalDelete({
         setVehiculeDeleted(true);
         toast.success('Véhicule Supprimé');
       } else {
-        console.log(putVehicule);
         toast.error("Une erreur s'est produite");
       }
     } catch (err) {
@@ -80,7 +79,7 @@ function ModalDelete({
       {deleteConfirmation && vehiculeDeleted && (
         <div className={`w-full h-full flex flex-col justify-center items-center`}>
           <div
-            className={`backdrop-filter backdrop-blur-xl bg-background/30 w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
+            className={`w-5/6 h-full rounded-lg py-6 px-2 my-4 flex flex-col items-center justify-center`}>
             {`Le véhicule immatriculé :`} <br /> {`${immat}`} <br />{' '}
             {`vient d'être supprimé.`}
             <button

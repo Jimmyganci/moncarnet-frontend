@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { isLoggedIn, users } from '../API/request';
 import { getVehicules } from '../API/requestVehicule';
@@ -42,6 +43,8 @@ interface AppContextInterface {
   setInfosUserVehicule: React.Dispatch<React.SetStateAction<IVehiculeAndUser[]>>;
   vehiculeDeleted: boolean;
   setVehiculeDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+  vehiculeGiven: boolean;
+  setVehiculeGiven: React.Dispatch<React.SetStateAction<boolean>>;
   deleteAccount: boolean;
   setDeleteAccount: React.Dispatch<React.SetStateAction<boolean>>;
   posted: boolean;
@@ -56,6 +59,8 @@ const UserContext = createContext<AppContextInterface>({
   setInfosUserVehicule: () => {},
   vehiculeDeleted: false,
   setVehiculeDeleted: () => {},
+  vehiculeGiven: false,
+  setVehiculeGiven: () => {},
   deleteAccount: false,
   setDeleteAccount: () => {},
   posted: false,
@@ -70,6 +75,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   const [userLoggedIn, setUserLoggedIn] = useState<IUser>(USER_LOGIN_EMPTY);
   const [infosUserVehicule, setInfosUserVehicule] = useState<IVehiculeAndUser[]>([]);
   const [vehiculeDeleted, setVehiculeDeleted] = useState<boolean>(false);
+  const [vehiculeGiven, setVehiculeGiven] = useState<boolean>(false);
   const [posted, setPosted] = useState<boolean>(false);
   const [deleteAccount, setDeleteAccount] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
@@ -79,7 +85,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   // set current user to nothing !
   const logout = (): void => {
     setUserLoggedIn(USER_LOGIN_EMPTY);
-    removeCookie('user_token');
+    removeCookie('user_token', { path: '/' });
     navigate('/');
   };
 
@@ -108,11 +114,16 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
           }
         }
       } catch (err: any) {
+        if (err.response.status === 500) {
+          toast.error('Merci de vous connecter!');
+          navigate('/');
+        }
+
         navigate('/');
       }
     }
     getUserLogin();
-  }, [vehiculeDeleted, posted, deleteAccount]);
+  }, [vehiculeDeleted, vehiculeGiven, posted, deleteAccount]);
 
   return (
     <UserContext.Provider
@@ -125,6 +136,8 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
         setDeleteAccount,
         vehiculeDeleted,
         setVehiculeDeleted,
+        vehiculeGiven,
+        setVehiculeGiven,
         posted,
         setPosted,
         logout,

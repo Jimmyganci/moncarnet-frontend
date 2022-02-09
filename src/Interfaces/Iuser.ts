@@ -9,4 +9,5 @@ export default interface IUser {
   postal_code: number;
   city: string;
   active?: boolean;
+  userName?: string;
 }

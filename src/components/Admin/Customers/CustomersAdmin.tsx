@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { pros, users } from '../../../API/request';
+import AdminContext from '../../../contexts/AdminContext';
 import IPros from '../../../Interfaces/IPros';
-import ProsInfos from '../../../Interfaces/IPros';
 import IUser from '../../../Interfaces/IUser';
-import UserInfos from '../../../Interfaces/IUser';
-import { glassMorphism } from '../../../variableTailwind';
+import { button, glassMorphism } from '../../../variableTailwind';
+import ModalInfos from '../Appointment/ModalInfos';
 
 interface ICustomers {
   particular: IUser[];
@@ -15,6 +16,11 @@ interface ICustomers {
 function CustomersAdmin() {
   const [dataCustomers, setDataCustomers] = useState<ICustomers[]>();
   const [dataSelect, setDataSelect] = useState('particular');
+  const [userId, setUserId] = useState<number>();
+  const [prosId, setProsId] = useState<number>();
+  const [showUser, setShowUser] = useState<boolean>(false);
+  const [showPros, setShowPros] = useState<boolean>(false);
+  const { renderState, setRenderState } = useContext(AdminContext);
 
   async function getCustomers() {
     const promise1 = users.getAll();
@@ -23,9 +29,46 @@ function CustomersAdmin() {
     setDataCustomers([{ particular: getAllCustomers[0], pros: getAllCustomers[1] }]);
   }
 
+  async function handleActiveUser(userId: number, data: IUser) {
+    try {
+      const toggleActiveUser = await users.put(userId, {
+        active: !data.active,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        email: data.email,
+        address: data.address,
+        phone: data.phone,
+        postal_code: data.postal_code,
+        city: data.city,
+      });
+      if (toggleActiveUser.status === 200) {
+        toast.success(
+          `${data.lastname + ' ' + data.firstname} a bien été ${
+            data.active ? 'bloqué' : 'débloqué'
+          }`,
+        );
+        setRenderState(!renderState);
+      }
+    } catch (err) {
+      if (err) toast.error("Une erreur s'est produite!");
+    }
+  }
+
+  async function handleDeletePros(id: number, data: IPros) {
+    try {
+      const deletedPros = await pros.delete(id);
+      if (deletedPros.status === 200) {
+        setRenderState(!renderState);
+        toast.success(`Le professionnel ${data.name} a bien été supprimé!`);
+      }
+    } catch (err) {
+      if (err) toast.error("Une erreur s'est produite!");
+    }
+  }
+
   useEffect(() => {
     getCustomers();
-  }, []);
+  }, [renderState]);
   return (
     <div className="flex flex-col items-end w-full">
       <div className={`w-5/6 p-2`}>
@@ -39,60 +82,64 @@ function CustomersAdmin() {
               className={`w-1/2 p-4 rounded-tl-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'particular' ? 'bg-primary-focus' : ''
               }`}>
-              Particulier
+              {`Particulier(s)`}
             </button>
             <button
               onClick={() => setDataSelect('pros')}
               className={`w-1/2 p-4 rounded-tr-lg bg-primary hover:bg-primary-hovered ${
                 dataSelect === 'pros' ? 'bg-primary-focus' : ''
               }`}>
-              Professionnels
+              {`Professionnel(s)`}
             </button>
           </div>
           {dataSelect === 'particular' ? (
-            <div className="grid grid-cols-9 pt-2 pb-2 bg-background/30">
+            <div className="grid grid-cols-6 pt-2 pb-2 bg-background/30">
               <p>Id User</p>
               <p>Nom</p>
               <p>Prénom</p>
               <p>Email</p>
-              <p>Adresse</p>
-              <p>Code Postal</p>
-              <p>City</p>
-              <p>Tel</p>
-              <p>Status</p>
             </div>
           ) : (
-            <div className="grid grid-cols-9 pt-2 pb-2 bg-background/30">
+            <div className="grid grid-cols-6 pt-2 pb-2 bg-background/30">
               <p>Id Pros</p>
               <p>Siret</p>
               <p>name</p>
               <p>Email</p>
-              <p>Adresse</p>
-              <p>Code Postal</p>
-              <p>City</p>
-              <p>Tel</p>
-              <p>Status</p>
             </div>
           )}
           {dataSelect === 'particular' && dataCustomers
-            ? dataCustomers[0].particular.map((user: UserInfos, index: number) => (
-                <div className="grid grid-cols-9 pt-2 pb-2 " key={index}>
+            ? dataCustomers[0].particular.map((user: IUser, index: number) => (
+                <div
+                  className="grid items-center grid-cols-6 pt-2 pb-2 hover:bg-background/30 "
+                  key={index}>
                   <p>{user.id_user}</p>
                   <p>{user.lastname}</p>
                   <p>{user.firstname}</p>
                   <p className="overflow-hidden whitespace-nowrap text-ellipsis">
                     {user.email}
                   </p>
-                  <p>{user.address}</p>
-                  <p>{user.postal_code}</p>
-                  <p>{user.city}</p>
-                  <p>{user.phone}</p>
-                  <p>non bloqué</p>
+                  <button
+                    onClick={() => {
+                      setShowUser(true);
+                      setUserId(user.id_user);
+                    }}
+                    className={`${button} w-2/3 m-auto`}>
+                    Details
+                  </button>
+                  <button
+                    onClick={() => user.id_user && handleActiveUser(user.id_user, user)}
+                    className={`${button} w-2/3 m-auto ${
+                      !user.active ? '' : 'bg-red-500 hover:bg-red-300'
+                    }`}>
+                    {user.active ? 'Bloquer' : 'Débloquer'}
+                  </button>
                 </div>
               ))
             : dataCustomers &&
-              dataCustomers[0].pros.map((pro: ProsInfos, index: number) => (
-                <div className="grid grid-cols-9 pt-2 pb-2 " key={index}>
+              dataCustomers[0].pros.map((pro: IPros, index: number) => (
+                <div
+                  className="grid items-center grid-cols-6 pt-2 pb-2 hover:bg-background/30 "
+                  key={index}>
                   <p>{pro.id_pros}</p>
                   <p className="overflow-hidden whitespace-nowrap text-ellipsis">
                     {pro.siret}
@@ -101,15 +148,31 @@ function CustomersAdmin() {
                   <p className="overflow-hidden whitespace-nowrap text-ellipsis">
                     {pro.email}
                   </p>
-                  <p>{pro.address}</p>
-                  <p>{pro.postal_code}</p>
-                  <p>{pro.city}</p>
-                  <p>{pro.phone}</p>
-                  <p>non bloqué</p>
+                  <button
+                    onClick={() => {
+                      setShowPros(true);
+                      setProsId(pro.id_pros);
+                    }}
+                    className={`${button} w-2/3 m-auto`}>
+                    Details
+                  </button>
+                  <button
+                    onClick={() => pro.id_pros && handleDeletePros(pro.id_pros, pro)}
+                    className={`${button} bg-red-500 hover:bg-red-300 w-2/3 m-auto`}>
+                    Supprimer
+                  </button>
                 </div>
               ))}
         </div>
       </div>
+      <ModalInfos
+        setShowUser={setShowUser}
+        showUser={showUser}
+        userId={userId}
+        prosId={prosId}
+        showPros={showPros}
+        setShowPros={setShowPros}
+      />
     </div>
   );
 }

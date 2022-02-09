@@ -36,7 +36,7 @@ function LandingPage() {
             <button className={`${button} w-2/3 lg:w-3/4 lg:h-16`}>Professionnel</button>
           </Link>
           <Link to="/login-admin" className="w-full">
-            <button className={`${button} w-2/3 lg:w-3/4 lg:h-16`}>Admin</button>
+            <button className={`${button} w-2/3 lg:w-3/4 lg:h-16`}>Administrateur</button>
           </Link>
         </div>
       </div>

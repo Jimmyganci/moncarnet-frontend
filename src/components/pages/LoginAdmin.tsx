@@ -1,10 +1,11 @@
 import React, { FormEvent, useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { login } from '../../API/request';
 import logo from '../../assets/logo.svg';
-import { button, glassMorphism, input } from '../../variableTailwind';
+import Return from '../../assets/return.png';
+import { appear, button, glassMorphism, input } from '../../variableTailwind';
 
 function LoginAdmin() {
   const [email, setEmail] = useState<string>('');
@@ -20,7 +21,13 @@ function LoginAdmin() {
   };
   return (
     <div
-      className={`${glassMorphism} min-h-screen flex justify-center flex-col items-center`}>
+      className={`${glassMorphism} min-h-screen flex justify-center flex-col items-center relative`}>
+      <Link to="/" className="absolute top-0 left-0">
+        <button
+          className={`p-2 mt-2 duration-300 ease-in-out rounded-lg shadow-lg bg-primary-hovered h-7 w-7 ml-2 ${appear}`}>
+          <img src={Return} alt="return" className="w-full h-full" />
+        </button>
+      </Link>
       <div
         className={`flex justify-center flex-col w-1/2 pt-5 pb-5 rounded-lg items-center ${glassMorphism} mt-5`}>
         <div className="flex items-center justify-center">

@@ -17,7 +17,7 @@ const ParticularSideBar = () => {
   const navigate: NavigateFunction = useNavigate();
 
   // access userContext !
-  const { logout }: any = useContext(UserContext);
+  const { logout } = useContext(UserContext);
 
   const linkArray = [
     {
@@ -68,9 +68,8 @@ const ParticularSideBar = () => {
           <button
             className="mt-4 text-2xl font-medium tracking-widest"
             onClick={() => {
-              logout().then(() => {
-                return navigate('/');
-              });
+              logout();
+              return navigate('/');
             }}>
             Se déconnecter
           </button>

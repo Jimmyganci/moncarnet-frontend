@@ -27,24 +27,26 @@ function AppointmentList() {
       //  get all appointment
       const getAll = await appointment.getAll();
       //  push in an array to map it and make a promise all for have the all informations of appointments
-      let requestId: RequestId[] = [];
-      getAll.map(async (appointment) => {
-        requestId.push({
-          appointmentId: appointment.id_appointment,
-          userId: appointment.userId,
-          prosId: appointment.prosId,
+      if (getAll) {
+        let requestId: RequestId[] = [];
+        getAll.map(async (appointment) => {
+          requestId.push({
+            appointmentId: appointment.id_appointment || 0,
+            userId: appointment.userId,
+            prosId: appointment.prosId,
+          });
         });
-      });
 
-      Promise.all(
-        requestId.map(async (id) => [
-          await appointment.getOne(id.appointmentId && id.appointmentId),
-          await users.getOne(id.userId),
-          await pros.getOne(id.prosId),
-        ]),
-      ).then((res: any) => {
-        setDataAppointment(res);
-      });
+        Promise.all(
+          requestId.map(async (id) => [
+            await appointment.getOne(id.appointmentId && id.appointmentId),
+            await users.getOne(id.userId),
+            await pros.getOne(id.prosId),
+          ]),
+        ).then((res: any) => {
+          setDataAppointment(res);
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +54,7 @@ function AppointmentList() {
 
   useEffect(() => {
     getAppointments();
-  }, []);
+  }, [showVehicule]);
 
   return (
     <div className="flex flex-col items-end w-full">
@@ -95,7 +97,11 @@ function AppointmentList() {
         prosId={prosId}
       />
       {showVehicule && (
-        <VehiculeModal vehicule={oneVehicule} setShowVehicule={setShowVehicule} />
+        <VehiculeModal
+          showVehicule={showVehicule}
+          vehicule={oneVehicule}
+          setShowVehicule={setShowVehicule}
+        />
       )}
     </div>
   );

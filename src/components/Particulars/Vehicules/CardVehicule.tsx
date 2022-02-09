@@ -10,7 +10,8 @@ import {
   glassMorphismWhiteShadow,
 } from '../../../variableTailwind';
 import Plate from '../../Plate';
-import ModalDeleteVehicule from '../ParticularInfos/ModalDeleteVehicule';
+import ModalDeleteVehicule from './ModalDeleteVehicule';
+import ModalGiveVehicule from './ModalGiveVehicule';
 
 interface Props {
   vehiculeSelect: IVehiculeAndUser;
@@ -18,8 +19,8 @@ interface Props {
 
 const CardVehicule = ({ vehiculeSelect }: Props) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
-  const { userLoggedIn, vehiculeDeleted }: any = useContext(UserContext);
-  const { setPosted }: any = useContext(UserContext);
+  const [giveConfirmation, setGiveConfirmation] = useState<boolean>(false);
+  const { userLoggedIn, vehiculeDeleted, setPosted } = useContext(UserContext);
   const [brand, setBrand] = useState<string>('');
 
   async function getBrand() {
@@ -34,7 +35,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
   return (
     <div className="w-full h-full pb-5 lg:h-fit">
       <div
-        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
+        className={`rounded-lg ${glassMorphism} mx-auto my-5 h-full w-11/12 max-w-3xl lg:min-w-[500px] flex flex-col justify-center items-center`}>
         {vehiculeSelect ? (
           <div className="flex flex-col items-center w-11/12">
             {!vehiculeDeleted && (
@@ -47,12 +48,12 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                   />
                 </div>
                 <div
-                  className={`flex w-5/6 max-w-lg justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
+                  className={`flex w-5/6 lg:w-full justify-around p-1 m-4 ${glassMorphismWhiteShadow}`}>
                   <p className="font-bold uppercase">{brand}</p>
                   <p className="font-bold uppercase">{vehiculeSelect.model}</p>
                 </div>
                 <div
-                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4 border-black border-[1px]`}>
+                  className={`w-64 h-12 max-h-16 max-w-sm shadow-text rounded-lg shadow-lg overflow-hidden mt-2 mb-4`}>
                   <Plate
                     immat={vehiculeSelect.immat}
                     postalCode={userLoggedIn && userLoggedIn.postal_code}
@@ -60,7 +61,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                 </div>
               </div>
             )}
-            {!deleteConfirmation ? (
+            {!deleteConfirmation && !giveConfirmation ? (
               <div>
                 <p>
                   <span>{`Mise en circulation le `}</span>
@@ -78,18 +79,29 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                 </div>
               </div>
             ) : (
-              <ModalDeleteVehicule
-                immat={vehiculeSelect.immat}
-                registration_date={vehiculeSelect.registrationDate}
-                url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
-                model_id={vehiculeSelect.modelId}
-                type_id={vehiculeSelect.typeId}
-                user_id={vehiculeSelect.userId}
-                deleteConfirmation={deleteConfirmation}
-                setDeleteConfirmation={setDeleteConfirmation}
-              />
+              <>
+                <ModalDeleteVehicule
+                  immat={vehiculeSelect.immat}
+                  registration_date={vehiculeSelect.registrationDate}
+                  url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
+                  model_id={vehiculeSelect.modelId}
+                  type_id={vehiculeSelect.typeId}
+                  user_id={vehiculeSelect.userId}
+                  deleteConfirmation={deleteConfirmation}
+                  setDeleteConfirmation={setDeleteConfirmation}
+                />
+                <ModalGiveVehicule
+                  immat={vehiculeSelect.immat}
+                  registration_date={vehiculeSelect.registrationDate}
+                  url_vehiculeRegistration={vehiculeSelect.urlGreenCard}
+                  model_id={vehiculeSelect.modelId}
+                  type_id={vehiculeSelect.typeId}
+                  giveConfirmation={giveConfirmation}
+                  setGiveConfirmation={setGiveConfirmation}
+                />
+              </>
             )}
-            {!deleteConfirmation && (
+            {!deleteConfirmation && !giveConfirmation && (
               <div className="w-11/12">
                 <button className={`${clearedGreenButton} w-full py-2`}>
                   <Link to={`/particular/vehicules/${vehiculeSelect.immat}/serviceBook`}>
@@ -106,7 +118,9 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
                       Modifier
                     </Link>
                   </button>
-                  <button className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}>
+                  <button
+                    className={`w-full ml-1 py-2 uppercase ${clearedGreenButton}`}
+                    onClick={() => vehiculeSelect && setGiveConfirmation(true)}>
                     Céder
                   </button>
                 </div>
@@ -119,7 +133,7 @@ const CardVehicule = ({ vehiculeSelect }: Props) => {
             )}
           </div>
         ) : (
-          'Pas de véhicules enregistré'
+          'Pas de véhicule enregistré'
         )}
       </div>
     </div>

@@ -6,10 +6,15 @@ import { users } from '../../../API/request';
 import UserContext from '../../../contexts/UserContext';
 import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, title } from '../../../variableTailwind';
+import ReturnButton from '../../ReturnButton';
+import AppointmentRequestModal from './AppointmentRequestModal';
 
 function UserGarage() {
   const [usersGarage, setUsersGarage] = useState<IPros[]>();
-  const { userLoggedIn }: any = useContext(UserContext);
+  const { userLoggedIn } = useContext(UserContext);
+  const [deletedGarage, setDeletedGarage] = useState<boolean>(false);
+  const [showAppointmentRequest, setShowAppointmentRequest] = useState<boolean>(false);
+  const [garageId, setGarageId] = useState<number>(0);
 
   useEffect(() => {
     async function getUsersGarage() {
@@ -24,24 +29,26 @@ function UserGarage() {
       }
     }
     getUsersGarage();
-  }, [userLoggedIn]);
+  }, [userLoggedIn, deletedGarage]);
 
   const handleDeleteGarage = async (idPros: number) => {
     try {
-      const res = await users.deleteGarage(userLoggedIn.id_user, idPros);
-      res.status === 200 && toast.success(res.data);
+      const res =
+        userLoggedIn.id_user && (await users.deleteGarage(userLoggedIn.id_user, idPros));
+      res && toast.success(res);
+      setDeletedGarage(false);
     } catch (err) {
       err && toast.error("Une erreur s'est produite!");
     }
   };
   return (
-    <div>
-      <div className="flex items-center justify-around">
+    <div className="flex flex-col items-center justify-center w-full max-w-lg">
+      <div className="flex items-center justify-center w-full">
         <h1 className={`${title}`}>Mes garages</h1>
         <Link to="/particular/garage">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
+            className="w-6 h-6 transition-all border-2 rounded-full text-background border-background hover:bg-white hover:text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor">
@@ -55,21 +62,25 @@ function UserGarage() {
         </Link>
       </div>
 
-      <div className="m-4">
-        {usersGarage && usersGarage.length > 0 ? (
-          usersGarage.map((el: any) => (
+      <div className="w-5/6 m-4">
+        {!showAppointmentRequest && usersGarage && usersGarage.length > 0 ? (
+          usersGarage.map((garage: IPros) => (
             <div
-              className={`flex flex-col mt-4 mb-4 rounded-lg ${glassMorphism}`}
-              key={el.id_pros}>
+              className={`flex flex-col w-full mt-4 mb-4 rounded-lg ${glassMorphism}`}
+              key={garage.id_pros}>
               <div className="flex items-center justify-around p-4">
                 <div className="flex flex-col justify-center w-1/2">
-                  <p>{el.name}</p>
-                  <p>{el.city}</p>
+                  <p>{garage.name}</p>
+                  <p>{garage.city}</p>
                 </div>
-                <Link to={`/particular/garage-details/${el.id_pros}`}>
+                <Link to={`/particular/garage-details/${garage.id_pros}`}>
                   <button className={` mt-0 ${button}`}>Details</button>
                 </Link>
-                <button onClick={() => handleDeleteGarage(el.id_pros)}>
+                <button
+                  onClick={() => {
+                    garage.id_pros && handleDeleteGarage(garage.id_pros);
+                    setDeletedGarage(true);
+                  }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-7 h-7"
@@ -83,7 +94,12 @@ function UserGarage() {
                   </svg>
                 </button>
               </div>
-              <button className="flex justify-center p-2 duration-300 ease-in-out bg-opacity-50 rounded-b-lg hover:bg-primary-hovered bg-background">
+              <button
+                onClick={() => {
+                  garage.id_pros && setGarageId(garage.id_pros);
+                  setShowAppointmentRequest(true);
+                }}
+                className="flex justify-center p-2 duration-300 ease-in-out bg-opacity-50 rounded-b-lg hover:bg-primary-hovered bg-background">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6"
@@ -103,13 +119,29 @@ function UserGarage() {
           ))
         ) : (
           <>
-            <p>{`Vous n'avez aucu garage enregistré dans vos favoris`}</p>
-            <Link to="/particular/garage">
-              <button className={button}>Afficher la liste des garages</button>
-            </Link>
+            {!showAppointmentRequest && (
+              <div>
+                <p>{`Vous n'avez aucun garage enregistré dans vos favoris`}</p>
+                <Link to="/particular/garage">
+                  <button className={button}>Afficher la liste des garages</button>
+                </Link>
+              </div>
+            )}
           </>
         )}
       </div>
+      <>
+        {!showAppointmentRequest && (
+          <div className="text-md font-inter max-w-md mb-2 w-[60%] flex justify-center mt-4">
+            <ReturnButton target={'/particular/home'} />
+          </div>
+        )}
+      </>
+      <AppointmentRequestModal
+        garageId={garageId}
+        showAppointmentRequest={showAppointmentRequest}
+        setShowAppointmentRequest={setShowAppointmentRequest}
+      />
     </div>
   );
 }

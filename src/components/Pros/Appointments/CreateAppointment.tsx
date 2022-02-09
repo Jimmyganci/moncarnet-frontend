@@ -116,7 +116,7 @@ function CreateAppointments() {
             )
             .map((user) => (
               <option value={user.id_user} key={user.id_user}>
-                {user.lastname} {user.firstname}
+                {user.firstname} {user.lastname}
               </option>
             ))}
         </select>
@@ -133,7 +133,9 @@ function CreateAppointments() {
               onChange={(e) => setChosenImmat(e.target.value)}>
               <option defaultValue={''}>Aucun véhicule sélectionné</option>
               {userVehicules &&
-                userVehicules.map((vehicule) => (
+                userVehicules
+                .filter((vehiculeFilter) => vehiculeFilter.validate)
+                .map((vehicule) => (
                   <option value={vehicule.immat} key={vehicule.immat}>
                     {vehicule.immat}
                   </option>

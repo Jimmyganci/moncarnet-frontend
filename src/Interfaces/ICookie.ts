@@ -1,4 +1,4 @@
-export interface ICookie {
+export default interface ICookie {
   email: string;
   iat: number;
   id_user: number;

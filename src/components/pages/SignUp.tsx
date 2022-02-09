@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { users } from '../../API/request';
 import { button, glassMorphism, input } from '../../variableTailwind';
 import Logo from '../Logo';
+import ReturnButton from '../ReturnButton';
 
 interface IAddressSelect {
   city: string;
@@ -30,7 +31,6 @@ function SignUp() {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const navigate: NavigateFunction = useNavigate();
-  console.log(addressList);
 
   async function getAdresse() {
     const res = await axios.get(
@@ -76,12 +76,11 @@ function SignUp() {
 
   return (
     <div className="flex flex-col items-center justify-around h-full">
-      <Logo />
-
+        <Logo/>
       <form
-        className={`w-11/12 mt-4 rounded-lg p-2 ${glassMorphism}`}
+        className={`w-11/12 h-4/6 my-6 rounded-lg p-5 ${glassMorphism}`}
         onSubmit={(e: React.FormEvent) => handleSignUp(e)}>
-        <h1 className="pt-4 pb-4 mb-4 text-2xl border-b border-background/25">
+        <h1 className="py-2 mb-4 text-2xl border-b border-background/25">
           Créer mon compte
         </h1>
         <div className="flex">
@@ -194,10 +193,11 @@ function SignUp() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <button className={button} type="submit">
+        <button className={`${button} w-1/2`} type="submit">
           Valider
         </button>
       </form>
+      <div className='w-1/2 mb-5 flex justify-center'><ReturnButton target='/login-particular' /></div>
     </div>
   );
 }

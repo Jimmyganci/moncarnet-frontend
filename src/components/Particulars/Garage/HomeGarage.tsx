@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { pros } from '../../../API/request';
+import IPros from '../../../Interfaces/IPros';
 import { button, glassMorphism, input } from '../../../variableTailwind';
 
 function HomeGarage() {
   const [searchGarage, setSearchGarage] = useState<string>('');
-  const [resultsSearchGarage, setResultsSearchGarage] = useState<any>([]);
-
+  const [resultsSearchGarage, setResultsSearchGarage] = useState<IPros[]>([]);
   const handleSearchGarage = async (e: React.FormEvent) => {
     e.preventDefault();
-    let url = `?namePros=${searchGarage}`;
+    let url: string = `?namePros=${searchGarage}`;
     try {
       const res = await pros.getAll(url);
       if (res.length === 0) toast('Aucun garage ne correspond à votre recherche!');
@@ -30,7 +30,7 @@ function HomeGarage() {
             className={`p-2.5 ${input}`}
             type="search"
             value={searchGarage}
-            placeholder="Garage du centre"
+            placeholder="Ex : Garage du centre"
             onChange={(e) => setSearchGarage(e.target.value)}
           />
         </label>
