@@ -36,7 +36,6 @@ const ServiceBook = () => {
     const res = infosVehicule && await brands.getOne(infosVehicule.brandId);
     res && setBrand(res.name);
   }
-  console.log(brand)
 
   useEffect(() => {
     getInfosVehicule();
