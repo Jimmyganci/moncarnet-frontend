@@ -4,7 +4,7 @@ import { vehicule } from '../../../API/request';
 import { getVehicules } from '../../../API/requestVehicule';
 import IAppointment from '../../../Interfaces/IAppointment';
 import IPros from '../../../Interfaces/IPros';
-import IUser from '../../../Interfaces/Iuser';
+import IUser from '../../../Interfaces/IUser';
 import IVehiculeAndUser from '../../../Interfaces/IVehiculeAndUser';
 
 interface AppointmentProps {

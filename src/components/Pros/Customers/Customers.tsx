@@ -21,20 +21,12 @@ function Customers() {
   useEffect(() => {
     getUsersFromPro()   
   }, [searchTerm]);
-
-  // Filter users
-
-  // useEffect(() => {
-  //   users.length && searchTerm && setFilteredUsers( users.filter(user => (user.lastname).startsWith(searchTerm)))
-  //  console.log(filteredUsers);
-  // }, [searchTerm]);
   
   return (
     <div className="w-full h-full overflow-auto">
       <h1 className={`${h1}`}>
          Clients
       </h1>
-        {/* <input onChange={(event) => {setSearchTerm(event.target.value)}}></input> */}
       <ul className='w-full'>
         {userArray && userArray
         .map((user) => (

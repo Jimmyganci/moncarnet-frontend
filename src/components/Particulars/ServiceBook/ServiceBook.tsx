@@ -99,7 +99,7 @@ const ServiceBook = () => {
                     className={`${glassMorphismWhiteShadow} h-1/4 w-11/12 max-w-lg flex flex-col justify-center items-center p-3 my-2 mb-4`}>
                     <div className="flex items-center justify-between w-full h-full">
                       <div className="flex flex-col items-center justify-center w-full h-full -ml-3 text-sm leading-7">
-                        <p className="text-lg font-medium underline">{`Révision du ${new Date(
+                        <p className="text-base font-medium underline">{`Révision du ${new Date(
                           service.date,
                         ).toLocaleDateString()}`}</p>
                         <p className="mt-2 mb-3 leading-4">{service.service}</p>

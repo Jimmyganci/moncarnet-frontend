@@ -76,7 +76,7 @@ const ServiceDetail = () => {
           <p className="px-2 py-1 text-xl underline font-medium">
             {infosVehicule && brand + ' ' + infosVehicule.model}
           </p>
-                    <div className='w-4/6 h-[11vw] max-h-12 max-w-sm mb-2 lg:mt-2'>
+          <div className='w-56 h-10 max-h-12 max-w-sm mb-2 lg:mt-2'>
             {infosVehicule && <Plate immat={infosVehicule.immat} postalCode={userLoggedIn && userLoggedIn.postal_code} />}
           </div>
         </div>
