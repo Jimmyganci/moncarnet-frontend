@@ -93,14 +93,6 @@ function GarageDetails() {
           <div className="w-1/2">
             <ReturnButton target={''} />
           </div>
-        <p className="underline">SIRET</p>
-        <p>{infosPros.siret}</p>
-        <button onClick={handleChoiceGarage} className={button}>
-          Ajouter aux favoris
-        </button>
-        <button className={button}>
-          <Link to="/particular/garage">Retour</Link>
-        </button>
       </div>}
     </div>
   );
